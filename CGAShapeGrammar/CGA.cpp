@@ -5,7 +5,19 @@
 namespace cga {
 
 const float M_PI = 3.1415926f;
-const bool showAxes = true;
+const bool showAxes = false;
+
+BoundingBox::BoundingBox(const std::vector<glm::vec2>& points) {
+	bottom_left = glm::vec2((std::numeric_limits<float>::max)(), (std::numeric_limits<float>::max)());
+	upper_right = -bottom_left;
+
+	for (int i = 0; i < points.size(); ++i) {
+		bottom_left.x = min(bottom_left.x, points[i].x);
+		bottom_left.y = min(bottom_left.y, points[i].y);
+		upper_right.x = max(upper_right.x, points[i].x);
+		upper_right.y = max(upper_right.y, points[i].y);
+	}
+}
 
 void Object::translate(const glm::vec3& v) {
 	modelMat = glm::translate(modelMat, v);
@@ -256,6 +268,8 @@ void Polygon::split(int direction, const std::vector<float> ratios, const std::v
 void Polygon::generate(RenderManager* renderManager) {
 	std::vector<Vertex> vertices((points.size() - 2) * 3);
 
+	BoundingBox bbox(points);
+
 	glm::vec4 p0(points[0], 0, 1);
 	p0 = modelMat * p0;
 	glm::vec4 normal(0, 0, 1, 0);
@@ -264,15 +278,20 @@ void Polygon::generate(RenderManager* renderManager) {
 	glm::vec4 p1(points[1], 0, 1);
 	p1 = modelMat * p1;
 
+	glm::vec3 uv1(points[1].x / bbox.upper_right.x, points[1].y / bbox.upper_right.y, 0);
+
 	for (int i = 1; i < points.size() - 1; ++i) {
 		glm::vec4 p2(points[i + 1], 0, 1);
 		p2 = modelMat * p2;
 
-		vertices[(i - 1) * 3] = Vertex(glm::vec3(p0), glm::vec3(normal), color);
-		vertices[(i - 1) * 3 + 1] = Vertex(glm::vec3(p1), glm::vec3(normal), color);
-		vertices[(i - 1) * 3 + 2] = Vertex(glm::vec3(p2), glm::vec3(normal), color);
+		glm::vec3 uv2(points[i + 1].x / bbox.upper_right.x, points[i + 1].y / bbox.upper_right.y, 0);
+
+		vertices[(i - 1) * 3] = Vertex(glm::vec3(p0), glm::vec3(normal), color, glm::vec3(0, 0, 0));
+		vertices[(i - 1) * 3 + 1] = Vertex(glm::vec3(p1), glm::vec3(normal), color, uv1);
+		vertices[(i - 1) * 3 + 2] = Vertex(glm::vec3(p2), glm::vec3(normal), color, uv2);
 
 		p1 = p2;
+		uv1 = uv2;
 	}
 
 	renderManager->addObject(name.c_str(), texture.c_str(), vertices);
@@ -289,10 +308,9 @@ CGA::CGA() {
 
 void CGA::generate(RenderManager* renderManager) {
 	Rectangle lot = Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1));
-	lot.setTexture("textures/roof.jpg");
-	lot.generate(renderManager);
+	//lot.setTexture("textures/roof.jpg");
+	//lot.generate(renderManager);
 
-	/*
 	PrismObject building = lot.extrude("Building", 11);
 	//building.generate(vertices);
 
@@ -390,7 +408,6 @@ void CGA::generate(RenderManager* renderManager) {
 	// 屋根
 	roof.setTexture("textures/roof.jpg");
 	roof.generate(renderManager);
-	*/
 }
 
 }

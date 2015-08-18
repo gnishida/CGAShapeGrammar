@@ -14,6 +14,15 @@ class PrismObject;
 class Polygon;
 class Rectangle;
 
+class BoundingBox {
+public:
+	glm::vec2 bottom_left;
+	glm::vec2 upper_right;
+
+public:
+	BoundingBox(const std::vector<glm::vec2>& points);
+};
+
 class Object {
 protected:
 	std::string name;
