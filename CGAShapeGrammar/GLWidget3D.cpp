@@ -53,9 +53,7 @@ void GLWidget3D::initializeGL() {
 	qglClearColor(QColor(113, 112, 117));
 
 	std::vector<Vertex> vertices;
-	system.generate(vertices);
-	renderManager.removeObject("object");
-	renderManager.addObject("object", "", vertices);
+	system.generate(&renderManager);
 }
 
 /**
