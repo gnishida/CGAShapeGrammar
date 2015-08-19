@@ -36,7 +36,7 @@ public:
 public:
 	void translate(const glm::vec3& v);
 	void setTexture(const std::string& texture);
-	virtual void setupProjection(float texWidth, float texHeight) {}
+	virtual void setupProjection(float texWidth, float texHeight);
 	virtual Object* extrude(const std::string& name, float height);
 	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
 	virtual void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
@@ -52,7 +52,6 @@ public:
 	PrismObject() {}
 	PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color);
 	void setupProjection(float texWidth, float texHeight);
-	Object* extrude(const std::string& name, float height);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
 	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	void generate(RenderManager* renderManager);
@@ -70,7 +69,6 @@ public:
 	void setupProjection(float u1, float v1, float u2, float v2);
 	Object* extrude(const std::string& name, float height);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
-	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	void generate(RenderManager* renderManager);
 };
 
@@ -83,12 +81,21 @@ public:
 	Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2> points, const glm::vec3& color, const std::string& texture);
 	void setupProjection(float texWidth, float texHeight);
 	Object* extrude(const std::string& name, float height);
-	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
 	void generate(RenderManager* renderManager);
 };
 
+class Rule {
+public:
+	Rule() {}
+
+	virtual void apply(Object* obj, std::list<Object*>& stack);
+};
+
 class CGA {
+private:
+	std::map<std::string, Rule*> rules;
+
 public:
 	CGA();
 

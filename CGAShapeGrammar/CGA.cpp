@@ -27,18 +27,24 @@ void Object::setTexture(const std::string& texture) {
 	this->texture = texture;
 }
 
+void Object::setupProjection(float texWidth, float texHeight) {
+	throw "setupProjection() is not supported.";
+}
+
 Object* Object::extrude(const std::string& name, float height) {
-	throw "Object does not support extrude operation";
+	throw "extrude() is not supported.";
 }
 
 void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+	throw "split() is not supported.";
 }
 
 void Object::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
-	throw "Object does not support componentSplit operation";
+	throw "componentSplit() is not supported.";
 }
 
 void Object::generate(RenderManager* renderManager) {
+	throw "generate() is not supported.";
 }
 
 PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
@@ -53,10 +59,6 @@ PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, con
 }
 
 void PrismObject::setupProjection(float texWidth, float texHeight) {
-}
-
-Object* PrismObject::extrude(const std::string& name, float height) {
-	throw "PrismObject does not support extrude operation.";
 }
 
 void PrismObject::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
@@ -232,10 +234,6 @@ Object* Rectangle::extrude(const std::string& name, float height) {
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
-void Rectangle::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
-	throw "Rectangle does not support componentSplit operation.";
-}
-
 void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 	rectangles.resize(ratios.size());
 
@@ -333,10 +331,6 @@ Object* Polygon::extrude(const std::string& name, float height) {
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
-void Polygon::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
-	throw "Polygon does not support componentSplit operation.";
-}
-
 void Polygon::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 }
 
@@ -377,11 +371,18 @@ void Polygon::generate(RenderManager* renderManager) {
 	}
 }
 
+void Rule::apply(Object* obj, std::list<Object*>& stack) {
+	
+}
+
 CGA::CGA() {
 }
 
 void CGA::buildingRule(RenderManager* renderManager) {
 	std::list<Object*> stack;
+
+
+
 
 	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
 	stack.push_back(lot);
@@ -389,6 +390,8 @@ void CGA::buildingRule(RenderManager* renderManager) {
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
+
+
 
 		if (obj->name == "Lot") {
 			stack.push_back(obj->extrude("Building", 11));
