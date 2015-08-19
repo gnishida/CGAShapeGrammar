@@ -33,6 +33,12 @@ PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, con
 	this->points = points;
 	this->height = height;
 	this->color = color;
+
+	BoundingBox bbox(points);
+	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, height);
+}
+
+void PrismObject::setupProjection(float texWidth, float texHeight) {
 }
 
 PrismObject PrismObject::extrude(const std::string& name, float height) {
@@ -42,7 +48,7 @@ PrismObject PrismObject::extrude(const std::string& name, float height) {
 void PrismObject::componentSplit(const std::string& front_name, Rectangle& front, const std::string& sides_name, std::vector<Rectangle>& sides, const std::string& top_name, Polygon& top, const std::string& base_name, Polygon& base) {
 	// front face
 	{
-		front = Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color);
+		front = Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color, texture);
 	}
 
 	// side faces
@@ -65,20 +71,20 @@ void PrismObject::componentSplit(const std::string& front_name, Rectangle& front
 			sidePoints[2] = glm::vec2(invMat * glm::vec4(points[(i + 1) % points.size()], height, 1));
 			sidePoints[3] = glm::vec2(invMat * glm::vec4(points[i], height, 1));
 
-			sides[i - 1] = Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color);
+			sides[i - 1] = Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color, texture);
 		}
 	}
 
 	// top face
 	{
-		top = Polygon(top_name, glm::translate(modelMat, glm::vec3(0, 0, height)), points, color);
+		top = Polygon(top_name, glm::translate(modelMat, glm::vec3(0, 0, height)), points, color, texture);
 	}
 
 	// bottom face
 	{
 		std::vector<glm::vec2> basePoints = points;
 		std::reverse(basePoints.begin(), basePoints.end());
-		base = Polygon(base_name, modelMat, basePoints, color);
+		base = Polygon(base_name, modelMat, basePoints, color, texture);
 	}
 }
 
@@ -172,12 +178,33 @@ void PrismObject::generate(RenderManager* renderManager) {
 	}
 }
 
-Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color) {
+Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color, const std::string& texture) {
 	this->name = name;
 	this->modelMat = modelMat;
 	this->width = width;
 	this->height = height;
 	this->color = color;
+	this->texture = texture;
+	this->scope = glm::vec3(width, height, 0);
+}
+
+void Rectangle::setupProjection(float texWidth, float texHeight) {
+	setupProjection(0, 0, width / texWidth, height / texHeight);
+	/*
+	texCoords.resize(4);
+	texCoords[0] = glm::vec2(0, 0);
+	texCoords[1] = glm::vec2(width / texWidth, 0);
+	texCoords[2] = glm::vec2(width / texWidth, height / texHeight);
+	texCoords[3] = glm::vec2(0, height / texHeight);
+	*/
+}
+
+void Rectangle::setupProjection(float u1, float v1, float u2, float v2) {
+	texCoords.resize(4);
+	texCoords[0] = glm::vec2(u1, v1);
+	texCoords[1] = glm::vec2(u2, v1);
+	texCoords[2] = glm::vec2(u2, v2);
+	texCoords[3] = glm::vec2(u1, v2);
 }
 
 PrismObject Rectangle::extrude(const std::string& name, float height) {
@@ -202,11 +229,17 @@ void Rectangle::split(int direction, const std::vector<float> ratios, const std:
 		glm::mat4 mat;
 		if (direction == DIRECTION_X) {
 			mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
-			rectangles[i] = Rectangle(names[i], modelMat * mat, width * ratios[i], height, color);
+			rectangles[i] = Rectangle(names[i], modelMat * mat, width * ratios[i], height, color, texture);
+			rectangles[i].setupProjection(
+				texCoords[0].x + (texCoords[1].x - texCoords[0].x) * offset / width, texCoords[0].y,
+				texCoords[0].x + (texCoords[1].x - texCoords[0].x) * (offset / width + ratios[i]), texCoords[2].y);
 			offset += width * ratios[i];
 		} else {
 			mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
-			rectangles[i] = Rectangle(names[i], modelMat * mat, width, height * ratios[i], color);
+			rectangles[i] = Rectangle(names[i], modelMat * mat, width, height * ratios[i], color, texture);
+			rectangles[i].setupProjection(
+				texCoords[0].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * offset / height,
+				texCoords[1].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * (offset / height + ratios[i]));
 			offset += height * ratios[i];
 		}
 	}
@@ -229,13 +262,13 @@ void Rectangle::generate(RenderManager* renderManager) {
 	glm::vec4 normal(0, 0, 1, 0);
 	normal = modelMat * normal;
 
-	vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(0, 0, 0));
-	vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), color, glm::vec3(0, 1, 0));
-	vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(1, 1, 0));
+	vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(texCoords[0], 0));
+	vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), color, glm::vec3(texCoords[1], 0));
+	vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(texCoords[2], 0));
 
-	vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(0, 0, 0));
-	vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(1, 1, 0));
-	vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), color, glm::vec3(0, 1, 0));
+	vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(texCoords[0], 0));
+	vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(texCoords[2], 0));
+	vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), color, glm::vec3(texCoords[3], 0));
 
 	renderManager->addObject(name.c_str(), texture.c_str(), vertices);
 
@@ -246,11 +279,22 @@ void Rectangle::generate(RenderManager* renderManager) {
 	}
 }
 
-Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2> points, const glm::vec3& color) {
+Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2> points, const glm::vec3& color, const std::string& texture) {
 	this->name = name;
 	this->modelMat = modelMat;
 	this->points = points;
 	this->color = color;
+	this->texture = texture;
+
+	BoundingBox bbox(points);
+	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, 0);
+}
+
+void Polygon::setupProjection(float texWidth, float texHeight) {
+	texCoords.resize(points.size());
+	for (int i = 0; i < points.size(); ++i) {
+		texCoords[i] = glm::vec2(points[i].x / texWidth, points[i].y / texHeight);
+	}
 }
 
 PrismObject Polygon::extrude(const std::string& name, float height) {
@@ -268,8 +312,6 @@ void Polygon::split(int direction, const std::vector<float> ratios, const std::v
 void Polygon::generate(RenderManager* renderManager) {
 	std::vector<Vertex> vertices((points.size() - 2) * 3);
 
-	BoundingBox bbox(points);
-
 	glm::vec4 p0(points[0], 0, 1);
 	p0 = modelMat * p0;
 	glm::vec4 normal(0, 0, 1, 0);
@@ -278,13 +320,13 @@ void Polygon::generate(RenderManager* renderManager) {
 	glm::vec4 p1(points[1], 0, 1);
 	p1 = modelMat * p1;
 
-	glm::vec3 uv1(points[1].x / bbox.upper_right.x, points[1].y / bbox.upper_right.y, 0);
+	glm::vec3 uv1(points[1].x / scope.x, points[1].y / scope.y, 0);
 
 	for (int i = 1; i < points.size() - 1; ++i) {
 		glm::vec4 p2(points[i + 1], 0, 1);
 		p2 = modelMat * p2;
 
-		glm::vec3 uv2(points[i + 1].x / bbox.upper_right.x, points[i + 1].y / bbox.upper_right.y, 0);
+		glm::vec3 uv2(points[i + 1].x / scope.x, points[i + 1].y / scope.y, 0);
 
 		vertices[(i - 1) * 3] = Vertex(glm::vec3(p0), glm::vec3(normal), color, glm::vec3(0, 0, 0));
 		vertices[(i - 1) * 3 + 1] = Vertex(glm::vec3(p1), glm::vec3(normal), color, uv1);
@@ -307,7 +349,7 @@ CGA::CGA() {
 }
 
 void CGA::generate(RenderManager* renderManager) {
-	Rectangle lot = Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1));
+	Rectangle lot = Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
 	//lot.setTexture("textures/roof.jpg");
 	//lot.generate(renderManager);
 
@@ -318,6 +360,12 @@ void CGA::generate(RenderManager* renderManager) {
 	Polygon roof, base;
 	std::vector<Rectangle> sideFacades;
 	building.componentSplit("FrontFacade", frontFacade, "SideFacade", sideFacades, "Roof", roof, "Base", base);
+	frontFacade.setupProjection(2.5f, 1.0f);
+	frontFacade.setTexture("textures/brick.jpg");
+	for (int i = 0; i < sideFacades.size(); ++i) {
+		sideFacades[i].setupProjection(2.5f, 1.0f);
+		sideFacades[i].setTexture("textures/brick.jpg");
+	}
 
 	std::vector<Rectangle> floors;
 
@@ -341,6 +389,12 @@ void CGA::generate(RenderManager* renderManager) {
 			floors.insert(floors.end(), sideFloors.begin(), sideFloors.end());
 		}
 	}
+
+	/*
+	for (int i = 0; i < floors.size(); ++i) {
+		floors[i].generate(renderManager);
+	}
+	*/
 
 	for (int i = 0; i < floors.size(); ++i) {
 		std::vector<float> tile_ratios;
@@ -397,6 +451,8 @@ void CGA::generate(RenderManager* renderManager) {
 				for (int l = 0; l < sub_walls.size(); ++l) {
 					if (l == 1) {
 						sub_walls[l].translate(glm::vec3(0, 0, -0.25f));
+						sub_walls[l].setupProjection(sub_walls[l].scope.x, sub_walls[l].scope.y);
+						sub_walls[l].setTexture("textures/window.jpg");
 					}
 
 					sub_walls[l].generate(renderManager);
@@ -406,6 +462,7 @@ void CGA::generate(RenderManager* renderManager) {
 	}
 	
 	// 屋根
+	roof.setupProjection(roof.scope.x, roof.scope.y);
 	roof.setTexture("textures/roof.jpg");
 	roof.generate(renderManager);
 }

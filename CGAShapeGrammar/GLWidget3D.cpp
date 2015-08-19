@@ -10,8 +10,8 @@ GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers
 	light_dir = glm::normalize(glm::vec3(-4, -5, -8));
 
 	// シャドウマップ用のmodel/view/projection行列を作成
-	glm::mat4 light_pMatrix = glm::ortho<float>(-100, 100, -100, 100, 0.1, 1000);
-	glm::mat4 light_mvMatrix = glm::lookAt(-light_dir * 100.0f, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 light_pMatrix = glm::ortho<float>(-50, 50, -50, 50, 0.1, 200);
+	glm::mat4 light_mvMatrix = glm::lookAt(-light_dir * 50.0f, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	light_mvpMatrix = light_pMatrix * light_mvMatrix;
 }
 
