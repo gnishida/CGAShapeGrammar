@@ -27,6 +27,20 @@ void Object::setTexture(const std::string& texture) {
 	this->texture = texture;
 }
 
+Object* Object::extrude(const std::string& name, float height) {
+	throw "Object does not support extrude operation";
+}
+
+void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+}
+
+void Object::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
+	throw "Object does not support componentSplit operation";
+}
+
+void Object::generate(RenderManager* renderManager) {
+}
+
 PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
 	this->name = name;
 	this->modelMat = modelMat;
@@ -41,14 +55,19 @@ PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, con
 void PrismObject::setupProjection(float texWidth, float texHeight) {
 }
 
-PrismObject PrismObject::extrude(const std::string& name, float height) {
+Object* PrismObject::extrude(const std::string& name, float height) {
 	throw "PrismObject does not support extrude operation.";
 }
 
-void PrismObject::componentSplit(const std::string& front_name, Rectangle& front, const std::string& sides_name, std::vector<Rectangle>& sides, const std::string& top_name, Polygon& top, const std::string& base_name, Polygon& base) {
+void PrismObject::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+	throw "PrismObject does not support split operation.";
+}
+
+
+void PrismObject::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
 	// front face
 	{
-		front = Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color, texture);
+		*front = new Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color, texture);
 	}
 
 	// side faces
@@ -71,20 +90,20 @@ void PrismObject::componentSplit(const std::string& front_name, Rectangle& front
 			sidePoints[2] = glm::vec2(invMat * glm::vec4(points[(i + 1) % points.size()], height, 1));
 			sidePoints[3] = glm::vec2(invMat * glm::vec4(points[i], height, 1));
 
-			sides[i - 1] = Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color, texture);
+			sides[i - 1] = new Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color, texture);
 		}
 	}
 
 	// top face
 	{
-		top = Polygon(top_name, glm::translate(modelMat, glm::vec3(0, 0, height)), points, color, texture);
+		*top = new Polygon(top_name, glm::translate(modelMat, glm::vec3(0, 0, height)), points, color, texture);
 	}
 
 	// bottom face
 	{
 		std::vector<glm::vec2> basePoints = points;
 		std::reverse(basePoints.begin(), basePoints.end());
-		base = Polygon(base_name, modelMat, basePoints, color, texture);
+		*base = new Polygon(base_name, modelMat, basePoints, color, texture);
 	}
 }
 
@@ -186,20 +205,17 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float w
 	this->color = color;
 	this->texture = texture;
 	this->scope = glm::vec3(width, height, 0);
+
+	this->textureEnabled = false;
 }
 
 void Rectangle::setupProjection(float texWidth, float texHeight) {
 	setupProjection(0, 0, width / texWidth, height / texHeight);
-	/*
-	texCoords.resize(4);
-	texCoords[0] = glm::vec2(0, 0);
-	texCoords[1] = glm::vec2(width / texWidth, 0);
-	texCoords[2] = glm::vec2(width / texWidth, height / texHeight);
-	texCoords[3] = glm::vec2(0, height / texHeight);
-	*/
 }
 
 void Rectangle::setupProjection(float u1, float v1, float u2, float v2) {
+	textureEnabled = true;
+
 	texCoords.resize(4);
 	texCoords[0] = glm::vec2(u1, v1);
 	texCoords[1] = glm::vec2(u2, v1);
@@ -207,20 +223,20 @@ void Rectangle::setupProjection(float u1, float v1, float u2, float v2) {
 	texCoords[3] = glm::vec2(u1, v2);
 }
 
-PrismObject Rectangle::extrude(const std::string& name, float height) {
+Object* Rectangle::extrude(const std::string& name, float height) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(width, 0);
 	points[2] = glm::vec2(width, height);
 	points[3] = glm::vec2(0, height);
-	return PrismObject(name, modelMat, points, height, color);
+	return new PrismObject(name, modelMat, points, height, color);
 }
 
-void Rectangle::componentSplit(const std::string& front_name, Rectangle& front, const std::string& sides_name, std::vector<Rectangle>& sides, const std::string& top_name, Polygon& top, const std::string& base_name, Polygon& base) {
+void Rectangle::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
 	throw "Rectangle does not support componentSplit operation.";
 }
 
-void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle>& rectangles) {
+void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 	rectangles.resize(ratios.size());
 
 	float offset = 0.0f;
@@ -229,17 +245,21 @@ void Rectangle::split(int direction, const std::vector<float> ratios, const std:
 		glm::mat4 mat;
 		if (direction == DIRECTION_X) {
 			mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
-			rectangles[i] = Rectangle(names[i], modelMat * mat, width * ratios[i], height, color, texture);
-			rectangles[i].setupProjection(
-				texCoords[0].x + (texCoords[1].x - texCoords[0].x) * offset / width, texCoords[0].y,
-				texCoords[0].x + (texCoords[1].x - texCoords[0].x) * (offset / width + ratios[i]), texCoords[2].y);
+			rectangles[i] = new Rectangle(names[i], modelMat * mat, width * ratios[i], height, color, texture);
+			if (textureEnabled) {
+				rectangles[i]->setupProjection(
+					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * offset / width, texCoords[0].y,
+					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * (offset / width + ratios[i]), texCoords[2].y);
+			}
 			offset += width * ratios[i];
 		} else {
 			mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
-			rectangles[i] = Rectangle(names[i], modelMat * mat, width, height * ratios[i], color, texture);
-			rectangles[i].setupProjection(
-				texCoords[0].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * offset / height,
-				texCoords[1].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * (offset / height + ratios[i]));
+			rectangles[i] = new Rectangle(names[i], modelMat * mat, width, height * ratios[i], color, texture);
+			if (textureEnabled) {
+				rectangles[i]->setupProjection(
+					texCoords[0].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * offset / height,
+					texCoords[1].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * (offset / height + ratios[i]));
+			}
 			offset += height * ratios[i];
 		}
 	}
@@ -262,16 +282,28 @@ void Rectangle::generate(RenderManager* renderManager) {
 	glm::vec4 normal(0, 0, 1, 0);
 	normal = modelMat * normal;
 
-	vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(texCoords[0], 0));
-	vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), color, glm::vec3(texCoords[1], 0));
-	vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(texCoords[2], 0));
+	if (textureEnabled) {
+		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(texCoords[0], 0));
+		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), color, glm::vec3(texCoords[1], 0));
+		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(texCoords[2], 0));
 
-	vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(texCoords[0], 0));
-	vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(texCoords[2], 0));
-	vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), color, glm::vec3(texCoords[3], 0));
+		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), color, glm::vec3(texCoords[0], 0));
+		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), color, glm::vec3(texCoords[2], 0));
+		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), color, glm::vec3(texCoords[3], 0));
 
-	renderManager->addObject(name.c_str(), texture.c_str(), vertices);
+		renderManager->addObject(name.c_str(), texture.c_str(), vertices);
+	} else {
+		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), color);
+		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), color);
+		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), color);
 
+		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), color);
+		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), color);
+		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), color);
+
+		renderManager->addObject(name.c_str(), "", vertices);
+	}
+	
 	vertices.resize(0);
 	if (showAxes) {
 		glutils::drawAxes(0.1, 3, modelMat, vertices);
@@ -297,15 +329,15 @@ void Polygon::setupProjection(float texWidth, float texHeight) {
 	}
 }
 
-PrismObject Polygon::extrude(const std::string& name, float height) {
-	return PrismObject(name, modelMat, points, height, color);
+Object* Polygon::extrude(const std::string& name, float height) {
+	return new PrismObject(name, modelMat, points, height, color);
 }
 
-void Polygon::componentSplit(const std::string& front_name, Rectangle& front, const std::string& sides_name, std::vector<Rectangle>& sides, const std::string& top_name, Polygon& top, const std::string& base_name, Polygon& base) {
+void Polygon::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
 	throw "Polygon does not support componentSplit operation.";
 }
 
-void Polygon::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle>& rectangles) {
+void Polygon::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 }
 
 
@@ -348,61 +380,78 @@ void Polygon::generate(RenderManager* renderManager) {
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager) {
-	Rectangle lot = Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
-	//lot.setTexture("textures/roof.jpg");
-	//lot.generate(renderManager);
+void CGA::buildingRule(RenderManager* renderManager) {
+	std::list<Object*> stack;
 
-	PrismObject building = lot.extrude("Building", 11);
-	//building.generate(vertices);
+	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
+	stack.push_back(lot);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
 
-	Rectangle frontFacade;
-	Polygon roof, base;
-	std::vector<Rectangle> sideFacades;
-	building.componentSplit("FrontFacade", frontFacade, "SideFacade", sideFacades, "Roof", roof, "Base", base);
-	frontFacade.setupProjection(2.5f, 1.0f);
-	frontFacade.setTexture("textures/brick.jpg");
-	for (int i = 0; i < sideFacades.size(); ++i) {
-		sideFacades[i].setupProjection(2.5f, 1.0f);
-		sideFacades[i].setTexture("textures/brick.jpg");
-	}
+		if (obj->name == "Lot") {
+			stack.push_back(obj->extrude("Building", 11));
+		} else if (obj->name == "Building") {
+			Rectangle* frontFacade;
+			Polygon* roof;
+			Polygon* base;
+			std::vector<Rectangle*> sideFacades;
+			obj->componentSplit("FrontFacade", &frontFacade, "SideFacade", sideFacades, "Roof", &roof, "Base", &base);
 
-	std::vector<Rectangle> floors;
+			stack.push_back(frontFacade);
+			for (int i = 0; i < sideFacades.size(); ++i) {
+				stack.push_back(sideFacades[i]);
+			}
+			stack.push_back(roof);
+			stack.push_back(base);
+		} else if (obj->name == "Roof") {
+			obj->setupProjection(obj->scope.x, obj->scope.y);
+			obj->setTexture("textures/roof.jpg");
+			obj->generate(renderManager);
+			delete obj;
+		} else if (obj->name == "FrontFacade") {
+			obj->setupProjection(2.5f, 1.0f);
+			obj->setTexture("textures/brick.jpg");
 
-	{
-		// 正面を、3階に分割
-		std::vector<float> floor_ratios(3);
-		floor_ratios[0] = 4.0f / frontFacade.height;
-		floor_ratios[1] = 3.5f / frontFacade.height;
-		floor_ratios[2] = 3.5f / frontFacade.height;
-		std::vector<std::string> floor_names(3);
-		floor_names[0] = "Floor";
-		floor_names[1] = "Floor";
-		floor_names[2] = "Floor";
-		frontFacade.split(DIRECTION_Y, floor_ratios, floor_names, floors);
+			std::vector<Rectangle*> floors;
+			std::vector<float> floor_ratios(3);
+			floor_ratios[0] = 4.0f / obj->scope.y;
+			floor_ratios[1] = 3.5f / obj->scope.y;
+			floor_ratios[2] = 3.5f / obj->scope.y;
+			std::vector<std::string> floor_names(3);
+			floor_names[0] = "Floor";
+			floor_names[1] = "Floor";
+			floor_names[2] = "Floor";
+			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
 
-		// 側面を、3階に分割
-		for (int i = 0; i < sideFacades.size(); ++i) {
-			std::vector<Rectangle> sideFloors;
-			sideFacades[i].split(DIRECTION_Y, floor_ratios, floor_names, sideFloors);
+			stack.insert(stack.end(), floors.begin(), floors.end());
+		} else if (obj->name == "SideFacade") {
+			obj->setupProjection(2.5f, 1.0f);
+			obj->setTexture("textures/brick.jpg");
 
-			floors.insert(floors.end(), sideFloors.begin(), sideFloors.end());
-		}
-	}
+			std::vector<Rectangle*> floors;
+			std::vector<float> floor_ratios(3);
 
-	/*
-	for (int i = 0; i < floors.size(); ++i) {
-		floors[i].generate(renderManager);
-	}
-	*/
+			// 分割比率、名前をセット
+			floor_ratios[0] = 4.0f / obj->scope.y;
+			floor_ratios[1] = 3.5f / obj->scope.y;
+			floor_ratios[2] = 3.5f / obj->scope.y;
+			std::vector<std::string> floor_names(3);
+			floor_names[0] = "Floor";
+			floor_names[1] = "Floor";
+			floor_names[2] = "Floor";
+			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
 
-	for (int i = 0; i < floors.size(); ++i) {
-		std::vector<float> tile_ratios;
-		std::vector<std::string> tile_names;
-		{
-			float margin_ratio = 1.0f / floors[i].width;
-			int numTiles = (floors[i].width - 2.0f) / 3.0f;
-			float tile_width_ratio = (floors[i].width - 2.0f) / numTiles / floors[i].width;
+			stack.insert(stack.end(), floors.begin(), floors.end());
+		} else if (obj->name == "Floor") {
+			std::vector<float> tile_ratios;
+			std::vector<std::string> tile_names;
+
+			// 分割比率、名前をセット
+			float margin_ratio = 1.0f / obj->scope.x;
+			int numTiles = (obj->scope.x - 2.0f) / 3.0f;
+			float tile_width_ratio = (obj->scope.x - 2.0f) / numTiles / obj->scope.x;
 
 			tile_ratios.push_back(margin_ratio);
 			tile_names.push_back("Wall");
@@ -412,12 +461,12 @@ void CGA::generate(RenderManager* renderManager) {
 			}
 			tile_ratios.push_back(margin_ratio);
 			tile_names.push_back("Wall");
-		}
 
-		std::vector<Rectangle> tiles;
-		floors[i].split(DIRECTION_X, tile_ratios, tile_names, tiles);
+			std::vector<Rectangle*> tiles;
+			obj->split(DIRECTION_X, tile_ratios, tile_names, tiles);
 
-		for (int j = 0; j < tiles.size(); ++j) {
+			stack.insert(stack.end(), tiles.begin(), tiles.end());
+		} else if (obj->name == "Tile") {
 			std::vector<float> wall_ratios(3);
 			wall_ratios[0] = 0.1f;
 			wall_ratios[1] = 0.8f;
@@ -427,44 +476,38 @@ void CGA::generate(RenderManager* renderManager) {
 			wall_names[1] = "WallWindowWall";
 			wall_names[2] = "Wall";
 
-			std::vector<Rectangle> walls;
-			tiles[j].split(DIRECTION_X, wall_ratios, wall_names, walls);
+			std::vector<Rectangle*> walls;
+			obj->split(DIRECTION_X, wall_ratios, wall_names, walls);
 
-			for (int k = 0; k < walls.size(); ++k) {
-				if (k == 1) continue;
-				walls[k].generate(renderManager);
-			}
+			stack.insert(stack.end(), walls.begin(), walls.end());
+		} else if (obj->name == "WallWindowWall") {
+			std::vector<float> wall_ratios(3);
+			wall_ratios[0] = 0.2f;
+			wall_ratios[1] = 0.6f;
+			wall_ratios[2] = 0.2f;
+			std::vector<std::string> wall_names(3);
+			wall_names[0] = "Wall";
+			wall_names[1] = "Window";
+			wall_names[2] = "Wall";
 
-			{
-				std::vector<float> subwall_ratios(3);
-				subwall_ratios[0] = 0.2f;
-				subwall_ratios[1] = 0.6f;
-				subwall_ratios[2] = 0.2f;
-				std::vector<std::string> subwall_names(3);
-				subwall_names[0] = "Wall";
-				subwall_names[1] = "Window";
-				subwall_names[2] = "Wall";
+			std::vector<Rectangle*> walls;
+			obj->split(DIRECTION_Y, wall_ratios, wall_names, walls);
 
-				std::vector<Rectangle> sub_walls;
-				walls[1].split(DIRECTION_Y, subwall_ratios, subwall_names, sub_walls);
-
-				for (int l = 0; l < sub_walls.size(); ++l) {
-					if (l == 1) {
-						sub_walls[l].translate(glm::vec3(0, 0, -0.25f));
-						sub_walls[l].setupProjection(sub_walls[l].scope.x, sub_walls[l].scope.y);
-						sub_walls[l].setTexture("textures/window.jpg");
-					}
-
-					sub_walls[l].generate(renderManager);
-				}
-			}
+			stack.insert(stack.end(), walls.begin(), walls.end());
+		} else if (obj->name == "Window") {
+			obj->translate(glm::vec3(0, 0, -0.25f));
+			obj->setupProjection(obj->scope.x, obj->scope.y);
+			obj->setTexture("textures/window.jpg");
+			obj->generate(renderManager);
+			delete obj;
+		} else if (obj->name == "Wall") {
+			obj->generate(renderManager);
+			delete obj;
+		} else {
+			obj->generate(renderManager);
+			delete obj;
 		}
 	}
-	
-	// 屋根
-	roof.setupProjection(roof.scope.x, roof.scope.y);
-	roof.setTexture("textures/roof.jpg");
-	roof.generate(renderManager);
 }
 
 }
