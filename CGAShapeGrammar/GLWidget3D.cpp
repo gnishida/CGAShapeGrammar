@@ -53,7 +53,9 @@ void GLWidget3D::initializeGL() {
 	qglClearColor(QColor(113, 112, 117));
 
 	std::vector<Vertex> vertices;
-	system.buildingRule(&renderManager);
+	//system.generatePyramid(&renderManager);
+	system.generateSimpleBuilding(&renderManager);
+	//system.generateBuilding(&renderManager);
 }
 
 /**
