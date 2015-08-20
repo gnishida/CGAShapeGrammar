@@ -23,8 +23,19 @@ void Object::translate(const glm::vec3& v) {
 	modelMat = glm::translate(modelMat, v);
 }
 
+void Object::rotate(float xAngle, float yAngle, float zAngle) {
+	modelMat = glm::rotate(modelMat, xAngle * M_PI / 180.0f, glm::vec3(1, 0, 0));
+	modelMat = glm::rotate(modelMat, yAngle * M_PI / 180.0f, glm::vec3(0, 1, 0));
+	modelMat = glm::rotate(modelMat, zAngle * M_PI / 180.0f, glm::vec3(0, 0, 1));
+}
+
+void Object::nil() {
+	removed = true;
+}
+
 void Object::setTexture(const std::string& texture) {
 	this->texture = texture;
+	textureEnabled = true;
 }
 
 Object* Object::clone() {
@@ -43,7 +54,7 @@ Object* Object::taper(const std::string& name, float height) {
 	throw "taper() is not supported.";
 }
 
-void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
 	throw "split() is not supported.";
 }
 
@@ -57,6 +68,7 @@ void Object::generate(RenderManager* renderManager) {
 
 PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
 	this->name = name;
+	this->removed = false;
 	this->modelMat = modelMat;
 	this->points = points;
 	this->height = height;
@@ -73,7 +85,7 @@ Object* PrismObject::clone() {
 void PrismObject::setupProjection(float texWidth, float texHeight) {
 }
 
-void PrismObject::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+void PrismObject::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
 	throw "PrismObject does not support split operation.";
 }
 
@@ -81,7 +93,7 @@ void PrismObject::split(int direction, const std::vector<float> ratios, const st
 void PrismObject::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
 	// front face
 	{
-		*front = new Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color, texture);
+		*front = new Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color);
 	}
 
 	// side faces
@@ -104,7 +116,7 @@ void PrismObject::componentSplit(const std::string& front_name, Rectangle** fron
 			sidePoints[2] = glm::vec2(invMat * glm::vec4(points[(i + 1) % points.size()], height, 1));
 			sidePoints[3] = glm::vec2(invMat * glm::vec4(points[i], height, 1));
 
-			sides[i - 1] = new Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color, texture);
+			sides[i - 1] = new Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color);
 		}
 	}
 
@@ -122,6 +134,8 @@ void PrismObject::componentSplit(const std::string& front_name, Rectangle** fron
 }
 
 void PrismObject::generate(RenderManager* renderManager) {
+	if (removed) return;
+
 	std::vector<Vertex> vertices((points.size() - 2) * 6 + points.size() * 6);
 
 	int num = 0;
@@ -211,8 +225,20 @@ void PrismObject::generate(RenderManager* renderManager) {
 	}
 }
 
-Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color, const std::string& texture) {
+Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color) {
 	this->name = name;
+	this->removed = false;
+	this->modelMat = modelMat;
+	this->width = width;
+	this->height = height;
+	this->color = color;
+	this->scope = glm::vec3(width, height, 0);
+	this->textureEnabled = false;
+}
+
+Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const std::string& texture, float u1, float v1, float u2, float v2) {
+	this->name = name;
+	this->removed = false;
 	this->modelMat = modelMat;
 	this->width = width;
 	this->height = height;
@@ -220,7 +246,12 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float w
 	this->texture = texture;
 	this->scope = glm::vec3(width, height, 0);
 
-	this->textureEnabled = false;
+	texCoords.resize(4);
+	texCoords[0] = glm::vec2(u1, v1);
+	texCoords[1] = glm::vec2(u2, v1);
+	texCoords[2] = glm::vec2(u2, v2);
+	texCoords[3] = glm::vec2(u1, v2);
+	this->textureEnabled = true;
 }
 
 Object* Rectangle::clone() {
@@ -228,25 +259,19 @@ Object* Rectangle::clone() {
 }
 
 void Rectangle::setupProjection(float texWidth, float texHeight) {
-	setupProjection(0, 0, width / texWidth, height / texHeight);
-}
-
-void Rectangle::setupProjection(float u1, float v1, float u2, float v2) {
-	textureEnabled = true;
-
 	texCoords.resize(4);
-	texCoords[0] = glm::vec2(u1, v1);
-	texCoords[1] = glm::vec2(u2, v1);
-	texCoords[2] = glm::vec2(u2, v2);
-	texCoords[3] = glm::vec2(u1, v2);
+	texCoords[0] = glm::vec2(0, 0);
+	texCoords[1] = glm::vec2(width / texWidth, 0);
+	texCoords[2] = glm::vec2(width / texWidth, height / texHeight);
+	texCoords[3] = glm::vec2(0, height / texHeight);
 }
 
 Object* Rectangle::extrude(const std::string& name, float height) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(width, 0);
-	points[2] = glm::vec2(width, height);
-	points[3] = glm::vec2(0, height);
+	points[1] = glm::vec2(this->width, 0);
+	points[2] = glm::vec2(this->width, this->height);
+	points[3] = glm::vec2(0, this->height);
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
@@ -259,8 +284,8 @@ Object* Rectangle::taper(const std::string& name, float height) {
 	return new Pyramid(name, points, glm::vec2(width * 0.5, height * 0.5), height, color, texture);
 }
 
-void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
-	rectangles.resize(ratios.size());
+void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
+	objects.resize(ratios.size());
 
 	float offset = 0.0f;
 	
@@ -268,20 +293,22 @@ void Rectangle::split(int direction, const std::vector<float> ratios, const std:
 		glm::mat4 mat;
 		if (direction == DIRECTION_X) {
 			mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
-			rectangles[i] = new Rectangle(names[i], modelMat * mat, width * ratios[i], height, color, texture);
 			if (textureEnabled) {
-				rectangles[i]->setupProjection(
+				objects[i] = new Rectangle(names[i], modelMat * mat, width * ratios[i], height, texture, 
 					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * offset / width, texCoords[0].y,
 					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * (offset / width + ratios[i]), texCoords[2].y);
+			} else {
+				objects[i] = new Rectangle(names[i], modelMat * mat, width * ratios[i], height, color); 
 			}
 			offset += width * ratios[i];
 		} else {
 			mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
-			rectangles[i] = new Rectangle(names[i], modelMat * mat, width, height * ratios[i], color, texture);
 			if (textureEnabled) {
-				rectangles[i]->setupProjection(
+				objects[i] = new Rectangle(names[i], modelMat * mat, width, height * ratios[i], texture,
 					texCoords[0].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * offset / height,
 					texCoords[1].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * (offset / height + ratios[i]));
+			} else {
+				objects[i] = new Rectangle(names[i], modelMat * mat, width, height * ratios[i], color);
 			}
 			offset += height * ratios[i];
 		}
@@ -289,6 +316,8 @@ void Rectangle::split(int direction, const std::vector<float> ratios, const std:
 }
 
 void Rectangle::generate(RenderManager* renderManager) {
+	if (removed) return;
+
 	std::vector<Vertex> vertices;
 
 	vertices.resize(6);
@@ -336,6 +365,7 @@ void Rectangle::generate(RenderManager* renderManager) {
 
 Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color, const std::string& texture) {
 	this->name = name;
+	this->removed = false;
 	this->modelMat = modelMat;
 	this->points = points;
 	this->color = color;
@@ -371,11 +401,9 @@ Object* Polygon::taper(const std::string& name, float height) {
 	return new Pyramid(name, points, center, height, color, texture);
 }
 
-void Polygon::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
-}
-
-
 void Polygon::generate(RenderManager* renderManager) {
+	if (removed) return;
+
 	std::vector<Vertex> vertices((points.size() - 2) * 3);
 
 	glm::vec4 p0(points[0], 0, 1);
@@ -413,14 +441,20 @@ void Polygon::generate(RenderManager* renderManager) {
 
 Pyramid::Pyramid(const std::string& name, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, const glm::vec3& color, const std::string& texture) {
 	this->name = name;
+	this->removed = false;
 	this->points = points;
 	this->center = center;
 	this->height = height;
 	this->color = color;
 	this->texture = texture;
+
+	BoundingBox bbox(points);
+	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, height);
 }
 
 void Pyramid::generate(RenderManager* renderManager) {
+	if (removed) return;
+
 	std::vector<Vertex> vertices(points.size() * 3);
 
 	glm::vec4 p0(center, height, 1);
@@ -457,12 +491,17 @@ CGA::CGA() {
 void CGA::generatePyramid(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 20, 20, glm::vec3(1, 1, 1), "");
+	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 20, 20, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 	
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
 		
 		if (obj->name == "Lot") {
 			stack.push_back(obj->taper("pyramid", 10));
@@ -476,22 +515,34 @@ void CGA::generatePyramid(RenderManager* renderManager) {
 void CGA::generateSimpleBuilding(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	std::vector<glm::vec2> points(6);
-	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(20, 0);
-	points[2] = glm::vec2(20, 20);
-	points[3] = glm::vec2(30, 40);
-	points[4] = glm::vec2(12.111, 48.944);
-	points[5] = glm::vec2(0, 24.721);
-
-	Polygon* lot = new Polygon("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1), "");
+	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 	
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
 		
 		if (obj->name == "Lot") {
+			std::vector<float> ratios(5);
+			for (int i = 0; i < ratios.size(); ++i) ratios[i] = 1.0f / ratios.size();
+			std::vector<std::string> names(5);
+			for (int i = 0; i < names.size(); ++i) names[i] = "SmallLot";
+			std::vector<Object*> polygons;
+			obj->split(DIRECTION_X, ratios, names, polygons);
+
+			for (int i = 0; i < polygons.size(); ++i) {
+				if (i % 2 == 1) {
+					polygons[i]->nil();
+				}
+			}
+
+			stack.insert(stack.end(), polygons.begin(), polygons.end());
+		} else if (obj->name == "SmallLot") {
 			stack.push_back(obj->extrude("Building", 20));
 		} else {
 			obj->generate(renderManager);
@@ -503,12 +554,17 @@ void CGA::generateSimpleBuilding(RenderManager* renderManager) {
 void CGA::generateBuilding(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
+	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 	
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
 		
 		if (obj->name == "Lot") {
 			stack.push_back(obj->extrude("Building", 11));
@@ -536,7 +592,6 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			obj->setupProjection(2.5f, 1.0f);
 			obj->setTexture("textures/brick.jpg");
 
-			std::vector<Rectangle*> floors;
 			std::vector<float> floor_ratios(3);
 			floor_ratios[0] = 4.0f / obj->scope.y;
 			floor_ratios[1] = 3.5f / obj->scope.y;
@@ -545,6 +600,8 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			floor_names[0] = "Floor";
 			floor_names[1] = "Floor";
 			floor_names[2] = "Floor";
+
+			std::vector<Object*> floors;
 			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
 
 			stack.insert(stack.end(), floors.begin(), floors.end());
@@ -552,10 +609,8 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			obj->setupProjection(2.5f, 1.0f);
 			obj->setTexture("textures/brick.jpg");
 
-			std::vector<Rectangle*> floors;
-			std::vector<float> floor_ratios(3);
-
 			// 分割比率、名前をセット
+			std::vector<float> floor_ratios(3);
 			floor_ratios[0] = 4.0f / obj->scope.y;
 			floor_ratios[1] = 3.5f / obj->scope.y;
 			floor_ratios[2] = 3.5f / obj->scope.y;
@@ -563,6 +618,8 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			floor_names[0] = "Floor";
 			floor_names[1] = "Floor";
 			floor_names[2] = "Floor";
+
+			std::vector<Object*> floors;
 			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
 
 			stack.insert(stack.end(), floors.begin(), floors.end());
@@ -584,7 +641,7 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			tile_ratios.push_back(margin_ratio);
 			tile_names.push_back("Wall");
 
-			std::vector<Rectangle*> tiles;
+			std::vector<Object*> tiles;
 			obj->split(DIRECTION_X, tile_ratios, tile_names, tiles);
 
 			stack.insert(stack.end(), tiles.begin(), tiles.end());
@@ -598,7 +655,7 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			wall_names[1] = "WallWindowWall";
 			wall_names[2] = "Wall";
 
-			std::vector<Rectangle*> walls;
+			std::vector<Object*> walls;
 			obj->split(DIRECTION_X, wall_ratios, wall_names, walls);
 
 			stack.insert(stack.end(), walls.begin(), walls.end());
@@ -612,7 +669,7 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 			wall_names[1] = "Window";
 			wall_names[2] = "Wall";
 
-			std::vector<Rectangle*> walls;
+			std::vector<Object*> walls;
 			obj->split(DIRECTION_Y, wall_ratios, wall_names, walls);
 
 			stack.insert(stack.end(), walls.begin(), walls.end());

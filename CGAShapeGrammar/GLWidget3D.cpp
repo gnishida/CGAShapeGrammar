@@ -48,14 +48,15 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  */
 void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 4096);
-	
+	showWireframe = true;
+
 	// set the clear color for the screen
 	qglClearColor(QColor(113, 112, 117));
 
 	std::vector<Vertex> vertices;
 	//system.generatePyramid(&renderManager);
-	system.generateSimpleBuilding(&renderManager);
-	//system.generateBuilding(&renderManager);
+	//system.generateSimpleBuilding(&renderManager);
+	system.generateBuilding(&renderManager);
 }
 
 /**
@@ -98,7 +99,7 @@ void GLWidget3D::drawScene(int drawMode) {
 		glUniform1i(glGetUniformLocation(renderManager.program, "shadowState"), 2);
 	}
 	
-	renderManager.renderAll(true);
+	renderManager.renderAll(showWireframe);
 }
 
 

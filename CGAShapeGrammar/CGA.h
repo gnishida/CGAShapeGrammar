@@ -26,6 +26,7 @@ public:
 class Object {
 public:
 	std::string name;
+	bool removed;
 	glm::mat4 modelMat;
 	glm::vec3 color;
 	bool textureEnabled;
@@ -35,12 +36,14 @@ public:
 
 public:
 	void translate(const glm::vec3& v);
+	void rotate(float xAngle, float yAngle, float zAngle);
+	void nil();
 	void setTexture(const std::string& texture);
 	virtual Object* clone();
 	virtual void setupProjection(float texWidth, float texHeight);
 	virtual Object* extrude(const std::string& name, float height);
 	virtual Object* taper(const std::string& name, float height);
-	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
+	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	virtual void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	virtual void generate(RenderManager* renderManager);
 };
@@ -55,7 +58,7 @@ public:
 	PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color);
 	Object* clone();
 	void setupProjection(float texWidth, float texHeight);
-	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
+	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	void generate(RenderManager* renderManager);
 };
@@ -67,13 +70,13 @@ public:
 
 public:
 	Rectangle() {}
-	Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color, const std::string& texture);
+	Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color);
+	Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const std::string& texture, float u1, float v1, float u2, float v2);
 	Object* clone();
 	void setupProjection(float texWidth, float texHeight);
-	void setupProjection(float u1, float v1, float u2, float v2);
 	Object* extrude(const std::string& name, float height);
 	Object* taper(const std::string& name, float height);
-	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
+	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	void generate(RenderManager* renderManager);
 };
 
@@ -88,7 +91,7 @@ public:
 	void setupProjection(float texWidth, float texHeight);
 	Object* extrude(const std::string& name, float height);
 	Object* taper(const std::string& name, float height);
-	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
+	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	void generate(RenderManager* renderManager);
 };
 

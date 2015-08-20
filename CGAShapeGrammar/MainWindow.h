@@ -15,6 +15,9 @@ private:
 public:
 	MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~MainWindow();
+
+public slots:
+	void onShowWireframe();
 };
 
 #endif // MAINWINDOW_H
