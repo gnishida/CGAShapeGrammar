@@ -26,14 +26,14 @@ public:
 
 class Object {
 public:
-	std::string name;
-	bool removed;
-	glm::mat4 modelMat;
-	glm::vec3 color;
-	bool textureEnabled;
-	std::string texture;
-	std::vector<glm::vec2> texCoords;
-	glm::vec3 scope;
+	std::string _name;
+	bool _removed;
+	glm::mat4 _modelMat;
+	glm::vec3 _color;
+	bool _textureEnabled;
+	std::string _texture;
+	std::vector<glm::vec2> _texCoords;
+	glm::vec3 _scope;
 
 public:
 	void translate(const glm::vec3& v);
@@ -53,7 +53,7 @@ public:
 
 class Line : public Object {
 private:
-	std::vector<glm::vec2> points;
+	std::vector<glm::vec2> _points;
 
 public:
 	Line(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color);
@@ -64,8 +64,8 @@ public:
 
 class RevolvedLine : public Object {
 private:
-	std::vector<glm::vec2> points;
-	int direction;
+	std::vector<glm::vec2> _points;
+	int _direction;
 
 public:
 	RevolvedLine(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, int direction, const glm::vec3& color);
@@ -75,8 +75,8 @@ public:
 
 class PrismObject : public Object {
 private:
-	std::vector<glm::vec2> points;
-	float height;
+	std::vector<glm::vec2> _points;
+	float _height;
 
 public:
 	PrismObject() {}
@@ -90,8 +90,8 @@ public:
 
 class Rectangle : public Object {
 public:
-	float width;
-	float height;
+	float _width;
+	float _height;
 
 public:
 	Rectangle() {}
@@ -108,8 +108,8 @@ public:
 
 class Polygon : public Object {
 private:
-	std::vector<glm::vec2> points;
-	glm::vec2 center;
+	std::vector<glm::vec2> _points;
+	glm::vec2 _center;
 
 public:
 	Polygon() {}
@@ -125,10 +125,10 @@ public:
 
 class Pyramid : public Object {
 private:
-	std::vector<glm::vec2> points;
-	glm::vec2 center;
-	float height;
-	float top_ratio;
+	std::vector<glm::vec2> _points;
+	glm::vec2 _center;
+	float _height;
+	float _top_ratio;
 
 public:
 	Pyramid(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, float top_ratio, const glm::vec3& color, const std::string& texture);
