@@ -672,7 +672,7 @@ CGA::CGA() {
 void CGA::generatePyramid(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 20, 20, glm::vec3(1, 1, 1));
+	Rectangle* lot = new Rectangle("Lot", modelMat, 20, 20, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 	
 	while (!stack.empty()) {
@@ -696,7 +696,7 @@ void CGA::generatePyramid(RenderManager* renderManager) {
 void CGA::generateSimpleBuilding(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1));
+	Rectangle* lot = new Rectangle("Lot", modelMat, 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 	
 	while (!stack.empty()) {
@@ -735,7 +735,7 @@ void CGA::generateSimpleBuilding(RenderManager* renderManager) {
 void CGA::generateBuilding(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1));
+	Rectangle* lot = new Rectangle("Lot", modelMat, 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 	
 	while (!stack.empty()) {
@@ -875,7 +875,7 @@ void CGA::generateVase1(RenderManager* renderManager) {
 	std::vector<glm::vec2> points;
 	points.push_back(glm::vec2(0, 6));
 	points.push_back(glm::vec2(38, 12));
-	Line* line = new Line("Line", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1));
+	Line* line = new Line("Line", modelMat, points, glm::vec3(1, 1, 1));
 	stack.push_back(line);
 	
 	while (!stack.empty()) {
@@ -911,7 +911,7 @@ void CGA::generateVase2(RenderManager* renderManager) {
 	}
 	points.push_back(glm::vec2(34, 8));
 	points.push_back(glm::vec2(38, 12));
-	Line* line = new Line("Line", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1));
+	Line* line = new Line("Line", modelMat, points, glm::vec3(1, 1, 1));
 	stack.push_back(line);
 	
 	while (!stack.empty()) {
@@ -962,7 +962,7 @@ void CGA::generateVase3(RenderManager* renderManager) {
 	}
 	points.push_back(glm::vec2(34, 8));
 	points.push_back(glm::vec2(38, 12));
-	Line* line = new Line("Line", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1));
+	Line* line = new Line("Line", modelMat, points, glm::vec3(1, 1, 1));
 	stack.push_back(line);
 	
 	while (!stack.empty()) {
@@ -991,7 +991,7 @@ void CGA::generateVase3(RenderManager* renderManager) {
 void CGA::generateSaltShaker1(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
-	Rectangle* base = new Rectangle("Base", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 10, 10, glm::vec3(1, 1, 1));
+	Rectangle* base = new Rectangle("Base", modelMat, 10, 10, glm::vec3(1, 1, 1));
 	stack.push_back(base);
 	
 	while (!stack.empty()) {
@@ -1015,7 +1015,7 @@ void CGA::generateSaltShaker1(RenderManager* renderManager) {
 void CGA::generateSaltShaker2(RenderManager* renderManager) {
 	std::list<Object*> stack;
 
-	Rectangle* base = new Rectangle("Base", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 10, 10, glm::vec3(1, 1, 1));
+	Rectangle* base = new Rectangle("Base", modelMat, 10, 10, glm::vec3(1, 1, 1));
 	stack.push_back(base);
 	
 	while (!stack.empty()) {

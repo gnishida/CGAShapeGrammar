@@ -138,6 +138,9 @@ public:
 
 class CGA {
 public:
+	glm::mat4 modelMat;
+
+public:
 	CGA();
 
 	void generatePyramid(RenderManager* renderManager);
