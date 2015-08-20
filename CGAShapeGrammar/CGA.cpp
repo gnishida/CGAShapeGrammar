@@ -27,15 +27,7 @@ void Object::setTexture(const std::string& texture) {
 	this->texture = texture;
 }
 
-Object* Object::clone() {
-	throw "setupProjection() is not supported.";
-}
-
 void Object::setupProjection(float texWidth, float texHeight) {
-	throw "setupProjection() is not supported.";
-}
-
-void Object::setupProjection(float u1, float v1, float u2, float v2) {
 	throw "setupProjection() is not supported.";
 }
 
@@ -43,7 +35,7 @@ Object* Object::extrude(const std::string& name, float height) {
 	throw "extrude() is not supported.";
 }
 
-void Object::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 	throw "split() is not supported.";
 }
 
@@ -66,14 +58,10 @@ PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, con
 	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, height);
 }
 
-Object* PrismObject::clone() {
-	return new PrismObject(*this);
-}
-
 void PrismObject::setupProjection(float texWidth, float texHeight) {
 }
 
-void PrismObject::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+void PrismObject::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 	throw "PrismObject does not support split operation.";
 }
 
@@ -227,10 +215,6 @@ void Rectangle::setupProjection(float texWidth, float texHeight) {
 	setupProjection(0, 0, width / texWidth, height / texHeight);
 }
 
-Object* Rectangle::clone() {
-	return new Rectangle(*this);
-}
-
 void Rectangle::setupProjection(float u1, float v1, float u2, float v2) {
 	textureEnabled = true;
 
@@ -250,31 +234,31 @@ Object* Rectangle::extrude(const std::string& name, float height) {
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
-void Rectangle::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
-	rectangles.resize(sizes.size());
+void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+	rectangles.resize(ratios.size());
 
 	float offset = 0.0f;
 	
-	for (int i = 0; i < sizes.size(); ++i) {
+	for (int i = 0; i < ratios.size(); ++i) {
 		glm::mat4 mat;
 		if (direction == DIRECTION_X) {
 			mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
-			rectangles[i] = new Rectangle(names[i], modelMat * mat, sizes[i], height, color, texture);
+			rectangles[i] = new Rectangle(names[i], modelMat * mat, width * ratios[i], height, color, texture);
 			if (textureEnabled) {
 				rectangles[i]->setupProjection(
 					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * offset / width, texCoords[0].y,
-					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * (offset + sizes[i]) / width, texCoords[2].y);
+					texCoords[0].x + (texCoords[1].x - texCoords[0].x) * (offset / width + ratios[i]), texCoords[2].y);
 			}
-			offset += sizes[i];
+			offset += width * ratios[i];
 		} else {
 			mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
-			rectangles[i] = new Rectangle(names[i], modelMat * mat, width, sizes[i], color, texture);
+			rectangles[i] = new Rectangle(names[i], modelMat * mat, width, height * ratios[i], color, texture);
 			if (textureEnabled) {
 				rectangles[i]->setupProjection(
 					texCoords[0].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * offset / height,
-					texCoords[1].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * (offset + sizes[i]) / height);
+					texCoords[1].x, texCoords[0].y + (texCoords[2].y - texCoords[0].y) * (offset / height + ratios[i]));
 			}
-			offset += sizes[i];
+			offset += height * ratios[i];
 		}
 	}
 }
@@ -336,10 +320,6 @@ Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::
 	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, 0);
 }
 
-Object* Polygon::clone() {
-	return new Polygon(*this);
-}
-
 void Polygon::setupProjection(float texWidth, float texHeight) {
 	texCoords.resize(points.size());
 	for (int i = 0; i < points.size(); ++i) {
@@ -351,7 +331,7 @@ Object* Polygon::extrude(const std::string& name, float height) {
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
-void Polygon::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
+void Polygon::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles) {
 }
 
 
@@ -391,285 +371,146 @@ void Polygon::generate(RenderManager* renderManager) {
 	}
 }
 
-ValueSet::ValueSet(Value* value, bool repeat) {
-	this->type = TYPE_SET;
-	values.push_back(value);
-	this->repeat = repeat;
-}
-
-ValueSet::ValueSet(const std::vector<Value*>& values, bool repeat) {
-	this->type = TYPE_SET;
-	this->values = values;
-	this->repeat = repeat;
-}
-
-float ValueSet::getEstimateValue(float size) {
-	float sum = 0.0f;
-	for (int i = 0; i < values.size(); ++i) {
-		if (values[i]->type == Value::TYPE_ABSOLUTE) {
-			sum += values[i]->value;
-		} else if (values[i]->type == Value::TYPE_RELATIVE) {
-			sum += size * values[i]->value;
-		} else if (values[i]->type == Value::TYPE_FLOATING) {
-			sum += values[i]->value;
-		}
-	}
-
-	return sum;
-}
-
-
-void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
-	int regular_count = 0;
-	int floating_count = 0;
-	float regular_sum = 0.0f;
-	float floating_sum = 0.0f;
-	bool repeat = false;
-
-	for (int i = 0; i < sizes.size(); ++i) {
-		if (sizes[i]->type == Value::TYPE_ABSOLUTE) {
-			regular_count++;
-			regular_sum += sizes[i]->value;
-		} else if (sizes[i]->type == Value::TYPE_RELATIVE) {
-			regular_count++;
-			regular_sum += size * sizes[i]->value * size;
-		} else if (sizes[i]->type == Value::TYPE_FLOATING) {
-			floating_count++;
-			floating_sum += sizes[i]->value;
-		}
-	}
-
-	float scale;
-	if (floating_count > 0) {
-		scale = (size - regular_sum) / floating_sum;
-	}
-
-	for (int i = 0; i < sizes.size(); ++i) {
-		if (sizes[i]->type == Value::TYPE_ABSOLUTE) {
-			decoded_sizes.push_back(sizes[i]->value);
-			decoded_output_names.push_back(output_names[i]);
-		} else if (sizes[i]->type == Value::TYPE_RELATIVE) {
-			decoded_sizes.push_back(sizes[i]->value * size);
-			decoded_output_names.push_back(output_names[i]);
-		} else if (sizes[i]->type == Value::TYPE_FLOATING) {
-			decoded_sizes.push_back(sizes[i]->value * scale);
-			decoded_output_names.push_back(output_names[i]);
-		} else if (sizes[i]->type == Value::TYPE_SET) {
-			if (sizes[i]->repeat) {
-				/*std::vector<Value*> temp_ratios(1);
-				temp_ratios[0] = ratios[i];*/
-				std::vector<std::string> temp_names(sizes[i]->values.size());
-				for (int k = 0; k < temp_names.size(); ++k) {
-					temp_names[k] = output_names[i];
-				}
-
-				float s = sizes[i]->getEstimateValue(size - regular_sum);
-				int num = (size - regular_sum) / s;
-				for (int k = 0; k < num; ++k) {
-					decodeSplitSizes((size - regular_sum) / num, sizes[i]->values, temp_names, decoded_sizes, decoded_output_names);
-				}
-			} else {
-				std::vector<Value*> temp_ratios(1);
-				temp_ratios[0] = sizes[i];
-				std::vector<std::string> temp_names(1);
-				temp_names[0] = output_names[i];
-				decodeSplitSizes(size - regular_sum, temp_ratios, temp_names, decoded_sizes, decoded_output_names);
-			}
-		}
-	}
-}
-
-ExtrudeRule::ExtrudeRule(float height, const std::string& output_name) {
-	this->height = height;
-	this->output_name = output_name;
-}
-
-void ExtrudeRule::apply(Object* obj, std::list<Object*>& stack) {
-	stack.push_back(obj->extrude(output_name, height));
-}
-
-ComponentSplitRule::ComponentSplitRule(const std::string& front_name, const std::string& side_name, const std::string& top_name, const std::string& bottom_name) {
-	this->front_name = front_name;
-	this->side_name = side_name;
-	this->top_name = top_name;
-	this->bottom_name = bottom_name;
-}
-
-void ComponentSplitRule::apply(Object* obj, std::list<Object*>& stack) {
-	Rectangle* front;
-	std::vector<Rectangle*> sides;
-	Polygon* top;
-	Polygon* bottom;
+void Rule::apply(Object* obj, std::list<Object*>& stack) {
 	
-	obj->componentSplit(front_name, &front, side_name, sides, top_name, &top, bottom_name, &bottom);
-	stack.push_back(front);
-	stack.insert(stack.end(), sides.begin(), sides.end());
-	stack.push_back(top);
-	stack.push_back(bottom);
-}
-
-SplitRule::SplitRule(int direction, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names) {
-	this->direction = direction;
-	this->sizes = sizes;
-	this->output_names = output_names;
-}
-
-void SplitRule::apply(Object* obj, std::list<Object*>& stack) {
-	std::vector<Rectangle*> floors;
-
-	std::vector<float> decoded_sizes;
-	std::vector<std::string> decoded_output_names;
-	if (direction == DIRECTION_X) {
-		decodeSplitSizes(obj->scope.x, sizes, output_names, decoded_sizes, decoded_output_names);
-	} else {
-		decodeSplitSizes(obj->scope.y, sizes, output_names, decoded_sizes, decoded_output_names);
-	}
-
-	obj->split(direction, decoded_sizes, decoded_output_names, floors);
-	stack.insert(stack.end(), floors.begin(), floors.end());
-}
-
-SetupProjectionRule::SetupProjectionRule(int type, float texWidth, float texHeight, const std::string& output_name) {
-	this->type = type;
-	this->texWidth = texWidth;
-	this->texHeight = texHeight;
-	this->output_name = output_name;
-}
-
-/*SetupProjectionRule::SetupProjectionRule(float u1, float v1, float u2, float v2, const std::string& output_name) {
-	this->u1 = u1;
-	this->v1 = v1;
-	this->u2 = u2;
-	this->v2 = v2;
-	this->output_name = output_name;
-}*/
-
-void SetupProjectionRule::apply(Object* obj, std::list<Object*>& stack) {
-	Object *obj2 = obj->clone();
-	obj2->name = output_name;
-
-	if (type == TYPE_RELATIVE) {
-		obj2->setupProjection(obj->scope.x, obj->scope.y);
-	} else {
-		obj2->setupProjection(texWidth, texHeight);
-	}
-	stack.push_back(obj2);
-}
-
-SetTextureRule::SetTextureRule(const std::string& texture, const std::string& output_name) {
-	this->texture = texture;
-	this->output_name = output_name;
-}
-
-void SetTextureRule::apply(Object* obj, std::list<Object*>& stack) {
-	Object* obj2 = obj->clone();
-	obj2->name = output_name;
-	
-	obj2->setTexture(texture);
-	stack.push_back(obj2);
-}
-
-TranslateRule::TranslateRule(const glm::vec3& vec, const std::string& output_name) {
-	this->vec = vec;
-	this->output_name = output_name;
-}
-
-void TranslateRule::apply(Object* obj, std::list<Object*>& stack) {
-	Object* obj2 = obj->clone();
-	obj2->name = output_name;
-
-	obj2->translate(vec);
-	stack.push_back(obj2);
 }
 
 CGA::CGA() {
-	rules = buildingRule();
 }
 
-void CGA::generate(RenderManager* renderManager) {
+void CGA::buildingRule(RenderManager* renderManager) {
 	std::list<Object*> stack;
+
+
+
+
 	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
 	stack.push_back(lot);
-
+	
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
 
-		if (rules.find(obj->name) == rules.end()) {
+
+
+		if (obj->name == "Lot") {
+			stack.push_back(obj->extrude("Building", 11));
+		} else if (obj->name == "Building") {
+			Rectangle* frontFacade;
+			Polygon* roof;
+			Polygon* base;
+			std::vector<Rectangle*> sideFacades;
+			obj->componentSplit("FrontFacade", &frontFacade, "SideFacade", sideFacades, "Roof", &roof, "Base", &base);
+
+			stack.push_back(frontFacade);
+			for (int i = 0; i < sideFacades.size(); ++i) {
+				stack.push_back(sideFacades[i]);
+			}
+			stack.push_back(roof);
+			stack.push_back(base);
+		} else if (obj->name == "Roof") {
+			obj->setupProjection(obj->scope.x, obj->scope.y);
+			obj->setTexture("textures/roof.jpg");
 			obj->generate(renderManager);
+			delete obj;
+		} else if (obj->name == "FrontFacade") {
+			obj->setupProjection(2.5f, 1.0f);
+			obj->setTexture("textures/brick.jpg");
+
+			std::vector<Rectangle*> floors;
+			std::vector<float> floor_ratios(3);
+			floor_ratios[0] = 4.0f / obj->scope.y;
+			floor_ratios[1] = 3.5f / obj->scope.y;
+			floor_ratios[2] = 3.5f / obj->scope.y;
+			std::vector<std::string> floor_names(3);
+			floor_names[0] = "Floor";
+			floor_names[1] = "Floor";
+			floor_names[2] = "Floor";
+			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
+
+			stack.insert(stack.end(), floors.begin(), floors.end());
+		} else if (obj->name == "SideFacade") {
+			obj->setupProjection(2.5f, 1.0f);
+			obj->setTexture("textures/brick.jpg");
+
+			std::vector<Rectangle*> floors;
+			std::vector<float> floor_ratios(3);
+
+			// 分割比率、名前をセット
+			floor_ratios[0] = 4.0f / obj->scope.y;
+			floor_ratios[1] = 3.5f / obj->scope.y;
+			floor_ratios[2] = 3.5f / obj->scope.y;
+			std::vector<std::string> floor_names(3);
+			floor_names[0] = "Floor";
+			floor_names[1] = "Floor";
+			floor_names[2] = "Floor";
+			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
+
+			stack.insert(stack.end(), floors.begin(), floors.end());
+		} else if (obj->name == "Floor") {
+			std::vector<float> tile_ratios;
+			std::vector<std::string> tile_names;
+
+			// 分割比率、名前をセット
+			float margin_ratio = 1.0f / obj->scope.x;
+			int numTiles = (obj->scope.x - 2.0f) / 3.0f;
+			float tile_width_ratio = (obj->scope.x - 2.0f) / numTiles / obj->scope.x;
+
+			tile_ratios.push_back(margin_ratio);
+			tile_names.push_back("Wall");
+			for (int i = 0; i < numTiles; ++i) {
+				tile_ratios.push_back(tile_width_ratio);
+				tile_names.push_back("Tile");
+			}
+			tile_ratios.push_back(margin_ratio);
+			tile_names.push_back("Wall");
+
+			std::vector<Rectangle*> tiles;
+			obj->split(DIRECTION_X, tile_ratios, tile_names, tiles);
+
+			stack.insert(stack.end(), tiles.begin(), tiles.end());
+		} else if (obj->name == "Tile") {
+			std::vector<float> wall_ratios(3);
+			wall_ratios[0] = 0.1f;
+			wall_ratios[1] = 0.8f;
+			wall_ratios[2] = 0.1f;
+			std::vector<std::string> wall_names(3);
+			wall_names[0] = "Wall";
+			wall_names[1] = "WallWindowWall";
+			wall_names[2] = "Wall";
+
+			std::vector<Rectangle*> walls;
+			obj->split(DIRECTION_X, wall_ratios, wall_names, walls);
+
+			stack.insert(stack.end(), walls.begin(), walls.end());
+		} else if (obj->name == "WallWindowWall") {
+			std::vector<float> wall_ratios(3);
+			wall_ratios[0] = 0.2f;
+			wall_ratios[1] = 0.6f;
+			wall_ratios[2] = 0.2f;
+			std::vector<std::string> wall_names(3);
+			wall_names[0] = "Wall";
+			wall_names[1] = "Window";
+			wall_names[2] = "Wall";
+
+			std::vector<Rectangle*> walls;
+			obj->split(DIRECTION_Y, wall_ratios, wall_names, walls);
+
+			stack.insert(stack.end(), walls.begin(), walls.end());
+		} else if (obj->name == "Window") {
+			obj->translate(glm::vec3(0, 0, -0.25f));
+			obj->setupProjection(obj->scope.x, obj->scope.y);
+			obj->setTexture("textures/window.jpg");
+			obj->generate(renderManager);
+			delete obj;
+		} else if (obj->name == "Wall") {
+			obj->generate(renderManager);
+			delete obj;
 		} else {
-			rules[obj->name]->apply(obj, stack);
+			obj->generate(renderManager);
+			delete obj;
 		}
-
-		delete obj;
 	}
-}
-
-std::map<std::string, Rule*> CGA::buildingRule() {
-	std::map<std::string, Rule*> rules;
-
-	rules["Lot"] = new ExtrudeRule(11, "Building");
-	rules["Building"] = new ComponentSplitRule("FrontFacade", "SideFacade", "Roof", "Base");
-	rules["FrontFacade"] = new SetupProjectionRule(SetupProjectionRule::TYPE_ABSOLUTE, 2.5f, 1.0f, "FrontFacade_1");
-	rules["FrontFacade_1"] = new SetTextureRule("textures/brick.jpg", "FrontFacade_2");
-	rules["SideFacade"] = new SetupProjectionRule(SetupProjectionRule::TYPE_ABSOLUTE, 2.5f, 1.0f, "SideFacade_1");
-	rules["SideFacade_1"] = new SetTextureRule("textures/brick.jpg", "SideFacade_2");
-	{
-		std::vector<Value*> floor_sizes(2);
-		floor_sizes[0] = new SingleValue(Value::TYPE_ABSOLUTE, 4.0f);
-		floor_sizes[1] = new ValueSet(new SingleValue(Value::TYPE_FLOATING, 3.5f), true);
-
-		std::vector<std::string> floor_names(2);
-		floor_names[0] = "Floor";
-		floor_names[1] = "Floor";
-
-		rules["FrontFacade_2"] = new SplitRule(DIRECTION_Y, floor_sizes, floor_names);
-		rules["SideFacade_2"] = new SplitRule(DIRECTION_Y, floor_sizes, floor_names);
-	}
-	{
-		std::vector<Value*> tile_sizes(3);
-		tile_sizes[0] = new SingleValue(Value::TYPE_ABSOLUTE, 1.0f);
-		tile_sizes[1] = new ValueSet(new SingleValue(Value::TYPE_FLOATING, 3.0f), true);
-		tile_sizes[2] = new SingleValue(Value::TYPE_ABSOLUTE, 1.0f);
-
-		std::vector<std::string> tile_names(3);
-		tile_names[0] = "Wall";
-		tile_names[1] = "Tile";
-		tile_names[2] = "Wall";
-
-		rules["Floor"] = new SplitRule(DIRECTION_X, tile_sizes, tile_names);
-	}
-	rules["Roof"] = new SetupProjectionRule(SetupProjectionRule::TYPE_RELATIVE, SCOPE_SX, SCOPE_SY, "Roof_1");
-	rules["Roof_1"] = new SetTextureRule("textures/roof.jpg", "Roof_2");
-	{
-		std::vector<Value*> wall_sizes(3);
-		wall_sizes[0] = new SingleValue(Value::TYPE_FLOATING, 1.0f);
-		wall_sizes[1] = new SingleValue(Value::TYPE_ABSOLUTE, 2.0f);
-		wall_sizes[2] = new SingleValue(Value::TYPE_FLOATING, 1.0f);
-		std::vector<std::string> wall_names(3);
-		wall_names[0] = "Wall";
-		wall_names[1] = "WallWindowWall";
-		wall_names[2] = "Wall";
-
-		rules["Tile"] = new SplitRule(DIRECTION_X, wall_sizes, wall_names);
-	}
-	{
-		std::vector<Value*> wall_sizes(3);
-		wall_sizes[0] = new SingleValue(Value::TYPE_ABSOLUTE, 1.0f);
-		wall_sizes[1] = new SingleValue(Value::TYPE_ABSOLUTE, 1.5f);
-		wall_sizes[2] = new SingleValue(Value::TYPE_FLOATING, 1.0f);
-		std::vector<std::string> wall_names(3);
-		wall_names[0] = "Wall";
-		wall_names[1] = "Window";
-		wall_names[2] = "Wall";
-
-		rules["WallWindowWall"] = new SplitRule(DIRECTION_Y, wall_sizes, wall_names);
-	}
-	rules["Window"] = new TranslateRule(glm::vec3(0, 0, -0.25f), "Window_1");
-	rules["Window_1"] = new SetupProjectionRule(SetupProjectionRule::TYPE_RELATIVE, 0, 0, "Window_2");
-	rules["Window_2"] = new SetTextureRule("textures/window.jpg", "Window_3");
-
-	return rules;
 }
 
 }
