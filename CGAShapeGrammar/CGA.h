@@ -10,6 +10,7 @@ namespace cga {
 
 enum { DIRECTION_X = 0, DIRECTION_Y, SCOPE_SX, SCOPE_SY };
 
+class PrismObject;
 class Polygon;
 class Rectangle;
 
@@ -41,7 +42,6 @@ public:
 	virtual Object* extrude(const std::string& name, float height);
 	virtual void split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
 	virtual void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
-	virtual Object* revolve(const std::string& name);
 	virtual void generate(RenderManager* renderManager);
 };
 
@@ -87,26 +87,6 @@ public:
 	void setupProjection(float texWidth, float texHeight);
 	Object* extrude(const std::string& name, float height);
 	void split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Rectangle*>& rectangles);
-	void generate(RenderManager* renderManager);
-};
-
-class SineCurve : public Object {
-private:
-	float width;
-	float height;
-
-public:
-	SineCurve(const std::string& name, float width, float height);
-	Object* revolve(const std::string& name);
-};
-
-class SineCurveRevolved : public Object {
-private:
-	float width;
-	float height;
-
-public:
-	SineCurveRevolved(const std::string& name, float width, float height);
 	void generate(RenderManager* renderManager);
 };
 
@@ -217,12 +197,6 @@ public:
 	void apply(Object* obj, std::list<Object*>& stack);
 };
 
-class RevolveRule : public Rule {
-public:
-	RevolveRule(const std::string& output_name);
-	void apply(Object* obj, std::list<Object*>& stack);
-};
-
 class CGA {
 private:
 	std::map<std::string, Rule*> rules;
@@ -232,7 +206,6 @@ public:
 
 	void generate(RenderManager* renderManager);
 	std::map<std::string, Rule*> buildingRule();
-	std::map<std::string, Rule*> vaseRule();
 };
 
 }

@@ -51,10 +51,6 @@ void Object::componentSplit(const std::string& front_name, Rectangle** front, co
 	throw "componentSplit() is not supported.";
 }
 
-Object* Object::revolve(const std::string& name) {
-	throw "revolve() is not supported.";
-}
-
 void Object::generate(RenderManager* renderManager) {
 	throw "generate() is not supported.";
 }
@@ -395,26 +391,6 @@ void Polygon::generate(RenderManager* renderManager) {
 	}
 }
 
-SineCurve::SineCurve(const std::string& name, float width, float height) {
-	this->name = name;
-	this->width = width;
-	this->height = height;
-}
-
-Object* SineCurve::revolve(const std::string& output_name) {
-	return new SineCurveRevolved(output_name, width, height);
-}
-
-SineCurveRevolved::SineCurveRevolved(const std::string& name, float width, float height) {
-	this->name = name;
-	this->width = width;
-	this->height = height;
-}
-
-void SineCurveRevolved::generate(RenderManager* renderManager) {
-
-}
-
 ValueSet::ValueSet(Value* value, bool repeat) {
 	this->type = TYPE_SET;
 	values.push_back(value);
@@ -606,25 +582,14 @@ void TranslateRule::apply(Object* obj, std::list<Object*>& stack) {
 	stack.push_back(obj2);
 }
 
-RevolveRule::RevolveRule(const std::string& output_name) {
-	this->output_name = output_name;
-}
-
-void RevolveRule::apply(Object* obj, std::list<Object*>& stack) {
-	stack.push_back(obj->revolve(output_name));
-}
-
 CGA::CGA() {
-	//rules = buildingRule();
-	rules = vaseRule();
+	rules = buildingRule();
 }
 
 void CGA::generate(RenderManager* renderManager) {
 	std::list<Object*> stack;
-	//Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
-	//stack.push_back(lot);
-	SineCurve* outline = new SineCurve("Outline", 3.0f, 1.0f);
-	stack.push_back(outline);
+	Rectangle* lot = new Rectangle("Lot", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 35, 10, glm::vec3(1, 1, 1), "");
+	stack.push_back(lot);
 
 	while (!stack.empty()) {
 		Object* obj = stack.front();
@@ -703,14 +668,6 @@ std::map<std::string, Rule*> CGA::buildingRule() {
 	rules["Window"] = new TranslateRule(glm::vec3(0, 0, -0.25f), "Window_1");
 	rules["Window_1"] = new SetupProjectionRule(SetupProjectionRule::TYPE_RELATIVE, 0, 0, "Window_2");
 	rules["Window_2"] = new SetTextureRule("textures/window.jpg", "Window_3");
-
-	return rules;
-}
-
-std::map<std::string, Rule*> CGA::vaseRule() {
-	std::map<std::string, Rule*> rules;
-
-	rules["Outline"] = new RevolveRule("VaseBody");
 
 	return rules;
 }
