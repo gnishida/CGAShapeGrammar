@@ -50,8 +50,20 @@ Object* Object::extrude(const std::string& name, float height) {
 	throw "extrude() is not supported.";
 }
 
-Object* Object::taper(const std::string& name, float height) {
+Object* Object::taper(const std::string& name, float height, float top_ratio) {
 	throw "taper() is not supported.";
+}
+
+Object* Object::offset(const std::string& name, float offsetRatio) {
+	throw "offset() is not supported.";
+}
+
+Object* offset(const std::string& name, float offsetRatio) {
+	throw "offset() is not supported.";
+}
+
+Object* Object::revolve(const std::string& name, int direction) {
+	throw "revolve() is not supported.";
 }
 
 void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
@@ -64,6 +76,69 @@ void Object::componentSplit(const std::string& front_name, Rectangle** front, co
 
 void Object::generate(RenderManager* renderManager) {
 	throw "generate() is not supported.";
+}
+
+Line::Line(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color) {
+	this->name = name;
+	this->removed = false;
+	this->modelMat = modelMat;
+	this->points = points;
+	this->color = color;
+	this->textureEnabled = false;
+
+	BoundingBox bbox(points);
+	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, 0);
+}
+
+Object* Line::clone() {
+	return new Line(*this);
+}
+
+Object* Line::revolve(const std::string& name, int direction) {
+	return new RevolvedLine(name, modelMat, points, direction, color);
+}
+
+void Line::generate(RenderManager* renderManager) {
+	// render nothing
+}
+
+RevolvedLine::RevolvedLine(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, int direction, const glm::vec3& color) {
+	this->name = name;
+	this->removed = false;
+	this->modelMat = modelMat;
+	this->points = points;
+	this->direction = direction;
+	this->color = color;
+	this->textureEnabled = false;
+
+	BoundingBox bbox(points);
+	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, bbox.upper_right.y);
+}
+
+Object* RevolvedLine::clone() {
+	return new RevolvedLine(*this);
+}
+
+void RevolvedLine::generate(RenderManager* renderManager) {
+	std::vector<Vertex> vertices;
+
+	if (direction == REVOLVE_X) {
+		glm::mat4 mat = modelMat;
+		for (int i = 0; i < points.size() - 1; ++i) {
+			glutils::drawCylinderX(points[i].y, points[i + 1].y, points[i + 1].x - points[i].x, color, mat, vertices);
+
+			mat = glm::translate(mat, glm::vec3(points[i + 1].x - points[i].x, 0, 0));
+		}
+	} else {
+		glm::mat4 mat = modelMat;
+		for (int i = 0; i < points.size() - 1; ++i) {
+			glutils::drawCylinderY(points[i].x, points[i + 1].x, points[i + 1].y - points[i].y, color, mat, vertices);
+
+			mat = glm::translate(mat, glm::vec3(0, points[i + 1].y - points[i].y, 0));
+		}
+	}
+
+	renderManager->addObject(name.c_str(), "", vertices);
 }
 
 PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
@@ -275,13 +350,22 @@ Object* Rectangle::extrude(const std::string& name, float height) {
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
-Object* Rectangle::taper(const std::string& name, float height) {
+Object* Rectangle::taper(const std::string& name, float height, float top_ratio) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(this->width, 0);
 	points[2] = glm::vec2(this->width, this->height);
 	points[3] = glm::vec2(0, this->height);
-	return new Pyramid(name, points, glm::vec2(width * 0.5, height * 0.5), height, color, texture);
+	return new Pyramid(name, modelMat, points, glm::vec2(this->width * 0.5, this->height * 0.5), height, top_ratio, color, texture);
+}
+
+Object* Rectangle::offset(const std::string& name, float offsetRatio) {
+	glm::mat4 mat = glm::translate(modelMat, glm::vec3(scope.x * 0.5f * offsetRatio, scope.y * 0.5f * offsetRatio, 0));
+	if (textureEnabled) {
+		return new Rectangle(name, mat, width * (1.0f - offsetRatio), height * (1.0f - offsetRatio), texture, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y);
+	} else {
+		return new Rectangle(name, mat, width * (1.0f - offsetRatio), height * (1.0f - offsetRatio), color);
+	}
 }
 
 void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
@@ -373,6 +457,12 @@ Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::
 
 	BoundingBox bbox(points);
 	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, 0);
+
+	this->center = glm::vec2(0, 0);
+	for (int i = 0; i < points.size(); ++i) {
+		center += points[i];
+	}
+	center /= points.size();
 }
 
 Object* Polygon::clone() {
@@ -391,14 +481,20 @@ Object* Polygon::extrude(const std::string& name, float height) {
 	return new PrismObject(name, modelMat, points, height, color);
 }
 
-Object* Polygon::taper(const std::string& name, float height) {
-	glm::vec2 center(0, 0);
-	for (int i = 0; i < points.size(); ++i) {
-		center += points[i];
-	}
-	center /= points.size();
+Object* Polygon::taper(const std::string& name, float height, float top_ratio) {
+	return new Pyramid(name, modelMat, points, center, height, top_ratio, color, texture);
+}
 
-	return new Pyramid(name, points, center, height, color, texture);
+Object* Polygon::offset(const std::string& name, float offsetRatio) {
+	glm::vec2 t = glm::vec2(points[0] * (1.0f - offsetRatio) + center * offsetRatio) - points[0];
+
+	std::vector<glm::vec2> new_points(points.size());
+	for (int i = 0; i < points.size(); ++i) {
+		new_points[i] = glm::vec2(points[i] * (1.0f - offsetRatio) + center * offsetRatio) - t;
+	}
+
+	glm::mat4 mat = glm::translate(modelMat, glm::vec3(t, 0));
+	return new Polygon(name, mat, new_points, color, texture);
 }
 
 void Polygon::generate(RenderManager* renderManager) {
@@ -439,12 +535,14 @@ void Polygon::generate(RenderManager* renderManager) {
 	}
 }
 
-Pyramid::Pyramid(const std::string& name, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, const glm::vec3& color, const std::string& texture) {
+Pyramid::Pyramid(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, float top_ratio, const glm::vec3& color, const std::string& texture) {
 	this->name = name;
 	this->removed = false;
+	this->modelMat = modelMat;
 	this->points = points;
 	this->center = center;
 	this->height = height;
+	this->top_ratio = top_ratio;
 	this->color = color;
 	this->texture = texture;
 
@@ -452,34 +550,118 @@ Pyramid::Pyramid(const std::string& name, const std::vector<glm::vec2>& points, 
 	this->scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, height);
 }
 
+void Pyramid::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
+	// front face (To be fixed)
+	{
+		*front = new Rectangle(front_name, glm::rotate(modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(points[1] - points[0]), height, color);
+	}
+
+	// side faces (To be fixed);
+	{
+		glm::mat4 mat;
+		sides.resize(points.size() - 1);
+		for (int i = 1; i < points.size(); ++i) {
+			glm::vec2 a = points[i] - points[i - 1];
+			glm::vec2 b = points[(i + 1) % points.size()] - points[i];
+
+			mat = glm::translate(mat, glm::vec3(glm::length(a), 0, 0));
+			float theta = acos(glm::dot(a, b) / glm::length(a) / glm::length(b));
+			mat = glm::rotate(mat, theta, glm::vec3(0, 0, 1));
+			glm::mat4 mat2 = glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0));
+			glm::mat4 invMat = glm::inverse(mat2);
+
+			std::vector<glm::vec2> sidePoints(4);
+			sidePoints[0] = glm::vec2(invMat * glm::vec4(points[i], 0, 1));
+			sidePoints[1] = glm::vec2(invMat * glm::vec4(points[(i + 1) % points.size()], 0, 1));
+			sidePoints[2] = glm::vec2(invMat * glm::vec4(points[(i + 1) % points.size()], height, 1));
+			sidePoints[3] = glm::vec2(invMat * glm::vec4(points[i], height, 1));
+
+			sides[i - 1] = new Rectangle(sides_name, modelMat * mat2, glm::length(points[(i + 1) % points.size()] - points[i]), height, color);
+		}
+	}
+
+	// top face
+	{
+		std::vector<glm::vec2> new_points(points.size());
+		for (int i = 0; i < points.size(); ++i) {
+			new_points[i] = glm::vec2(points[i] * top_ratio + center * (1.0f - top_ratio));
+		}
+		*top = new Polygon(top_name, glm::translate(modelMat, glm::vec3(0, 0, height)), new_points, color, texture);
+	}
+
+	// bottom face
+	{
+		std::vector<glm::vec2> basePoints = points;
+		std::reverse(basePoints.begin(), basePoints.end());
+		*base = new Polygon(base_name, modelMat, basePoints, color, texture);
+	}
+}
+
 void Pyramid::generate(RenderManager* renderManager) {
 	if (removed) return;
 
-	std::vector<Vertex> vertices(points.size() * 3);
+	if (top_ratio == 0.0f) {
+		std::vector<Vertex> vertices(points.size() * 3);
 
-	glm::vec4 p0(center, height, 1);
-	p0 = modelMat * p0;
+		glm::vec4 p0(center, height, 1);
+		p0 = modelMat * p0;
 
-	glm::vec4 p1(points.back(), 0, 1);
-	p1 = modelMat * p1;
+		glm::vec4 p1(points.back(), 0, 1);
+		p1 = modelMat * p1;
 
-	for (int i = 0; i < points.size(); ++i) {
-		glm::vec4 p2(points[i], 0, 1);
-		p2 = modelMat * p2;
+		for (int i = 0; i < points.size(); ++i) {
+			glm::vec4 p2(points[i], 0, 1);
+			p2 = modelMat * p2;
 
-		glm::vec3 normal = glm::cross(glm::vec3(p1 - p0), glm::vec3(p2 - p0));
+			glm::vec3 normal = glm::cross(glm::vec3(p1 - p0), glm::vec3(p2 - p0));
 
-		vertices[i * 3] = Vertex(glm::vec3(p0), normal, color, glm::vec3(0, 0, 0));
-		vertices[i * 3 + 1] = Vertex(glm::vec3(p1), normal, color, glm::vec3(0, 0, 0));
-		vertices[i * 3 + 2] = Vertex(glm::vec3(p2), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 3] = Vertex(glm::vec3(p0), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 3 + 1] = Vertex(glm::vec3(p1), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 3 + 2] = Vertex(glm::vec3(p2), normal, color, glm::vec3(0, 0, 0));
 
-		p1 = p2;
+			p1 = p2;
+		}
+
+		renderManager->addObject(name.c_str(), texture.c_str(), vertices);
+	} else {
+		std::vector<Vertex> vertices(points.size() * 6);
+
+		glm::vec4 p0(points.back(), 0, 1);
+		p0 = modelMat * p0;
+
+		glm::vec4 p1(points.back() * top_ratio + center * (1.0f - top_ratio), height, 1);
+		p1 = modelMat * p1;
+
+		std::vector<glm::vec3> pts3(points.size());
+		for (int i = 0; i < points.size(); ++i) {
+			glm::vec4 p2(points[i], 0, 1);
+			p2 = modelMat * p2;
+
+			glm::vec4 p3(points[i] * top_ratio + center * (1.0f - top_ratio), height, 1);
+			pts3[i] = glm::vec3(p3);
+			p3 = modelMat * p3;
+
+			glm::vec3 normal = glm::cross(glm::vec3(p2 - p0), glm::vec3(p3 - p0));
+
+			vertices[i * 6 + 0] = Vertex(glm::vec3(p0), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 6 + 1] = Vertex(glm::vec3(p2), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 6 + 2] = Vertex(glm::vec3(p3), normal, color, glm::vec3(0, 0, 0));
+
+			vertices[i * 6 + 3] = Vertex(glm::vec3(p0), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 6 + 4] = Vertex(glm::vec3(p3), normal, color, glm::vec3(0, 0, 0));
+			vertices[i * 6 + 5] = Vertex(glm::vec3(p1), normal, color, glm::vec3(0, 0, 0));
+
+			p0 = p2;
+			p1 = p3;
+		}
+
+		glutils::drawPolygon(pts3, color, modelMat, vertices);
+
+		renderManager->addObject(name.c_str(), texture.c_str(), vertices);
 	}
 
-	renderManager->addObject(name.c_str(), texture.c_str(), vertices);
-
 	if (showAxes) {
-		vertices.resize(0);
+		std::vector<Vertex> vertices;
 		glutils::drawAxes(0.1, 3, modelMat, vertices);
 		renderManager->addObject("axis", "", vertices);
 	}
@@ -688,7 +870,182 @@ void CGA::generateBuilding(RenderManager* renderManager) {
 	}
 }
 
-void CGA::generateVase(RenderManager* renderManager) {
+void CGA::generateVase1(RenderManager* renderManager) {
+	std::list<Object*> stack;
+	
+	std::vector<glm::vec2> points;
+	points.push_back(glm::vec2(0, 6));
+	points.push_back(glm::vec2(38, 12));
+	Line* line = new Line("Line", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1));
+	stack.push_back(line);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
+		
+		if (obj->name == "Line") {
+			Object* obj2 = obj->clone();
+			obj2->name = "RotatedLine";
+			obj2->rotate(0, -90, 0);
+			stack.push_back(obj2);
+		} else if (obj->name == "RotatedLine") {
+			stack.push_back(obj->revolve("Vase", REVOLVE_X));
+		} else {
+			obj->generate(renderManager);
+			delete obj;
+		}
+	}
+}
+
+void CGA::generateVase2(RenderManager* renderManager) {
+	std::list<Object*> stack;
+	
+	std::vector<glm::vec2> points;
+	for (int i = 0; i <= 30; ++i) {
+		float y = 6.0f + 6.0f * sinf((float)i / 30 * M_PI * 0.5);
+		points.push_back(glm::vec2(i, y));
+	}
+	points.push_back(glm::vec2(34, 8));
+	points.push_back(glm::vec2(38, 12));
+	Line* line = new Line("Line", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1));
+	stack.push_back(line);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
+		
+		if (obj->name == "Line") {
+			Object* obj2 = obj->clone();
+			obj2->name = "RotatedLine";
+			obj2->rotate(0, -90, 0);
+			stack.push_back(obj2);
+		} else if (obj->name == "RotatedLine") {
+			stack.push_back(obj->revolve("Vase", REVOLVE_X));
+		} else {
+			obj->generate(renderManager);
+			delete obj;
+		}
+	}
+}
+
+void CGA::generateVase3(RenderManager* renderManager) {
+	std::list<Object*> stack;
+	
+	std::vector<glm::vec2> points;
+	points.push_back(glm::vec2(0, 8));
+	points.push_back(glm::vec2(0.5, 8));
+	points.push_back(glm::vec2(0.6, 6));
+	points.push_back(glm::vec2(2, 5));
+	points.push_back(glm::vec2(2.1, 6));
+	points.push_back(glm::vec2(3.0, 6));
+	points.push_back(glm::vec2(4.5, 2));
+	for (int i = 0; i < 5; ++i) {
+		float x = 5.0f + (float)i / 5 * 3;
+		float y = 2.0f + sinf((float)i / 5 * M_PI);
+		points.push_back(glm::vec2(x, y));
+	}
+
+	//points.push_back(glm::vec2(5, 2));
+	//points.push_back(glm::vec2(6, 4));
+	for (int i = 0; i <= 22; ++i) {
+		float y = 1.5f + 10.5f * sinf((float)i / 22 * M_PI * 0.5);
+		points.push_back(glm::vec2(8 + i, y));
+	}
+	points.push_back(glm::vec2(34, 8));
+	points.push_back(glm::vec2(38, 12));
+	Line* line = new Line("Line", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), points, glm::vec3(1, 1, 1));
+	stack.push_back(line);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
+		
+		if (obj->name == "Line") {
+			Object* obj2 = obj->clone();
+			obj2->name = "RotatedLine";
+			obj2->rotate(0, -90, 0);
+			stack.push_back(obj2);
+		} else if (obj->name == "RotatedLine") {
+			stack.push_back(obj->revolve("Vase", REVOLVE_X));
+		} else {
+			obj->generate(renderManager);
+			delete obj;
+		}
+	}
+}
+
+void CGA::generateSaltShaker1(RenderManager* renderManager) {
+	std::list<Object*> stack;
+	
+	Rectangle* base = new Rectangle("Base", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 10, 10, glm::vec3(1, 1, 1));
+	stack.push_back(base);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
+		
+		if (obj->name == "Base") {
+			stack.push_back(obj->extrude("Body", 20));
+		} else {
+			obj->generate(renderManager);
+			delete obj;
+		}
+	}
+}
+
+void CGA::generateSaltShaker2(RenderManager* renderManager) {
+	std::list<Object*> stack;
+
+	Rectangle* base = new Rectangle("Base", glm::rotate(glm::mat4(), -M_PI * 0.5f, glm::vec3(1, 0, 0)), 10, 10, glm::vec3(1, 1, 1));
+	stack.push_back(base);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (obj->removed) {
+			delete obj;
+			continue;
+		}
+		
+		if (obj->name == "Base") {
+			Object* obj2 = obj->taper("Body", 20, 0.7f);
+			Rectangle* front;
+			std::vector<Rectangle*> sides;
+			Polygon* top;
+			Polygon* base;
+			obj2->componentSplit("front", &front, "side", sides, "top", &top, "base", &base);
+			stack.push_back(obj2);
+			stack.push_back(top);
+		} else if (obj->name == "top") {
+			stack.push_back(obj->offset("CapBase", 0.2f));
+		} else if (obj->name == "CapBase") {
+			stack.push_back(obj->extrude("Cap", 6));
+		} else {
+			obj->generate(renderManager);
+			delete obj;
+		}
+	}
 }
 
 }

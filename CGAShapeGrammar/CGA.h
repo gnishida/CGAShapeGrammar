@@ -9,6 +9,7 @@
 namespace cga {
 
 enum { DIRECTION_X = 0, DIRECTION_Y };
+enum { REVOLVE_X = 0, REVOLVE_Y };
 
 class PrismObject;
 class Polygon;
@@ -42,10 +43,34 @@ public:
 	virtual Object* clone();
 	virtual void setupProjection(float texWidth, float texHeight);
 	virtual Object* extrude(const std::string& name, float height);
-	virtual Object* taper(const std::string& name, float height);
+	virtual Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
+	virtual Object* offset(const std::string& name, float offsetRatio);
+	virtual Object* revolve(const std::string& name, int direction);
 	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	virtual void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	virtual void generate(RenderManager* renderManager);
+};
+
+class Line : public Object {
+private:
+	std::vector<glm::vec2> points;
+
+public:
+	Line(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color);
+	Object* clone();
+	Object* revolve(const std::string& name, int direction);
+	void generate(RenderManager* renderManager);
+};
+
+class RevolvedLine : public Object {
+private:
+	std::vector<glm::vec2> points;
+	int direction;
+
+public:
+	RevolvedLine(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, int direction, const glm::vec3& color);
+	Object* clone();
+	void generate(RenderManager* renderManager);
 };
 
 class PrismObject : public Object {
@@ -75,7 +100,8 @@ public:
 	Object* clone();
 	void setupProjection(float texWidth, float texHeight);
 	Object* extrude(const std::string& name, float height);
-	Object* taper(const std::string& name, float height);
+	Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
+	Object* offset(const std::string& name, float offsetRatio);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	void generate(RenderManager* renderManager);
 };
@@ -83,6 +109,7 @@ public:
 class Polygon : public Object {
 private:
 	std::vector<glm::vec2> points;
+	glm::vec2 center;
 
 public:
 	Polygon() {}
@@ -90,7 +117,8 @@ public:
 	Object* clone();
 	void setupProjection(float texWidth, float texHeight);
 	Object* extrude(const std::string& name, float height);
-	Object* taper(const std::string& name, float height);
+	Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
+	Object* offset(const std::string& name, float offsetRatio);
 	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	void generate(RenderManager* renderManager);
 };
@@ -100,9 +128,11 @@ private:
 	std::vector<glm::vec2> points;
 	glm::vec2 center;
 	float height;
+	float top_ratio;
 
 public:
-	Pyramid(const std::string& name, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, const glm::vec3& color, const std::string& texture);
+	Pyramid(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, float top_ratio, const glm::vec3& color, const std::string& texture);
+	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	void generate(RenderManager* renderManager);
 };
 
@@ -113,7 +143,11 @@ public:
 	void generatePyramid(RenderManager* renderManager);
 	void generateSimpleBuilding(RenderManager* renderManager);
 	void generateBuilding(RenderManager* renderManager);
-	void generateVase(RenderManager* renderManager);
+	void generateVase1(RenderManager* renderManager);
+	void generateVase2(RenderManager* renderManager);
+	void generateVase3(RenderManager* renderManager);
+	void generateSaltShaker1(RenderManager* renderManager);
+	void generateSaltShaker2(RenderManager* renderManager);
 };
 
 }

@@ -56,7 +56,8 @@ void GLWidget3D::initializeGL() {
 	std::vector<Vertex> vertices;
 	//system.generatePyramid(&renderManager);
 	//system.generateSimpleBuilding(&renderManager);
-	system.generateBuilding(&renderManager);
+	//system.generateBuilding(&renderManager);
+	system.generateSaltShaker2(&renderManager);
 }
 
 /**
