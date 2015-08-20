@@ -141,6 +141,15 @@ void RevolvedLine::generate(RenderManager* renderManager) {
 	renderManager->addObject(_name.c_str(), "", vertices);
 }
 
+Circle::Circle(const std::string& name, const glm::mat4& modelMat, const glm::vec2& center, float radius, const glm::vec3& color) {
+	this->_name = name;
+	this->_removed = false;
+	this->_modelMat = modelMat;
+	this->_center = center;
+	this->_radius = _radius;
+	this->_color = color;
+}
+
 PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
 	this->_name = name;
 	this->_removed = false;
@@ -367,6 +376,9 @@ Object* Rectangle::offset(const std::string& name, float offsetRatio) {
 	}
 }
 
+Object* Rectangle::inscribeCircle(const std::string& name) {
+}
+
 void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
 	objects.resize(ratios.size());
 
@@ -494,6 +506,10 @@ Object* Polygon::offset(const std::string& name, float offsetRatio) {
 
 	glm::mat4 mat = glm::translate(_modelMat, glm::vec3(t, 0));
 	return new Polygon(name, mat, points, _color, _texture);
+}
+
+Object* Polygon::inscribeCircle(const std::string& name) {
+
 }
 
 void Polygon::generate(RenderManager* renderManager) {
