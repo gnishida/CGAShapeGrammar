@@ -1,6 +1,16 @@
 ﻿#include "CGA.h"
 #include "GLUtils.h"
 #include <map>
+#include <boost/shared_ptr.hpp>
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/Polygon_2.h>
+#include <CGAL/create_straight_skeleton_2.h>
+
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K ;
+typedef K::Point_2 KPoint;
+typedef CGAL::Polygon_2<K> Polygon_2 ;
+typedef CGAL::Straight_skeleton_2<K> Ss ;
+typedef boost::shared_ptr<Ss> SsPtr ;
 
 namespace cga {
 
@@ -72,6 +82,10 @@ void Object::split(int direction, const std::vector<float> ratios, const std::ve
 
 void Object::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
 	throw "componentSplit() is not supported.";
+}
+
+Object* Object::roofHip(const std::string& name, float angle) {
+	throw "roofHip() is not supported.";
 }
 
 void Object::generate(RenderManager* renderManager) {
@@ -148,6 +162,84 @@ Circle::Circle(const std::string& name, const glm::mat4& modelMat, const glm::ve
 	this->_center = center;
 	this->_radius = _radius;
 	this->_color = color;
+}
+
+HipRoof::HipRoof(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float angle, const glm::vec3& color) {
+	this->_name = name;
+	this->_removed = false;
+	this->_modelMat = modelMat;
+	this->_points = points;
+	this->_angle = angle;
+	this->_color = color;
+}
+
+Object* HipRoof::clone() {
+	return new HipRoof(*this);
+}
+
+void HipRoof::generate(RenderManager* renderManager) {
+	std::vector<Vertex> vertices;
+
+	Polygon_2 poly;
+	for (int i = 0; i < _points.size(); ++i) {
+		poly.push_back(KPoint(_points[i].x, _points[i].y));
+	}
+
+	// You can pass the polygon via an iterator pair
+	SsPtr iss = CGAL::create_interior_straight_skeleton_2(poly);
+
+	for (auto face = iss->faces_begin(); face != iss->faces_end(); ++face) {
+		// 各faceについて、ポリゴンを生成する
+		auto edge0 = face->halfedge();
+		auto edge = edge0;
+
+		// 最初のエッジを保存する
+		glm::vec2 p0, p1;
+		bool first = true;
+
+		glm::vec3 prev_p;
+
+		do {
+			auto head = edge->vertex();
+			auto tail = edge->opposite()->vertex();
+
+			if (edge->is_bisector()) {
+				if (edge->is_inner_bisector()) { // 外側に接続されていない分割線
+				} else { // 外側と接続されている分割線
+				}
+			} else { // 一番外側のボーダー
+			}
+			//cv::line(m, cv::Point(tail->point().x(), tail->point().y()), cv::Point(head->point().x(), head->point().y()), color, 1);
+
+			if (first) {
+				p0 = glm::vec2(tail->point().x(), tail->point().y());
+				p1 = glm::vec2(head->point().x(), head->point().y());
+				first = false;
+
+				prev_p = glm::vec3(p1, 0);
+			} else {
+				glm::vec2 p2 = glm::vec2(head->point().x(), head->point().y());
+
+				if (p2 != p0) {
+					// p2の高さを計算
+					float z = glutils::distance(p0, p1, p2) * tanf(_angle * M_PI / 180.0f);
+
+					// 三角形を作成
+					glm::vec4 v0 = _modelMat * glm::vec4(p0, 0, 1);
+					glm::vec4 v1 = _modelMat * glm::vec4(prev_p, 1);
+					glm::vec4 v2 = _modelMat * glm::vec4(p2, z, 1);
+
+					vertices.push_back(Vertex(glm::vec3(v0), glm::vec3(0, 0, 1), _color));
+					vertices.push_back(Vertex(glm::vec3(v1), glm::vec3(0, 0, 1), _color));
+					vertices.push_back(Vertex(glm::vec3(v2), glm::vec3(0, 0, 1), _color));
+	
+					prev_p = glm::vec3(p2, z);
+				}
+			}
+		} while ((edge = edge->next()) != edge0);
+	}
+
+	renderManager->addObject(_name.c_str(), "", vertices);
 }
 
 PrismObject::PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
@@ -421,6 +513,15 @@ void Rectangle::split(int direction, const std::vector<float> ratios, const std:
 	}
 }
 
+Object* Rectangle::roofHip(const std::string& name, float angle) {
+	std::vector<glm::vec2> points(4);
+	points[0] = glm::vec2(0, 0);
+	points[1] = glm::vec2(_width, 0);
+	points[2] = glm::vec2(_width, _height);
+	points[3] = glm::vec2(0, _height);
+	return new HipRoof(name, _modelMat, points, angle, _color);
+}
+
 void Rectangle::generate(RenderManager* renderManager) {
 	if (_removed) return;
 
@@ -521,6 +622,10 @@ Object* Polygon::offset(const std::string& name, float offsetRatio) {
 
 Object* Polygon::inscribeCircle(const std::string& name) {
 	return NULL;
+}
+
+Object* Polygon::roofHip(const std::string& name, float angle) {
+	return new HipRoof(name, _modelMat, _points, angle, _color);
 }
 
 void Polygon::generate(RenderManager* renderManager) {
@@ -777,15 +882,44 @@ void CGA::generateHouse(RenderManager* renderManager) {
 		if (obj->_name == "Lot") {
 			stack.push_back(obj->extrude("House", 6));
 		} else if (obj->_name == "House") {
-			std::vector<float> ratios;
-			ratios.push_back(0.5);
-			ratios.push_back(0.5);
-			std::vector<std::string> names;
-			names.push_back("FirstFloor");
-			names.push_back("SecondFloor");
-			std::vector<Object*> objects;
-			obj->split(DIRECTION_Y, ratios, names, objects);
-			stack.insert(stack.end(), objects.begin(), objects.end());
+			Rectangle* frontFacade;
+			Polygon* roof;
+			Polygon* base;
+			std::vector<Rectangle*> sideFacades;
+			obj->componentSplit("FrontFacade", &frontFacade, "SideFacade", sideFacades, "Roof", &roof, "Base", &base);
+
+			stack.push_back(frontFacade);
+			for (int i = 0; i < sideFacades.size(); ++i) {
+				stack.push_back(sideFacades[i]);
+			}
+			stack.push_back(roof);
+			stack.push_back(base);
+		} else if (obj->_name == "Roof") {
+			stack.push_back(obj->roofHip("HipRoof", 30));
+		} else if (obj->_name == "FrontFacade") {
+			std::vector<float> floor_ratios(2);
+			floor_ratios[0] = 0.5f;
+			floor_ratios[1] = 0.5f;
+			std::vector<std::string> floor_names(2);
+			floor_names[0] = "FirstFrontFloor";
+			floor_names[1] = "SecondFrontFloor";
+
+			std::vector<Object*> floors;
+			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
+
+			stack.insert(stack.end(), floors.begin(), floors.end());
+		} else if (obj->_name == "SideFacade") {
+			std::vector<float> floor_ratios(2);
+			floor_ratios[0] = 0.5f;
+			floor_ratios[1] = 0.5f;
+			std::vector<std::string> floor_names(2);
+			floor_names[0] = "FirstSideFloor";
+			floor_names[1] = "SecondSideFloor";
+
+			std::vector<Object*> floors;
+			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
+
+			stack.insert(stack.end(), floors.begin(), floors.end());
 		} else {
 			obj->generate(renderManager);
 			delete obj;

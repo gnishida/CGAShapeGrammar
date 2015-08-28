@@ -49,6 +49,7 @@ public:
 	virtual Object* revolve(const std::string& name, int direction);
 	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	virtual void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
+	virtual Object* roofHip(const std::string& name, float angle);
 	virtual void generate(RenderManager* renderManager);
 };
 
@@ -83,6 +84,18 @@ public:
 	Circle(const std::string& name, const glm::mat4& modelMat, const glm::vec2& center, float radius, const glm::vec3& color);
 };
 
+class HipRoof : public Object {
+private:
+	std::vector<glm::vec2> _points;
+	float _angle;
+
+public:
+	HipRoof(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float angle, const glm::vec3& color);
+	Object* clone();
+	void generate(RenderManager* renderManager);
+};
+
+
 class PrismObject : public Object {
 private:
 	std::vector<glm::vec2> _points;
@@ -114,6 +127,7 @@ public:
 	Object* offset(const std::string& name, float offsetRatio);
 	Object* inscribeCircle(const std::string& name);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
+	Object* roofHip(const std::string& name, float angle);
 	void generate(RenderManager* renderManager);
 };
 
@@ -132,6 +146,7 @@ public:
 	Object* offset(const std::string& name, float offsetRatio);
 	Object* inscribeCircle(const std::string& name);
 	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
+	Object* roofHip(const std::string& name, float angle);
 	void generate(RenderManager* renderManager);
 };
 
