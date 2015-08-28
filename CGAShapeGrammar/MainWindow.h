@@ -17,6 +17,7 @@ public:
 	~MainWindow();
 
 public slots:
+	void onOpenCGARules();
 	void onShowWireframe();
 };
 

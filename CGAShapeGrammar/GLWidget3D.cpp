@@ -56,23 +56,17 @@ void GLWidget3D::initializeGL() {
 	// set the clear color for the screen
 	qglClearColor(QColor(113, 112, 117));
 
-	std::vector<Vertex> vertices;
-
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 
+	/*
 	std::list<cga::Object*> stack;
 	cga::Rectangle* lot = new cga::Rectangle("Lot", system.modelMat, 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 
-	std::map<std::string, cga::Rule*> rules = cga::parseRule("simple_building.cga");
+	std::map<std::string, cga::Rule*> rules = cga::parseRule("../cga/simple_building8.xml");
 
 	system.generate(&renderManager, rules, stack);
-
-	//system.generatePyramid(&renderManager);
-	//system.generateSimpleBuilding(&renderManager);
-	//system.generateHouse(&renderManager);
-	//system.generateBuilding(&renderManager);
-	//system.generateSaltShaker2(&renderManager);
+	*/
 }
 
 /**
@@ -118,4 +112,18 @@ void GLWidget3D::drawScene(int drawMode) {
 	renderManager.renderAll(showWireframe);
 }
 
+void GLWidget3D::loadCGA(char* filename) {
+	std::vector<Vertex> vertices;
 
+	renderManager.removeObjects();
+
+	std::list<cga::Object*> stack;
+	cga::Rectangle* lot = new cga::Rectangle("Lot", system.modelMat, 35, 10, glm::vec3(1, 1, 1));
+	stack.push_back(lot);
+
+	std::map<std::string, cga::Rule*> rules = cga::parseRule(filename);
+
+	system.generate(&renderManager, rules, stack);
+
+	updateGL();
+}

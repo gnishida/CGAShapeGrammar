@@ -4,12 +4,12 @@
 
 namespace cga {
 
-class SetTextureRule : public Rule {
+class TextureRule : public Rule {
 private:
 	std::string texture;
 
 public:
-	SetTextureRule(const std::string& texture, const std::string& output_name);
+	TextureRule(const std::string& texture, const std::string& output_name);
 	void apply(Object* obj, std::list<Object*>& stack);
 };
 

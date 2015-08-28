@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Aug 28 16:52:52 2015
+** Created: Fri Aug 28 18:26:24 2015
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -29,6 +29,7 @@ class Ui_MainWindowClass
 public:
     QAction *actionExit;
     QAction *actionShowWireframe;
+    QAction *actionOpenCGARules;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -46,6 +47,8 @@ public:
         actionShowWireframe = new QAction(MainWindowClass);
         actionShowWireframe->setObjectName(QString::fromUtf8("actionShowWireframe"));
         actionShowWireframe->setCheckable(true);
+        actionOpenCGARules = new QAction(MainWindowClass);
+        actionOpenCGARules->setObjectName(QString::fromUtf8("actionOpenCGARules"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -66,6 +69,8 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuView->menuAction());
+        menuFile->addAction(actionOpenCGARules);
+        menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuView->addAction(actionShowWireframe);
 
@@ -80,6 +85,7 @@ public:
         actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0, QApplication::UnicodeUTF8));
         actionShowWireframe->setText(QApplication::translate("MainWindowClass", "Show Wireframe", 0, QApplication::UnicodeUTF8));
         actionShowWireframe->setShortcut(QApplication::translate("MainWindowClass", "W", 0, QApplication::UnicodeUTF8));
+        actionOpenCGARules->setText(QApplication::translate("MainWindowClass", "Open CGA Rules", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

@@ -27,6 +27,8 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpenCGARules"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -61,6 +63,11 @@
    </property>
    <property name="shortcut">
     <string>W</string>
+   </property>
+  </action>
+  <action name="actionOpenCGARules">
+   <property name="text">
+    <string>Open CGA Rules</string>
    </property>
   </action>
  </widget>

@@ -92,9 +92,6 @@
     <ClCompile Include="SplitRule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="SetTextureRule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
     <ClCompile Include="SetupProjectionRule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
@@ -124,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRule.cpp">
+      <Filter>Source Files\rule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +171,6 @@
     <ClInclude Include="SetupProjectionRule.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="SetTextureRule.h">
-      <Filter>Source Files\rule</Filter>
-    </ClInclude>
     <ClInclude Include="RuleParser.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
@@ -205,6 +202,9 @@
       <Filter>Source Files\shape</Filter>
     </ClInclude>
     <ClInclude Include="ExtrudeRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRule.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>

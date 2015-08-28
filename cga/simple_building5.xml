@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<rules>
+	<rule input_name="Lot" op="extrude">
+		<param name="height" value="11"/>
+		<param name="output_name" value="Building"/>
+	</rule>
+	<rule input_name="Building" op="comp">
+		<param name="front" value="FrontFacade"/>
+		<param name="side" value="SideFacade"/>
+		<param name="top" value="Roof"/>
+		<param name="bottom" value="Base"/>
+	</rule>
+	<rule input_name="FrontFacade" op="setupProjection">
+		<param name="coordinateType" value="absolute"/>
+		<param name="texWidth" value="2.5"/>
+		<param name="texHeight" value="1"/>
+		<param name="output_name" value="FrontFacade_1"/>
+	</rule>
+	<rule input_name="FrontFacade_1" op="texture">
+		<param name="texture" value="textures/brick.jpg"/>
+		<param name="output_name" value="FrontFacade_2"/>
+	</rule>
+	<rule input_name="SideFacade" op="setupProjection">
+		<param name="coordinateType" value="absolute"/>
+		<param name="texWidth" value="2.5"/>
+		<param name="texHeight" value="1"/>
+		<param name="output_name" value="SideFacade_1"/>
+	</rule>
+	<rule input_name="SideFacade_1" op="texture">
+		<param name="texture" value="textures/brick.jpg"/>
+		<param name="output_name" value="SideFacade_2"/>
+	</rule>
+	<rule input_name="FrontFacade_2" op="split">
+		<param name="direction" value="y"/>
+		<param name="size">
+			<element type="absolute" value="4.0"/>
+			<element type="floating" value="3.5" repeat="true"/>
+		</param>
+		<param name="name">
+			<element value="Floor"/>
+			<element value="Floor"/>
+		</param>
+	</rule>
+	<rule input_name="SideFacade_2" op="split">
+		<param name="direction" value="y"/>
+		<param name="size">
+			<element type="absolute" value="4.0"/>
+			<element type="floating" value="3.5" repeat="true"/>
+		</param>
+		<param name="name">
+			<element value="Floor"/>
+			<element value="Floor"/>
+		</param>
+	</rule>
+	<rule input_name="Floor" op="split">
+		<param name="direction" value="x"/>
+		<param name="size">
+			<element type="absolute" value="1.0"/>
+			<element type="floating" value="3.0" repeat="true"/>
+			<element type="absolute" value="1.0"/>
+		</param>
+		<param name="name">
+			<element value="Wall"/>
+			<element value="Tile"/>
+			<element value="Wall"/>
+		</param>
+	</rule>
+</rules>

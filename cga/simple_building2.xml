@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<rules>
+	<rule input_name="Lot" op="extrude">
+		<param name="height" value="11"/>
+		<param name="output_name" value="Building"/>
+	</rule>
+	<rule input_name="Building" op="comp">
+		<param name="front" value="FrontFacade"/>
+		<param name="side" value="SideFacade"/>
+		<param name="top" value="Roof"/>
+		<param name="bottom" value="Base"/>
+	</rule>
+</rules>
