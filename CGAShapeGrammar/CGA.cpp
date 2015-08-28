@@ -901,8 +901,8 @@ void CGA::generateHouse(RenderManager* renderManager) {
 			floor_ratios[0] = 0.5f;
 			floor_ratios[1] = 0.5f;
 			std::vector<std::string> floor_names(2);
-			floor_names[0] = "FirstFrontFloor";
-			floor_names[1] = "SecondFrontFloor";
+			floor_names[0] = "Entrance";
+			floor_names[1] = "Floor";
 
 			std::vector<Object*> floors;
 			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
@@ -913,13 +913,63 @@ void CGA::generateHouse(RenderManager* renderManager) {
 			floor_ratios[0] = 0.5f;
 			floor_ratios[1] = 0.5f;
 			std::vector<std::string> floor_names(2);
-			floor_names[0] = "FirstSideFloor";
-			floor_names[1] = "SecondSideFloor";
+			floor_names[0] = "Floor";
+			floor_names[1] = "Floor";
 
 			std::vector<Object*> floors;
 			obj->split(DIRECTION_Y, floor_ratios, floor_names, floors);
 
 			stack.insert(stack.end(), floors.begin(), floors.end());
+		} else if (obj->_name == "Floor") {
+			std::vector<float> tile_ratios;
+			std::vector<std::string> tile_names;
+
+			// 分割比率、名前をセット
+			float margin_ratio = 1.0f / obj->_scope.x;
+			int numTiles = (obj->_scope.x - 2.0f) / 3.0f;
+			float tile_width_ratio = (obj->_scope.x - 2.0f) / numTiles / obj->_scope.x;
+
+			tile_ratios.push_back(margin_ratio);
+			tile_names.push_back("Wall");
+			for (int i = 0; i < numTiles; ++i) {
+				tile_ratios.push_back(tile_width_ratio);
+				tile_names.push_back("Tile");
+			}
+			tile_ratios.push_back(margin_ratio);
+			tile_names.push_back("Wall");
+
+			std::vector<Object*> tiles;
+			obj->split(DIRECTION_X, tile_ratios, tile_names, tiles);
+
+			stack.insert(stack.end(), tiles.begin(), tiles.end());
+		} else if (obj->_name == "Tile") {
+			std::vector<float> wall_ratios(3);
+			wall_ratios[0] = 0.1f;
+			wall_ratios[1] = 0.8f;
+			wall_ratios[2] = 0.1f;
+			std::vector<std::string> wall_names(3);
+			wall_names[0] = "Wall";
+			wall_names[1] = "WallWindowWall";
+			wall_names[2] = "Wall";
+
+			std::vector<Object*> walls;
+			obj->split(DIRECTION_X, wall_ratios, wall_names, walls);
+
+			stack.insert(stack.end(), walls.begin(), walls.end());
+		} else if (obj->_name == "WallWindowWall") {
+			std::vector<float> wall_ratios(3);
+			wall_ratios[0] = 0.2f;
+			wall_ratios[1] = 0.6f;
+			wall_ratios[2] = 0.2f;
+			std::vector<std::string> wall_names(3);
+			wall_names[0] = "Wall";
+			wall_names[1] = "Window";
+			wall_names[2] = "Wall";
+
+			std::vector<Object*> walls;
+			obj->split(DIRECTION_Y, wall_ratios, wall_names, walls);
+
+			stack.insert(stack.end(), walls.begin(), walls.end());
 		} else {
 			obj->generate(renderManager);
 			delete obj;
