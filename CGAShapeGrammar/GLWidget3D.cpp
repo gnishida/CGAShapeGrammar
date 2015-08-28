@@ -59,8 +59,9 @@ void GLWidget3D::initializeGL() {
 
 	//system.generatePyramid(&renderManager);
 	//system.generateSimpleBuilding(&renderManager);
+	system.generateHouse(&renderManager);
 	//system.generateBuilding(&renderManager);
-	system.generateSaltShaker2(&renderManager);
+	//system.generateSaltShaker2(&renderManager);
 }
 
 /**

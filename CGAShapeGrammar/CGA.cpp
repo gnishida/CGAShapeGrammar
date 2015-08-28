@@ -58,8 +58,8 @@ Object* Object::offset(const std::string& name, float offsetRatio) {
 	throw "offset() is not supported.";
 }
 
-Object* offset(const std::string& name, float offsetRatio) {
-	throw "offset() is not supported.";
+Object* Object::inscribeCircle(const std::string& name) {
+	throw "inscribeCircle() is not supported.";
 }
 
 Object* Object::revolve(const std::string& name, int direction) {
@@ -170,7 +170,17 @@ void PrismObject::setupProjection(float texWidth, float texHeight) {
 }
 
 void PrismObject::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
-	throw "PrismObject does not support split operation.";
+	glm::mat4 modelMat = this->_modelMat;
+
+	for (int i = 0; i < ratios.size(); ++i) {
+		PrismObject* obj = new PrismObject(*this);
+		obj->_name = names[i];
+		obj->_modelMat = modelMat;
+		obj->_height = this->_height * ratios[i];
+		objects.push_back(obj);
+
+		modelMat = glm::translate(modelMat, glm::vec3(0, 0, obj->_height));
+	}
 }
 
 
@@ -377,6 +387,7 @@ Object* Rectangle::offset(const std::string& name, float offsetRatio) {
 }
 
 Object* Rectangle::inscribeCircle(const std::string& name) {
+	return NULL;
 }
 
 void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
@@ -509,7 +520,7 @@ Object* Polygon::offset(const std::string& name, float offsetRatio) {
 }
 
 Object* Polygon::inscribeCircle(const std::string& name) {
-
+	return NULL;
 }
 
 void Polygon::generate(RenderManager* renderManager) {
@@ -741,6 +752,40 @@ void CGA::generateSimpleBuilding(RenderManager* renderManager) {
 			stack.insert(stack.end(), polygons.begin(), polygons.end());
 		} else if (obj->_name == "SmallLot") {
 			stack.push_back(obj->extrude("Building", 20));
+		} else {
+			obj->generate(renderManager);
+			delete obj;
+		}
+	}
+}
+
+void CGA::generateHouse(RenderManager* renderManager) {
+	std::list<Object*> stack;
+
+	Rectangle* lot = new Rectangle("Lot", modelMat, 10, 6, glm::vec3(1, 1, 1));
+	stack.push_back(lot);
+	
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (obj->_removed) {
+			delete obj;
+			continue;
+		}
+		
+		if (obj->_name == "Lot") {
+			stack.push_back(obj->extrude("House", 6));
+		} else if (obj->_name == "House") {
+			std::vector<float> ratios;
+			ratios.push_back(0.5);
+			ratios.push_back(0.5);
+			std::vector<std::string> names;
+			names.push_back("FirstFloor");
+			names.push_back("SecondFloor");
+			std::vector<Object*> objects;
+			obj->split(DIRECTION_Y, ratios, names, objects);
+			stack.insert(stack.end(), objects.begin(), objects.end());
 		} else {
 			obj->generate(renderManager);
 			delete obj;

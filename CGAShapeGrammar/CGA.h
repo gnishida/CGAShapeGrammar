@@ -157,6 +157,7 @@ public:
 
 	void generatePyramid(RenderManager* renderManager);
 	void generateSimpleBuilding(RenderManager* renderManager);
+	void generateHouse(RenderManager* renderManager);
 	void generateBuilding(RenderManager* renderManager);
 	void generateVase1(RenderManager* renderManager);
 	void generateVase2(RenderManager* renderManager);
