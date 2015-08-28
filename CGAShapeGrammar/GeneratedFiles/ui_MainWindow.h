@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Aug 28 18:26:24 2015
+** Created: Fri Aug 28 18:32:49 2015
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -86,6 +86,7 @@ public:
         actionShowWireframe->setText(QApplication::translate("MainWindowClass", "Show Wireframe", 0, QApplication::UnicodeUTF8));
         actionShowWireframe->setShortcut(QApplication::translate("MainWindowClass", "W", 0, QApplication::UnicodeUTF8));
         actionOpenCGARules->setText(QApplication::translate("MainWindowClass", "Open CGA Rules", 0, QApplication::UnicodeUTF8));
+        actionOpenCGARules->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
