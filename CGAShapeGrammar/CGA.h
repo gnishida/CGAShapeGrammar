@@ -5,10 +5,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include "Vertex.h"
+#include "Rule.h"
 
 namespace cga {
 
-enum { DIRECTION_X = 0, DIRECTION_Y };
+enum { DIRECTION_X = 0, DIRECTION_Y, SCOPE_SX, SCOPE_SY };
 enum { REVOLVE_X = 0, REVOLVE_Y };
 
 class PrismObject;
@@ -170,8 +171,11 @@ public:
 public:
 	CGA();
 
-	void generatePyramid(RenderManager* renderManager);
+	void generate(RenderManager* renderManager, std::map<std::string, Rule*>& rules, std::list<Object*> stack);
+
+	/*void generatePyramid(RenderManager* renderManager);*/
 	void generateSimpleBuilding(RenderManager* renderManager);
+	/*
 	void generateHouse(RenderManager* renderManager);
 	void generateBuilding(RenderManager* renderManager);
 	void generateVase1(RenderManager* renderManager);
@@ -179,6 +183,7 @@ public:
 	void generateVase3(RenderManager* renderManager);
 	void generateSaltShaker1(RenderManager* renderManager);
 	void generateSaltShaker2(RenderManager* renderManager);
+	*/
 };
 
 }

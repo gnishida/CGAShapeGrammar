@@ -133,6 +133,8 @@
     <ClCompile Include="..\..\codebase\ShadowMapping.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGA.cpp" />
+    <ClCompile Include="ComponentSplitRule.cpp" />
+    <ClCompile Include="ExtrudeRule.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_MainWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -154,6 +156,12 @@
     <ClCompile Include="GLWidget3D.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Rule.cpp" />
+    <ClCompile Include="RuleParser.cpp" />
+    <ClCompile Include="SetTextureRule.cpp" />
+    <ClCompile Include="SetupProjectionRule.cpp" />
+    <ClCompile Include="SplitRule.cpp" />
+    <ClCompile Include="TranslateRule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -204,7 +212,15 @@
     <ClInclude Include="..\..\codebase\Vertex.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGA.h" />
+    <ClInclude Include="ComponentSplitRule.h" />
+    <ClInclude Include="ExtrudeRule.h" />
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />
+    <ClInclude Include="Rule.h" />
+    <ClInclude Include="RuleParser.h" />
+    <ClInclude Include="SetTextureRule.h" />
+    <ClInclude Include="SetupProjectionRule.h" />
+    <ClInclude Include="SplitRule.h" />
+    <ClInclude Include="TranslateRule.h" />
     <CustomBuild Include="GLWidget3D.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

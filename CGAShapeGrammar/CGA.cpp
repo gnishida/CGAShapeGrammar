@@ -482,33 +482,33 @@ Object* Rectangle::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-void Rectangle::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
-	objects.resize(ratios.size());
+void Rectangle::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Object*>& objects) {
+	objects.resize(sizes.size());
 
 	float offset = 0.0f;
 	
-	for (int i = 0; i < ratios.size(); ++i) {
+	for (int i = 0; i < sizes.size(); ++i) {
 		glm::mat4 mat;
 		if (direction == DIRECTION_X) {
 			mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
 			if (_textureEnabled) {
-				objects[i] = new Rectangle(names[i], _modelMat * mat, _width * ratios[i], _height, _texture, 
+				objects[i] = new Rectangle(names[i], _modelMat * mat, sizes[i], _height, _texture,
 					_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * offset / _width, _texCoords[0].y,
-					_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset / _width + ratios[i]), _texCoords[2].y);
+					_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _width, _texCoords[2].y);
 			} else {
-				objects[i] = new Rectangle(names[i], _modelMat * mat, _width * ratios[i], _height, _color); 
+				objects[i] = new Rectangle(names[i], _modelMat * mat, sizes[i], _height, _color);
 			}
-			offset += _width * ratios[i];
+			offset += sizes[i];
 		} else {
 			mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
 			if (_textureEnabled) {
-				objects[i] = new Rectangle(names[i], _modelMat * mat, _width, _height * ratios[i], _texture,
+				objects[i] = new Rectangle(names[i], _modelMat * mat, _width, sizes[i], _texture,
 					_texCoords[0].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * offset / _height,
-					_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset / _height + ratios[i]));
+					_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _height);
 			} else {
-				objects[i] = new Rectangle(names[i], _modelMat * mat, _width, _height * ratios[i], _color);
+				objects[i] = new Rectangle(names[i], _modelMat * mat, _width, sizes[i], _color);
 			}
-			offset += _height * ratios[i];
+			offset += sizes[i];
 		}
 	}
 }
@@ -801,7 +801,23 @@ void Pyramid::generate(RenderManager* renderManager) {
 CGA::CGA() {
 }
 
-void CGA::generatePyramid(RenderManager* renderManager) {
+void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule*>& rules, std::list<Object*> stack) {
+	while (!stack.empty()) {
+		Object* obj = stack.front();
+		stack.pop_front();
+
+		if (rules.find(obj->_name) == rules.end()) {
+			obj->generate(renderManager);
+
+		} else {
+			rules[obj->_name]->apply(obj, stack);
+		}
+		delete obj;
+	}
+
+}
+
+/*void CGA::generatePyramid(RenderManager* renderManager) {
 	std::list<Object*> stack;
 	
 	Rectangle* lot = new Rectangle("Lot", modelMat, 20, 20, glm::vec3(1, 1, 1));
@@ -823,9 +839,10 @@ void CGA::generatePyramid(RenderManager* renderManager) {
 			delete obj;
 		}
 	}
-}
+}*/
 
 void CGA::generateSimpleBuilding(RenderManager* renderManager) {
+	/*
 	std::list<Object*> stack;
 	
 	Rectangle* lot = new Rectangle("Lot", modelMat, 35, 10, glm::vec3(1, 1, 1));
@@ -841,30 +858,16 @@ void CGA::generateSimpleBuilding(RenderManager* renderManager) {
 		}
 		
 		if (obj->_name == "Lot") {
-			std::vector<float> ratios(5);
-			for (int i = 0; i < ratios.size(); ++i) ratios[i] = 1.0f / ratios.size();
-			std::vector<std::string> names(5);
-			for (int i = 0; i < names.size(); ++i) names[i] = "SmallLot";
-			std::vector<Object*> polygons;
-			obj->split(DIRECTION_X, ratios, names, polygons);
-
-			for (int i = 0; i < polygons.size(); ++i) {
-				if (i % 2 == 1) {
-					polygons[i]->nil();
-				}
-			}
-
-			stack.insert(stack.end(), polygons.begin(), polygons.end());
-		} else if (obj->_name == "SmallLot") {
 			stack.push_back(obj->extrude("Building", 20));
 		} else {
 			obj->generate(renderManager);
 			delete obj;
 		}
 	}
+	*/
 }
 
-void CGA::generateHouse(RenderManager* renderManager) {
+/*void CGA::generateHouse(RenderManager* renderManager) {
 	std::list<Object*> stack;
 
 	Rectangle* lot = new Rectangle("Lot", modelMat, 10, 6, glm::vec3(1, 1, 1));
@@ -1290,6 +1293,6 @@ void CGA::generateSaltShaker2(RenderManager* renderManager) {
 			delete obj;
 		}
 	}
-}
+}*/
 
 }

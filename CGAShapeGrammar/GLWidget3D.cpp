@@ -3,6 +3,8 @@
 #include "OBJLoader.h"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
+#include "RuleParser.h"
+#include <map>
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット
@@ -57,9 +59,17 @@ void GLWidget3D::initializeGL() {
 
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 
+	std::list<cga::Object*> stack;
+	cga::Rectangle* lot = new cga::Rectangle("Lot", system.modelMat, 35, 10, glm::vec3(1, 1, 1));
+	stack.push_back(lot);
+
+	std::map<std::string, cga::Rule*> rules = cga::parseRule("simple_building.cga");
+
+	system.generate(&renderManager, rules, stack);
+
 	//system.generatePyramid(&renderManager);
 	//system.generateSimpleBuilding(&renderManager);
-	system.generateHouse(&renderManager);
+	//system.generateHouse(&renderManager);
 	//system.generateBuilding(&renderManager);
 	//system.generateSaltShaker2(&renderManager);
 }
