@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "RuleParser.h"
 #include <map>
+#include "Rectangle.h"
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット

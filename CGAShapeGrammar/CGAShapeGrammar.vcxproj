@@ -133,6 +133,7 @@
     <ClCompile Include="..\..\codebase\ShadowMapping.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGA.cpp" />
+    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ComponentSplitRule.cpp" />
     <ClCompile Include="ExtrudeRule.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_MainWindow.cpp">
@@ -154,8 +155,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GLWidget3D.cpp" />
+    <ClCompile Include="HipRoof.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Polygon.cpp" />
+    <ClCompile Include="Prism.cpp" />
+    <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleParser.cpp" />
     <ClCompile Include="SetTextureRule.cpp" />
@@ -212,9 +218,15 @@
     <ClInclude Include="..\..\codebase\Vertex.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGA.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="ComponentSplitRule.h" />
     <ClInclude Include="ExtrudeRule.h" />
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />
+    <ClInclude Include="HipRoof.h" />
+    <ClInclude Include="Polygon.h" />
+    <ClInclude Include="Prism.h" />
+    <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleParser.h" />
     <ClInclude Include="SetTextureRule.h" />

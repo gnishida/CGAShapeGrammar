@@ -1,5 +1,7 @@
 #include "ComponentSplitRule.h"
 #include "CGA.h"
+#include "Rectangle.h"
+#include "Polygon.h"
 
 namespace cga {
 

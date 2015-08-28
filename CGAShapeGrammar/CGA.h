@@ -12,7 +12,8 @@ namespace cga {
 enum { DIRECTION_X = 0, DIRECTION_Y, SCOPE_SX, SCOPE_SY };
 enum { REVOLVE_X = 0, REVOLVE_Y };
 
-class PrismObject;
+const float M_PI = 3.1415926f;
+
 class Polygon;
 class Rectangle;
 
@@ -47,121 +48,10 @@ public:
 	virtual Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	virtual Object* offset(const std::string& name, float offsetRatio);
 	virtual Object* inscribeCircle(const std::string& name);
-	virtual Object* revolve(const std::string& name, int direction);
 	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	virtual void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
 	virtual Object* roofHip(const std::string& name, float angle);
 	virtual void generate(RenderManager* renderManager);
-};
-
-class Line : public Object {
-private:
-	std::vector<glm::vec2> _points;
-
-public:
-	Line(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color);
-	Object* clone();
-	Object* revolve(const std::string& name, int direction);
-	void generate(RenderManager* renderManager);
-};
-
-class RevolvedLine : public Object {
-private:
-	std::vector<glm::vec2> _points;
-	int _direction;
-
-public:
-	RevolvedLine(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, int direction, const glm::vec3& color);
-	Object* clone();
-	void generate(RenderManager* renderManager);
-};
-
-class Circle : public Object {
-private:
-	glm::vec2 _center;
-	float _radius;
-
-public:
-	Circle(const std::string& name, const glm::mat4& modelMat, const glm::vec2& center, float radius, const glm::vec3& color);
-};
-
-class HipRoof : public Object {
-private:
-	std::vector<glm::vec2> _points;
-	float _angle;
-
-public:
-	HipRoof(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float angle, const glm::vec3& color);
-	Object* clone();
-	void generate(RenderManager* renderManager);
-};
-
-
-class PrismObject : public Object {
-private:
-	std::vector<glm::vec2> _points;
-	float _height;
-
-public:
-	PrismObject() {}
-	PrismObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color);
-	Object* clone();
-	void setupProjection(float texWidth, float texHeight);
-	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
-	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
-	void generate(RenderManager* renderManager);
-};
-
-class Rectangle : public Object {
-public:
-	float _width;
-	float _height;
-
-public:
-	Rectangle() {}
-	Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const glm::vec3& color);
-	Rectangle(const std::string& name, const glm::mat4& modelMat, float width, float height, const std::string& texture, float u1, float v1, float u2, float v2);
-	Object* clone();
-	void setupProjection(float texWidth, float texHeight);
-	Object* extrude(const std::string& name, float height);
-	Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
-	Object* offset(const std::string& name, float offsetRatio);
-	Object* inscribeCircle(const std::string& name);
-	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
-	Object* roofHip(const std::string& name, float angle);
-	void generate(RenderManager* renderManager);
-};
-
-class Polygon : public Object {
-private:
-	std::vector<glm::vec2> _points;
-	glm::vec2 _center;
-
-public:
-	Polygon() {}
-	Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color, const std::string& texture);
-	Object* clone();
-	void setupProjection(float texWidth, float texHeight);
-	Object* extrude(const std::string& name, float height);
-	Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
-	Object* offset(const std::string& name, float offsetRatio);
-	Object* inscribeCircle(const std::string& name);
-	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
-	Object* roofHip(const std::string& name, float angle);
-	void generate(RenderManager* renderManager);
-};
-
-class Pyramid : public Object {
-private:
-	std::vector<glm::vec2> _points;
-	glm::vec2 _center;
-	float _height;
-	float _top_ratio;
-
-public:
-	Pyramid(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, float top_ratio, const glm::vec3& color, const std::string& texture);
-	void componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
-	void generate(RenderManager* renderManager);
 };
 
 class CGA {

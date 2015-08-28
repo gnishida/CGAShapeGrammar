@@ -42,6 +42,9 @@
     <Filter Include="Source Files\rule">
       <UniqueIdentifier>{835205f5-9f42-4ab7-9ba0-bd45803ae073}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shape">
+      <UniqueIdentifier>{94ce4025-591e-40f1-b8be-9ad9d09103a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,12 +80,6 @@
     <ClCompile Include="..\..\codebase\ShadowMapping.cpp">
       <Filter>Source Files\codebase</Filter>
     </ClCompile>
-    <ClCompile Include="CGA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExtrudeRule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Rule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
@@ -103,6 +100,30 @@
     </ClCompile>
     <ClCompile Include="ComponentSplitRule.cpp">
       <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtrudeRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="CGA.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="HipRoof.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Prism.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Pyramid.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files\shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,12 +159,6 @@
     <ClInclude Include="..\..\codebase\Vertex.h">
       <Filter>Source Files\codebase</Filter>
     </ClInclude>
-    <ClInclude Include="CGA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExtrudeRule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -166,6 +181,30 @@
       <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="ComponentSplitRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="CGA.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="HipRoof.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Prism.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtrudeRule.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>
