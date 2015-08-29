@@ -5,12 +5,11 @@
 		<param name="top_ratio" value="0.7"/>
 		<param name="output_name" value="Body"/>
 	</rule>
-	<rule input_name="Body" op="copy">
-		<param name="copy_name" value="Body_2"/>
-		<param name="output_name" value="Body_3"/>
-	</rule>
-	<rule input_name="Body_3" op="comp">
+	<rule input_name="Body" op="comp">
+		<param name="front" value="Front"/>
+		<param name="side" value="Side"/>
 		<param name="top" value="Top"/>
+		<param name="bottom" value="Bottom"/>
 	</rule>
 	<rule input_name="Top" op="offset">
 		<param name="offsetDistance" value="0.2"/>

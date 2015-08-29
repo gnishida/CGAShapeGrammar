@@ -14,8 +14,8 @@ enum { REVOLVE_X = 0, REVOLVE_Y };
 
 const float M_PI = 3.1415926f;
 
-class Polygon;
-class Rectangle;
+/*class Polygon;
+class Rectangle;*/
 
 class BoundingBox {
 public:
@@ -39,13 +39,13 @@ public:
 
 public:
 	virtual Object* clone(const std::string& name);
-	virtual void comp(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
+	virtual void comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom);
 	virtual Object* extrude(const std::string& name, float height);
 	virtual Object* inscribeCircle(const std::string& name);
 	void nil();
 	virtual Object* offset(const std::string& name, float offsetRatio);
 	virtual Object* roofHip(const std::string& name, float angle);
-	void rotate(float xAngle, float yAngle, float zAngle);
+	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);
 	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	virtual Object* taper(const std::string& name, float height, float top_ratio = 0.0f);

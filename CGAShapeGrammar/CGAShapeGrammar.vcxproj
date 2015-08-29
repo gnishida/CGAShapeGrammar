@@ -165,6 +165,7 @@
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RoofHipRule.cpp" />
+    <ClCompile Include="RotateRule.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleParser.cpp" />
     <ClCompile Include="TaperRule.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RoofHipRule.h" />
+    <ClInclude Include="RotateRule.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleParser.h" />
     <ClInclude Include="TaperRule.h" />

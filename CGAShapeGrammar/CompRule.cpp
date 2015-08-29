@@ -13,10 +13,10 @@ CompRule::CompRule(const std::string& front_name, const std::string& side_name, 
 }
 
 void CompRule::apply(Object* obj, std::list<Object*>& stack) {
-	Rectangle* front;
-	std::vector<Rectangle*> sides;
-	Polygon* top;
-	Polygon* bottom;
+	Object* front;
+	std::vector<Object*> sides;
+	Object* top;
+	Object* bottom;
 	
 	obj->comp(front_name, &front, side_name, sides, top_name, &top, bottom_name, &bottom);
 	if (!front_name.empty()) {

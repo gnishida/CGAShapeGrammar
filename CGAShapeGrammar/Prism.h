@@ -15,7 +15,7 @@ public:
 	Object* clone(const std::string& name);
 	void setupProjection(float texWidth, float texHeight);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
-	void comp(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base);
+	void comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom);
 	void generate(RenderManager* renderManager);
 };
 

@@ -26,7 +26,7 @@ Object* Object::clone(const std::string& name) {
 	throw "clone() is not supported.";
 }
 
-void Object::comp(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
+void Object::comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom) {
 	throw "componentSplit() is not supported.";
 }
 
@@ -50,7 +50,7 @@ Object* Object::roofHip(const std::string& name, float angle) {
 	throw "roofHip() is not supported.";
 }
 
-void Object::rotate(float xAngle, float yAngle, float zAngle) {
+void Object::rotate(const std::string& name, float xAngle, float yAngle, float zAngle) {
 	_modelMat = glm::rotate(_modelMat, xAngle * M_PI / 180.0f, glm::vec3(1, 0, 0));
 	_modelMat = glm::rotate(_modelMat, yAngle * M_PI / 180.0f, glm::vec3(0, 1, 0));
 	_modelMat = glm::rotate(_modelMat, zAngle * M_PI / 180.0f, glm::vec3(0, 0, 1));

@@ -40,22 +40,22 @@ std::map<std::string, cga::Rule*> parseRule(char* filename) {
 
 			if (op == "copy") {
 				rules[input_name] = parseCopyRule(node);
-			} else if (op == "extrude") {
-				rules[input_name] = parseExtrudeRule(node);
-			} else if (op == "taper") {
-				rules[input_name] = parseTaperRule(node);
-			} else if (op == "offset") {
-				rules[input_name] = parseOffsetRule(node);
 			} else if (op == "comp") {
 				rules[input_name] = parseCompRule(node);
+			} else if (op == "extrude") {
+				rules[input_name] = parseExtrudeRule(node);
+			} else if (op == "offset") {
+				rules[input_name] = parseOffsetRule(node);
 			} else if (op == "roofHip") {
 				rules[input_name] = parseRoofHipRule(node);
 			} else if (op == "setupProjection") {
 				rules[input_name] = parseSetupProjectionRule(node);
-			} else if (op == "texture") {
-				rules[input_name] = parseTextureRule(node);
 			} else if (op == "split") {
 				rules[input_name] = parseSplitRule(node);
+			} else if (op == "taper") {
+				rules[input_name] = parseTaperRule(node);
+			} else if (op == "texture") {
+				rules[input_name] = parseTextureRule(node);
 			} else if (op == "translate") {
 				rules[input_name] = parseTranslateRule(node);
 			}

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<rules>
+	<rule input_name="Lot" op="taper">
+		<param name="height" value="11"/>
+		<param name="top_ratio" value="0.7"/>
+		<param name="output_name" value="Pyramid"/>
+	</rule>
+	<rule input_name="Pyramid" op="comp">
+		<param name="front" value="FrontFacade"/>
+		<param name="side" value="SideFacade"/>
+		<param name="top" value="Roof"/>
+		<param name="bottom" value="Base"/>
+	</rule>
+</rules>

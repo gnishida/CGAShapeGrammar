@@ -137,6 +137,9 @@
     <ClCompile Include="CompRule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
+    <ClCompile Include="RotateRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -229,6 +232,9 @@
       <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="CompRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateRule.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>

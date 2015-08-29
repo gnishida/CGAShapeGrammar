@@ -40,7 +40,7 @@ void Prism::split(int direction, const std::vector<float> ratios, const std::vec
 }
 
 
-void Prism::comp(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
+void Prism::comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom) {
 	// front face
 	{
 		*front = new Rectangle(front_name, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color);
@@ -79,7 +79,7 @@ void Prism::comp(const std::string& front_name, Rectangle** front, const std::st
 	{
 		std::vector<glm::vec2> basePoints = _points;
 		std::reverse(basePoints.begin(), basePoints.end());
-		*base = new Polygon(base_name, _modelMat, basePoints, _color, _texture);
+		*bottom = new Polygon(bottom_name, _modelMat, basePoints, _color, _texture);
 	}
 }
 

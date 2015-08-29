@@ -27,10 +27,29 @@ Object* Pyramid::clone(const std::string& name) {
 	return copy;
 }
 
-void Pyramid::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
+void Pyramid::comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom) {
+	std::vector<glm::vec2> top_points(_points.size());
+	for (int i = 0; i < _points.size(); ++i) {
+		top_points[i] = (_points[i] - _center) * _top_ratio + _center;
+	}
+
 	// front face (To be fixed)
 	{
-		*front = new Rectangle(front_name, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color);
+		std::vector<glm::vec2> points(3 + (_top_ratio > 0.0f ? 1 : 0));
+
+		float dist = glutils::distance(glm::vec3(_points[0], 0), glm::vec3(_points[1], 0), glm::vec3(top_points[1], _height));
+		float angle = asin(_height / dist);
+		glm::mat4 mat = glm::rotate(glm::mat4(), -angle, glm::vec3(1, 0, 0));
+
+		points[0] = glm::vec2(mat * glm::vec4(_points[0], 0, 1));
+		points[1] = glm::vec2(mat * glm::vec4(_points[1], 0, 1));
+		points[2] = glm::vec2(mat * glm::vec4(top_points[1], _height, 1));
+		if (points.size() > 3) {
+			points[3] = glm::vec2(mat * glm::vec4(top_points[0], _height, 1));
+		}
+
+		mat = glm::rotate(_modelMat, angle, glm::vec3(1, 0, 0));
+		*front = new Polygon(front_name, mat, points, _color, _texture);
 	}
 
 	// side faces (To be fixed);
@@ -40,37 +59,55 @@ void Pyramid::componentSplit(const std::string& front_name, Rectangle** front, c
 		for (int i = 1; i < _points.size(); ++i) {
 			glm::vec2 a = _points[i] - _points[i - 1];
 			glm::vec2 b = _points[(i + 1) % _points.size()] - _points[i];
-
 			mat = glm::translate(mat, glm::vec3(glm::length(a), 0, 0));
 			float theta = acos(glm::dot(a, b) / glm::length(a) / glm::length(b));
 			mat = glm::rotate(mat, theta, glm::vec3(0, 0, 1));
-			glm::mat4 mat2 = glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0));
-			glm::mat4 invMat = glm::inverse(mat2);
 
-			std::vector<glm::vec2> sidePoints(4);
-			sidePoints[0] = glm::vec2(invMat * glm::vec4(_points[i], 0, 1));
-			sidePoints[1] = glm::vec2(invMat * glm::vec4(_points[(i + 1) % _points.size()], 0, 1));
-			sidePoints[2] = glm::vec2(invMat * glm::vec4(_points[(i + 1) % _points.size()], _height, 1));
-			sidePoints[3] = glm::vec2(invMat * glm::vec4(_points[i], _height, 1));
+			std::vector<glm::vec3> points3d(3 + (_top_ratio > 0.0f ? 1 : 0));
+			points3d[0] = glm::vec3(_points[i], 0);
+			points3d[1] = glm::vec3(_points[(i+1) % _points.size()], 0);
+			points3d[2] = glm::vec3(top_points[(i+1) % _points.size()], _height);
+			if (points3d.size() > 3) {
+				points3d[3] = glm::vec3(top_points[i], _height);
+			}
 
-			sides[i - 1] = new Rectangle(sides_name, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color);
+			glm::mat4 invMat = glm::inverse(mat);
+			for (int k = 0; k < points3d.size(); ++k) {
+				points3d[k] = glm::vec3(invMat * glm::vec4(points3d[k], 1));
+			}
+
+			float dist = glutils::distance(points3d[0], points3d[1], points3d[2]);
+			float angle = asin(_height / dist);
+			glm::mat4 matRot = glm::rotate(glm::mat4(), -angle, glm::vec3(1, 0, 0));
+
+			std::vector<glm::vec2> points(points3d.size());
+			for (int k = 0; k < points.size(); ++k) {
+				points[k] = glm::vec2(matRot * glm::vec4(points3d[k], 1));
+			}
+
+			glm::mat4 mat2 = glm::rotate(mat, angle, glm::vec3(1, 0, 0));
+			sides[i - 1] = new Polygon(front_name, _modelMat * mat2, points, _color, _texture);
+			
 		}
 	}
 
 	// top face
-	{
-		std::vector<glm::vec2> points(_points.size());
-		for (int i = 0; i < _points.size(); ++i) {
-			points[i] = glm::vec2(_points[i] * _top_ratio + _center * (1.0f - _top_ratio));
+	if (_top_ratio > 0.0f) {
+		std::vector<glm::vec2> points = top_points;
+		glm::vec2 offset = points[0];
+		for (int i = 0; i < points.size(); ++i) {
+			points[i] -= offset;
 		}
-		*top = new Polygon(top_name, glm::translate(_modelMat, glm::vec3(0, 0, _height)), points, _color, _texture);
+		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(offset, _height));
+
+		*top = new Polygon(front_name, mat, points, _color, _texture);
 	}
 
 	// bottom face
 	{
 		std::vector<glm::vec2> basePoints = _points;
 		std::reverse(basePoints.begin(), basePoints.end());
-		*base = new Polygon(base_name, _modelMat, basePoints, _color, _texture);
+		*bottom = new Polygon(bottom_name, _modelMat, basePoints, _color, _texture);
 	}
 }
 
