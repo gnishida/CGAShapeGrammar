@@ -1,9 +1,13 @@
 #include "RuleParser.h"
-#include "SetupProjectionRule.h"
+#include "CompRule.h"
+#include "CopyRule.h"
 #include "ExtrudeRule.h"
-#include "ComponentSplitRule.h"
-#include "TextureRule.h"
+#include "OffsetRule.h"
+#include "RoofHipRule.h"
+#include "SetupProjectionRule.h"
 #include "SplitRule.h"
+#include "TaperRule.h"
+#include "TextureRule.h"
 #include "TranslateRule.h"
 #include "CGA.h"
 #include <iostream>
@@ -34,10 +38,18 @@ std::map<std::string, cga::Rule*> parseRule(char* filename) {
 			}
 			QString op = node.toElement().attribute("op");
 
-			if (op == "extrude") {
+			if (op == "copy") {
+				rules[input_name] = parseCopyRule(node);
+			} else if (op == "extrude") {
 				rules[input_name] = parseExtrudeRule(node);
+			} else if (op == "taper") {
+				rules[input_name] = parseTaperRule(node);
+			} else if (op == "offset") {
+				rules[input_name] = parseOffsetRule(node);
 			} else if (op == "comp") {
 				rules[input_name] = parseCompRule(node);
+			} else if (op == "roofHip") {
+				rules[input_name] = parseRoofHipRule(node);
 			} else if (op == "setupProjection") {
 				rules[input_name] = parseSetupProjectionRule(node);
 			} else if (op == "texture") {
@@ -53,28 +65,6 @@ std::map<std::string, cga::Rule*> parseRule(char* filename) {
 	}
 
 	return rules;
-}
-
-Rule* parseExtrudeRule(const QDomNode& node) {
-	float height;
-	std::string output_name;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "height") {
-				height = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
-			}
-		}
-
-		child = child.nextSibling();
-	}
-
-	return new ExtrudeRule(height, output_name);
 }
 
 Rule* parseCompRule(const QDomNode& node) {
@@ -102,7 +92,95 @@ Rule* parseCompRule(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new ComponentSplitRule(front_name, side_name, top_name, bottom_name);
+	return new CompRule(front_name, side_name, top_name, bottom_name);
+}
+
+Rule* parseCopyRule(const QDomNode& node) {
+	std::string copy_name;
+	std::string output_name;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "copy_name") {
+				copy_name = child.toElement().attribute("value").toUtf8().constData();
+			} else if (name == "output_name") {
+				output_name = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new CopyRule(copy_name, output_name);
+}
+
+Rule* parseExtrudeRule(const QDomNode& node) {
+	float height;
+	std::string output_name;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "height") {
+				height = child.toElement().attribute("value").toFloat();
+			} else if (name == "output_name") {
+				output_name = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new ExtrudeRule(height, output_name);
+}
+
+Rule* parseOffsetRule(const QDomNode& node) {
+	float offsetDistance;
+	std::string output_name;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "offsetDistance") {
+				offsetDistance = child.toElement().attribute("value").toFloat();
+			} else if (name == "output_name") {
+				output_name = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new OffsetRule(offsetDistance, output_name);
+}
+
+Rule* parseRoofHipRule(const QDomNode& node) {
+	float angle = 0.0f;
+	std::string output_name;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "angle") {
+				angle = child.toElement().attribute("value").toFloat();
+			} else if (name == "output_name") {
+				output_name = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new RoofHipRule(angle, output_name);
 }
 
 Rule* parseSetupProjectionRule(const QDomNode& node) {
@@ -135,28 +213,6 @@ Rule* parseSetupProjectionRule(const QDomNode& node) {
 	}
 
 	return new SetupProjectionRule(coordinateType, texWidth, texHeight, output_name);
-}
-
-Rule* parseTextureRule(const QDomNode& node) {
-	std::string texture;
-	std::string output_name;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "texture") {
-				texture = child.toElement().attribute("value").toUtf8().constData();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
-			}
-		}
-
-		child = child.nextSibling();
-	}
-
-	return new TextureRule(texture, output_name);
 }
 
 Rule* parseSplitRule(const QDomNode& node) {
@@ -223,6 +279,53 @@ Rule* parseSplitRule(const QDomNode& node) {
 	}
 
 	return new SplitRule(direction, sizes, names);
+}
+
+Rule* parseTaperRule(const QDomNode& node) {
+	float height;
+	float top_ratio = 0.0f;
+	std::string output_name;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "height") {
+				height = child.toElement().attribute("value").toFloat();
+			} else if (name == "top_ratio") {
+				top_ratio = child.toElement().attribute("value").toFloat();
+			} else if (name == "output_name") {
+				output_name = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new TaperRule(height, top_ratio, output_name);
+}
+
+Rule* parseTextureRule(const QDomNode& node) {
+	std::string texture;
+	std::string output_name;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "texture") {
+				texture = child.toElement().attribute("value").toUtf8().constData();
+			} else if (name == "output_name") {
+				output_name = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new TextureRule(texture, output_name);
 }
 
 Rule* parseTranslateRule(const QDomNode& node) {

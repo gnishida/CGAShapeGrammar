@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<rules>
+	<rule input_name="Lot" op="taper">
+		<param name="height" value="11"/>
+		<param name="top_ratio" value="0.7"/>
+		<param name="output_name" value="Body"/>
+	</rule>
+	<rule input_name="Body" op="copy">
+		<param name="copy_name" value="Body_2"/>
+		<param name="output_name" value="Body_3"/>
+	</rule>
+	<rule input_name="Body_3" op="comp">
+		<param name="top" value="Top"/>
+	</rule>
+	<rule input_name="Top" op="offset">
+		<param name="offsetDistance" value="0.2"/>
+		<param name="output_name" value="CapBase"/>
+	</rule>
+	<rule input_name="CapBase" op="extrude">
+		<param name="height" value="6"/>
+		<param name="output_name" value="Cap"/>
+	</rule>
+</rules>

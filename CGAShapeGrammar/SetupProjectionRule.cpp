@@ -19,8 +19,7 @@ SetupProjectionRule::SetupProjectionRule(int type, float texWidth, float texHeig
 }*/
 
 void SetupProjectionRule::apply(Object* obj, std::list<Object*>& stack) {
-	Object *obj2 = obj->clone();
-	obj2->_name = output_name;
+	Object *obj2 = obj->clone(output_name);
 
 	if (type == TYPE_RELATIVE) {
 		obj2->setupProjection(obj->_scope.x, obj->_scope.y);

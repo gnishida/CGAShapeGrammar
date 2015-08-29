@@ -34,8 +34,10 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float w
 	this->_textureEnabled = true;
 }
 
-Object* Rectangle::clone() {
-	return new Rectangle(*this);
+Object* Rectangle::clone(const std::string& name) {
+	Object* copy = new Rectangle(*this);
+	copy->_name = name;
+	return copy;
 }
 
 void Rectangle::setupProjection(float texWidth, float texHeight) {

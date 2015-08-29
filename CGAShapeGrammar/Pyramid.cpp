@@ -21,6 +21,12 @@ Pyramid::Pyramid(const std::string& name, const glm::mat4& modelMat, const std::
 	this->_scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, height);
 }
 
+Object* Pyramid::clone(const std::string& name) {
+	Object* copy = new Pyramid(*this);
+	copy->_name = name;
+	return copy;
+}
+
 void Pyramid::componentSplit(const std::string& front_name, Rectangle** front, const std::string& sides_name, std::vector<Rectangle*>& sides, const std::string& top_name, Polygon** top, const std::string& base_name, Polygon** base) {
 	// front face (To be fixed)
 	{

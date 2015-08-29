@@ -11,4 +11,10 @@ Circle::Circle(const std::string& name, const glm::mat4& modelMat, const glm::ve
 	this->_color = color;
 }
 
+Object* Circle::clone(const std::string& name) {
+	Object* copy = new Circle(*this);
+	copy->_name = name;
+	return copy;
+}
+
 }

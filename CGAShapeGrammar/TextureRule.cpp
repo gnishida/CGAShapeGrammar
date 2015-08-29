@@ -9,10 +9,9 @@ TextureRule::TextureRule(const std::string& texture, const std::string& output_n
 }
 
 void TextureRule::apply(Object* obj, std::list<Object*>& stack) {
-	Object* obj2 = obj->clone();
-	obj2->_name = output_name;
+	Object* obj2 = obj->clone(output_name);
 	
-	obj2->setTexture(texture);
+	obj2->texture(texture);
 	stack.push_back(obj2);
 }
 

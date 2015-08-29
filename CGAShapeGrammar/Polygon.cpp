@@ -24,8 +24,10 @@ Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::
 	_center /= points.size();
 }
 
-Object* Polygon::clone() {
-	return new Polygon(*this);
+Object* Polygon::clone(const std::string& name) {
+	Object* copy = new Polygon(*this);
+	copy->_name = name;
+	return copy;
 }
 
 

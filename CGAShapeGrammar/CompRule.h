@@ -4,7 +4,7 @@
 
 namespace cga {
 
-class ComponentSplitRule : public Rule {
+class CompRule : public Rule {
 private:
 	std::string front_name;
 	std::string side_name;
@@ -12,7 +12,7 @@ private:
 	std::string bottom_name;
 
 public:
-	ComponentSplitRule(const std::string& front_name, const std::string& side_name, const std::string& top_name, const std::string& bottom_name);
+	CompRule(const std::string& front_name, const std::string& side_name, const std::string& top_name, const std::string& bottom_name);
 	void apply(Object* obj, std::list<Object*>& stack);
 };
 

@@ -12,7 +12,7 @@ private:
 public:
 	Polygon() {}
 	Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color, const std::string& texture);
-	Object* clone();
+	Object* clone(const std::string& name);
 	void setupProjection(float texWidth, float texHeight);
 	Object* extrude(const std::string& name, float height);
 	Object* taper(const std::string& name, float height, float top_ratio = 0.0f);

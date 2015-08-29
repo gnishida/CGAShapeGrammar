@@ -22,8 +22,10 @@ HipRoof::HipRoof(const std::string& name, const glm::mat4& modelMat, const std::
 	this->_color = color;
 }
 
-Object* HipRoof::clone() {
-	return new HipRoof(*this);
+Object* HipRoof::clone(const std::string& name) {
+	Object* copy = new HipRoof(*this);
+	copy->_name = name;
+	return copy;
 }
 
 void HipRoof::generate(RenderManager* renderManager) {
@@ -74,13 +76,15 @@ void HipRoof::generate(RenderManager* renderManager) {
 					float z = glutils::distance(p0, p1, p2) * tanf(_angle * M_PI / 180.0f);
 
 					// 三角形を作成
-					glm::vec4 v0 = _modelMat * glm::vec4(p0, 0, 1);
-					glm::vec4 v1 = _modelMat * glm::vec4(prev_p, 1);
-					glm::vec4 v2 = _modelMat * glm::vec4(p2, z, 1);
+					glm::vec3 v0 = glm::vec3(_modelMat * glm::vec4(p0, 0, 1));
+					glm::vec3 v1 = glm::vec3(_modelMat * glm::vec4(prev_p, 1));
+					glm::vec3 v2 = glm::vec3(_modelMat * glm::vec4(p2, z, 1));
 
-					vertices.push_back(Vertex(glm::vec3(v0), glm::vec3(0, 0, 1), _color));
-					vertices.push_back(Vertex(glm::vec3(v1), glm::vec3(0, 0, 1), _color));
-					vertices.push_back(Vertex(glm::vec3(v2), glm::vec3(0, 0, 1), _color));
+					glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
+
+					vertices.push_back(Vertex(v0, normal, _color));
+					vertices.push_back(Vertex(v1, normal, _color));
+					vertices.push_back(Vertex(v2, normal, _color));
 	
 					prev_p = glm::vec3(p2, z);
 				}

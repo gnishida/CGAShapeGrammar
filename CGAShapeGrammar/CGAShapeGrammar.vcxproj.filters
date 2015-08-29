@@ -95,9 +95,6 @@
     <ClCompile Include="SetupProjectionRule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentSplitRule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
     <ClCompile Include="ExtrudeRule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
@@ -123,6 +120,21 @@
       <Filter>Source Files\shape</Filter>
     </ClCompile>
     <ClCompile Include="TextureRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="TaperRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="CopyRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="OffsetRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="RoofHipRule.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="CompRule.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
   </ItemGroup>
@@ -177,9 +189,6 @@
     <ClInclude Include="Rule.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentSplitRule.h">
-      <Filter>Source Files\rule</Filter>
-    </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
@@ -205,6 +214,21 @@
       <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="TextureRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="TaperRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="CopyRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="OffsetRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="RoofHipRule.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="CompRule.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>
