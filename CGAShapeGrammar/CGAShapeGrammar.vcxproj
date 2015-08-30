@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\codebase\GLUtils.cpp" />
+    <ClCompile Include="..\..\codebase\OBJLoader.cpp" />
     <ClCompile Include="..\..\codebase\RenderManager.cpp" />
     <ClCompile Include="..\..\codebase\Shader.cpp" />
     <ClCompile Include="..\..\codebase\ShadowMapping.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="CompOperator.cpp" />
     <ClCompile Include="CopyOperator.cpp" />
     <ClCompile Include="ExtrudeOperator.cpp" />
+    <ClCompile Include="GeneralObject.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_MainWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -157,6 +159,7 @@
     </ClCompile>
     <ClCompile Include="GLWidget3D.cpp" />
     <ClCompile Include="HipRoof.cpp" />
+    <ClCompile Include="InsertOperator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="OffsetOperator.cpp" />
@@ -218,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\codebase\GLUtils.h" />
+    <ClInclude Include="..\..\codebase\OBJLoader.h" />
     <ClInclude Include="..\..\codebase\RenderManager.h" />
     <ClInclude Include="..\..\codebase\Shader.h" />
     <ClInclude Include="..\..\codebase\ShadowMapping.h" />
@@ -228,8 +232,10 @@
     <ClInclude Include="CompOperator.h" />
     <ClInclude Include="CopyOperator.h" />
     <ClInclude Include="ExtrudeOperator.h" />
+    <ClInclude Include="GeneralObject.h" />
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />
     <ClInclude Include="HipRoof.h" />
+    <ClInclude Include="InsertOperator.h" />
     <ClInclude Include="OffsetOperator.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Prism.h" />

@@ -42,6 +42,7 @@ public:
 	virtual void comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom);
 	virtual Object* extrude(const std::string& name, float height);
 	virtual Object* inscribeCircle(const std::string& name);
+	Object* insert(const std::string& name, const std::string& geometryPath);
 	void nil();
 	virtual Object* offset(const std::string& name, float offsetRatio);
 	virtual Object* roofHip(const std::string& name, float angle);

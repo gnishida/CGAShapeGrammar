@@ -143,6 +143,15 @@
     <ClCompile Include="ShapeLOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\codebase\OBJLoader.cpp">
+      <Filter>Source Files\codebase</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralObject.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="InsertOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -242,6 +251,15 @@
     </ClInclude>
     <ClInclude Include="ShapeLOperator.h">
       <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codebase\OBJLoader.h">
+      <Filter>Source Files\codebase</Filter>
+    </ClInclude>
+    <ClInclude Include="InsertOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralObject.h">
+      <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

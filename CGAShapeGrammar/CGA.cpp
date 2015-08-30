@@ -1,10 +1,11 @@
 ﻿#include "CGA.h"
 #include "GLUtils.h"
+#include "OBJLoader.h"
 #include <map>
 
 #include "Rectangle.h"
 #include "Polygon.h"
-
+#include "GeneralObject.h"
 
 namespace cga {
 
@@ -36,6 +37,15 @@ Object* Object::extrude(const std::string& name, float height) {
 
 Object* Object::inscribeCircle(const std::string& name) {
 	throw "inscribeCircle() is not supported.";
+}
+
+Object* Object::insert(const std::string& name, const std::string& geometryPath) {
+	std::vector<glm::vec3> points;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec3> texCoords;
+	OBJLoader::load(geometryPath.c_str(), points, normals, texCoords);
+
+	return new GeneralObject(name, _modelMat, points, normals, _color);
 }
 
 void Object::nil() {

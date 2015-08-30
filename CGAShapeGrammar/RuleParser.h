@@ -12,6 +12,7 @@ std::map<std::string, Rule> parseRule(char* filename);
 Operator* parseCompOperator(const QDomNode& node);
 Operator* parseCopyOperator(const QDomNode& node);
 Operator* parseExtrudeOperator(const QDomNode& node);
+Operator* parseInsertOperator(const QDomNode& node);
 Operator* parseOffsetOperator(const QDomNode& node);
 Operator* parseRoofHipOperator(const QDomNode& node);
 Operator* parseRotateOperator(const QDomNode& node);

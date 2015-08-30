@@ -2,6 +2,7 @@
 #include "CompOperator.h"
 #include "CopyOperator.h"
 #include "ExtrudeOperator.h"
+#include "InsertOperator.h"
 #include "OffsetOperator.h"
 #include "RoofHipOperator.h"
 #include "RotateOperator.h"
@@ -49,6 +50,8 @@ std::map<std::string, Rule> parseRule(char* filename) {
 						rules[name].operators.push_back(parseCompOperator(operator_node));
 					} else if (operator_name == "extrude") {
 						rules[name].operators.push_back(parseExtrudeOperator(operator_node));
+					} else if (operator_name == "insert") {
+						rules[name].operators.push_back(parseInsertOperator(operator_node));
 					} else if (operator_name == "offset") {
 						rules[name].operators.push_back(parseOffsetOperator(operator_node));
 					} else if (operator_name == "roofHip") {
@@ -149,6 +152,25 @@ Operator* parseExtrudeOperator(const QDomNode& node) {
 	}
 
 	return new ExtrudeOperator(height);
+}
+
+Operator* parseInsertOperator(const QDomNode& node) {
+	std::string geometryPath;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "geometryPath") {
+				geometryPath = child.toElement().attribute("value").toUtf8().constData();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new InsertOperator(geometryPath);
 }
 
 Operator* parseOffsetOperator(const QDomNode& node) {
