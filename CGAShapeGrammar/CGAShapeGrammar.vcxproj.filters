@@ -140,6 +140,9 @@
     <ClCompile Include="CopyOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
+    <ClCompile Include="ShapeLOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -235,6 +238,9 @@
       <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="CopyOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeLOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>

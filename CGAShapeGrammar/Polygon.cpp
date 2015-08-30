@@ -2,9 +2,9 @@
 #include "Pyramid.h"
 #include "HipRoof.h"
 #include "Prism.h"
+#include "GLUtils.h"
 
 namespace cga {
-
 
 Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec3& color, const std::string& texture) {
 	this->_name = name;
@@ -66,42 +66,17 @@ Object* Polygon::roofHip(const std::string& name, float angle) {
 	return new HipRoof(name, _modelMat, _points, angle, _color);
 }
 
-void Polygon::generate(RenderManager* renderManager) {
+void Polygon::generate(RenderManager* renderManager, bool showAxes) {
 	if (_removed) return;
 
-	std::vector<Vertex> vertices((_points.size() - 2) * 3);
-
-	glm::vec4 p0(_points[0], 0, 1);
-	p0 = _modelMat * p0;
-	glm::vec4 normal(0, 0, 1, 0);
-	normal = _modelMat * normal;
-
-	glm::vec4 p1(_points[1], 0, 1);
-	p1 = _modelMat * p1;
-
-	glm::vec3 uv1(_points[1].x / _scope.x, _points[1].y / _scope.y, 0);
-
-	for (int i = 1; i < _points.size() - 1; ++i) {
-		glm::vec4 p2(_points[i + 1], 0, 1);
-		p2 = _modelMat * p2;
-
-		glm::vec3 uv2(_points[i + 1].x / _scope.x, _points[i + 1].y / _scope.y, 0);
-
-		vertices[(i - 1) * 3] = Vertex(glm::vec3(p0), glm::vec3(normal), _color, glm::vec3(0, 0, 0));
-		vertices[(i - 1) * 3 + 1] = Vertex(glm::vec3(p1), glm::vec3(normal), _color, uv1);
-		vertices[(i - 1) * 3 + 2] = Vertex(glm::vec3(p2), glm::vec3(normal), _color, uv2);
-
-		p1 = p2;
-		uv1 = uv2;
-	}
+	std::vector<Vertex> vertices;
+	glutils::drawConcavePolygon(_points, _color, _modelMat, vertices);
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 
-	/*if (showAxes) {
-		vertices.resize(0);
-		glutils::drawAxes(0.1, 3, _modelMat, vertices);
-		renderManager->addObject("axis", "", vertices);
-	}*/
+	if (showAxes) {
+		drawAxes(renderManager, _modelMat);
+	}
 }
 
 }

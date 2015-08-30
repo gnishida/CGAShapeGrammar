@@ -60,6 +60,10 @@ void Object::setupProjection(float texWidth, float texHeight) {
 	throw "setupProjection() is not supported.";
 }
 
+Object* Object::shapeL(const std::string& name, float frontWidth, float leftWidth) {
+	throw "shapeL() is not supported.";
+}
+
 void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
 	throw "split() is not supported.";
 }
@@ -77,20 +81,26 @@ void Object::translate(const glm::vec3& v) {
 	_modelMat = glm::translate(_modelMat, v);
 }
 
-void Object::generate(RenderManager* renderManager) {
+void Object::generate(RenderManager* renderManager, bool showAxes) {
 	throw "generate() is not supported.";
+}
+
+void Object::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) {
+	std::vector<Vertex> vertices;
+	glutils::drawAxes(0.1, 3, modelMat, vertices);
+	renderManager->addObject("axis", "", vertices);
 }
 
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack) {
+void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack, bool showAxes) {
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
 
 		if (rules.find(obj->_name) == rules.end()) {
-			obj->generate(renderManager);
+			obj->generate(renderManager, showAxes);
 			delete obj;
 		} else {
 			rules[obj->_name].apply(obj, stack);

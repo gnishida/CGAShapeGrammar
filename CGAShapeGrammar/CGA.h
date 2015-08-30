@@ -47,11 +47,15 @@ public:
 	virtual Object* roofHip(const std::string& name, float angle);
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);
+	virtual Object* shapeL(const std::string& name, float frontWidth, float leftWidth);
 	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	virtual Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);
 	void translate(const glm::vec3& v);
-	virtual void generate(RenderManager* renderManager);
+	virtual void generate(RenderManager* renderManager, bool showAxes);
+
+protected:
+	void drawAxes(RenderManager* renderManager, const glm::mat4& modelMat);
 };
 
 class CGA {
@@ -61,7 +65,7 @@ public:
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack);
+	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack, bool showAxes = false);
 };
 
 }

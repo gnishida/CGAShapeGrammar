@@ -111,7 +111,7 @@ void Pyramid::comp(const std::string& front_name, Object** front, const std::str
 	}
 }
 
-void Pyramid::generate(RenderManager* renderManager) {
+void Pyramid::generate(RenderManager* renderManager, bool showAxes) {
 	if (_removed) return;
 
 	if (_top_ratio == 0.0f) {
@@ -174,11 +174,9 @@ void Pyramid::generate(RenderManager* renderManager) {
 		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 	}
 
-	/*if (showAxes) {
-		std::vector<Vertex> vertices;
-		glutils::drawAxes(0.1, 3, _modelMat, vertices);
-		renderManager->addObject("axis", "", vertices);
-	}*/
+	if (showAxes) {
+		drawAxes(renderManager, _modelMat);
+	}
 }
 
 

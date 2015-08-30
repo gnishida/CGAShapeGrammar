@@ -28,7 +28,7 @@ Object* HipRoof::clone(const std::string& name) {
 	return copy;
 }
 
-void HipRoof::generate(RenderManager* renderManager) {
+void HipRoof::generate(RenderManager* renderManager, bool showAxes) {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -93,6 +93,10 @@ void HipRoof::generate(RenderManager* renderManager) {
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
+
+	if (showAxes) {
+		drawAxes(renderManager, _modelMat);
+	}
 }
 
 }

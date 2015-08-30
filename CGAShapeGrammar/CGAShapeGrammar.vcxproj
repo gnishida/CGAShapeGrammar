@@ -168,6 +168,7 @@
     <ClCompile Include="RotateOperator.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleParser.cpp" />
+    <ClCompile Include="ShapeLOperator.cpp" />
     <ClCompile Include="TaperOperator.cpp" />
     <ClCompile Include="TextureOperator.cpp" />
     <ClCompile Include="SetupProjectionOperator.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="RotateOperator.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleParser.h" />
+    <ClInclude Include="ShapeLOperator.h" />
     <ClInclude Include="TaperOperator.h" />
     <ClInclude Include="TextureOperator.h" />
     <ClInclude Include="SetupProjectionOperator.h" />

@@ -6,6 +6,7 @@
 #include "RoofHipOperator.h"
 #include "RotateOperator.h"
 #include "SetupProjectionOperator.h"
+#include "ShapeLOperator.h"
 #include "SplitOperator.h"
 #include "TaperOperator.h"
 #include "TextureOperator.h"
@@ -54,6 +55,8 @@ std::map<std::string, Rule> parseRule(char* filename) {
 						rules[name].operators.push_back(parseRoofHipOperator(operator_node));
 					} else if (operator_name == "setupProjection") {
 						rules[name].operators.push_back(parseSetupProjectionOperator(operator_node));
+					} else if (operator_name == "shapeL") {
+						rules[name].operators.push_back(parseShapeLOperator(operator_node));
 					} else if (operator_name == "split") {
 						rules[name].operators.push_back(parseSplitOperator(operator_node));
 					} else if (operator_name == "taper") {
@@ -238,6 +241,28 @@ Operator* parseSetupProjectionOperator(const QDomNode& node) {
 	}
 
 	return new SetupProjectionOperator(coordinateType, texWidth, texHeight);
+}
+
+Operator* parseShapeLOperator(const QDomNode& node) {
+	float frontWidth;
+	float leftWidth;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "frontWidth") {
+				frontWidth = child.toElement().attribute("value").toFloat();
+			} else if (name == "leftWidth") {
+				leftWidth = child.toElement().attribute("value").toFloat();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new ShapeLOperator(frontWidth, leftWidth);
 }
 
 Operator* parseSplitOperator(const QDomNode& node) {

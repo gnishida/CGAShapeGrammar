@@ -3,6 +3,7 @@
 #include "Pyramid.h"
 #include "HipRoof.h"
 #include "Prism.h"
+#include "Polygon.h"
 
 namespace cga {
 
@@ -79,6 +80,18 @@ Object* Rectangle::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
+Object* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
+	std::vector<glm::vec2> points(6);
+	points[0] = glm::vec2(0, 0);
+	points[1] = glm::vec2(_width, 0);
+	points[2] = glm::vec2(_width, frontWidth);
+	points[3] = glm::vec2(leftWidth, frontWidth);
+	points[4] = glm::vec2(leftWidth, _height);
+	points[5] = glm::vec2(0, _height);
+
+	return new Polygon(name, _modelMat, points, _color, _texture);
+}
+
 void Rectangle::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Object*>& objects) {
 	objects.resize(sizes.size());
 
@@ -119,7 +132,7 @@ Object* Rectangle::roofHip(const std::string& name, float angle) {
 	return new HipRoof(name, _modelMat, points, angle, _color);
 }
 
-void Rectangle::generate(RenderManager* renderManager) {
+void Rectangle::generate(RenderManager* renderManager, bool showAxes) {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -160,11 +173,11 @@ void Rectangle::generate(RenderManager* renderManager) {
 		renderManager->addObject(_name.c_str(), "", vertices);
 	}
 	
-	vertices.resize(0);
-	/*if (showAxes) {
+	if (showAxes) {
+		vertices.resize(0);
 		glutils::drawAxes(0.1, 3, _modelMat, vertices);
 		renderManager->addObject("axis", "", vertices);
-	}*/
+	}
 }
 
 }

@@ -1,6 +1,7 @@
 #include "Prism.h"
 #include "Rectangle.h"
 #include "Polygon.h"
+#include "GLUtils.h"
 
 namespace cga {
 
@@ -77,65 +78,28 @@ void Prism::comp(const std::string& front_name, Object** front, const std::strin
 
 	// bottom face
 	{
-		std::vector<glm::vec2> basePoints = _points;
-		std::reverse(basePoints.begin(), basePoints.end());
-		*bottom = new Polygon(bottom_name, _modelMat, basePoints, _color, _texture);
+		//std::vector<glm::vec2> basePoints = _points;
+		//std::reverse(basePoints.begin(), basePoints.end());
+		*bottom = new Polygon(bottom_name, _modelMat, _points, _color, _texture);
 	}
 }
 
-void Prism::generate(RenderManager* renderManager) {
+void Prism::generate(RenderManager* renderManager, bool showAxes) {
 	if (_removed) return;
 
-	std::vector<Vertex> vertices((_points.size() - 2) * 6 + _points.size() * 6);
+	std::vector<Vertex> vertices;//((_points.size() - 2) * 6 + _points.size() * 6);
 
 	int num = 0;
 
 	// top
 	{
-		glm::vec4 p0(_points.back(), _height, 1);
-		p0 = _modelMat * p0;
-		glm::vec4 normal(0, 0, 1, 0);
-		normal = _modelMat * normal;
-
-		glm::vec4 p1(_points[0], _height, 1);
-		p1 = _modelMat * p1;
-
-		for (int i = 0; i < _points.size() - 2; ++i) {
-			glm::vec4 p2(_points[i + 1], _height, 1);
-			p2 = _modelMat * p2;
-
-			vertices[i * 3] = Vertex(glm::vec3(p0), glm::vec3(normal), _color);
-			vertices[i * 3 + 1] = Vertex(glm::vec3(p1), glm::vec3(normal), _color);
-			vertices[i * 3 + 2] = Vertex(glm::vec3(p2), glm::vec3(normal), _color);
-
-			p1 = p2;
-		}
-
-		num += (_points.size() - 2) * 3;
+		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(0, 0, _height));
+		glutils::drawConcavePolygon(_points, _color, mat, vertices);
 	}
 
 	// bottom
 	{
-		glm::vec4 p0(_points.back(), 0, 1);
-		p0 = _modelMat * p0;
-		glm::vec4 normal(0, 0, -1, 0);
-		normal = _modelMat * normal;
-
-		glm::vec4 p1(_points[0], 0, 1);
-		p1 = _modelMat * p1;
-
-		for (int i = 0; i < _points.size() - 2; ++i) {
-			glm::vec4 p2(_points[i + 1], 0, 1);
-			p2 = _modelMat * p2;
-
-			vertices[num + i * 3] = Vertex(glm::vec3(p0), glm::vec3(normal), _color);
-			vertices[num + i * 3 + 1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color);
-			vertices[num + i * 3 + 2] = Vertex(glm::vec3(p1), glm::vec3(normal), _color);
-
-			p1 = p2;
-		}
-
-		num += (_points.size() - 2) * 3;
+		glutils::drawConcavePolygon(_points, _color, _modelMat, vertices);
 	}
 
 	// side
@@ -153,13 +117,13 @@ void Prism::generate(RenderManager* renderManager) {
 
 			glm::vec3 normal = glm::normalize(glm::cross(glm::vec3(p3) - glm::vec3(p1), glm::vec3(p2) - glm::vec3(p1)));
 			
-			vertices[num + i * 6 + 0] = Vertex(glm::vec3(p1), normal, _color);
-			vertices[num + i * 6 + 1] = Vertex(glm::vec3(p3), normal, _color);
-			vertices[num + i * 6 + 2] = Vertex(glm::vec3(p4), normal, _color);
+			vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p3), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p4), normal, _color));
 
-			vertices[num + i * 6 + 3] = Vertex(glm::vec3(p1), normal, _color);
-			vertices[num + i * 6 + 4] = Vertex(glm::vec3(p4), normal, _color);
-			vertices[num + i * 6 + 5] = Vertex(glm::vec3(p2), normal, _color);
+			vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p4), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p2), normal, _color));
 
 			p1 = p3;
 			p2 = p4;
@@ -168,11 +132,9 @@ void Prism::generate(RenderManager* renderManager) {
 
 	renderManager->addObject(_name.c_str(), "", vertices);
 
-	/*if (showAxes) {
-		vertices.resize(0);
-		glutils::drawAxes(0.1, 3, _modelMat, vertices);
-		renderManager->addObject("axis", "", vertices);
-	}*/
+	if (showAxes) {
+		drawAxes(renderManager, _modelMat);
+	}
 }
 
 }

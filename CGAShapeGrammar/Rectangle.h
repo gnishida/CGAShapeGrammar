@@ -19,9 +19,10 @@ public:
 	Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	Object* offset(const std::string& name, float offsetRatio);
 	Object* inscribeCircle(const std::string& name);
+	Object* shapeL(const std::string& name, float frontWidth, float leftWidth);
 	void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	Object* roofHip(const std::string& name, float angle);
-	void generate(RenderManager* renderManager);
+	void generate(RenderManager* renderManager, bool showAxes);
 };
 
 }
