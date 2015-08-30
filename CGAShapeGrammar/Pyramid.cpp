@@ -129,9 +129,9 @@ void Pyramid::generate(RenderManager* renderManager, bool showAxes) {
 
 			glm::vec3 normal = glm::cross(glm::vec3(p1 - p0), glm::vec3(p2 - p0));
 
-			vertices[i * 3] = Vertex(glm::vec3(p0), normal, _color, glm::vec3(0, 0, 0));
-			vertices[i * 3 + 1] = Vertex(glm::vec3(p1), normal, _color, glm::vec3(0, 0, 0));
-			vertices[i * 3 + 2] = Vertex(glm::vec3(p2), normal, _color, glm::vec3(0, 0, 0));
+			vertices[i * 3] = Vertex(glm::vec3(p0), normal, _color, glm::vec2(0, 0));
+			vertices[i * 3 + 1] = Vertex(glm::vec3(p1), normal, _color, glm::vec2(0, 0));
+			vertices[i * 3 + 2] = Vertex(glm::vec3(p2), normal, _color, glm::vec2(0, 0));
 
 			p1 = p2;
 		}
@@ -157,13 +157,13 @@ void Pyramid::generate(RenderManager* renderManager, bool showAxes) {
 
 			glm::vec3 normal = glm::cross(glm::vec3(p2 - p0), glm::vec3(p3 - p0));
 
-			vertices[i * 6 + 0] = Vertex(glm::vec3(p0), normal, _color, glm::vec3(0, 0, 0));
-			vertices[i * 6 + 1] = Vertex(glm::vec3(p2), normal, _color, glm::vec3(0, 0, 0));
-			vertices[i * 6 + 2] = Vertex(glm::vec3(p3), normal, _color, glm::vec3(0, 0, 0));
+			vertices[i * 6 + 0] = Vertex(glm::vec3(p0), normal, _color, glm::vec2(0, 0));
+			vertices[i * 6 + 1] = Vertex(glm::vec3(p2), normal, _color, glm::vec2(0, 0));
+			vertices[i * 6 + 2] = Vertex(glm::vec3(p3), normal, _color, glm::vec2(0, 0));
 
-			vertices[i * 6 + 3] = Vertex(glm::vec3(p0), normal, _color, glm::vec3(0, 0, 0));
-			vertices[i * 6 + 4] = Vertex(glm::vec3(p3), normal, _color, glm::vec3(0, 0, 0));
-			vertices[i * 6 + 5] = Vertex(glm::vec3(p1), normal, _color, glm::vec3(0, 0, 0));
+			vertices[i * 6 + 3] = Vertex(glm::vec3(p0), normal, _color, glm::vec2(0, 0));
+			vertices[i * 6 + 4] = Vertex(glm::vec3(p3), normal, _color, glm::vec2(0, 0));
+			vertices[i * 6 + 5] = Vertex(glm::vec3(p1), normal, _color, glm::vec2(0, 0));
 
 			p0 = p2;
 			p1 = p3;
