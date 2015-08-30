@@ -45,23 +45,23 @@ BoundingBox::BoundingBox(const std::vector<glm::vec3>& points) {
 	}
 }
 
-Object* Object::clone(const std::string& name) {
+Shape* Shape::clone(const std::string& name) {
 	throw "clone() is not supported.";
 }
 
-void Object::comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom) {
+void Shape::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
 	throw "componentSplit() is not supported.";
 }
 
-Object* Object::extrude(const std::string& name, float height) {
+Shape* Shape::extrude(const std::string& name, float height) {
 	throw "extrude() is not supported.";
 }
 
-Object* Object::inscribeCircle(const std::string& name) {
+Shape* Shape::inscribeCircle(const std::string& name) {
 	throw "inscribeCircle() is not supported.";
 }
 
-Object* Object::insert(const std::string& name, const std::string& geometryPath) {
+Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 	std::vector<glm::vec3> points;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec3> texCoords;
@@ -89,54 +89,54 @@ Object* Object::insert(const std::string& name, const std::string& geometryPath)
 	return new GeneralObject(name, _modelMat, points, normals, _color);
 }
 
-void Object::nil() {
+void Shape::nil() {
 	_removed = true;
 }
 
-Object* Object::offset(const std::string& name, float offsetRatio) {
+Shape* Shape::offset(const std::string& name, float offsetRatio) {
 	throw "offset() is not supported.";
 }
 
-Object* Object::roofHip(const std::string& name, float angle) {
+Shape* Shape::roofHip(const std::string& name, float angle) {
 	throw "roofHip() is not supported.";
 }
 
-void Object::rotate(const std::string& name, float xAngle, float yAngle, float zAngle) {
+void Shape::rotate(const std::string& name, float xAngle, float yAngle, float zAngle) {
 	_modelMat = glm::rotate(_modelMat, xAngle * M_PI / 180.0f, glm::vec3(1, 0, 0));
 	_modelMat = glm::rotate(_modelMat, yAngle * M_PI / 180.0f, glm::vec3(0, 1, 0));
 	_modelMat = glm::rotate(_modelMat, zAngle * M_PI / 180.0f, glm::vec3(0, 0, 1));
 }
 
-void Object::setupProjection(float texWidth, float texHeight) {
+void Shape::setupProjection(float texWidth, float texHeight) {
 	throw "setupProjection() is not supported.";
 }
 
-Object* Object::shapeL(const std::string& name, float frontWidth, float leftWidth) {
+Shape* Shape::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	throw "shapeL() is not supported.";
 }
 
-void Object::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
+void Shape::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Shape*>& objects) {
 	throw "split() is not supported.";
 }
 
-Object* Object::taper(const std::string& name, float height, float top_ratio) {
+Shape* Shape::taper(const std::string& name, float height, float top_ratio) {
 	throw "taper() is not supported.";
 }
 
-void Object::texture(const std::string& tex) {
+void Shape::texture(const std::string& tex) {
 	this->_texture = tex;
 	_textureEnabled = true;
 }
 
-void Object::translate(const glm::vec3& v) {
+void Shape::translate(const glm::vec3& v) {
 	_modelMat = glm::translate(_modelMat, v);
 }
 
-void Object::generate(RenderManager* renderManager, bool showAxes) {
+void Shape::generate(RenderManager* renderManager, bool showAxes) {
 	throw "generate() is not supported.";
 }
 
-void Object::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) {
+void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) {
 	std::vector<Vertex> vertices;
 	glutils::drawAxes(0.1, 3, modelMat, vertices);
 	renderManager->addObject("axis", "", vertices);
@@ -145,9 +145,9 @@ void Object::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) {
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack, bool showAxes) {
+void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showAxes) {
 	while (!stack.empty()) {
-		Object* obj = stack.front();
+		Shape* obj = stack.front();
 		stack.pop_front();
 
 		if (rules.find(obj->_name) == rules.end()) {

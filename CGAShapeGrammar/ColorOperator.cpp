@@ -7,7 +7,7 @@ ColorOperator::ColorOperator(const glm::vec3& color) {
 	this->color = color;
 }
 
-Object* ColorOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* ColorOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	obj->_color = color;
 	return obj;
 }

@@ -11,7 +11,7 @@ private:
 public:
 	InsertOperator(const std::string& geometryPath);
 
-	Object* apply(Object* obj, std::list<Object*>& stack);
+	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 
 }

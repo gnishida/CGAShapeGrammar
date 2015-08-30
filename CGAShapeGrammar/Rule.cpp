@@ -30,7 +30,7 @@ float ValueSet::getEstimateValue(float size) {
 	return sum;
 }
 
-void Rule::apply(Object* obj, std::list<Object*>& stack) {
+void Rule::apply(Shape* obj, std::list<Shape*>& stack) {
 	for (int i = 0; i < operators.size(); ++i) {
 		obj = operators[i]->apply(obj, stack);
 	}

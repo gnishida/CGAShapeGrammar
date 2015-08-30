@@ -22,8 +22,8 @@ HipRoof::HipRoof(const std::string& name, const glm::mat4& modelMat, const std::
 	this->_color = color;
 }
 
-Object* HipRoof::clone(const std::string& name) {
-	Object* copy = new HipRoof(*this);
+Shape* HipRoof::clone(const std::string& name) {
+	Shape* copy = new HipRoof(*this);
 	copy->_name = name;
 	return copy;
 }

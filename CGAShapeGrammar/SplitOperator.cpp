@@ -9,8 +9,8 @@ SplitOperator::SplitOperator(int direction, const std::vector<Value*>& sizes, co
 	this->output_names = output_names;
 }
 
-Object* SplitOperator::apply(Object* obj, std::list<Object*>& stack) {
-	std::vector<Object*> floors;
+Shape* SplitOperator::apply(Shape* obj, std::list<Shape*>& stack) {
+	std::vector<Shape*> floors;
 
 	std::vector<float> decoded_sizes;
 	std::vector<std::string> decoded_output_names;

@@ -7,7 +7,7 @@ OffsetOperator::OffsetOperator(float offsetDistance) {
 	this->offsetDistance = offsetDistance;
 }
 
-Object* OffsetOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* OffsetOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	return obj->offset(obj->_name, offsetDistance);
 }
 

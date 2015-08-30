@@ -16,7 +16,7 @@ private:
 public:
 	SetupProjectionOperator(int type, float texWidth, float texHeight);
 	//SetupProjectionRule(float u1, float v1, float u2, float v2, const std::string& output_name);
-	Object* apply(Object* obj, std::list<Object*>& stack);
+	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 
 }

@@ -14,13 +14,10 @@ enum { REVOLVE_X = 0, REVOLVE_Y };
 
 const float M_PI = 3.1415926f;
 
-/*class Polygon;
-class Rectangle;*/
-
 class BoundingBox {
 public:
-	glm::vec3 minPt;//bottom_left;
-	glm::vec3 maxPt;//upper_right;
+	glm::vec3 minPt;
+	glm::vec3 maxPt;
 
 public:
 	BoundingBox(const std::vector<glm::vec2>& points);
@@ -30,7 +27,7 @@ public:
 	float sz() { return maxPt.z - minPt.z; }
 };
 
-class Object {
+class Shape {
 public:
 	std::string _name;
 	bool _removed;
@@ -42,19 +39,19 @@ public:
 	glm::vec3 _scope;
 
 public:
-	virtual Object* clone(const std::string& name);
-	virtual void comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom);
-	virtual Object* extrude(const std::string& name, float height);
-	virtual Object* inscribeCircle(const std::string& name);
-	Object* insert(const std::string& name, const std::string& geometryPath);
+	virtual Shape* clone(const std::string& name);
+	virtual void comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom);
+	virtual Shape* extrude(const std::string& name, float height);
+	virtual Shape* inscribeCircle(const std::string& name);
+	Shape* insert(const std::string& name, const std::string& geometryPath);
 	void nil();
-	virtual Object* offset(const std::string& name, float offsetRatio);
-	virtual Object* roofHip(const std::string& name, float angle);
+	virtual Shape* offset(const std::string& name, float offsetRatio);
+	virtual Shape* roofHip(const std::string& name, float angle);
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);
-	virtual Object* shapeL(const std::string& name, float frontWidth, float leftWidth);
-	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
-	virtual Object* taper(const std::string& name, float height, float top_ratio = 0.0f);
+	virtual Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
+	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Shape*>& objects);
+	virtual Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);
 	void translate(const glm::vec3& v);
 	virtual void generate(RenderManager* renderManager, bool showAxes);
@@ -70,7 +67,7 @@ public:
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack, bool showAxes = false);
+	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showAxes = false);
 };
 
 }

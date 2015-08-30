@@ -12,7 +12,7 @@ private:
 public:
 	ShapeLOperator(float frontWidth, float leftWidth);
 
-	Object* apply(Object* obj, std::list<Object*>& stack);
+	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 
 }

@@ -7,7 +7,7 @@ ExtrudeOperator::ExtrudeOperator(float height) {
 	this->height = height;
 }
 
-Object* ExtrudeOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* ExtrudeOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	return obj->extrude(obj->_name, height);
 }
 

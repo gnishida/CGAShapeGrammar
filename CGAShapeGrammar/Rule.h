@@ -7,7 +7,7 @@
 
 namespace cga {
 
-class Object;
+class Shape;
 
 class Value  {
 public:
@@ -43,7 +43,7 @@ class Operator {
 public:
 	Operator() {}
 
-	virtual Object* apply(Object* obj, std::list<Object*>& stack) = 0;
+	virtual Shape* apply(Shape* obj, std::list<Shape*>& stack) = 0;
 };
 
 class Rule {
@@ -54,7 +54,7 @@ public:
 public:
 	Rule() {}
 
-	void apply(Object* obj, std::list<Object*>& stack);
+	void apply(Shape* obj, std::list<Shape*>& stack);
 	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
 	//static std::map<std::string, cga::Rule*> parseRule(char* filename);
 };

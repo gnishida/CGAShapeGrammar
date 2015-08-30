@@ -12,7 +12,7 @@ private:
 public:
 	ColorOperator(const glm::vec3& color);
 
-	Object* apply(Object* obj, std::list<Object*>& stack);
+	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 
 }

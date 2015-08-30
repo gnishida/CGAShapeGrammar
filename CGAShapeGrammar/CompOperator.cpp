@@ -12,11 +12,11 @@ CompOperator::CompOperator(const std::string& front_name, const std::string& sid
 	this->bottom_name = bottom_name;
 }
 
-Object* CompOperator::apply(Object* obj, std::list<Object*>& stack) {
-	Object* front = NULL;
-	std::vector<Object*> sides;
-	Object* top = NULL;
-	Object* bottom = NULL;
+Shape* CompOperator::apply(Shape* obj, std::list<Shape*>& stack) {
+	Shape* front = NULL;
+	std::vector<Shape*> sides;
+	Shape* top = NULL;
+	Shape* bottom = NULL;
 	
 	obj->comp(front_name, &front, side_name, sides, top_name, &top, bottom_name, &bottom);
 	if (front != NULL) {

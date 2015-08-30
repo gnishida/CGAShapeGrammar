@@ -17,8 +17,8 @@ Prism::Prism(const std::string& name, const glm::mat4& modelMat, const std::vect
 	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, height);
 }
 
-Object* Prism::clone(const std::string& name) {
-	Object* copy = new Prism(*this);
+Shape* Prism::clone(const std::string& name) {
+	Shape* copy = new Prism(*this);
 	copy->_name = name;
 	return copy;
 }
@@ -26,7 +26,7 @@ Object* Prism::clone(const std::string& name) {
 void Prism::setupProjection(float texWidth, float texHeight) {
 }
 
-void Prism::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects) {
+void Prism::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Shape*>& objects) {
 	glm::mat4 modelMat = this->_modelMat;
 
 	for (int i = 0; i < ratios.size(); ++i) {
@@ -41,7 +41,7 @@ void Prism::split(int direction, const std::vector<float> ratios, const std::vec
 }
 
 
-void Prism::comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom) {
+void Prism::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
 	// front face
 	{
 		*front = new Rectangle(front_name, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color);

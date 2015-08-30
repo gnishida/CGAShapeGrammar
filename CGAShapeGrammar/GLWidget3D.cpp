@@ -107,7 +107,7 @@ void GLWidget3D::loadCGA(char* filename) {
 
 	renderManager.removeObjects();
 
-	std::list<cga::Object*> stack;
+	std::list<cga::Shape*> stack;
 	cga::Rectangle* lot = new cga::Rectangle("Lot", system.modelMat, 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 

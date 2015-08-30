@@ -7,7 +7,7 @@ RoofHipOperator::RoofHipOperator(float angle) {
 	this->angle = angle;
 }
 
-Object* RoofHipOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* RoofHipOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	return obj->roofHip(obj->_name, angle);
 }
 

@@ -13,7 +13,7 @@ private:
 public:
 	RotateOperator(float xAngle, float yAngle, float zAngle);
 
-	Object* apply(Object* obj, std::list<Object*>& stack);
+	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 
 }

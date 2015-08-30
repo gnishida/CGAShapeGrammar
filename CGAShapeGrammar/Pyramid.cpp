@@ -21,13 +21,13 @@ Pyramid::Pyramid(const std::string& name, const glm::mat4& modelMat, const std::
 	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, height);
 }
 
-Object* Pyramid::clone(const std::string& name) {
-	Object* copy = new Pyramid(*this);
+Shape* Pyramid::clone(const std::string& name) {
+	Shape* copy = new Pyramid(*this);
 	copy->_name = name;
 	return copy;
 }
 
-void Pyramid::comp(const std::string& front_name, Object** front, const std::string& sides_name, std::vector<Object*>& sides, const std::string& top_name, Object** top, const std::string& bottom_name, Object** bottom) {
+void Pyramid::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
 	std::vector<glm::vec2> top_points(_points.size());
 	for (int i = 0; i < _points.size(); ++i) {
 		top_points[i] = (_points[i] - _center) * _top_ratio + _center;

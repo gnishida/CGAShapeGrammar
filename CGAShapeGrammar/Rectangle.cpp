@@ -35,8 +35,8 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& modelMat, float w
 	this->_textureEnabled = true;
 }
 
-Object* Rectangle::clone(const std::string& name) {
-	Object* copy = new Rectangle(*this);
+Shape* Rectangle::clone(const std::string& name) {
+	Shape* copy = new Rectangle(*this);
 	copy->_name = name;
 	return copy;
 }
@@ -49,7 +49,7 @@ void Rectangle::setupProjection(float texWidth, float texHeight) {
 	_texCoords[3] = glm::vec2(0, _height / texHeight);
 }
 
-Object* Rectangle::extrude(const std::string& name, float height) {
+Shape* Rectangle::extrude(const std::string& name, float height) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_width, 0);
@@ -58,7 +58,7 @@ Object* Rectangle::extrude(const std::string& name, float height) {
 	return new Prism(name, _modelMat, points, height, _color);
 }
 
-Object* Rectangle::taper(const std::string& name, float height, float top_ratio) {
+Shape* Rectangle::taper(const std::string& name, float height, float top_ratio) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_width, 0);
@@ -67,7 +67,7 @@ Object* Rectangle::taper(const std::string& name, float height, float top_ratio)
 	return new Pyramid(name, _modelMat, points, glm::vec2(_width * 0.5, _height * 0.5), height, top_ratio, _color, _texture);
 }
 
-Object* Rectangle::offset(const std::string& name, float offsetRatio) {
+Shape* Rectangle::offset(const std::string& name, float offsetRatio) {
 	glm::mat4 mat = glm::translate(_modelMat, glm::vec3(_scope.x * 0.5f * offsetRatio, _scope.y * 0.5f * offsetRatio, 0));
 	if (_textureEnabled) {
 		return new Rectangle(name, mat, _width * (1.0f - offsetRatio), _height * (1.0f - offsetRatio), _texture, _texCoords[0].x, _texCoords[0].y, _texCoords[2].x, _texCoords[2].y);
@@ -76,11 +76,11 @@ Object* Rectangle::offset(const std::string& name, float offsetRatio) {
 	}
 }
 
-Object* Rectangle::inscribeCircle(const std::string& name) {
+Shape* Rectangle::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-Object* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
+Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	std::vector<glm::vec2> points(6);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_width, 0);
@@ -92,7 +92,7 @@ Object* Rectangle::shapeL(const std::string& name, float frontWidth, float leftW
 	return new Polygon(name, _modelMat, points, _color, _texture);
 }
 
-void Rectangle::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Object*>& objects) {
+void Rectangle::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Shape*>& objects) {
 	objects.resize(sizes.size());
 
 	float offset = 0.0f;
@@ -123,7 +123,7 @@ void Rectangle::split(int direction, const std::vector<float> sizes, const std::
 	}
 }
 
-Object* Rectangle::roofHip(const std::string& name, float angle) {
+Shape* Rectangle::roofHip(const std::string& name, float angle) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_width, 0);

@@ -24,8 +24,8 @@ Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::
 	_center /= points.size();
 }
 
-Object* Polygon::clone(const std::string& name) {
-	Object* copy = new Polygon(*this);
+Shape* Polygon::clone(const std::string& name) {
+	Shape* copy = new Polygon(*this);
 	copy->_name = name;
 	return copy;
 }
@@ -38,15 +38,15 @@ void Polygon::setupProjection(float texWidth, float texHeight) {
 	}
 }
 
-Object* Polygon::extrude(const std::string& name, float height) {
+Shape* Polygon::extrude(const std::string& name, float height) {
 	return new Prism(name, _modelMat, _points, height, _color);
 }
 
-Object* Polygon::taper(const std::string& name, float height, float top_ratio) {
+Shape* Polygon::taper(const std::string& name, float height, float top_ratio) {
 	return new Pyramid(name, _modelMat, _points, _center, height, top_ratio, _color, _texture);
 }
 
-Object* Polygon::offset(const std::string& name, float offsetRatio) {
+Shape* Polygon::offset(const std::string& name, float offsetRatio) {
 	glm::vec2 t = glm::vec2(_points[0] * (1.0f - offsetRatio) + _center * offsetRatio) - _points[0];
 
 	std::vector<glm::vec2> points(_points.size());
@@ -58,11 +58,11 @@ Object* Polygon::offset(const std::string& name, float offsetRatio) {
 	return new Polygon(name, mat, points, _color, _texture);
 }
 
-Object* Polygon::inscribeCircle(const std::string& name) {
+Shape* Polygon::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-Object* Polygon::roofHip(const std::string& name, float angle) {
+Shape* Polygon::roofHip(const std::string& name, float angle) {
 	return new HipRoof(name, _modelMat, _points, angle, _color);
 }
 

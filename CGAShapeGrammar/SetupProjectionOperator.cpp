@@ -17,7 +17,7 @@ SetupProjectionOperator::SetupProjectionOperator(int type, float texWidth, float
 	this->output_name = output_name;
 }*/
 
-Object* SetupProjectionOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* SetupProjectionOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	if (type == TYPE_RELATIVE) {
 		obj->setupProjection(obj->_scope.x, obj->_scope.y);
 	} else {

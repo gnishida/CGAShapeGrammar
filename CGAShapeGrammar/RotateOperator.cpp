@@ -9,7 +9,7 @@ RotateOperator::RotateOperator(float xAngle, float yAngle, float zAngle) {
 	this->zAngle = zAngle;
 }
 
-Object* RotateOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* RotateOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	obj->rotate(obj->_name, xAngle, yAngle, zAngle);
 	return obj;
 }

@@ -7,7 +7,7 @@ TranslateOperator::TranslateOperator(const glm::vec3& vec) {
 	this->vec = vec;
 }
 
-Object* TranslateOperator::apply(Object* obj, std::list<Object*>& stack) {
+Shape* TranslateOperator::apply(Shape* obj, std::list<Shape*>& stack) {
 	obj->translate(vec);
 	return obj;
 }

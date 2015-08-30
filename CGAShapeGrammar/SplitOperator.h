@@ -12,7 +12,7 @@ private:
 
 public:
 	SplitOperator(int direction, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names);
-	Object* apply(Object* obj, std::list<Object*>& stack);
+	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 
 }

@@ -11,8 +11,8 @@ GeneralObject::GeneralObject(const std::string& name, const glm::mat4& modelMat,
 	this->_color = color;
 }
 
-Object* GeneralObject::clone(const std::string& name) {
-	Object* copy = new GeneralObject(*this);
+Shape* GeneralObject::clone(const std::string& name) {
+	Shape* copy = new GeneralObject(*this);
 	copy->_name = name;
 	return copy;
 }
