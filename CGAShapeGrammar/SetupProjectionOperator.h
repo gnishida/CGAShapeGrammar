@@ -4,7 +4,7 @@
 
 namespace cga {
 
-class SetupProjectionRule : public Rule {
+class SetupProjectionOperator : public Operator {
 public:
 	static enum { TYPE_ABSOLUTE = 0, TYPE_RELATIVE };
 
@@ -14,9 +14,9 @@ private:
 	float texHeight;
 
 public:
-	SetupProjectionRule(int type, float texWidth, float texHeight, const std::string& output_name);
+	SetupProjectionOperator(int type, float texWidth, float texHeight);
 	//SetupProjectionRule(float u1, float v1, float u2, float v2, const std::string& output_name);
-	void apply(Object* obj, std::list<Object*>& stack);
+	Object* apply(Object* obj, std::list<Object*>& stack);
 };
 
 }

@@ -8,16 +8,17 @@
 
 namespace cga {
 
-std::map<std::string, cga::Rule*> parseRule(char* filename);
-Rule* parseCompRule(const QDomNode& node);
-Rule* parseCopyRule(const QDomNode& node);
-Rule* parseExtrudeRule(const QDomNode& node);
-Rule* parseOffsetRule(const QDomNode& node);
-Rule* parseRoofHipRule(const QDomNode& node);
-Rule* parseSetupProjectionRule(const QDomNode& node);
-Rule* parseSplitRule(const QDomNode& node);
-Rule* parseTaperRule(const QDomNode& node);
-Rule* parseTextureRule(const QDomNode& node);
-Rule* parseTranslateRule(const QDomNode& node);
+std::map<std::string, Rule> parseRule(char* filename);
+Operator* parseCompOperator(const QDomNode& node);
+Operator* parseCopyOperator(const QDomNode& node);
+Operator* parseExtrudeOperator(const QDomNode& node);
+Operator* parseOffsetOperator(const QDomNode& node);
+Operator* parseRoofHipOperator(const QDomNode& node);
+Operator* parseRotateOperator(const QDomNode& node);
+Operator* parseSetupProjectionOperator(const QDomNode& node);
+Operator* parseSplitOperator(const QDomNode& node);
+Operator* parseTaperOperator(const QDomNode& node);
+Operator* parseTextureOperator(const QDomNode& node);
+Operator* parseTranslateOperator(const QDomNode& node);
 
 }

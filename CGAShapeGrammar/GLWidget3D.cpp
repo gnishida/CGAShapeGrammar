@@ -111,7 +111,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	cga::Rectangle* lot = new cga::Rectangle("Lot", system.modelMat, 35, 10, glm::vec3(1, 1, 1));
 	stack.push_back(lot);
 
-	std::map<std::string, cga::Rule*> rules = cga::parseRule(filename);
+	std::map<std::string, cga::Rule> rules = cga::parseRule(filename);
 
 	system.generate(&renderManager, rules, stack);
 

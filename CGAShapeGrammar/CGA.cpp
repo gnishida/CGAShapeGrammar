@@ -84,18 +84,17 @@ void Object::generate(RenderManager* renderManager) {
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule*>& rules, std::list<Object*> stack) {
+void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack) {
 	while (!stack.empty()) {
 		Object* obj = stack.front();
 		stack.pop_front();
 
 		if (rules.find(obj->_name) == rules.end()) {
 			obj->generate(renderManager);
-
+			delete obj;
 		} else {
-			rules[obj->_name]->apply(obj, stack);
+			rules[obj->_name].apply(obj, stack);
 		}
-		delete obj;
 	}
 
 }

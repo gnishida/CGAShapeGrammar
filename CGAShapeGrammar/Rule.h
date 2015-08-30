@@ -39,16 +39,24 @@ public:
 	float getEstimateValue(float size);
 };
 
+class Operator {
+public:
+	Operator() {}
+
+	virtual Object* apply(Object* obj, std::list<Object*>& stack) = 0;
+};
+
 class Rule {
-protected:
+public:
 	std::string output_name;
+	std::vector<Operator*> operators;
 
 public:
 	Rule() {}
 
-	virtual void apply(Object* obj, std::list<Object*>& stack) = 0;
+	void apply(Object* obj, std::list<Object*>& stack);
 	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
-	static std::map<std::string, cga::Rule*> parseRule(char* filename);
+	//static std::map<std::string, cga::Rule*> parseRule(char* filename);
 };
 
 }

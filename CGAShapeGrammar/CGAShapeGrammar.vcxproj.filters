@@ -86,18 +86,6 @@
     <ClCompile Include="RuleParser.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="TranslateRule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
-    <ClCompile Include="SplitRule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
-    <ClCompile Include="SetupProjectionRule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
-    <ClCompile Include="ExtrudeRule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
     <ClCompile Include="CGA.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
@@ -119,25 +107,37 @@
     <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
-    <ClCompile Include="TextureRule.cpp">
+    <ClCompile Include="CompOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="TaperRule.cpp">
+    <ClCompile Include="ExtrudeOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="CopyRule.cpp">
+    <ClCompile Include="OffsetOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="OffsetRule.cpp">
+    <ClCompile Include="RoofHipOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="RoofHipRule.cpp">
+    <ClCompile Include="SetupProjectionOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="CompRule.cpp">
+    <ClCompile Include="SplitOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="RotateRule.cpp">
+    <ClCompile Include="TaperOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="TranslateOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="CopyOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
   </ItemGroup>
@@ -177,15 +177,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TranslateRule.h">
-      <Filter>Source Files\rule</Filter>
-    </ClInclude>
-    <ClInclude Include="SplitRule.h">
-      <Filter>Source Files\rule</Filter>
-    </ClInclude>
-    <ClInclude Include="SetupProjectionRule.h">
-      <Filter>Source Files\rule</Filter>
-    </ClInclude>
     <ClInclude Include="RuleParser.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
@@ -213,28 +204,37 @@
     <ClInclude Include="Pyramid.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
-    <ClInclude Include="ExtrudeRule.h">
+    <ClInclude Include="CompOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="TextureRule.h">
+    <ClInclude Include="ExtrudeOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="TaperRule.h">
+    <ClInclude Include="OffsetOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="CopyRule.h">
+    <ClInclude Include="RoofHipOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="OffsetRule.h">
+    <ClInclude Include="SetupProjectionOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="RoofHipRule.h">
+    <ClInclude Include="SplitOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="CompRule.h">
+    <ClInclude Include="TaperOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="RotateRule.h">
+    <ClInclude Include="TextureOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="TranslateOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="CopyOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>

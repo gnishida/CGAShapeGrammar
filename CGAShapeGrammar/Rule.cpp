@@ -1,4 +1,5 @@
 #include "Rule.h"
+#include "CGA.h"
 
 namespace cga {
 
@@ -27,6 +28,17 @@ float ValueSet::getEstimateValue(float size) {
 	}
 
 	return sum;
+}
+
+void Rule::apply(Object* obj, std::list<Object*>& stack) {
+	for (int i = 0; i < operators.size(); ++i) {
+		obj = operators[i]->apply(obj, stack);
+	}
+	
+	if (obj != NULL) {
+		obj->_name = output_name;
+		stack.push_back(obj);
+	}
 }
 
 void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {

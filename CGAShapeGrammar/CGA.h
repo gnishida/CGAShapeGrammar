@@ -61,7 +61,7 @@ public:
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, std::map<std::string, Rule*>& rules, std::list<Object*> stack);
+	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Object*> stack);
 };
 
 }

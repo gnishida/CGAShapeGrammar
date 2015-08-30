@@ -86,7 +86,7 @@ void Pyramid::comp(const std::string& front_name, Object** front, const std::str
 			}
 
 			glm::mat4 mat2 = glm::rotate(mat, angle, glm::vec3(1, 0, 0));
-			sides[i - 1] = new Polygon(front_name, _modelMat * mat2, points, _color, _texture);
+			sides[i - 1] = new Polygon(sides_name, _modelMat * mat2, points, _color, _texture);
 			
 		}
 	}
@@ -100,7 +100,7 @@ void Pyramid::comp(const std::string& front_name, Object** front, const std::str
 		}
 		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(offset, _height));
 
-		*top = new Polygon(front_name, mat, points, _color, _texture);
+		*top = new Polygon(top_name, mat, points, _color, _texture);
 	}
 
 	// bottom face

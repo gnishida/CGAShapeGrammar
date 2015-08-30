@@ -134,9 +134,9 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGA.cpp" />
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="CompRule.cpp" />
-    <ClCompile Include="CopyRule.cpp" />
-    <ClCompile Include="ExtrudeRule.cpp" />
+    <ClCompile Include="CompOperator.cpp" />
+    <ClCompile Include="CopyOperator.cpp" />
+    <ClCompile Include="ExtrudeOperator.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_MainWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -159,20 +159,20 @@
     <ClCompile Include="HipRoof.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="OffsetRule.cpp" />
+    <ClCompile Include="OffsetOperator.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Rectangle.cpp" />
-    <ClCompile Include="RoofHipRule.cpp" />
-    <ClCompile Include="RotateRule.cpp" />
+    <ClCompile Include="RoofHipOperator.cpp" />
+    <ClCompile Include="RotateOperator.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleParser.cpp" />
-    <ClCompile Include="TaperRule.cpp" />
-    <ClCompile Include="TextureRule.cpp" />
-    <ClCompile Include="SetupProjectionRule.cpp" />
-    <ClCompile Include="SplitRule.cpp" />
-    <ClCompile Include="TranslateRule.cpp" />
+    <ClCompile Include="TaperOperator.cpp" />
+    <ClCompile Include="TextureOperator.cpp" />
+    <ClCompile Include="SetupProjectionOperator.cpp" />
+    <ClCompile Include="SplitOperator.cpp" />
+    <ClCompile Include="TranslateOperator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -224,25 +224,25 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGA.h" />
     <ClInclude Include="Circle.h" />
-    <ClInclude Include="CompRule.h" />
-    <ClInclude Include="CopyRule.h" />
-    <ClInclude Include="ExtrudeRule.h" />
+    <ClInclude Include="CompOperator.h" />
+    <ClInclude Include="CopyOperator.h" />
+    <ClInclude Include="ExtrudeOperator.h" />
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />
     <ClInclude Include="HipRoof.h" />
-    <ClInclude Include="OffsetRule.h" />
+    <ClInclude Include="OffsetOperator.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Rectangle.h" />
-    <ClInclude Include="RoofHipRule.h" />
-    <ClInclude Include="RotateRule.h" />
+    <ClInclude Include="RoofHipOperator.h" />
+    <ClInclude Include="RotateOperator.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleParser.h" />
-    <ClInclude Include="TaperRule.h" />
-    <ClInclude Include="TextureRule.h" />
-    <ClInclude Include="SetupProjectionRule.h" />
-    <ClInclude Include="SplitRule.h" />
-    <ClInclude Include="TranslateRule.h" />
+    <ClInclude Include="TaperOperator.h" />
+    <ClInclude Include="TextureOperator.h" />
+    <ClInclude Include="SetupProjectionOperator.h" />
+    <ClInclude Include="SplitOperator.h" />
+    <ClInclude Include="TranslateOperator.h" />
     <CustomBuild Include="GLWidget3D.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

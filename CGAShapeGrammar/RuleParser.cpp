@@ -1,21 +1,22 @@
 #include "RuleParser.h"
-#include "CompRule.h"
-#include "CopyRule.h"
-#include "ExtrudeRule.h"
-#include "OffsetRule.h"
-#include "RoofHipRule.h"
-#include "SetupProjectionRule.h"
-#include "SplitRule.h"
-#include "TaperRule.h"
-#include "TextureRule.h"
-#include "TranslateRule.h"
+#include "CompOperator.h"
+#include "CopyOperator.h"
+#include "ExtrudeOperator.h"
+#include "OffsetOperator.h"
+#include "RoofHipOperator.h"
+#include "RotateOperator.h"
+#include "SetupProjectionOperator.h"
+#include "SplitOperator.h"
+#include "TaperOperator.h"
+#include "TextureOperator.h"
+#include "TranslateOperator.h"
 #include "CGA.h"
 #include <iostream>
 
 namespace cga {
 
-std::map<std::string, cga::Rule*> parseRule(char* filename) {
-	std::map<std::string, Rule*> rules;
+std::map<std::string, Rule> parseRule(char* filename) {
+	std::map<std::string, Rule> rules;
 
 	QFile file(filename);
 
@@ -23,51 +24,65 @@ std::map<std::string, cga::Rule*> parseRule(char* filename) {
 	doc.setContent(&file, true);
 	QDomElement root = doc.documentElement();
 
-	QDomNode node = root.firstChild();
-	while (!node.isNull()) {
-		if (node.toElement().tagName() == "rule") {
-			if (!node.toElement().hasAttribute("input_name")) {
-				std::cout << "<rule> tag must contain input_name attribute." << std::endl;
-				throw "<rule> tag must contain input_name attribute.";
+	QDomNode rule_node = root.firstChild();
+	while (!rule_node.isNull()) {
+		if (rule_node.toElement().tagName() == "rule") {
+			if (!rule_node.toElement().hasAttribute("name")) {
+				std::cout << "<rule> tag must contain name attribute." << std::endl;
+				throw "<rule> tag must contain name attribute.";
 			}
-			std::string input_name = node.toElement().attribute("input_name").toUtf8().constData();
+			std::string name = rule_node.toElement().attribute("name").toUtf8().constData();
 
-			if (!node.toElement().hasAttribute("op")) {
-				std::cout << "<rule> tag must contain op attribute." << std::endl;
-				throw "<rule> tag must contain op attribute.";
-			}
-			QString op = node.toElement().attribute("op");
+			QDomNode operator_node = rule_node.firstChild();
+			while (!operator_node.isNull()) {
+				if (operator_node.toElement().tagName() == "operator") {
+					if (!operator_node.toElement().hasAttribute("name")) {
+						std::cout << "<operator> tag must contain name attribute." << std::endl;
+						throw "<operator> tag must contain name attribute.";
+					}
+					std::string operator_name = operator_node.toElement().attribute("name").toUtf8().constData();
 
-			if (op == "copy") {
-				rules[input_name] = parseCopyRule(node);
-			} else if (op == "comp") {
-				rules[input_name] = parseCompRule(node);
-			} else if (op == "extrude") {
-				rules[input_name] = parseExtrudeRule(node);
-			} else if (op == "offset") {
-				rules[input_name] = parseOffsetRule(node);
-			} else if (op == "roofHip") {
-				rules[input_name] = parseRoofHipRule(node);
-			} else if (op == "setupProjection") {
-				rules[input_name] = parseSetupProjectionRule(node);
-			} else if (op == "split") {
-				rules[input_name] = parseSplitRule(node);
-			} else if (op == "taper") {
-				rules[input_name] = parseTaperRule(node);
-			} else if (op == "texture") {
-				rules[input_name] = parseTextureRule(node);
-			} else if (op == "translate") {
-				rules[input_name] = parseTranslateRule(node);
+					if (operator_name == "copy") {
+						rules[name].operators.push_back(parseCopyOperator(operator_node));
+					} else if (operator_name == "comp") {
+						rules[name].operators.push_back(parseCompOperator(operator_node));
+					} else if (operator_name == "extrude") {
+						rules[name].operators.push_back(parseExtrudeOperator(operator_node));
+					} else if (operator_name == "offset") {
+						rules[name].operators.push_back(parseOffsetOperator(operator_node));
+					} else if (operator_name == "roofHip") {
+						rules[name].operators.push_back(parseRoofHipOperator(operator_node));
+					} else if (operator_name == "setupProjection") {
+						rules[name].operators.push_back(parseSetupProjectionOperator(operator_node));
+					} else if (operator_name == "split") {
+						rules[name].operators.push_back(parseSplitOperator(operator_node));
+					} else if (operator_name == "taper") {
+						rules[name].operators.push_back(parseTaperOperator(operator_node));
+					} else if (operator_name == "texture") {
+						rules[name].operators.push_back(parseTextureOperator(operator_node));
+					} else if (operator_name == "translate") {
+						rules[name].operators.push_back(parseTranslateOperator(operator_node));
+					}
+
+				} else if (operator_node.toElement().tagName() == "output") {
+					if (!operator_node.toElement().hasAttribute("name")) {
+						std::cout << "<output> tag must contain name attribute." << std::endl;
+						throw "<output> tag must contain name attribute.";
+					}
+					rules[name].output_name = operator_node.toElement().attribute("name").toUtf8().constData();
+				}
+
+				operator_node = operator_node.nextSibling();
 			}
 		}
 
-		node = node.nextSibling();
+		rule_node = rule_node.nextSibling();
 	}
 
 	return rules;
 }
 
-Rule* parseCompRule(const QDomNode& node) {
+Operator* parseCompOperator(const QDomNode& node) {
 	std::string front_name;
 	std::string side_name;
 	std::string top_name;
@@ -92,12 +107,11 @@ Rule* parseCompRule(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new CompRule(front_name, side_name, top_name, bottom_name);
+	return new CompOperator(front_name, side_name, top_name, bottom_name);
 }
 
-Rule* parseCopyRule(const QDomNode& node) {
+Operator* parseCopyOperator(const QDomNode& node) {
 	std::string copy_name;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -106,20 +120,17 @@ Rule* parseCopyRule(const QDomNode& node) {
 
 			if (name == "copy_name") {
 				copy_name = child.toElement().attribute("value").toUtf8().constData();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new CopyRule(copy_name, output_name);
+	return new CopyOperator(copy_name);
 }
 
-Rule* parseExtrudeRule(const QDomNode& node) {
+Operator* parseExtrudeOperator(const QDomNode& node) {
 	float height;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -128,20 +139,17 @@ Rule* parseExtrudeRule(const QDomNode& node) {
 
 			if (name == "height") {
 				height = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new ExtrudeRule(height, output_name);
+	return new ExtrudeOperator(height);
 }
 
-Rule* parseOffsetRule(const QDomNode& node) {
+Operator* parseOffsetOperator(const QDomNode& node) {
 	float offsetDistance;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -150,20 +158,17 @@ Rule* parseOffsetRule(const QDomNode& node) {
 
 			if (name == "offsetDistance") {
 				offsetDistance = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new OffsetRule(offsetDistance, output_name);
+	return new OffsetOperator(offsetDistance);
 }
 
-Rule* parseRoofHipRule(const QDomNode& node) {
+Operator* parseRoofHipOperator(const QDomNode& node) {
 	float angle = 0.0f;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -172,22 +177,44 @@ Rule* parseRoofHipRule(const QDomNode& node) {
 
 			if (name == "angle") {
 				angle = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new RoofHipRule(angle, output_name);
+	return new RoofHipOperator(angle);
 }
 
-Rule* parseSetupProjectionRule(const QDomNode& node) {
+Operator* parseRotateOperator(const QDomNode& node) {
+	float xAngle = 0.0f;
+	float yAngle = 0.0f;
+	float zAngle = 0.0f;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "xAngle") {
+				xAngle = child.toElement().attribute("value").toFloat();
+			} else if (name == "yAngle") {
+				yAngle = child.toElement().attribute("value").toFloat();
+			} else if (name == "zAngle") {
+				zAngle = child.toElement().attribute("value").toFloat();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new RotateOperator(xAngle, yAngle, zAngle);
+}
+
+Operator* parseSetupProjectionOperator(const QDomNode& node) {
 	int coordinateType;
 	float texWidth;
 	float texHeight;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -196,26 +223,24 @@ Rule* parseSetupProjectionRule(const QDomNode& node) {
 
 			if (name == "coordinateType") {
 				if (child.toElement().attribute("value") == "absolute") {
-					coordinateType = SetupProjectionRule::TYPE_ABSOLUTE;
+					coordinateType = SetupProjectionOperator::TYPE_ABSOLUTE;
 				} else {
-					coordinateType = SetupProjectionRule::TYPE_RELATIVE;
+					coordinateType = SetupProjectionOperator::TYPE_RELATIVE;
 				}
 			} else if (name == "texWidth") {
 				texWidth = child.toElement().attribute("value").toFloat();
 			} else if (name == "texHeight") {
 				texHeight = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new SetupProjectionRule(coordinateType, texWidth, texHeight, output_name);
+	return new SetupProjectionOperator(coordinateType, texWidth, texHeight);
 }
 
-Rule* parseSplitRule(const QDomNode& node) {
+Operator* parseSplitOperator(const QDomNode& node) {
 	int direction;
 	std::vector<Value*> sizes;
 	std::vector<std::string> names;
@@ -278,13 +303,12 @@ Rule* parseSplitRule(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new SplitRule(direction, sizes, names);
+	return new SplitOperator(direction, sizes, names);
 }
 
-Rule* parseTaperRule(const QDomNode& node) {
+Operator* parseTaperOperator(const QDomNode& node) {
 	float height;
 	float top_ratio = 0.0f;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -295,20 +319,17 @@ Rule* parseTaperRule(const QDomNode& node) {
 				height = child.toElement().attribute("value").toFloat();
 			} else if (name == "top_ratio") {
 				top_ratio = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new TaperRule(height, top_ratio, output_name);
+	return new TaperOperator(height, top_ratio);
 }
 
-Rule* parseTextureRule(const QDomNode& node) {
+Operator* parseTextureOperator(const QDomNode& node) {
 	std::string texture;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -317,20 +338,17 @@ Rule* parseTextureRule(const QDomNode& node) {
 
 			if (name == "texture") {
 				texture = child.toElement().attribute("value").toUtf8().constData();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new TextureRule(texture, output_name);
+	return new TextureOperator(texture);
 }
 
-Rule* parseTranslateRule(const QDomNode& node) {
+Operator* parseTranslateOperator(const QDomNode& node) {
 	float x, y, z;
-	std::string output_name;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -343,15 +361,13 @@ Rule* parseTranslateRule(const QDomNode& node) {
 				y = child.toElement().attribute("value").toFloat();
 			} else if (name == "z") {
 				z = child.toElement().attribute("value").toFloat();
-			} else if (name == "output_name") {
-				output_name = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new TranslateRule(glm::vec3(x, y, z), output_name);
+	return new TranslateOperator(glm::vec3(x, y, z));
 }
 
 }
