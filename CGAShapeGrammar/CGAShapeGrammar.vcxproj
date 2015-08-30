@@ -135,6 +135,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGA.cpp" />
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="ColorOperator.cpp" />
     <ClCompile Include="CompOperator.cpp" />
     <ClCompile Include="CopyOperator.cpp" />
     <ClCompile Include="ExtrudeOperator.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGA.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="ColorOperator.h" />
     <ClInclude Include="CompOperator.h" />
     <ClInclude Include="CopyOperator.h" />
     <ClInclude Include="ExtrudeOperator.h" />

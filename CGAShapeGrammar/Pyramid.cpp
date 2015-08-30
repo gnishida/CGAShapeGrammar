@@ -18,7 +18,7 @@ Pyramid::Pyramid(const std::string& name, const glm::mat4& modelMat, const std::
 	this->_texture = texture;
 
 	BoundingBox bbox(points);
-	this->_scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, height);
+	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, height);
 }
 
 Object* Pyramid::clone(const std::string& name) {

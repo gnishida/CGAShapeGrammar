@@ -15,7 +15,7 @@ Polygon::Polygon(const std::string& name, const glm::mat4& modelMat, const std::
 	this->_texture = texture;
 
 	BoundingBox bbox(points);
-	this->_scope = glm::vec3(bbox.upper_right.x, bbox.upper_right.y, 0);
+	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, 0);
 
 	this->_center = glm::vec2(0, 0);
 	for (int i = 0; i < points.size(); ++i) {

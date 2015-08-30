@@ -1,4 +1,5 @@
 #include "RuleParser.h"
+#include "ColorOperator.h"
 #include "CompOperator.h"
 #include "CopyOperator.h"
 #include "ExtrudeOperator.h"
@@ -44,10 +45,12 @@ std::map<std::string, Rule> parseRule(char* filename) {
 					}
 					std::string operator_name = operator_node.toElement().attribute("name").toUtf8().constData();
 
-					if (operator_name == "copy") {
-						rules[name].operators.push_back(parseCopyOperator(operator_node));
+					if (operator_name == "color") {
+						rules[name].operators.push_back(parseColorOperator(operator_node));
 					} else if (operator_name == "comp") {
 						rules[name].operators.push_back(parseCompOperator(operator_node));
+					} else if (operator_name == "copy") {
+						rules[name].operators.push_back(parseCopyOperator(operator_node));
 					} else if (operator_name == "extrude") {
 						rules[name].operators.push_back(parseExtrudeOperator(operator_node));
 					} else if (operator_name == "insert") {
@@ -86,6 +89,31 @@ std::map<std::string, Rule> parseRule(char* filename) {
 	}
 
 	return rules;
+}
+
+Operator* parseColorOperator(const QDomNode& node) {
+	float r;
+	float g;
+	float b;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "r") {
+				r = child.toElement().attribute("value").toFloat();
+			} else if (name == "g") {
+				g = child.toElement().attribute("value").toFloat();
+			} else if (name == "b") {
+				b = child.toElement().attribute("value").toFloat();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new ColorOperator(glm::vec3(r, g, b));
 }
 
 Operator* parseCompOperator(const QDomNode& node) {

@@ -12,14 +12,36 @@ namespace cga {
 const bool showAxes = false;
 
 BoundingBox::BoundingBox(const std::vector<glm::vec2>& points) {
-	bottom_left = glm::vec2((std::numeric_limits<float>::max)(), (std::numeric_limits<float>::max)());
-	upper_right = -bottom_left;
+	minPt.x = (std::numeric_limits<float>::max)();
+	minPt.y = (std::numeric_limits<float>::max)();
+	minPt.z = 0.0f;
+	maxPt.x = -(std::numeric_limits<float>::max)();
+	maxPt.y = -(std::numeric_limits<float>::max)();
+	maxPt.z = 0.0f;
 
 	for (int i = 0; i < points.size(); ++i) {
-		bottom_left.x = min(bottom_left.x, points[i].x);
-		bottom_left.y = min(bottom_left.y, points[i].y);
-		upper_right.x = max(upper_right.x, points[i].x);
-		upper_right.y = max(upper_right.y, points[i].y);
+		minPt.x = min(minPt.x, points[i].x);
+		minPt.y = min(minPt.y, points[i].y);
+		maxPt.x = max(maxPt.x, points[i].x);
+		maxPt.y = max(maxPt.y, points[i].y);
+	}
+}
+
+BoundingBox::BoundingBox(const std::vector<glm::vec3>& points) {
+	minPt.x = (std::numeric_limits<float>::max)();
+	minPt.y = (std::numeric_limits<float>::max)();
+	minPt.z = (std::numeric_limits<float>::max)();
+	maxPt.x = -(std::numeric_limits<float>::max)();
+	maxPt.y = -(std::numeric_limits<float>::max)();
+	maxPt.z = -(std::numeric_limits<float>::max)();
+
+	for (int i = 0; i < points.size(); ++i) {
+		minPt.x = min(minPt.x, points[i].x);
+		minPt.y = min(minPt.y, points[i].y);
+		minPt.z = min(minPt.y, points[i].z);
+		maxPt.x = max(maxPt.x, points[i].x);
+		maxPt.y = max(maxPt.y, points[i].y);
+		maxPt.z = max(maxPt.y, points[i].z);
 	}
 }
 
@@ -44,6 +66,25 @@ Object* Object::insert(const std::string& name, const std::string& geometryPath)
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec3> texCoords;
 	OBJLoader::load(geometryPath.c_str(), points, normals, texCoords);
+
+	// compute scale
+	float scaleX = 1.0f;
+	float scaleY = 1.0f;
+	float scaleZ = 1.0f;
+
+	BoundingBox bbox(points);
+	if (_scope.z == 0) {
+		scaleX = _scope.x / bbox.sx();
+		scaleY = _scope.y / bbox.sy();
+		scaleZ = (scaleX + scaleY) * 0.5f;
+	}
+
+	// scale the points
+	for (int i = 0; i < points.size(); ++i) {
+		points[i].x = points[i].x * scaleX;
+		points[i].y = points[i].y * scaleY;
+		points[i].z = points[i].z * scaleZ;
+	}
 
 	return new GeneralObject(name, _modelMat, points, normals, _color);
 }

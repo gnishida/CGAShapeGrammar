@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<operator name="extrude">
+			<param name="height" value="11"/>
+		</operator>
+		<operator name="comp">
+			<param name="front" value="FrontFacade"/>
+			<param name="side" value="SideFacade"/>
+			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base"/>
+		</operator>
+	</rule>
+	<rule name="FrontFacade">
+		<operator name="insert">
+			<param name="geometryPath" value="../models/window.obj"/>
+		</operator>
+	</rule>
+</rules>

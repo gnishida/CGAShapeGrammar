@@ -19,11 +19,15 @@ class Rectangle;*/
 
 class BoundingBox {
 public:
-	glm::vec2 bottom_left;
-	glm::vec2 upper_right;
+	glm::vec3 minPt;//bottom_left;
+	glm::vec3 maxPt;//upper_right;
 
 public:
 	BoundingBox(const std::vector<glm::vec2>& points);
+	BoundingBox(const std::vector<glm::vec3>& points);
+	float sx() { return maxPt.x - minPt.x; }
+	float sy() { return maxPt.y - minPt.y; }
+	float sz() { return maxPt.z - minPt.z; }
 };
 
 class Object {

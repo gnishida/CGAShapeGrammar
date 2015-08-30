@@ -1,0 +1,18 @@
+#pragma once
+
+#include "Rule.h"
+#include <glm/gtc/matrix_transform.hpp>
+
+namespace cga {
+
+class ColorOperator : public Operator {
+private:
+	glm::vec3 color;
+
+public:
+	ColorOperator(const glm::vec3& color);
+
+	Object* apply(Object* obj, std::list<Object*>& stack);
+};
+
+}
