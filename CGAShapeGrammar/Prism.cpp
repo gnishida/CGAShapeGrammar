@@ -26,14 +26,14 @@ Shape* Prism::clone(const std::string& name) {
 void Prism::setupProjection(float texWidth, float texHeight) {
 }
 
-void Prism::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Shape*>& objects) {
+void Prism::split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
 	glm::mat4 modelMat = this->_modelMat;
 
-	for (int i = 0; i < ratios.size(); ++i) {
+	for (int i = 0; i < sizes.size(); ++i) {
 		Prism* obj = new Prism(*this);
 		obj->_name = names[i];
 		obj->_modelMat = modelMat;
-		obj->_height = this->_height * ratios[i];
+		obj->_height = sizes[i];
 		objects.push_back(obj);
 
 		modelMat = glm::translate(modelMat, glm::vec3(0, 0, obj->_height));

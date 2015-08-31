@@ -115,7 +115,11 @@ Shape* Shape::shapeL(const std::string& name, float frontWidth, float leftWidth)
 	throw "shapeL() is not supported.";
 }
 
-void Shape::split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Shape*>& objects) {
+void Shape::size(const glm::vec3& sz) {
+	throw "size() is not supported.";
+}
+
+void Shape::split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
 	throw "split() is not supported.";
 }
 

@@ -9,6 +9,7 @@
 #include "RotateOperator.h"
 #include "SetupProjectionOperator.h"
 #include "ShapeLOperator.h"
+#include "SizeOperator.h"
 #include "SplitOperator.h"
 #include "TaperOperator.h"
 #include "TextureOperator.h"
@@ -63,6 +64,8 @@ std::map<std::string, Rule> parseRule(char* filename) {
 						rules[name].operators.push_back(parseSetupProjectionOperator(operator_node));
 					} else if (operator_name == "shapeL") {
 						rules[name].operators.push_back(parseShapeLOperator(operator_node));
+					} else if (operator_name == "size") {
+						rules[name].operators.push_back(parseSizeOperator(operator_node));
 					} else if (operator_name == "split") {
 						rules[name].operators.push_back(parseSplitOperator(operator_node));
 					} else if (operator_name == "taper") {
@@ -313,6 +316,31 @@ Operator* parseShapeLOperator(const QDomNode& node) {
 	}
 
 	return new ShapeLOperator(frontWidth, leftWidth);
+}
+
+Operator* parseSizeOperator(const QDomNode& node) {
+	float xSize = 0.0f;
+	float ySize = 0.0f;
+	float zSize = 0.0f;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+
+			if (name == "xSize") {
+				xSize = child.toElement().attribute("value").toFloat();
+			} else if (name == "ySize") {
+				ySize = child.toElement().attribute("value").toFloat();
+			} else if (name == "zSize") {
+				zSize = child.toElement().attribute("value").toFloat();
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return new SizeOperator(glm::vec3(xSize, ySize, zSize));
 }
 
 Operator* parseSplitOperator(const QDomNode& node) {

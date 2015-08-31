@@ -50,7 +50,8 @@ public:
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);
 	virtual Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
-	virtual void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Shape*>& objects);
+	virtual void size(const glm::vec3& sz);
+	virtual void split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);
 	virtual Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);
 	void translate(const glm::vec3& v);

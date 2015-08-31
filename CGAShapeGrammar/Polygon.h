@@ -20,6 +20,7 @@ public:
 	Shape* inscribeCircle(const std::string& name);
 	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	Shape* roofHip(const std::string& name, float angle);
+	void size(const glm::vec3& sz);
 	void generate(RenderManager* renderManager, bool showAxes);
 };
 

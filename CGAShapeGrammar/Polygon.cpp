@@ -66,6 +66,16 @@ Shape* Polygon::roofHip(const std::string& name, float angle) {
 	return new HipRoof(name, _modelMat, _points, angle, _color);
 }
 
+void Polygon::size(const glm::vec3& sz) {
+	float scaleX = sz.x / _scope.x;
+	float scaleY = sz.y / _scope.y;
+	for (int i = 0; i < _points.size(); ++i) {
+		_points[i].x *= scaleX;
+		_points[i].y *= scaleY;
+	}
+	_scope = sz;
+}
+
 void Polygon::generate(RenderManager* renderManager, bool showAxes) {
 	if (_removed) return;
 

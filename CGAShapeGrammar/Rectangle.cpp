@@ -80,6 +80,15 @@ Shape* Rectangle::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
+Shape* Rectangle::roofHip(const std::string& name, float angle) {
+	std::vector<glm::vec2> points(4);
+	points[0] = glm::vec2(0, 0);
+	points[1] = glm::vec2(_width, 0);
+	points[2] = glm::vec2(_width, _height);
+	points[3] = glm::vec2(0, _height);
+	return new HipRoof(name, _modelMat, points, angle, _color);
+}
+
 Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	std::vector<glm::vec2> points(6);
 	points[0] = glm::vec2(0, 0);
@@ -92,7 +101,13 @@ Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWi
 	return new Polygon(name, _modelMat, points, _color, _texture);
 }
 
-void Rectangle::split(int direction, const std::vector<float> sizes, const std::vector<std::string> names, std::vector<Shape*>& objects) {
+void Rectangle::size(const glm::vec3& sz) {
+	_width = sz.x;
+	_height = sz.y;
+	_scope = sz;
+}
+
+void Rectangle::split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
 	objects.resize(sizes.size());
 
 	float offset = 0.0f;
@@ -121,15 +136,6 @@ void Rectangle::split(int direction, const std::vector<float> sizes, const std::
 			offset += sizes[i];
 		}
 	}
-}
-
-Shape* Rectangle::roofHip(const std::string& name, float angle) {
-	std::vector<glm::vec2> points(4);
-	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_width, 0);
-	points[2] = glm::vec2(_width, _height);
-	points[3] = glm::vec2(0, _height);
-	return new HipRoof(name, _modelMat, points, angle, _color);
 }
 
 void Rectangle::generate(RenderManager* renderManager, bool showAxes) {
