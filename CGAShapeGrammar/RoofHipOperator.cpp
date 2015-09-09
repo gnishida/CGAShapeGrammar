@@ -1,5 +1,6 @@
 #include "RoofHipOperator.h"
 #include "CGA.h"
+#include "Shape.h"
 
 namespace cga {
 

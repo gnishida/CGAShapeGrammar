@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CGA.h"
+#include "Shape.h"
 
 namespace cga {
 

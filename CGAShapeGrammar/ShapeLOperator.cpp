@@ -1,5 +1,6 @@
 #include "ShapeLOperator.h"
 #include "CGA.h"
+#include "Shape.h"
 
 namespace cga {
 

@@ -1,5 +1,6 @@
 #include "Rule.h"
 #include "CGA.h"
+#include "Shape.h"
 
 namespace cga {
 
