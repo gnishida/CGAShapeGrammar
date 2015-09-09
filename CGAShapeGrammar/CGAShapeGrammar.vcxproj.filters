@@ -33,9 +33,6 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Source Files\codebase">
-      <UniqueIdentifier>{5cdc3587-52bc-41c1-af0a-b622891e60ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\shaders">
       <UniqueIdentifier>{2d5c4520-ca71-4622-b020-a9bb38e995e1}</UniqueIdentifier>
     </Filter>
@@ -67,18 +64,6 @@
     </ClCompile>
     <ClCompile Include="GLWidget3D.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\codebase\GLUtils.cpp">
-      <Filter>Source Files\codebase</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\codebase\RenderManager.cpp">
-      <Filter>Source Files\codebase</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\codebase\Shader.cpp">
-      <Filter>Source Files\codebase</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\codebase\ShadowMapping.cpp">
-      <Filter>Source Files\codebase</Filter>
     </ClCompile>
     <ClCompile Include="Rule.cpp">
       <Filter>Source Files\rule</Filter>
@@ -143,9 +128,6 @@
     <ClCompile Include="ShapeLOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\codebase\OBJLoader.cpp">
-      <Filter>Source Files\codebase</Filter>
-    </ClCompile>
     <ClCompile Include="GeneralObject.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
@@ -157,6 +139,21 @@
     </ClCompile>
     <ClCompile Include="SizeOperator.cpp">
       <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="GLUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowMapping.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,21 +173,6 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\codebase\GLUtils.h">
-      <Filter>Source Files\codebase</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\codebase\RenderManager.h">
-      <Filter>Source Files\codebase</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\codebase\Shader.h">
-      <Filter>Source Files\codebase</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\codebase\ShadowMapping.h">
-      <Filter>Source Files\codebase</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\codebase\Vertex.h">
-      <Filter>Source Files\codebase</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
@@ -258,9 +240,6 @@
     <ClInclude Include="ShapeLOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\codebase\OBJLoader.h">
-      <Filter>Source Files\codebase</Filter>
-    </ClInclude>
     <ClInclude Include="InsertOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
@@ -272,6 +251,24 @@
     </ClInclude>
     <ClInclude Include="SizeOperator.h">
       <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="GLUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
