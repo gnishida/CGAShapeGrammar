@@ -2,9 +2,10 @@
 
 namespace cga {
 
-GeneralObject::GeneralObject(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const glm::vec3& color) {
+GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const glm::vec3& color) {
 	this->_name = name;
 	this->_removed = false;
+	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_points = points;
 	this->_normals = normals;
@@ -17,21 +18,21 @@ Shape* GeneralObject::clone(const std::string& name) {
 	return copy;
 }
 
-void GeneralObject::generate(RenderManager* renderManager, bool showAxes) {
+void GeneralObject::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices(_points.size());
 	for (int i = 0; i < _points.size(); ++i) {
-		vertices[i].position = glm::vec3(_modelMat * glm::vec4(_points[i], 1));
-		vertices[i].normal = glm::vec3(_modelMat * glm::vec4(_normals[i], 0));
+		vertices[i].position = glm::vec3(_pivot * _modelMat * glm::vec4(_points[i], 1));
+		vertices[i].normal = glm::vec3(_pivot * _modelMat * glm::vec4(_normals[i], 0));
 		vertices[i].color = _color;
 		//vertices[i].texCoord = _texCoords[i];
 	}
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 
-	if (showAxes) {
-		drawAxes(renderManager, _modelMat);
+	if (showScopeCoordinateSystem) {
+		drawAxes(renderManager, _pivot * _modelMat);
 	}
 }
 

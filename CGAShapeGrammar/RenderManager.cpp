@@ -136,6 +136,14 @@ void RenderManager::renderAll(bool wireframe) {
 	}
 }
 
+void RenderManager::renderAllExcept(const QString& object_name, bool wireframe) {
+	for (auto it = objects.begin(); it != objects.end(); ++it) {
+		if (it.key() == object_name) continue;
+
+		render(it.key(), wireframe);
+	}
+}
+
 void RenderManager::render(const QString& object_name, bool wireframe) {
 	for (auto it = objects[object_name].begin(); it != objects[object_name].end(); ++it) {
 		GLuint texId = it.key();

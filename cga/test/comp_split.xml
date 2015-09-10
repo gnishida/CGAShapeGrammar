@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<operator name="extrude">
+			<param name="height" value="5"/>
+		</operator>
+		<operator name="comp">
+			<param name="front" value="Facade"/>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base"/>
+		</operator>
+	</rule>
+	<rule name="Facade">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="2.0"/>
+				<element type="floating" value="1.5" repeat="true"/>
+			</param>
+			<param name="name">
+				<element value="Floor"/>
+				<element value="Floor"/>
+			</param>
+		</operator>
+	</rule>
+</rules>

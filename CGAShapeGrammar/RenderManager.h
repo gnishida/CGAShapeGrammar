@@ -36,6 +36,7 @@ public:
 	void removeObjects();
 	void removeObject(const QString& object_name);
 	void renderAll(bool wireframe = false);
+	void renderAllExcept(const QString& object_name, bool wireframe = false);
 	void render(const QString& object_name, bool wireframe = false);
 	void updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix);
 

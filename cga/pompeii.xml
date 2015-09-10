@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="world"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0.3"/>
+			<param name="z" value="0"/>
+		</operator>
+		<operator name="split">
+			<param name="splitAxis" value="z"/>
+			<param name="size">
+				<element type="floating" value="1.0"/>
+				<element type="absolute" value="0.3"/>
+			</param>
+			<param name="name">
+				<element value="Parcel"/>
+				<element value="NIL"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="Parcel">
+		<operator name="extrude">
+			<param name="height" value="5"/>
+		</operator>
+		<operator name="comp">
+			<param name="front" value="Facade"/>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+		</operator>
+	</rule>
+	<rule name="Facade">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="5"/>
+				<element type="floating" value="2.5" repeat="true"/>
+			</param>
+			<param name="name">
+				<element value="GroundFloor"/>
+				<element value="UpperFloor"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="GroundFloor">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="0.5"/>
+				<element type="absolute" value="3"/>
+				<element type="floating" value="0.5"/>
+			</param>
+			<param name="name">
+				<element value="PaintedWall"/>
+				<element value="ShopTile"/>
+				<element value="WindowTile"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="PaintedWall">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="1.5"/>
+				<element type="floating" value="1"/>
+			</param>
+			<param name="name">
+				<element value="RedWall"/>
+				<element value="Wall"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="RedWall">
+		<operator name="color">
+			<param name="r" value="1"/>
+			<param name="g" value="0"/>
+			<param name="b" value="0"/>
+		</operator>
+	</rule>
+	<rule name="Wall">
+		<operator name="color">
+			<param name="r" value="0.5"/>
+			<param name="g" value="0.5"/>
+			<param name="b" value="0.5"/>
+		</operator>
+	</rule>
+
+</rules>

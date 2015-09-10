@@ -9,8 +9,10 @@
 
 namespace cga {
 
-enum { DIRECTION_X = 0, DIRECTION_Y, SCOPE_SX, SCOPE_SY };
+enum { DIRECTION_X = 0, DIRECTION_Y, DIRECTION_Z, SCOPE_SX, SCOPE_SY };
 enum { REVOLVE_X = 0, REVOLVE_Y };
+enum { MODE_ABSOLUTE = 0, MODE_RELATIVE };
+enum { COORD_SYSTEM_WORLD = 0, COORD_SYSTEM_OBJECT };
 
 const float M_PI = 3.1415926f;
 
@@ -36,7 +38,7 @@ public:
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showAxes = false);
+	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showScopeCoordinateSystem = false);
 };
 
 }

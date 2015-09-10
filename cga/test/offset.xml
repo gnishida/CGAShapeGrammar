@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<operator name="offset">
+			<param name="offsetDistance" value="0.2"/>
+		</operator>
+		<operator name="extrude">
+			<param name="height" value="3"/>
+		</operator>
+	</rule>
+</rules>

@@ -1,13 +1,14 @@
-#include "Prism.h"
+﻿#include "Prism.h"
 #include "Rectangle.h"
 #include "Polygon.h"
 #include "GLUtils.h"
 
 namespace cga {
 
-Prism::Prism(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
+Prism::Prism(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float height, const glm::vec3& color) {
 	this->_name = name;
 	this->_removed = false;
+	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_points = points;
 	this->_height = height;
@@ -23,28 +24,10 @@ Shape* Prism::clone(const std::string& name) {
 	return copy;
 }
 
-void Prism::setupProjection(float texWidth, float texHeight) {
-}
-
-void Prism::split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
-	glm::mat4 modelMat = this->_modelMat;
-
-	for (int i = 0; i < sizes.size(); ++i) {
-		Prism* obj = new Prism(*this);
-		obj->_name = names[i];
-		obj->_modelMat = modelMat;
-		obj->_height = sizes[i];
-		objects.push_back(obj);
-
-		modelMat = glm::translate(modelMat, glm::vec3(0, 0, obj->_height));
-	}
-}
-
-
 void Prism::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
 	// front face
 	{
-		*front = new Rectangle(front_name, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color);
+		*front = new Rectangle(front_name, _pivot, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color);
 	}
 
 	// side faces
@@ -67,24 +50,72 @@ void Prism::comp(const std::string& front_name, Shape** front, const std::string
 			sidePoints[2] = glm::vec2(invMat * glm::vec4(_points[(i + 1) % _points.size()], _height, 1));
 			sidePoints[3] = glm::vec2(invMat * glm::vec4(_points[i], _height, 1));
 
-			sides[i - 1] = new Rectangle(sides_name, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color);
+			sides[i - 1] = new Rectangle(sides_name, _pivot, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color);
 		}
 	}
 
 	// top face
 	{
-		*top = new Polygon(top_name, glm::translate(_modelMat, glm::vec3(0, 0, _height)), _points, _color, _texture);
+		*top = new Polygon(top_name, _pivot, glm::translate(_modelMat, glm::vec3(0, 0, _height)), _points, _color, _texture);
 	}
 
 	// bottom face
 	{
 		//std::vector<glm::vec2> basePoints = _points;
 		//std::reverse(basePoints.begin(), basePoints.end());
-		*bottom = new Polygon(bottom_name, _modelMat, _points, _color, _texture);
+		*bottom = new Polygon(bottom_name, _pivot, _modelMat, _points, _color, _texture);
 	}
 }
 
-void Prism::generate(RenderManager* renderManager, bool showAxes) {
+void Prism::setupProjection(float texWidth, float texHeight) {
+}
+
+void Prism::size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
+	float scale_x;
+	if (xSize.type == Value::TYPE_RELATIVE) {
+		scale_x = xSize.value;
+	} else {
+		scale_x = xSize.value / _scope.x;
+	}
+
+	float scale_y;
+	if (ySize.type == Value::TYPE_RELATIVE) {
+		scale_y = ySize.value;
+	} else {
+		scale_y = ySize.value / _scope.y;
+	}
+
+	if (zSize.type == Value::TYPE_RELATIVE) {
+		_height *= zSize.value;
+	} else {
+		_height = zSize.value;
+	}
+
+	for (int i = 0; i < _points.size(); ++i) {
+		_points[i].x *= scale_x;
+		_points[i].y *= scale_y;
+	}
+}
+
+/**
+ * To be fixed:
+ * Z方向のsplitしか対応していない。
+ */
+void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
+	glm::mat4 modelMat = this->_modelMat;
+
+	for (int i = 0; i < sizes.size(); ++i) {
+		Prism* obj = new Prism(*this);
+		obj->_name = names[i];
+		obj->_modelMat = modelMat;
+		obj->_height = sizes[i];
+		objects.push_back(obj);
+
+		modelMat = glm::translate(modelMat, glm::vec3(0, 0, obj->_height));
+	}
+}
+
+void Prism::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;//((_points.size() - 2) * 6 + _points.size() * 6);
@@ -93,27 +124,27 @@ void Prism::generate(RenderManager* renderManager, bool showAxes) {
 
 	// top
 	{
-		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(0, 0, _height));
+		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(0, 0, _height));
 		glutils::drawConcavePolygon(_points, _color, mat, vertices);
 	}
 
 	// bottom
 	{
-		glutils::drawConcavePolygon(_points, _color, _modelMat, vertices);
+		glutils::drawConcavePolygon(_points, _color, _pivot * _modelMat, vertices);
 	}
 
 	// side
 	{
 		glm::vec4 p1(_points.back(), 0, 1);
 		glm::vec4 p2(_points.back(), _height, 1);
-		p1 = _modelMat * p1;
-		p2 = _modelMat * p2;
+		p1 = _pivot * _modelMat * p1;
+		p2 = _pivot * _modelMat * p2;
 
 		for (int i = 0; i < _points.size(); ++i) {
 			glm::vec4 p3(_points[i], 0, 1);
 			glm::vec4 p4(_points[i], _height, 1);
-			p3 = _modelMat * p3;
-			p4 = _modelMat * p4;
+			p3 = _pivot * _modelMat * p3;
+			p4 = _pivot * _modelMat * p4;
 
 			glm::vec3 normal = glm::normalize(glm::cross(glm::vec3(p3) - glm::vec3(p1), glm::vec3(p2) - glm::vec3(p1)));
 			
@@ -132,8 +163,8 @@ void Prism::generate(RenderManager* renderManager, bool showAxes) {
 
 	renderManager->addObject(_name.c_str(), "", vertices);
 
-	if (showAxes) {
-		drawAxes(renderManager, _modelMat);
+	if (showScopeCoordinateSystem) {
+		drawAxes(renderManager, _pivot * _modelMat);
 	}
 }
 

@@ -6,6 +6,8 @@
 #include "RuleParser.h"
 #include <map>
 #include "Rectangle.h"
+#include "Polygon.h"
+#include "GLUtils.h"
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット
@@ -50,13 +52,18 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  * This function is called once before the first call to paintGL() or resizeGL().
  */
 void GLWidget3D::initializeGL() {
-	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 4096);
+	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 8192);
 	showWireframe = true;
+	showScopeCoordinateSystem = true;
 
 	// set the clear color for the screen
 	qglClearColor(QColor(113, 112, 117));
 
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
+
+	std::vector<Vertex> vertices;
+	glutils::drawGrid(30, 30, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
+	renderManager.addObject("grid", "", vertices);
 }
 
 /**
@@ -99,21 +106,45 @@ void GLWidget3D::drawScene(int drawMode) {
 		glUniform1i(glGetUniformLocation(renderManager.program, "shadowState"), 2);
 	}
 	
-	renderManager.renderAll(showWireframe);
+	if (showScopeCoordinateSystem) {
+		renderManager.renderAll(showWireframe);
+	} else {
+		renderManager.renderAllExcept("axis", showWireframe);
+	}
 }
 
 void GLWidget3D::loadCGA(char* filename) {
-	std::vector<Vertex> vertices;
-
 	renderManager.removeObjects();
 
 	std::list<cga::Shape*> stack;
-	cga::Rectangle* lot = new cga::Rectangle("Lot", system.modelMat, 35, 10, glm::vec3(1, 1, 1));
-	stack.push_back(lot);
+	/*{
+		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 5, 5, glm::vec3(1, 1, 1));
+		stack.push_back(lot);
+	}*/
 
-	std::map<std::string, cga::Rule> rules = cga::parseRule(filename);
+	{
+		std::vector<glm::vec2> points;
+		points.push_back(glm::vec2(0, 0));
+		points.push_back(glm::vec2(2, 0));
+		points.push_back(glm::vec2(2, 2));
+		points.push_back(glm::vec2(5, 2));
+		points.push_back(glm::vec2(5, 5));
+		points.push_back(glm::vec2(0, 5));
+		cga::Polygon* lot = new cga::Polygon("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), points, glm::vec3(1, 1, 1), "");
+		stack.push_back(lot);
+	}
 
-	system.generate(&renderManager, rules, stack);
+	try {
+		std::map<std::string, cga::Rule> rules = cga::parseRule(filename);
+		system.generate(&renderManager, rules, stack, true);
+	} catch (const char* ex) {
+		std::cout << "ERROR:" << std::endl << ex << std::endl;
+		return;
+	}
+	
+	std::vector<Vertex> vertices;
+	glutils::drawGrid(30, 30, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
+	renderManager.addObject("grid", "", vertices);
 
 	updateGL();
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Sat Aug 29 21:00:35 2015
+** Created: Thu Sep 10 10:46:09 2015
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -28,8 +28,9 @@ class Ui_MainWindowClass
 {
 public:
     QAction *actionExit;
-    QAction *actionShowWireframe;
+    QAction *actionViewWireframe;
     QAction *actionOpenCGARules;
+    QAction *actionViewScopeCoordinateSystem;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -44,11 +45,14 @@ public:
         MainWindowClass->resize(600, 400);
         actionExit = new QAction(MainWindowClass);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
-        actionShowWireframe = new QAction(MainWindowClass);
-        actionShowWireframe->setObjectName(QString::fromUtf8("actionShowWireframe"));
-        actionShowWireframe->setCheckable(true);
+        actionViewWireframe = new QAction(MainWindowClass);
+        actionViewWireframe->setObjectName(QString::fromUtf8("actionViewWireframe"));
+        actionViewWireframe->setCheckable(true);
         actionOpenCGARules = new QAction(MainWindowClass);
         actionOpenCGARules->setObjectName(QString::fromUtf8("actionOpenCGARules"));
+        actionViewScopeCoordinateSystem = new QAction(MainWindowClass);
+        actionViewScopeCoordinateSystem->setObjectName(QString::fromUtf8("actionViewScopeCoordinateSystem"));
+        actionViewScopeCoordinateSystem->setCheckable(true);
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -72,7 +76,8 @@ public:
         menuFile->addAction(actionOpenCGARules);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
-        menuView->addAction(actionShowWireframe);
+        menuView->addAction(actionViewWireframe);
+        menuView->addAction(actionViewScopeCoordinateSystem);
 
         retranslateUi(MainWindowClass);
 
@@ -83,10 +88,12 @@ public:
     {
         MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "MainWindow", 0, QApplication::UnicodeUTF8));
         actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0, QApplication::UnicodeUTF8));
-        actionShowWireframe->setText(QApplication::translate("MainWindowClass", "Show Wireframe", 0, QApplication::UnicodeUTF8));
-        actionShowWireframe->setShortcut(QApplication::translate("MainWindowClass", "W", 0, QApplication::UnicodeUTF8));
+        actionViewWireframe->setText(QApplication::translate("MainWindowClass", "Wireframe", 0, QApplication::UnicodeUTF8));
+        actionViewWireframe->setShortcut(QApplication::translate("MainWindowClass", "W", 0, QApplication::UnicodeUTF8));
         actionOpenCGARules->setText(QApplication::translate("MainWindowClass", "Open CGA Rules", 0, QApplication::UnicodeUTF8));
         actionOpenCGARules->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0, QApplication::UnicodeUTF8));
+        actionViewScopeCoordinateSystem->setText(QApplication::translate("MainWindowClass", "Scope Coordinate System", 0, QApplication::UnicodeUTF8));
+        actionViewScopeCoordinateSystem->setShortcut(QApplication::translate("MainWindowClass", "C", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

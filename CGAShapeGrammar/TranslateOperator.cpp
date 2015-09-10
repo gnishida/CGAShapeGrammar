@@ -4,12 +4,14 @@
 
 namespace cga {
 
-TranslateOperator::TranslateOperator(const glm::vec3& vec) {
+TranslateOperator::TranslateOperator(int mode, int coordSystem, const glm::vec3& vec) {
+	this->mode = mode;
+	this->coordSystem = coordSystem;
 	this->vec = vec;
 }
 
 Shape* TranslateOperator::apply(Shape* obj, std::list<Shape*>& stack) {
-	obj->translate(vec);
+	obj->translate(mode, coordSystem, vec);
 	return obj;
 }
 

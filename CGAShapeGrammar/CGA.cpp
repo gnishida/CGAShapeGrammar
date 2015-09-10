@@ -48,13 +48,13 @@ BoundingBox::BoundingBox(const std::vector<glm::vec3>& points) {
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showAxes) {
+void CGA::generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showScopeCoordinateSystem) {
 	while (!stack.empty()) {
 		Shape* obj = stack.front();
 		stack.pop_front();
 
 		if (rules.find(obj->_name) == rules.end()) {
-			obj->generate(renderManager, showAxes);
+			obj->generate(renderManager, showScopeCoordinateSystem);
 			delete obj;
 		} else {
 			rules[obj->_name].apply(obj, stack);

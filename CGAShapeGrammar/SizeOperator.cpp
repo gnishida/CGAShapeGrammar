@@ -4,12 +4,14 @@
 
 namespace cga {
 
-SizeOperator::SizeOperator(const glm::vec3& size) {
-	this->size = size;
+SizeOperator::SizeOperator(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
+	this->xSize = xSize;
+	this->ySize = ySize;
+	this->zSize = zSize;
 }
 
 Shape* SizeOperator::apply(Shape* obj, std::list<Shape*>& stack) {
-	obj->size(size);
+	obj->size(xSize, ySize, zSize);
 	return obj;
 }
 

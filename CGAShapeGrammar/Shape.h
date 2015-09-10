@@ -14,6 +14,7 @@ public:
 	std::string _texture;
 	std::vector<glm::vec2> _texCoords;
 	glm::vec3 _scope;
+	glm::mat4 _pivot;
 
 public:
 	virtual Shape* clone(const std::string& name);
@@ -27,12 +28,12 @@ public:
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);
 	virtual Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
-	virtual void size(const glm::vec3& sz);
-	virtual void split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);
+	virtual void size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
+	virtual void split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);
 	virtual Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);
-	void translate(const glm::vec3& v);
-	virtual void generate(RenderManager* renderManager, bool showAxes);
+	void translate(int mode, int coordSystem, const glm::vec3& v);
+	virtual void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);
 
 protected:
 	void drawAxes(RenderManager* renderManager, const glm::mat4& modelMat);

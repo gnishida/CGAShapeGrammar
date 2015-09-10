@@ -60,6 +60,8 @@ std::map<std::string, Rule> parseRule(char* filename) {
 						rules[name].operators.push_back(parseOffsetOperator(operator_node));
 					} else if (operator_name == "roofHip") {
 						rules[name].operators.push_back(parseRoofHipOperator(operator_node));
+					} else if (operator_name == "rotate") {
+						rules[name].operators.push_back(parseRotateOperator(operator_node));
 					} else if (operator_name == "setupProjection") {
 						rules[name].operators.push_back(parseSetupProjectionOperator(operator_node));
 					} else if (operator_name == "shapeL") {
@@ -319,32 +321,49 @@ Operator* parseShapeLOperator(const QDomNode& node) {
 }
 
 Operator* parseSizeOperator(const QDomNode& node) {
-	float xSize = 0.0f;
-	float ySize = 0.0f;
-	float zSize = 0.0f;
+	SingleValue xSize;
+	SingleValue ySize;
+	SingleValue zSize;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
+			QString type;
+			if (child.toElement().hasAttribute("type")) {
+				type = child.toElement().attribute("type");
+			}
+			float value = child.toElement().attribute("value").toFloat();
 
 			if (name == "xSize") {
-				xSize = child.toElement().attribute("value").toFloat();
+				if (type == "relative") {
+					xSize = SingleValue(Value::TYPE_RELATIVE, value);
+				} else {
+					xSize = SingleValue(Value::TYPE_ABSOLUTE, value);
+				}
 			} else if (name == "ySize") {
-				ySize = child.toElement().attribute("value").toFloat();
+				if (type == "relative") {
+					ySize = SingleValue(Value::TYPE_RELATIVE, value);
+				} else {
+					ySize = SingleValue(Value::TYPE_ABSOLUTE, value);
+				}
 			} else if (name == "zSize") {
-				zSize = child.toElement().attribute("value").toFloat();
+				if (type == "relative") {
+					zSize = SingleValue(Value::TYPE_RELATIVE, value);
+				} else {
+					zSize = SingleValue(Value::TYPE_ABSOLUTE, value);
+				}
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new SizeOperator(glm::vec3(xSize, ySize, zSize));
+	return new SizeOperator(xSize, ySize, zSize);
 }
 
 Operator* parseSplitOperator(const QDomNode& node) {
-	int direction;
+	int splitAxis;
 	std::vector<Value*> sizes;
 	std::vector<std::string> names;
 
@@ -353,11 +372,13 @@ Operator* parseSplitOperator(const QDomNode& node) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
 
-			if (name == "direction") {
-				if (child.toElement().attribute("value") == "y") {
-					direction = DIRECTION_Y;
-				} else {
-					direction = DIRECTION_X;
+			if (name == "splitAxis") {
+				if (child.toElement().attribute("value") == "x") {
+					splitAxis = DIRECTION_X;
+				} else if (child.toElement().attribute("value") == "y") {
+					splitAxis = DIRECTION_Y;
+				} else if (child.toElement().attribute("value") == "z") {
+					splitAxis = DIRECTION_Z;
 				}
 			} else if (name == "size") {
 				QDomNode element = child.firstChild();
@@ -406,7 +427,7 @@ Operator* parseSplitOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new SplitOperator(direction, sizes, names);
+	return new SplitOperator(splitAxis, sizes, names);
 }
 
 Operator* parseTaperOperator(const QDomNode& node) {
@@ -451,6 +472,8 @@ Operator* parseTextureOperator(const QDomNode& node) {
 }
 
 Operator* parseTranslateOperator(const QDomNode& node) {
+	int mode;
+	int coordSystem;
 	float x, y, z;
 
 	QDomNode child = node.firstChild();
@@ -458,7 +481,23 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
 
-			if (name == "x") {
+			if (name == "mode") {
+				if (child.toElement().attribute("value") == "abs") {
+					mode = MODE_ABSOLUTE;
+				} else if (child.toElement().attribute("value") == "rel") {
+					mode = MODE_RELATIVE;
+				} else {
+					throw "mode has to be either abs or rel.";
+				}
+			} else if (name == "coordSystem") {
+				if (child.toElement().attribute("value") == "world") {
+					coordSystem = COORD_SYSTEM_WORLD;
+				} else if (child.toElement().attribute("value") == "object") {
+					coordSystem = COORD_SYSTEM_OBJECT;
+				} else {
+					throw "coordSystem has to be either world or object.";
+				}
+			} else if (name == "x") {
 				x = child.toElement().attribute("value").toFloat();
 			} else if (name == "y") {
 				y = child.toElement().attribute("value").toFloat();
@@ -470,7 +509,7 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new TranslateOperator(glm::vec3(x, y, z));
+	return new TranslateOperator(mode, coordSystem, glm::vec3(x, y, z));
 }
 
 }

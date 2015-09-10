@@ -7,10 +7,12 @@ namespace cga {
 
 class SizeOperator : public Operator {
 private:
-	glm::vec3 size;
+	SingleValue xSize;
+	SingleValue ySize;
+	SingleValue zSize;
 
 public:
-	SizeOperator(const glm::vec3& size);
+	SizeOperator(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
 
 	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };

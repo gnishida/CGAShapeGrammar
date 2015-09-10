@@ -13,9 +13,10 @@ typedef boost::shared_ptr<Ss> SsPtr ;
 
 namespace cga {
 
-HipRoof::HipRoof(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float angle, const glm::vec3& color) {
+HipRoof::HipRoof(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float angle, const glm::vec3& color) {
 	this->_name = name;
 	this->_removed = false;
+	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_points = points;
 	this->_angle = angle;
@@ -28,7 +29,7 @@ Shape* HipRoof::clone(const std::string& name) {
 	return copy;
 }
 
-void HipRoof::generate(RenderManager* renderManager, bool showAxes) {
+void HipRoof::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -76,9 +77,9 @@ void HipRoof::generate(RenderManager* renderManager, bool showAxes) {
 					float z = glutils::distance(p0, p1, p2) * tanf(_angle * M_PI / 180.0f);
 
 					// 三角形を作成
-					glm::vec3 v0 = glm::vec3(_modelMat * glm::vec4(p0, 0, 1));
-					glm::vec3 v1 = glm::vec3(_modelMat * glm::vec4(prev_p, 1));
-					glm::vec3 v2 = glm::vec3(_modelMat * glm::vec4(p2, z, 1));
+					glm::vec3 v0 = glm::vec3(_pivot * _modelMat * glm::vec4(p0, 0, 1));
+					glm::vec3 v1 = glm::vec3(_pivot * _modelMat * glm::vec4(prev_p, 1));
+					glm::vec3 v2 = glm::vec3(_pivot * _modelMat * glm::vec4(p2, z, 1));
 
 					glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 
@@ -94,8 +95,8 @@ void HipRoof::generate(RenderManager* renderManager, bool showAxes) {
 
 	renderManager->addObject(_name.c_str(), "", vertices);
 
-	if (showAxes) {
-		drawAxes(renderManager, _modelMat);
+	if (showScopeCoordinateSystem) {
+		drawAxes(renderManager, _pivot * _modelMat);
 	}
 }
 

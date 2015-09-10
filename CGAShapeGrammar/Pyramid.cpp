@@ -6,9 +6,10 @@
 
 namespace cga {
 
-Pyramid::Pyramid(const std::string& name, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, float top_ratio, const glm::vec3& color, const std::string& texture) {
+Pyramid::Pyramid(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, const glm::vec2& center, float height, float top_ratio, const glm::vec3& color, const std::string& texture) {
 	this->_name = name;
 	this->_removed = false;
+	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_points = points;
 	this->_center = center;
@@ -49,7 +50,7 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 		}
 
 		mat = glm::rotate(_modelMat, angle, glm::vec3(1, 0, 0));
-		*front = new Polygon(front_name, mat, points, _color, _texture);
+		*front = new Polygon(front_name, _pivot, mat, points, _color, _texture);
 	}
 
 	// side faces (To be fixed);
@@ -86,7 +87,7 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 			}
 
 			glm::mat4 mat2 = glm::rotate(mat, angle, glm::vec3(1, 0, 0));
-			sides[i - 1] = new Polygon(sides_name, _modelMat * mat2, points, _color, _texture);
+			sides[i - 1] = new Polygon(sides_name, _pivot, _modelMat * mat2, points, _color, _texture);
 			
 		}
 	}
@@ -100,32 +101,32 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 		}
 		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(offset, _height));
 
-		*top = new Polygon(top_name, mat, points, _color, _texture);
+		*top = new Polygon(top_name, _pivot, mat, points, _color, _texture);
 	}
 
 	// bottom face
 	{
 		std::vector<glm::vec2> basePoints = _points;
 		std::reverse(basePoints.begin(), basePoints.end());
-		*bottom = new Polygon(bottom_name, _modelMat, basePoints, _color, _texture);
+		*bottom = new Polygon(bottom_name, _pivot, _modelMat, basePoints, _color, _texture);
 	}
 }
 
-void Pyramid::generate(RenderManager* renderManager, bool showAxes) {
+void Pyramid::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	if (_removed) return;
 
 	if (_top_ratio == 0.0f) {
 		std::vector<Vertex> vertices(_points.size() * 3);
 
 		glm::vec4 p0(_center, _height, 1);
-		p0 = _modelMat * p0;
+		p0 = _pivot * _modelMat * p0;
 
 		glm::vec4 p1(_points.back(), 0, 1);
-		p1 = _modelMat * p1;
+		p1 = _pivot * _modelMat * p1;
 
 		for (int i = 0; i < _points.size(); ++i) {
 			glm::vec4 p2(_points[i], 0, 1);
-			p2 = _modelMat * p2;
+			p2 = _pivot * _modelMat * p2;
 
 			glm::vec3 normal = glm::cross(glm::vec3(p1 - p0), glm::vec3(p2 - p0));
 
@@ -141,19 +142,19 @@ void Pyramid::generate(RenderManager* renderManager, bool showAxes) {
 		std::vector<Vertex> vertices(_points.size() * 6);
 
 		glm::vec4 p0(_points.back(), 0, 1);
-		p0 = _modelMat * p0;
+		p0 = _pivot * _modelMat * p0;
 
 		glm::vec4 p1(_points.back() * _top_ratio + _center * (1.0f - _top_ratio), _height, 1);
-		p1 = _modelMat * p1;
+		p1 = _pivot * _modelMat * p1;
 
 		std::vector<glm::vec3> pts3(_points.size());
 		for (int i = 0; i < _points.size(); ++i) {
 			glm::vec4 p2(_points[i], 0, 1);
-			p2 = _modelMat * p2;
+			p2 = _pivot * _modelMat * p2;
 
 			glm::vec4 p3(_points[i] * _top_ratio + _center * (1.0f - _top_ratio), _height, 1);
 			pts3[i] = glm::vec3(p3);
-			p3 = _modelMat * p3;
+			p3 = _pivot * _modelMat * p3;
 
 			glm::vec3 normal = glm::cross(glm::vec3(p2 - p0), glm::vec3(p3 - p0));
 
@@ -169,13 +170,13 @@ void Pyramid::generate(RenderManager* renderManager, bool showAxes) {
 			p1 = p3;
 		}
 
-		glutils::drawPolygon(pts3, _color, _modelMat, vertices);
+		glutils::drawPolygon(pts3, _color, _pivot * _modelMat, vertices);
 
 		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 	}
 
-	if (showAxes) {
-		drawAxes(renderManager, _modelMat);
+	if (showScopeCoordinateSystem) {
+		drawAxes(renderManager, _pivot * _modelMat);
 	}
 }
 

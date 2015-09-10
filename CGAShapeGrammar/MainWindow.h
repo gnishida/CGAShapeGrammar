@@ -18,7 +18,8 @@ public:
 
 public slots:
 	void onOpenCGARules();
-	void onShowWireframe();
+	void onViewWireframe();
+	void onViewScopeCoordinateSystem();
 };
 
 #endif // MAINWINDOW_H

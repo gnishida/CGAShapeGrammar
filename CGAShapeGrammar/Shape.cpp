@@ -46,7 +46,7 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 		points[i].z = points[i].z * scaleZ;
 	}
 
-	return new GeneralObject(name, _modelMat, points, normals, _color);
+	return new GeneralObject(name, _pivot, _modelMat, points, normals, _color);
 }
 
 void Shape::nil() {
@@ -75,11 +75,11 @@ Shape* Shape::shapeL(const std::string& name, float frontWidth, float leftWidth)
 	throw "shapeL() is not supported.";
 }
 
-void Shape::size(const glm::vec3& sz) {
+void Shape::size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
 	throw "size() is not supported.";
 }
 
-void Shape::split(int direction, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
+void Shape::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
 	throw "split() is not supported.";
 }
 
@@ -92,11 +92,27 @@ void Shape::texture(const std::string& tex) {
 	_textureEnabled = true;
 }
 
-void Shape::translate(const glm::vec3& v) {
-	_modelMat = glm::translate(_modelMat, v);
+void Shape::translate(int mode, int coordSystem, const glm::vec3& v) {
+	if (mode == MODE_ABSOLUTE) {
+		if (coordSystem == COORD_SYSTEM_WORLD) {
+			_modelMat[3].x = v.x;
+			_modelMat[3].y = v.y;
+			_modelMat[3].z = v.z;
+		} else if (coordSystem == COORD_SYSTEM_OBJECT) {
+			_modelMat = glm::translate(_modelMat, v);
+		}
+	} else if (mode == MODE_RELATIVE) {
+		if (coordSystem == COORD_SYSTEM_WORLD) {
+			_modelMat[3].x += v.x;
+			_modelMat[3].y += v.y;
+			_modelMat[3].z += v.z;
+		} else if (coordSystem == COORD_SYSTEM_OBJECT) {
+			_modelMat = glm::translate(_modelMat, v);
+		}
+	}
 }
 
-void Shape::generate(RenderManager* renderManager, bool showAxes) {
+void Shape::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	throw "generate() is not supported.";
 }
 

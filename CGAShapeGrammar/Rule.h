@@ -25,6 +25,7 @@ public:
 
 class SingleValue : public Value {
 public:
+	SingleValue() { this->type = TYPE_ABSOLUTE; this->value = 0.0f; this->repeat = false; }
 	SingleValue(int type, float value) { this->type = type; this->value = value; this->repeat = false; }
 
 	float getEstimateValue(float size) { return value; }

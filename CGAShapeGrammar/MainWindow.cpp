@@ -3,11 +3,13 @@
 
 MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags) {
 	ui.setupUi(this);
-	ui.actionShowWireframe->setChecked(true);
+	ui.actionViewWireframe->setChecked(true);
+	ui.actionViewScopeCoordinateSystem->setChecked(true);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGARules, SIGNAL(triggered()), this, SLOT(onOpenCGARules()));
-	connect(ui.actionShowWireframe, SIGNAL(triggered()), this, SLOT(onShowWireframe()));
+	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewWireframe()));
+	connect(ui.actionViewScopeCoordinateSystem, SIGNAL(triggered()), this, SLOT(onViewScopeCoordinateSystem()));
 
 	glWidget = new GLWidget3D();
 	setCentralWidget(glWidget);
@@ -23,7 +25,12 @@ void MainWindow::onOpenCGARules() {
 	glWidget->loadCGA(filename.toUtf8().data());
 }
 
-void MainWindow::onShowWireframe() {
-	glWidget->showWireframe = ui.actionShowWireframe->isChecked();
+void MainWindow::onViewWireframe() {
+	glWidget->showWireframe = ui.actionViewWireframe->isChecked();
+	glWidget->updateGL();
+}
+
+void MainWindow::onViewScopeCoordinateSystem() {
+	glWidget->showScopeCoordinateSystem = ui.actionViewScopeCoordinateSystem->isChecked();
 	glWidget->updateGL();
 }

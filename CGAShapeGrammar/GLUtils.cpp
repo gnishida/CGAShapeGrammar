@@ -222,8 +222,7 @@ void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, c
 		p3 = mat * p3;
 
 		if (!normal_computed) {
-			normal = glm::cross(glm::vec3(p2 - p1), glm::vec3(p3 - p1));
-			normal = glm::vec3(mat * glm::vec4(normal, 0));
+			normal = glm::normalize(glm::cross(glm::vec3(p2 - p1), glm::vec3(p3 - p1)));
 			normal_computed = true;
 		}
 
@@ -252,8 +251,7 @@ void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, c
 		glm::vec2 t3 = texCoords[i + 1];
 
 		if (!normal_computed) {
-			normal = glm::cross(glm::vec3(p2 - p1), glm::vec3(p3 - p1));
-			normal = glm::vec3(mat * glm::vec4(normal, 0));
+			normal = glm::normalize(glm::cross(glm::vec3(p2 - p1), glm::vec3(p3 - p1)));
 			normal_computed = true;
 		}
 
@@ -301,22 +299,32 @@ void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec3& c
 
 void drawGrid(float width, float height, float cell_size, const glm::vec3& lineColor, const glm::vec3& backgroundColor, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	drawQuad(width, height, backgroundColor, mat, vertices);
+
+	float line_width = cell_size * 0.03;
 	
 	for (float x = 0; x < width * 0.5; x += cell_size) {
-		glm::mat4 m = glm::translate(mat, glm::vec3(x, -height * 0.5, 0));
-		drawCylinderY(0.1, 0.1, height, lineColor, m, vertices);
-		if (x > 0) {
-			glm::mat4 m = glm::translate(mat, glm::vec3(-x, -height * 0.5, 0));
-			drawCylinderY(0.1, 0.1, height, lineColor, m, vertices);
+		if (x == 0) {
+			glm::mat4 m = glm::translate(mat, glm::vec3(x, -height * 0.5, 0));
+			drawCylinderY(line_width * 2, line_width * 2, height, lineColor, m, vertices);
+		} else {
+			glm::mat4 m = glm::translate(mat, glm::vec3(x, -height * 0.5, 0));
+			drawCylinderY(line_width * 0.5, line_width * 0.5, height, lineColor, m, vertices);
+
+			m = glm::translate(mat, glm::vec3(-x, -height * 0.5, 0));
+			drawCylinderY(line_width * 0.5, line_width * 0.5, height, lineColor, m, vertices);
 		}
 	}
 
 	for (float y = 0; y < height * 0.5; y += cell_size) {
-		glm::mat4 m = glm::translate(mat, glm::vec3(-width * 0.5, y, 0));
-		drawCylinderX(0.1, 0.1, width, lineColor, m, vertices);
-		if (y > 0) {
-			glm::mat4 m = glm::translate(mat, glm::vec3(-width * 0.5, -y, 0));
-			drawCylinderX(0.1, 0.1, width, lineColor, m, vertices);
+		if (y == 0) {
+			glm::mat4 m = glm::translate(mat, glm::vec3(-width * 0.5, y, 0));
+			drawCylinderX(line_width * 2, line_width * 2, width, lineColor, m, vertices);
+		} else {
+			glm::mat4 m = glm::translate(mat, glm::vec3(-width * 0.5, y, 0));
+			drawCylinderX(line_width * 0.5, line_width * 0.5, width, lineColor, m, vertices);
+
+			m = glm::translate(mat, glm::vec3(-width * 0.5, -y, 0));
+			drawCylinderX(line_width * 0.5, line_width * 0.5, width, lineColor, m, vertices);
 		}
 	}
 }
