@@ -62,6 +62,9 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 			glm::vec2 b = _points[(i + 1) % _points.size()] - _points[i];
 			mat = glm::translate(mat, glm::vec3(glm::length(a), 0, 0));
 			float theta = acos(glm::dot(a, b) / glm::length(a) / glm::length(b));
+			if (a.x * b.y - a.y * b.x < 0) {
+				theta = -theta;
+			}
 			mat = glm::rotate(mat, theta, glm::vec3(0, 0, 1));
 
 			std::vector<glm::vec3> points3d(3 + (_top_ratio > 0.0f ? 1 : 0));
@@ -78,7 +81,7 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 			}
 
 			float dist = glutils::distance(points3d[0], points3d[1], points3d[2]);
-			float angle = asin(_height / dist);
+			float angle = acos(points3d[2].y / dist);
 			glm::mat4 matRot = glm::rotate(glm::mat4(), -angle, glm::vec3(1, 0, 0));
 
 			std::vector<glm::vec2> points(points3d.size());
@@ -106,9 +109,9 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 
 	// bottom face
 	{
-		std::vector<glm::vec2> basePoints = _points;
-		std::reverse(basePoints.begin(), basePoints.end());
-		*bottom = new Polygon(bottom_name, _pivot, _modelMat, basePoints, _color, _texture);
+		//std::vector<glm::vec2> basePoints = _points;
+		//std::reverse(basePoints.begin(), basePoints.end());
+		*bottom = new Polygon(bottom_name, _pivot, _modelMat, _points, _color, _texture);
 	}
 }
 
