@@ -24,7 +24,7 @@
 			<param name="texture" value="textures/brick.jpg"/>
 		</operator>
 		<operator name="split">
-			<param name="direction" value="y"/>
+			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="absolute" value="4.0"/>
 				<element type="floating" value="3.5" repeat="true"/>
@@ -45,7 +45,7 @@
 			<param name="texture" value="textures/brick.jpg"/>
 		</operator>
 		<operator name="split">
-			<param name="direction" value="y"/>
+			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="absolute" value="4.0"/>
 				<element type="floating" value="3.5" repeat="true"/>
@@ -58,7 +58,7 @@
 	</rule>
 	<rule name="Floor">
 		<operator name="split">
-			<param name="direction" value="x"/>
+			<param name="splitAxis" value="x"/>
 			<param name="size">
 				<element type="absolute" value="1.0"/>
 				<element type="floating" value="3.0" repeat="true"/>
@@ -83,7 +83,7 @@
 	</rule>
 	<rule name="Tile">
 		<operator name="split">
-			<param name="direction" value="x"/>
+			<param name="splitAxis" value="x"/>
 			<param name="size">
 				<element type="floating" value="1.0"/>
 				<element type="absolute" value="2.0"/>
@@ -98,7 +98,7 @@
 	</rule>
 	<rule name="WallWindowWall">
 		<operator name="split">
-			<param name="direction" value="y"/>
+			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="absolute" value="1.0"/>
 				<element type="absolute" value="1.5"/>
@@ -109,6 +109,28 @@
 				<element value="Window"/>
 				<element value="Wall"/>
 			</param>
+		</operator>
+	</rule>
+	<rule name="Window">
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-0.1"/>
+		</operator>
+		<operator name="setupProjection">
+			<param name="coordinateType" value="relative"/>
+			<param name="texWidth" value="0"/>
+			<param name="texHeight" value="0"/>
+		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="../models/window.obj"/>
+		</operator>
+		<operator name="color">
+			<param name="r" value="1"/>
+			<param name="g" value="1"/>
+			<param name="b" value="1"/>
 		</operator>
 	</rule>
 </rules>

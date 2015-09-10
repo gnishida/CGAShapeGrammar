@@ -23,7 +23,7 @@ public:
 	virtual Shape* inscribeCircle(const std::string& name);
 	Shape* insert(const std::string& name, const std::string& geometryPath);
 	void nil();
-	virtual Shape* offset(const std::string& name, float offsetRatio);
+	virtual Shape* offset(const std::string& name, float offsetDistance);
 	virtual Shape* roofHip(const std::string& name, float angle);
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);

@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<rules>
-	<rule name="Lot">
-		<operator name="shapeL">
-			<param name="frontWidth" value="5"/>
-			<param name="leftWidth" value="11"/>
-		</operator>
-	</rule>
-</rules>

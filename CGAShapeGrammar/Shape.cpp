@@ -53,7 +53,7 @@ void Shape::nil() {
 	_removed = true;
 }
 
-Shape* Shape::offset(const std::string& name, float offsetRatio) {
+Shape* Shape::offset(const std::string& name, float offsetDistance) {
 	throw "offset() is not supported.";
 }
 

@@ -1,6 +1,7 @@
 #include "Polygon.h"
 #include "Pyramid.h"
 #include "HipRoof.h"
+#include "OffsetPolygon.h"
 #include "Prism.h"
 #include "GLUtils.h"
 
@@ -39,7 +40,9 @@ Shape* Polygon::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-Shape* Polygon::offset(const std::string& name, float offsetRatio) {
+Shape* Polygon::offset(const std::string& name, float offsetDistance) {
+	return new OffsetPolygon(name, _pivot, _modelMat, _points, offsetDistance, _color, _texture);
+	/*
 	glm::vec2 t = glm::vec2(_points[0] * (1.0f - offsetRatio) + _center * offsetRatio) - _points[0];
 
 	std::vector<glm::vec2> points(_points.size());
@@ -49,6 +52,7 @@ Shape* Polygon::offset(const std::string& name, float offsetRatio) {
 
 	glm::mat4 mat = glm::translate(_modelMat, glm::vec3(t, 0));
 	return new Polygon(name, _pivot, mat, points, _color, _texture);
+	*/
 }
 
 Shape* Polygon::roofHip(const std::string& name, float angle) {

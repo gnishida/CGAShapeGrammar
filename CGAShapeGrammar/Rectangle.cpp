@@ -4,6 +4,7 @@
 #include "HipRoof.h"
 #include "Prism.h"
 #include "Polygon.h"
+#include "OffsetPolygon.h"
 
 namespace cga {
 
@@ -56,13 +57,22 @@ Shape* Rectangle::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-Shape* Rectangle::offset(const std::string& name, float offsetRatio) {
+Shape* Rectangle::offset(const std::string& name, float offsetDistance) {
+	std::vector<glm::vec2> points(4);
+	points[0] = glm::vec2(0, 0);
+	points[1] = glm::vec2(_width, 0);
+	points[2] = glm::vec2(_width, this->_height);
+	points[3] = glm::vec2(0, _height);
+
+	return new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture);
+	/*
 	glm::mat4 mat = glm::translate(_modelMat, glm::vec3(_scope.x * 0.5f * offsetRatio, _scope.y * 0.5f * offsetRatio, 0));
 	if (_textureEnabled) {
 		return new Rectangle(name, _pivot, mat, _width * (1.0f - offsetRatio), _height * (1.0f - offsetRatio), _texture, _texCoords[0].x, _texCoords[0].y, _texCoords[2].x, _texCoords[2].y);
 	} else {
 		return new Rectangle(name, _pivot, mat, _width * (1.0f - offsetRatio), _height * (1.0f - offsetRatio), _color);
 	}
+	*/
 }
 
 Shape* Rectangle::roofHip(const std::string& name, float angle) {

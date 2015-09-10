@@ -10,6 +10,7 @@ namespace glutils {
 
 // geometry computation
 bool isWithinPolygon(const glm::vec2& p, const std::vector<glm::vec2>& points);
+void offsetPolygon(const std::vector<glm::vec2>& points, float offsetDistance, std::vector<glm::vec2>& offset_points);
 float distance(const glm::vec2& a, const glm::vec2& b, const glm::vec2& c, bool segmentOnly = false);
 float distance(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c);
 glm::vec3 lineLineIntersection(const glm::vec3& p1, const glm::vec3& v1, const glm::vec3& p2, const glm::vec3& v2, float weight1 = 0.5f, float weight2 = 0.5f);
@@ -22,6 +23,7 @@ void drawQuad(float w, float h, const glm::vec3& color, const glm::mat4& mat, st
 void drawQuad(float w, float h, const glm::vec2& t1, const glm::vec2& t2, const glm::vec2& t3, const glm::vec2& t4, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices);
+void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawGrid(float width, float height, float cell_size, const glm::vec3& lineColor, const glm::vec3& backgroundColor, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawBox(float length_x, float length_y, float length_z, glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);

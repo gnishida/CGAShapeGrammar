@@ -7,23 +7,13 @@
 #include <CGAL/partition_2.h>
 #include <CGAL/point_generators_2.h>
 #include <CGAL/random_polygon_2.h>
+#include <CGAL/Polygon_2.h>
+#include <CGAL/create_offset_polygons_2.h>
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/ring.hpp>
 #include <cassert>
 #include <list>
-
-typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
-typedef CGAL::Partition_traits_2<K>                         Traits;
-typedef Traits::Point_2                                     Point_2;
-typedef Traits::Polygon_2                                   Polygon_2;
-typedef Polygon_2::Vertex_iterator                          Vertex_iterator;
-typedef std::list<Polygon_2>                                Polygon_list;
-typedef CGAL::Creator_uniform_2<int, Point_2>               Creator;
-typedef CGAL::Random_points_in_square_2< Point_2, Creator > Point_generator;
-
-//typedef boost::geometry::model::polygon<point_type>			polygon_type;
-typedef boost::geometry::model::d2::point_xy<double>		point_2d;
 
 #ifndef M_PI
 #define M_PI	3.14159265359
@@ -34,6 +24,18 @@ typedef boost::geometry::model::d2::point_xy<double>		point_2d;
 #endif
 
 namespace glutils {
+
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
+typedef CGAL::Partition_traits_2<K>                         Traits;
+typedef Traits::Point_2                                     Point_2;
+typedef Traits::Polygon_2                                   Polygon_2;
+typedef Polygon_2::Vertex_iterator                          Vertex_iterator;
+typedef std::list<Polygon_2>                                Polygon_list;
+typedef CGAL::Creator_uniform_2<int, Point_2>               Creator;
+typedef CGAL::Random_points_in_square_2< Point_2, Creator > Point_generator;
+typedef boost::shared_ptr<Polygon_2>						PolygonPtr;
+//typedef boost::geometry::model::polygon<point_type>			polygon_type;
+typedef boost::geometry::model::d2::point_xy<double>		point_2d;
 
 /**
  * Test if the point is inside the polygon
@@ -46,6 +48,31 @@ bool isWithinPolygon(const glm::vec2& p, const std::vector<glm::vec2>& points) {
 	boost::geometry::correct(contour);
 
 	return boost::geometry::within(point_2d(p.x, p.y), contour);
+}
+
+/**
+ * Compute the offset polygon.
+ */
+void offsetPolygon(const std::vector<glm::vec2>& points, float offsetDistance, std::vector<glm::vec2>& offset_points) {
+	Polygon_2 poly;
+
+	for (int i = 0; i < points.size(); ++i) {
+		poly.push_back(K::Point_2(points[i].x, points[i].y));
+	}
+
+	std::vector<PolygonPtr> offset_poly;
+	if (offsetDistance >= 0) {
+		K::FT lOffset = offsetDistance;
+		offset_poly = CGAL::create_exterior_skeleton_and_offset_polygons_2(lOffset, poly);
+	} else {
+		K::FT lOffset = -offsetDistance;
+		offset_poly = CGAL::create_interior_skeleton_and_offset_polygons_2(lOffset,poly);
+	}
+
+	offset_points.clear();
+	for (auto it = offset_poly[0]->vertices_begin(); it != offset_poly[0]->vertices_end(); ++it) {
+		offset_points.push_back(glm::vec2(it->x(), it->y()));
+	}
 }
 
 /*
@@ -219,6 +246,32 @@ void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, c
 
 	for (int i = 0; i < points.size() - 2; ++i) {
 		glm::vec4 p3(points[i + 1], 1);
+		p3 = mat * p3;
+
+		if (!normal_computed) {
+			normal = glm::normalize(glm::cross(glm::vec3(p2 - p1), glm::vec3(p3 - p1)));
+			normal_computed = true;
+		}
+
+		vertices.push_back(Vertex(glm::vec3(p1), normal, color));
+		vertices.push_back(Vertex(glm::vec3(p2), normal, color));
+		vertices.push_back(Vertex(glm::vec3(p3), normal, color));
+
+		p2 = p3;
+	}
+}
+
+void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+	glm::vec4 p1(points.back(), 0, 1);
+	p1 = mat * p1;
+	glm::vec4 p2(points[0], 0, 1);
+	p2 = mat * p2;
+
+	glm::vec3 normal;
+	bool normal_computed = false;
+
+	for (int i = 0; i < points.size() - 2; ++i) {
+		glm::vec4 p3(points[i + 1], 0, 1);
 		p3 = mat * p3;
 
 		if (!normal_computed) {
