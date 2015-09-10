@@ -9,8 +9,8 @@ Shape* Shape::clone(const std::string& name) {
 	throw "clone() is not supported.";
 }
 
-void Shape::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
-	throw "componentSplit() is not supported.";
+void Shape::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
+	throw "comp() is not supported.";
 }
 
 Shape* Shape::extrude(const std::string& name, float height) {

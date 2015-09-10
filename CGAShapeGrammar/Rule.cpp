@@ -34,6 +34,7 @@ float ValueSet::getEstimateValue(float size) {
 void Rule::apply(Shape* obj, std::list<Shape*>& stack) {
 	for (int i = 0; i < operators.size(); ++i) {
 		obj = operators[i]->apply(obj, stack);
+		if (obj == NULL) break;
 	}
 	
 	if (obj != NULL) {

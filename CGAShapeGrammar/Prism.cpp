@@ -24,16 +24,15 @@ Shape* Prism::clone(const std::string& name) {
 	return copy;
 }
 
-void Prism::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
+void Prism::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
 	// front face
-	{
-		*front = new Rectangle(front_name, _pivot, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color);
+	if (name_map.find("front") != name_map.end() && name_map.at("front") != "NIL") {
+		shapes.push_back(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color));
 	}
 
 	// side faces
-	{
+	if (name_map.find("side") != name_map.end() && name_map.at("side") != "NIL") {
 		glm::mat4 mat;
-		sides.resize(_points.size() - 1);
 		for (int i = 1; i < _points.size(); ++i) {
 			glm::vec2 a = _points[i] - _points[i - 1];
 			glm::vec2 b = _points[(i + 1) % _points.size()] - _points[i];
@@ -50,20 +49,20 @@ void Prism::comp(const std::string& front_name, Shape** front, const std::string
 			sidePoints[2] = glm::vec2(invMat * glm::vec4(_points[(i + 1) % _points.size()], _height, 1));
 			sidePoints[3] = glm::vec2(invMat * glm::vec4(_points[i], _height, 1));
 
-			sides[i - 1] = new Rectangle(sides_name, _pivot, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color);
+			shapes.push_back(new Rectangle(name_map.at("side"), _pivot, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color));
 		}
 	}
 
 	// top face
-	{
-		*top = new Polygon(top_name, _pivot, glm::translate(_modelMat, glm::vec3(0, 0, _height)), _points, _color, _texture);
+	if (name_map.find("top") != name_map.end() && name_map.at("top") != "NIL") {
+		shapes.push_back(new Polygon(name_map.at("top"), _pivot, glm::translate(_modelMat, glm::vec3(0, 0, _height)), _points, _color, _texture));
 	}
 
 	// bottom face
-	{
+	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL") {
 		//std::vector<glm::vec2> basePoints = _points;
 		//std::reverse(basePoints.begin(), basePoints.end());
-		*bottom = new Polygon(bottom_name, _pivot, _modelMat, _points, _color, _texture);
+		shapes.push_back(new Polygon(name_map.at("bottom"), _pivot, _modelMat, _points, _color, _texture));
 	}
 }
 

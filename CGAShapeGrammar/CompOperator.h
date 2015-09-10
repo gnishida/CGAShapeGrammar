@@ -1,18 +1,16 @@
 #pragma once
 
 #include "Rule.h"
+#include <map>
 
 namespace cga {
 
 class CompOperator : public Operator {
 private:
-	std::string front_name;
-	std::string side_name;
-	std::string top_name;
-	std::string bottom_name;
+	std::map<std::string, std::string> name_map;
 
 public:
-	CompOperator(const std::string& front_name, const std::string& side_name, const std::string& top_name, const std::string& bottom_name);
+	CompOperator(const std::map<std::string, std::string>& name_map);
 	Shape* apply(Shape* obj, std::list<Shape*>& stack);
 };
 

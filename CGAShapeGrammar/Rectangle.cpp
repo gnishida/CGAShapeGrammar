@@ -65,14 +65,6 @@ Shape* Rectangle::offset(const std::string& name, float offsetDistance) {
 	points[3] = glm::vec2(0, _height);
 
 	return new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture);
-	/*
-	glm::mat4 mat = glm::translate(_modelMat, glm::vec3(_scope.x * 0.5f * offsetRatio, _scope.y * 0.5f * offsetRatio, 0));
-	if (_textureEnabled) {
-		return new Rectangle(name, _pivot, mat, _width * (1.0f - offsetRatio), _height * (1.0f - offsetRatio), _texture, _texCoords[0].x, _texCoords[0].y, _texCoords[2].x, _texCoords[2].y);
-	} else {
-		return new Rectangle(name, _pivot, mat, _width * (1.0f - offsetRatio), _height * (1.0f - offsetRatio), _color);
-	}
-	*/
 }
 
 Shape* Rectangle::roofHip(const std::string& name, float angle) {

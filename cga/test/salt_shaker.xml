@@ -14,16 +14,16 @@
 	</rule>
 	<rule name="Top">
 		<operator name="offset">
-			<param name="offsetDistance" value="-1"/>
+			<param name="offsetDistance" value="-0.5"/>
 		</operator>
 		<operator name="comp">
 			<param name="inside" value="X"/>
 			<param name="border" value="Y"/>
 		</operator>
-		<!--
+	</rule>
+	<rule name="X">
 		<operator name="extrude">
 			<param name="height" value="2"/>
 		</operator>
-		-->
 	</rule>
 </rules>

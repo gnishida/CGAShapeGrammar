@@ -126,27 +126,35 @@ Operator* parseCompOperator(const QDomNode& node) {
 	std::string side_name;
 	std::string top_name;
 	std::string bottom_name;
+	std::string inside_name;
+	std::string border_name;
+	std::map<std::string, std::string> name_map;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
+			std::string value = child.toElement().attribute("value").toUtf8().constData();
 
 			if (name == "front") {
-				front_name = child.toElement().attribute("value").toUtf8().constData();
+				name_map["front"] = value;
 			} else if (name == "side") {
-				side_name = child.toElement().attribute("value").toUtf8().constData();
+				name_map["side"] = value;
 			} else if (name == "top") {
-				top_name = child.toElement().attribute("value").toUtf8().constData();
+				name_map["top"] = value;
 			} else if (name == "bottom") {
-				bottom_name = child.toElement().attribute("value").toUtf8().constData();
+				name_map["bottom"] = value;
+			} else if (name == "inside") {
+				name_map["inside"] = value;
+			} else if (name == "border") {
+				name_map["border"] = value;
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new CompOperator(front_name, side_name, top_name, bottom_name);
+	return new CompOperator(name_map);
 }
 
 Operator* parseCopyOperator(const QDomNode& node) {

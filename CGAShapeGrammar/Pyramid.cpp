@@ -28,14 +28,14 @@ Shape* Pyramid::clone(const std::string& name) {
 	return copy;
 }
 
-void Pyramid::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
+void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
 	std::vector<glm::vec2> top_points(_points.size());
 	for (int i = 0; i < _points.size(); ++i) {
 		top_points[i] = (_points[i] - _center) * _top_ratio + _center;
 	}
 
 	// front face (To be fixed)
-	{
+	if (name_map.find("front") != name_map.end() && name_map.at("front") != "NIL") {
 		std::vector<glm::vec2> points(3 + (_top_ratio > 0.0f ? 1 : 0));
 
 		float dist = glutils::distance(glm::vec3(_points[0], 0), glm::vec3(_points[1], 0), glm::vec3(top_points[1], _height));
@@ -50,13 +50,12 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 		}
 
 		mat = glm::rotate(_modelMat, angle, glm::vec3(1, 0, 0));
-		*front = new Polygon(front_name, _pivot, mat, points, _color, _texture);
+		shapes.push_back(new Polygon(name_map.at("front"), _pivot, mat, points, _color, _texture));
 	}
 
 	// side faces (To be fixed);
-	{
+	if (name_map.find("side") != name_map.end() && name_map.at("side") != "NIL") {
 		glm::mat4 mat;
-		sides.resize(_points.size() - 1);
 		for (int i = 1; i < _points.size(); ++i) {
 			glm::vec2 a = _points[i] - _points[i - 1];
 			glm::vec2 b = _points[(i + 1) % _points.size()] - _points[i];
@@ -90,13 +89,12 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 			}
 
 			glm::mat4 mat2 = glm::rotate(mat, angle, glm::vec3(1, 0, 0));
-			sides[i - 1] = new Polygon(sides_name, _pivot, _modelMat * mat2, points, _color, _texture);
-			
+			shapes.push_back(new Polygon(name_map.at("side"), _pivot, _modelMat * mat2, points, _color, _texture));
 		}
 	}
 
 	// top face
-	if (_top_ratio > 0.0f) {
+	if (_top_ratio > 0.0f && name_map.find("top") != name_map.end() && name_map.at("top") != "NIL") {
 		std::vector<glm::vec2> points = top_points;
 		glm::vec2 offset = points[0];
 		for (int i = 0; i < points.size(); ++i) {
@@ -104,14 +102,14 @@ void Pyramid::comp(const std::string& front_name, Shape** front, const std::stri
 		}
 		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(offset, _height));
 
-		*top = new Polygon(top_name, _pivot, mat, points, _color, _texture);
+		shapes.push_back(new Polygon(name_map.at("top"), _pivot, mat, points, _color, _texture));
 	}
 
 	// bottom face
-	{
+	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL") {
 		//std::vector<glm::vec2> basePoints = _points;
 		//std::reverse(basePoints.begin(), basePoints.end());
-		*bottom = new Polygon(bottom_name, _pivot, _modelMat, _points, _color, _texture);
+		shapes.push_back(new Polygon(name_map.at("bottom"), _pivot, _modelMat, _points, _color, _texture));
 	}
 }
 

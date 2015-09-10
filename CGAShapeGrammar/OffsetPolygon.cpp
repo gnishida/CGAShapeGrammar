@@ -1,4 +1,6 @@
 #include "OffsetPolygon.h"
+#include "Polygon.h"
+#include "GeneralObject.h"
 #include "GLUtils.h"
 
 namespace cga {
@@ -29,8 +31,45 @@ Shape* OffsetPolygon::clone(const std::string& name) {
 	return copy;
 }
 
-void OffsetPolygon::comp(const std::string& front_name, Shape** front, const std::string& sides_name, std::vector<Shape*>& sides, const std::string& top_name, Shape** top, const std::string& bottom_name, Shape** bottom) {
+void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
+	std::vector<glm::vec2> offset_points;
+	glutils::offsetPolygon(_points, _offsetDistance, offset_points);
 
+	// inside face
+	if (name_map.find("inside") != name_map.end() && name_map.at("inside") != "NIL") {
+		std::vector<glm::vec2> pts = offset_points;
+		glm::vec2 t = pts[0] - _points[0];
+		for (int i = 0; i < pts.size(); ++i) {
+			pts[i] -= t;
+		}
+
+		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(t, 0));
+		shapes.push_back(new Polygon(name_map.at("inside"), _pivot, mat, pts, _color, _texture));
+	}
+
+	// border face
+	if (name_map.find("border") != name_map.end() && name_map.at("border") != "NIL") {
+		std::vector<glm::vec3> pts;
+		std::vector<glm::vec3> normals;
+		for (int i = 0; i < _points.size(); ++i) {
+			pts.push_back(glm::vec3(offset_points[i], 0));
+			pts.push_back(glm::vec3(_points[i], 0));
+			pts.push_back(glm::vec3(_points[(i+1) % _points.size()], 0));
+
+			pts.push_back(glm::vec3(offset_points[i], 0));
+			pts.push_back(glm::vec3(_points[(i+1) % _points.size()], 0));
+			pts.push_back(glm::vec3(offset_points[(i+1) % offset_points.size()], 0));
+
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+		}
+		
+		shapes.push_back(new GeneralObject(name_map.at("border"), _pivot, _modelMat, pts, normals, _color));
+	}
 }
 
 void OffsetPolygon::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
@@ -50,18 +89,6 @@ void OffsetPolygon::generate(RenderManager* renderManager, bool showScopeCoordin
 		pts[3] = offset_points[(i+1) % offset_points.size()];
 		glutils::drawPolygon(pts, _color, _pivot * _modelMat, vertices);
 	}
-
-	/*
-	glm::vec2 t = glm::vec2(_points[0] * (1.0f - offsetRatio) + _center * offsetRatio) - _points[0];
-
-	std::vector<glm::vec2> points(_points.size());
-	for (int i = 0; i < _points.size(); ++i) {
-		points[i] = glm::vec2(_points[i] * (1.0f - offsetRatio) + _center * offsetRatio) - t;
-	}
-
-
-	glutils::drawConcavePolygon(_points, _color, _pivot * _modelMat, vertices);
-	*/
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 
