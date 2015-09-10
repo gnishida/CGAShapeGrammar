@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<operator name="taper">
+			<param name="height" value="3"/>
+			<param name="top_ratio" value="0.7"/>
+		</operator>
+		<operator name="comp">
+			<param name="front" value="Side"/>
+			<param name="side" value="Side"/>
+			<param name="top" value="Top"/>
+			<param name="bottom" value="Bottom"/>
+		</operator>
+	</rule>
+	<rule name="Top">
+		<operator name="offset">
+			<param name="offsetDistance" value="0.2"/>
+		</operator>
+		<operator name="extrude">
+			<param name="height" value="2"/>
+		</operator>
+	</rule>
+</rules>

@@ -117,12 +117,12 @@ void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
 	std::list<cga::Shape*> stack;
-	/*{
+	{
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 5, 5, glm::vec3(1, 1, 1));
 		stack.push_back(lot);
-	}*/
+	}
 
-	{
+	/*{
 		std::vector<glm::vec2> points;
 		points.push_back(glm::vec2(0, 0));
 		points.push_back(glm::vec2(2, 0));
@@ -132,7 +132,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		points.push_back(glm::vec2(0, 5));
 		cga::Polygon* lot = new cga::Polygon("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), points, glm::vec3(1, 1, 1), "");
 		stack.push_back(lot);
-	}
+	}*/
 
 	try {
 		std::map<std::string, cga::Rule> rules = cga::parseRule(filename);
