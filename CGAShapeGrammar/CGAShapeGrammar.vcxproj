@@ -133,6 +133,7 @@
     <ClCompile Include="ColorOperator.cpp" />
     <ClCompile Include="CompOperator.cpp" />
     <ClCompile Include="CopyOperator.cpp" />
+    <ClCompile Include="Cuboid.cpp" />
     <ClCompile Include="ExtrudeOperator.cpp" />
     <ClCompile Include="GeneralObject.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_MainWindow.cpp">
@@ -230,6 +231,7 @@
     <ClInclude Include="ColorOperator.h" />
     <ClInclude Include="CompOperator.h" />
     <ClInclude Include="CopyOperator.h" />
+    <ClInclude Include="Cuboid.h" />
     <ClInclude Include="ExtrudeOperator.h" />
     <ClInclude Include="GeneralObject.h" />
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />

@@ -4,6 +4,7 @@
 #include "HipRoof.h"
 #include "Prism.h"
 #include "Polygon.h"
+#include "Cuboid.h"
 #include "OffsetPolygon.h"
 
 namespace cga {
@@ -45,12 +46,15 @@ Shape* Rectangle::clone(const std::string& name) {
 }
 
 Shape* Rectangle::extrude(const std::string& name, float height) {
+	return new Cuboid(name, _pivot, _modelMat, _width, _height, height, _color);
+	/*
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_width, 0);
 	points[2] = glm::vec2(_width, this->_height);
 	points[3] = glm::vec2(0, _height);
 	return new Prism(name, _pivot, _modelMat, points, height, _color);
+	*/
 }
 
 Shape* Rectangle::inscribeCircle(const std::string& name) {

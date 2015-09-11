@@ -161,6 +161,9 @@
     <ClCompile Include="OffsetPolygon.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="Cuboid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -281,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="OffsetPolygon.h">
       <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Cuboid.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

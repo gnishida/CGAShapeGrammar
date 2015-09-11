@@ -5,7 +5,7 @@
 			<param name="height" value="5"/>
 		</operator>
 		<operator name="split">
-			<param name="splitAxis" value="z"/>
+			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="absolute" value="2.0"/>
 				<element type="floating" value="1.5" repeat="true"/>
