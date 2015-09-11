@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<operator name="extrude">
+			<param name="height" value="1"/>
+		</operator>
+		<operator name="copy">
+			<param name="name" value="B"/>
+		</operator>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="3"/>
+			<param name="y" value="0"/>
+			<param name="z" value="0"/>
+		</operator>
+		<operator name="copy">
+			<param name="name" value="C"/>
+		</operator>
+	</rule>
+	<rule name="C">
+		<operator name="copy">
+			<param name="name" value="D"/>
+		</operator>
+		<operator name="size">
+			<param name="xSize" value="2"/>
+			<param name="ySize" value="1.75"/>
+			<param name="zSize" value="0.5"/>
+		</operator>
+		<operator name="copy">
+			<param name="name" value="E"/>
+		</operator>
+	</rule>
+</rules>

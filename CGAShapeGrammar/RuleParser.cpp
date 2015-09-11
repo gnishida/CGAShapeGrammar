@@ -178,11 +178,7 @@ Operator* parseCopyOperator(const QDomNode& node) {
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "copy_name") {
-				copy_name = child.toElement().attribute("value").toUtf8().constData();
-			}
+			copy_name = child.toElement().attribute("value").toUtf8().constData();
 		}
 
 		child = child.nextSibling();

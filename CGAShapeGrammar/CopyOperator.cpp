@@ -12,7 +12,7 @@ Shape* CopyOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>
 	Shape* copy = obj->clone(copy_name);
 	stack.push_back(copy);
 
-	return obj->clone(obj->_name);
+	return obj;
 }
 
 }
