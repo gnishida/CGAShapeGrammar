@@ -7,12 +7,15 @@ namespace cga {
 
 class ColorOperator : public Operator {
 private:
-	glm::vec3 color;
+	std::vector<std::string> color;
 
 public:
-	ColorOperator(const glm::vec3& color);
+	ColorOperator(const std::vector<std::string>& color);
 
 	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
+
+private:
+	static void decodeRGB(const std::string& str, float& r, float& g, float& b);
 };
 
 }

@@ -3,10 +3,16 @@
 	<!-- Attributes -->
 	<attr name="groundfloor_height" value="4"/>
 	<attr name="floor_height" value="3.5"/>
-	<attr name="tile_width" value="4"/>
-	<attr name="height" value="20"/>
+	<attr name="tile_width" value="3"/>
+	<attr name="height" value="11"/>
 	<attr name="wallColor" value="#ffffff"/>
 	<attr name="LOD" value="0"/>
+	
+	<!-- Assets -->
+	<attr name="frontdoor_tex" value="textures/shopdoor.tif"/>
+	<attr name="wall_tex" value="textures/brickwall.jpg"/>
+	<attr name="roof_tex" value="textures/roof.tif"/>
+	<attr name="window_tex" value="textures/window.1.tif"/>
 	
 	<!-- Initial Shape starting rule -->
 	<rule name="Lot">
@@ -35,7 +41,7 @@
 			<param name="texHeight" value="1"/>
 		</operator>
 		<operator name="texture">
-			<param name="texture" value="textures/brick.jpg"/>
+			<param name="texture" value="wall_tex"/>
 		</operator>
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
@@ -58,7 +64,7 @@
 			<param name="texHeight" value="1"/>
 		</operator>
 		<operator name="texture">
-			<param name="texture" value="textures/brick.jpg"/>
+			<param name="texture" value="wall_tex"/>
 		</operator>
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
@@ -81,7 +87,7 @@
 			<param name="texHeight" value="0"/>
 		</operator>
 		<operator name="texture">
-			<param name="texture" value="textures/roof.jpg"/>
+			<param name="texture" value="roof_tex"/>
 		</operator>
 	</rule>
 	
@@ -125,7 +131,8 @@
 		</operator>
 	</rule>
 
-	<!--
+	<!-- a tile consists of a centered window element and 
+		wall elements above, below, left and right -->
 	<rule name="Tile">
 		<operator name="split">
 			<param name="splitAxis" value="x"/>
@@ -141,6 +148,7 @@
 			</param>
 		</operator>
 	</rule>
+	
 	<rule name="WallWindowWall">
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
@@ -156,27 +164,92 @@
 			</param>
 		</operator>
 	</rule>
+	
+	<!-- similarily, the EntranceTile contains a centered Door element,
+		but with no wall on spacing below -->
+	<rule name="EntranceTile">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="1.0"/>
+				<element type="absolute" value="2"/>
+				<element type="floating" value="1.0"/>
+			</param>
+			<param name="name">
+				<element value="SolidWall"/>
+				<element value="DoorAndSolidWall"/>
+				<element value="SolidWall"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<rule name="DoorAndSolidWall">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="2.5"/>
+				<element type="floating" value="2.0"/>
+			</param>
+			<param name="name">
+				<element value="Door"/>
+				<element value="SolidWall"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<!-- firstly, the depth and the depth position of the future window is set
+		secondly, one of nine window textures is randomly selected
+		finally, the window geometry asset is inserted -->
 	<rule name="Window">
 		<operator name="translate">
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
-			<param name="z" value="-0.1"/>
+			<param name="z" value="-0.03"/>
 		</operator>
 		<operator name="setupProjection">
 			<param name="coordinateType" value="relative"/>
 			<param name="texWidth" value="0"/>
 			<param name="texHeight" value="0"/>
 		</operator>
-		<operator name="insert">
-			<param name="geometryPath" value="../models/window.obj"/>
-		</operator>
-		<operator name="color">
-			<param name="r" value="1"/>
-			<param name="g" value="1"/>
-			<param name="b" value="1"/>
+		<operator name="texture">
+			<param name="texture" value="window_tex"/>
 		</operator>
 	</rule>
-	-->
+	
+	<!-- same for the door asset. Scaling, positioning, texture selection
+		and geometry insert
+		TODO: fix door uv bug (problem with uv handling on split?) -->
+	<rule name="Door">
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-0.03"/>
+		</operator>
+		<operator name="setupProjection">
+			<param name="coordinateType" value="relative"/>
+			<param name="texWidth" value="0"/>
+			<param name="texHeight" value="0"/>
+		</operator>
+		<operator name="texture">
+			<param name="texture" value="frontdoor_tex"/>
+		</operator>
+	</rule>
+	
+	<!-- for the wall asset, setting the texture scale params u and v 
+		guarantees a texture mapping that nicely fits over the whole facade -->
+	<rule name="Wall">
+		<operator name="color">
+			<param name="s" value="wallColor"/>
+		</operator>
+	</rule>
+	
+	<rule name="SolidWall">
+		<operator name="color">
+			<param name="s" value="wallColor"/>
+		</operator>
+	</rule>
 </rules>
