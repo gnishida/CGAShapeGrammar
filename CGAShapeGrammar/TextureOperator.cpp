@@ -10,7 +10,7 @@ TextureOperator::TextureOperator(const std::string& texture) {
 }
 
 Shape* TextureOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	obj->texture(texture);
+	obj->texture(ruleSet.evalString(texture));
 	return obj;
 }
 
