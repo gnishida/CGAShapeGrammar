@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="buildingheight" value="20"/>
+	<!-- Attributes -->
+	<attr name="groundfloor_height" value="4"/>
+	<attr name="floor_height" value="3.5"/>
+	<attr name="tile_width" value="4"/>
+	<attr name="height" value="20"/>
+	<attr name="wallColor" value="#ffffff"/>
+	
+	<!-- Rules -->
 	<rule name="Lot">
 		<operator name="extrude">
 			<param name="height" value="buildingheight"/>

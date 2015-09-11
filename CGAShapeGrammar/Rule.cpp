@@ -116,7 +116,7 @@ bool RuleSet::contain(const std::string& name) const {
 	else return true;
 }
 
-void RuleSet::addAttr(const std::string& name, float value) {
+void RuleSet::addAttr(const std::string& name, const std::string& value) {
 	attrs[name] = value;
 }
 
@@ -128,9 +128,17 @@ void RuleSet::addOperator(const std::string& name, Operator* op) {
 	rules[name].operators.push_back(op);
 }
 
-float RuleSet::eval(const std::string& attr_name) const {
+float RuleSet::evalFloat(const std::string& attr_name) const {
 	if (attrs.find(attr_name) == attrs.end()) {
 		return ::atof(attr_name.c_str());
+	} else {
+		return ::atof(attrs.at(attr_name).c_str());
+	}
+}
+
+std::string RuleSet::evalString(const std::string& attr_name) const {
+	if (attrs.find(attr_name) == attrs.end()) {
+		return attr_name;
 	} else {
 		return attrs.at(attr_name);
 	}

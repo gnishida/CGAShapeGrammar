@@ -39,7 +39,7 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 				std::cout << "<attr> tag must contain value attribute." << std::endl;
 				throw "<attr> tag must contain value attribute.";
 			}
-			float value = child_node.toElement().attribute("value").toFloat();
+			std::string value = child_node.toElement().attribute("value").toUtf8().constData();
 
 			ruleSet.addAttr(name, value);
 		} else if (child_node.toElement().tagName() == "rule") {

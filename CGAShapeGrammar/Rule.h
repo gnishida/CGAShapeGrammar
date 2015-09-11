@@ -65,7 +65,7 @@ public:
 
 class RuleSet {
 public:
-	std::map<std::string, float> attrs;
+	std::map<std::string, std::string> attrs;
 	std::map<std::string, cga::Rule> rules;
 
 public:
@@ -74,10 +74,11 @@ public:
 	bool contain(const std::string& name) const;
 	Rule getRule(const std::string& name) const { return rules.at(name); }
 	Rule& getRule(const std::string& name) { return rules[name]; }
-	void addAttr(const std::string& name, float value);
+	void addAttr(const std::string& name, const std::string& value);
 	void addRule(const std::string& name);
 	void addOperator(const std::string& name, Operator* op);
-	float eval(const std::string& attr_name) const;
+	float evalFloat(const std::string& attr_name) const;
+	std::string evalString(const std::string& attr_name) const;
 };
 
 }
