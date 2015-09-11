@@ -1,18 +1,31 @@
 <?xml version="1.0"?>
-<rules version="2010.3" author="andi">
+<rules version="2011.1" author="andi">
 	<!-- Attributes -->
-	<attr name="groundfloor_height" value="4"/>
-	<attr name="floor_height" value="3.5"/>
-	<attr name="tile_width" value="3"/>
-	<attr name="height" value="11"/>
-	<attr name="wallColor" value="#ffffff"/>
-	<attr name="LOD" value="0"/>
+	<attr name="buildingH" value="27"/>
+	<attr name="floorH" value="3.5"/>
+	<attr name="groundfloorH" value="4.5"/>
+	<attr name="nSymmetries" value="2"/>
+	<attr name="borderwallW" value="0.3"/>
+	<attr name="ledgeH" value="0.3"/>
+	<attr name="windowW" value="2.5"/>
+	<attr name="milkGlassW" value="1.25"/>
+	<attr name="blindH" value="0.8"/>
+	<attr name="frameW" value="0.7"/>
+	<attr name="balconyDepth" value="2"/>
+	<attr name="brightblue" value="#86b1c7"/>
+	<attr name="darkblue" value="#33556c"/>
+	<attr name="red" value="#5c3f40"/>
+	<attr name="grey" value="#6b7785"/>
+	<attr name="white" value="#ffffff"/>
+
+	<attr name="tileW" value="3.75"/>
+	<attr name="barDiameter" value="0.04"/>
 	
 	<!-- Assets -->
-	<attr name="frontdoor_tex" value="../assets/textures/shopdoor.tif"/>
-	<attr name="wall_tex" value="../assets/textures/brickwall.jpg"/>
-	<attr name="roof_tex" value="../assets/textures/roof.tif"/>
-	<attr name="window_tex" value="../assets/textures/window.1.tif"/>
+	<attr name="cyl_v" value="../assets/primitives/cylinder.vert.8.notop.tex.obj"/>
+	<attr name="cyl_h" value="../assets/primitives/cylinder.hor.8.notop.tex.obj"/>
+	<attr name="window_tex" value="../assets/textures/1_glass_2_blue.tif"/>
+	<attr name="milkGlass_tex" value="../assets/textures/blend_tex.png"/>
 	
 	<!-- Initial Shape starting rule -->
 	<rule name="Lot">
