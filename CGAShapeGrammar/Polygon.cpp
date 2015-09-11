@@ -55,14 +55,16 @@ void Polygon::setupProjection(float texWidth, float texHeight) {
 	}
 }
 
-void Polygon::size(const glm::vec3& sz) {
-	float scaleX = sz.x / _scope.x;
-	float scaleY = sz.y / _scope.y;
+void Polygon::size(float xSize, float ySize, float zSize) {
+	float scaleX = xSize / _scope.x;
+	float scaleY = ySize / _scope.y;
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].x *= scaleX;
 		_points[i].y *= scaleY;
 	}
-	_scope = sz;
+	_scope.x = xSize;
+	_scope.y = ySize;
+	_scope.z = 0.0f;
 }
 
 Shape* Polygon::taper(const std::string& name, float height, float top_ratio) {

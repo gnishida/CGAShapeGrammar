@@ -75,7 +75,7 @@ Shape* Shape::shapeL(const std::string& name, float frontWidth, float leftWidth)
 	throw "shapeL() is not supported.";
 }
 
-void Shape::size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
+void Shape::size(float xSize, float ySize, float zSize) {
 	throw "size() is not supported.";
 }
 

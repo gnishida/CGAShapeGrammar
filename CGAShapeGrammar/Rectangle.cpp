@@ -96,23 +96,11 @@ Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWi
 	return new Polygon(name, _pivot, _modelMat, points, _color, _texture);
 }
 
-void Rectangle::size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
-	if (xSize.type == Value::TYPE_RELATIVE) {
-		_scope.x *= xSize.value;
-		_width = _scope.x;
-	} else {
-		_width = xSize.value;
-		_scope.x = xSize.value;
-	}
-
-	if (ySize.type == Value::TYPE_RELATIVE) {
-		_scope.y *= ySize.value;
-		_height = _scope.y;
-	} else {
-		_height = ySize.value;
-		_scope.x = ySize.value;
-	}
-
+void Rectangle::size(float xSize, float ySize, float zSize) {
+	_scope.x = xSize;
+	_width = xSize;
+	_scope.y = ySize;
+	_height = ySize;
 	_scope.z = 0.0f;	// XY平面の2Dなので、Z方向のサイズは0固定。
 }
 

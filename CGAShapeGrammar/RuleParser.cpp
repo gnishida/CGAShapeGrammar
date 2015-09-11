@@ -344,7 +344,7 @@ Operator* parseSizeOperator(const QDomNode& node) {
 			if (child.toElement().hasAttribute("type")) {
 				type = child.toElement().attribute("type");
 			}
-			float value = child.toElement().attribute("value").toFloat();
+			std::string value = child.toElement().attribute("value").toUtf8().constData();
 
 			if (name == "xSize") {
 				if (type == "relative") {
@@ -396,7 +396,7 @@ Operator* parseSplitOperator(const QDomNode& node) {
 				while (!element.isNull()) {
 					if (element.toElement().tagName() == "element") {
 						QString type = element.toElement().attribute("type");
-						float value = element.toElement().attribute("value").toFloat();
+						std::string value = element.toElement().attribute("value").toUtf8().constData();
 						bool repeat = false;
 						if (element.toElement().hasAttribute("repeat")) {
 							repeat = true;

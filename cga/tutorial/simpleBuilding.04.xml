@@ -6,23 +6,28 @@
 	<attr name="tile_width" value="4"/>
 	<attr name="height" value="20"/>
 	<attr name="wallColor" value="#ffffff"/>
+	<attr name="LOD" value="0"/>
 	
-	<!-- Rules -->
+	<!-- Initial Shape starting rule -->
 	<rule name="Lot">
 		<operator name="extrude">
-			<param name="height" value="buildingheight"/>
+			<param name="height" value="height"/>
 		</operator>
-		<output name="Building"/>
+		<operator name="copy">
+			<param name="name" value="Building"/>
+		</operator>
 	</rule>
+	
+	<!-- split the building geometry into its facade components -->
 	<rule name="Building">
 		<operator name="comp">
 			<param name="front" value="FrontFacade"/>
 			<param name="side" value="SideFacade"/>
 			<param name="top" value="Roof"/>
-			<param name="bottom" value="Base"/>
 		</operator>
 	</rule>
-	<!--
+	
+	<!-- the front facade is subdivided into one front groundfloor and upper floors -->
 	<rule name="FrontFacade">
 		<operator name="setupProjection">
 			<param name="coordinateType" value="absolute"/>
@@ -35,15 +40,17 @@
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="4.0"/>
-				<element type="floating" value="3.5" repeat="true"/>
+				<element type="absolute" value="groundfloor_height"/>
+				<element type="floating" value="floor_height" repeat="true"/>
 			</param>
 			<param name="name">
-				<element value="Floor"/>
+				<element value="Groundfloor"/>
 				<element value="Floor"/>
 			</param>
 		</operator>
 	</rule>
+	
+	<!--
 	<rule name="SideFacade">
 		<operator name="setupProjection">
 			<param name="coordinateType" value="absolute"/>

@@ -16,7 +16,7 @@ public:
 	Shape* clone(const std::string& name);
 	void comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes);
 	void setupProjection(float texWidth, float texHeight);
-	void size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
+	void size(float xSize, float ySize, float zSize);
 	void split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);
 	void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);
 };

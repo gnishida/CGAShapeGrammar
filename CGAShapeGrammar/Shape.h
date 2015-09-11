@@ -28,7 +28,7 @@ public:
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
 	virtual void setupProjection(float texWidth, float texHeight);
 	virtual Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
-	virtual void size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
+	virtual void size(float xSize, float ySize, float zSize);
 	virtual void split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);
 	virtual Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);

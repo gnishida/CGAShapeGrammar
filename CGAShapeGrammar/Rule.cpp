@@ -5,6 +5,10 @@
 
 namespace cga {
 
+float SingleValue::getEstimateValue(float size, const RuleSet& ruleSet) {
+	return ruleSet.evalFloat(value);
+}
+
 ValueSet::ValueSet(Value* value, bool repeat) {
 	this->type = TYPE_SET;
 	values.push_back(value);
@@ -17,15 +21,15 @@ ValueSet::ValueSet(const std::vector<Value*>& values, bool repeat) {
 	this->repeat = repeat;
 }
 
-float ValueSet::getEstimateValue(float size) {
+float ValueSet::getEstimateValue(float size, const RuleSet& ruleSet) {
 	float sum = 0.0f;
 	for (int i = 0; i < values.size(); ++i) {
 		if (values[i]->type == Value::TYPE_ABSOLUTE) {
-			sum += values[i]->value;
+			sum += ruleSet.evalFloat(values[i]->value);
 		} else if (values[i]->type == Value::TYPE_RELATIVE) {
-			sum += size * values[i]->value;
+			sum += ruleSet.evalFloat(values[i]->value) * size;
 		} else if (values[i]->type == Value::TYPE_FLOATING) {
-			sum += values[i]->value;
+			sum += ruleSet.evalFloat(values[i]->value);
 		}
 	}
 
@@ -51,7 +55,7 @@ void Rule::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) c
 	}
 }
 
-void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
+void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
 	int regular_count = 0;
 	int floating_count = 0;
 	float regular_sum = 0.0f;
@@ -61,13 +65,13 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 	for (int i = 0; i < sizes.size(); ++i) {
 		if (sizes[i]->type == Value::TYPE_ABSOLUTE) {
 			regular_count++;
-			regular_sum += sizes[i]->value;
+			regular_sum += ruleSet.evalFloat(sizes[i]->value);
 		} else if (sizes[i]->type == Value::TYPE_RELATIVE) {
 			regular_count++;
-			regular_sum += size * sizes[i]->value * size;
+			regular_sum += size * ruleSet.evalFloat(sizes[i]->value) * size;
 		} else if (sizes[i]->type == Value::TYPE_FLOATING) {
 			floating_count++;
-			floating_sum += sizes[i]->value;
+			floating_sum += ruleSet.evalFloat(sizes[i]->value);
 		}
 	}
 
@@ -78,13 +82,13 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 
 	for (int i = 0; i < sizes.size(); ++i) {
 		if (sizes[i]->type == Value::TYPE_ABSOLUTE) {
-			decoded_sizes.push_back(sizes[i]->value);
+			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value));
 			decoded_output_names.push_back(output_names[i]);
 		} else if (sizes[i]->type == Value::TYPE_RELATIVE) {
-			decoded_sizes.push_back(sizes[i]->value * size);
+			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value) * size);
 			decoded_output_names.push_back(output_names[i]);
 		} else if (sizes[i]->type == Value::TYPE_FLOATING) {
-			decoded_sizes.push_back(sizes[i]->value * scale);
+			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value) * scale);
 			decoded_output_names.push_back(output_names[i]);
 		} else if (sizes[i]->type == Value::TYPE_SET) {
 			if (sizes[i]->repeat) {
@@ -95,17 +99,17 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 					temp_names[k] = output_names[i];
 				}
 
-				float s = sizes[i]->getEstimateValue(size - regular_sum);
+				float s = sizes[i]->getEstimateValue(size - regular_sum, ruleSet);
 				int num = (size - regular_sum) / s;
 				for (int k = 0; k < num; ++k) {
-					decodeSplitSizes((size - regular_sum) / num, sizes[i]->values, temp_names, decoded_sizes, decoded_output_names);
+					decodeSplitSizes((size - regular_sum) / num, sizes[i]->values, temp_names, ruleSet, decoded_sizes, decoded_output_names);
 				}
 			} else {
 				std::vector<Value*> temp_ratios(1);
 				temp_ratios[0] = sizes[i];
 				std::vector<std::string> temp_names(1);
 				temp_names[0] = output_names[i];
-				decodeSplitSizes(size - regular_sum, temp_ratios, temp_names, decoded_sizes, decoded_output_names);
+				decodeSplitSizes(size - regular_sum, temp_ratios, temp_names, ruleSet, decoded_sizes, decoded_output_names);
 			}
 		}
 	}

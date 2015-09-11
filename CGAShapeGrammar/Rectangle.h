@@ -21,7 +21,7 @@ public:
 	Shape* roofHip(const std::string& name, float angle);
 	void setupProjection(float texWidth, float texHeight);
 	Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
-	void size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
+	void size(float xSize, float ySize, float zSize);
 	void split(int splitAxis, const std::vector<float>& ratios, const std::vector<std::string>& names, std::vector<Shape*>& objects);
 	Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);

@@ -69,31 +69,19 @@ void Prism::comp(const std::map<std::string, std::string>& name_map, std::vector
 void Prism::setupProjection(float texWidth, float texHeight) {
 }
 
-void Prism::size(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
-	float scale_x;
-	if (xSize.type == Value::TYPE_RELATIVE) {
-		scale_x = xSize.value;
-	} else {
-		scale_x = xSize.value / _scope.x;
-	}
-
-	float scale_y;
-	if (ySize.type == Value::TYPE_RELATIVE) {
-		scale_y = ySize.value;
-	} else {
-		scale_y = ySize.value / _scope.y;
-	}
-
-	if (zSize.type == Value::TYPE_RELATIVE) {
-		_height *= zSize.value;
-	} else {
-		_height = zSize.value;
-	}
+void Prism::size(float xSize, float ySize, float zSize) {
+	float scale_x = xSize / _scope.x;
+	float scale_y = ySize / _scope.y;
+	_height = zSize;
 
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].x *= scale_x;
 		_points[i].y *= scale_y;
 	}
+
+	_scope.x = xSize;
+	_scope.y = ySize;
+	_scope.z = zSize;
 }
 
 /**

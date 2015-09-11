@@ -19,7 +19,7 @@ public:
 	Shape* offset(const std::string& name, float offsetDistance);
 	Shape* roofHip(const std::string& name, float angle);
 	void setupProjection(float texWidth, float texHeight);
-	void size(const glm::vec3& sz);
+	void size(float xSize, float ySize, float zSize);
 	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);

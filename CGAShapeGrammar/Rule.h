@@ -8,6 +8,7 @@
 namespace cga {
 
 class Shape;
+class RuleSet;
 
 class Value  {
 public:
@@ -15,20 +16,20 @@ public:
 
 public:
 	int type;
-	float value;
+	std::string value;
 	std::vector<Value*> values;
 	bool repeat;
 
 public:
-	virtual float getEstimateValue(float size) = 0;
+	virtual float getEstimateValue(float size, const RuleSet& ruleSet) = 0;
 };
 
 class SingleValue : public Value {
 public:
-	SingleValue() { this->type = TYPE_ABSOLUTE; this->value = 0.0f; this->repeat = false; }
-	SingleValue(int type, float value) { this->type = type; this->value = value; this->repeat = false; }
+	SingleValue() { this->type = TYPE_ABSOLUTE; this->value = ""; this->repeat = false; }
+	SingleValue(int type, const std::string& value) { this->type = type; this->value = value; this->repeat = false; }
 
-	float getEstimateValue(float size) { return value; }
+	float getEstimateValue(float size, const RuleSet& ruleSet);
 };
 
 
@@ -37,7 +38,7 @@ public:
 	ValueSet(Value* value, bool repeat = false);
 	ValueSet(const std::vector<Value*>& values, bool repeat = false);
 
-	float getEstimateValue(float size);
+	float getEstimateValue(float size, const RuleSet& ruleSet);
 };
 
 class RuleSet;
@@ -60,7 +61,7 @@ public:
 	Rule() {}
 
 	void apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) const;
-	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
+	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
 };
 
 class RuleSet {
