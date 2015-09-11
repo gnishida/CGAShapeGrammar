@@ -92,22 +92,22 @@ void Shape::texture(const std::string& tex) {
 	_textureEnabled = true;
 }
 
-void Shape::translate(int mode, int coordSystem, const glm::vec3& v) {
+void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	if (mode == MODE_ABSOLUTE) {
 		if (coordSystem == COORD_SYSTEM_WORLD) {
-			_modelMat[3].x = v.x;
-			_modelMat[3].y = v.y;
-			_modelMat[3].z = v.z;
+			_modelMat[3].x = x;
+			_modelMat[3].y = y;
+			_modelMat[3].z = z;
 		} else if (coordSystem == COORD_SYSTEM_OBJECT) {
-			_modelMat = glm::translate(_modelMat, v);
+			_modelMat = glm::translate(_modelMat, glm::vec3(x, y, z));
 		}
 	} else if (mode == MODE_RELATIVE) {
 		if (coordSystem == COORD_SYSTEM_WORLD) {
-			_modelMat[3].x += v.x;
-			_modelMat[3].y += v.y;
-			_modelMat[3].z += v.z;
+			_modelMat[3].x += x;
+			_modelMat[3].y += y;
+			_modelMat[3].z += z;
 		} else if (coordSystem == COORD_SYSTEM_OBJECT) {
-			_modelMat = glm::translate(_modelMat, v);
+			_modelMat = glm::translate(_modelMat, glm::vec3(x, y, z));
 		}
 	}
 }

@@ -485,7 +485,9 @@ Operator* parseTextureOperator(const QDomNode& node) {
 Operator* parseTranslateOperator(const QDomNode& node) {
 	int mode;
 	int coordSystem;
-	float x, y, z;
+	SingleValue x;
+	SingleValue y;
+	SingleValue z;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -509,18 +511,18 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 					throw "coordSystem has to be either world or object.";
 				}
 			} else if (name == "x") {
-				x = child.toElement().attribute("value").toFloat();
+				x = SingleValue(Value::TYPE_ABSOLUTE, child.toElement().attribute("value").toUtf8().constData());
 			} else if (name == "y") {
-				y = child.toElement().attribute("value").toFloat();
+				y = SingleValue(Value::TYPE_ABSOLUTE, child.toElement().attribute("value").toUtf8().constData());
 			} else if (name == "z") {
-				z = child.toElement().attribute("value").toFloat();
+				z = SingleValue(Value::TYPE_ABSOLUTE, child.toElement().attribute("value").toUtf8().constData());
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new TranslateOperator(mode, coordSystem, glm::vec3(x, y, z));
+	return new TranslateOperator(mode, coordSystem, x, y, z);
 }
 
 }

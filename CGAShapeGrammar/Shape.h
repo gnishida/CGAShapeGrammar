@@ -32,7 +32,7 @@ public:
 	virtual void split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);
 	virtual Shape* taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);
-	void translate(int mode, int coordSystem, const glm::vec3& v);
+	void translate(int mode, int coordSystem, float x, float y, float z);
 	virtual void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);
 
 protected:

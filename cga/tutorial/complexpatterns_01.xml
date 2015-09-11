@@ -81,6 +81,13 @@
 			<param name="ySize" type="absolute" value="0.7"/>
 			<param name="zSize" type="absolute" value="scope.sz-borderwallW"/>
 		</operator>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="borderwallW"/>
+			<param name="y" value="0"/>
+			<param name="z" value="0"/>
+		</operator>
 		<operator name="comp">
 			<param name="front" value="Railing"/>
 			<param name="left" value="Railing"/>
