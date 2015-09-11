@@ -31,7 +31,7 @@ float ValueSet::getEstimateValue(float size) {
 	return sum;
 }
 
-void Rule::apply(Shape* obj, std::list<Shape*>& stack) {
+void Rule::apply(Shape* obj, std::list<Shape*>& stack) const {
 	for (int i = 0; i < operators.size(); ++i) {
 		obj = operators[i]->apply(obj, stack);
 		if (obj == NULL) break;
@@ -101,6 +101,23 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 			}
 		}
 	}
+}
+
+bool RuleSet::contain(const std::string& name) const {
+	if (rules.find(name) == rules.end()) return false;
+	else return true;
+}
+
+void RuleSet::addAttr(const std::string& name, float value) {
+	attrs[name] = value;
+}
+
+void RuleSet::addOperator(const std::string& name, Operator* op) {
+	rules[name].operators.push_back(op);
+}
+
+void RuleSet::setRuleOutput(const std::string& name, const std::string& output_name) {
+	rules[name].output_name = output_name;
 }
 
 }

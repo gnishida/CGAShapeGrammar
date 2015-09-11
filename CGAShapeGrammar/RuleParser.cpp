@@ -19,8 +19,10 @@
 
 namespace cga {
 
-std::map<std::string, Rule> parseRule(char* filename) {
-	std::map<std::string, Rule> rules;
+//std::map<std::string, Rule> parseRule(char* filename) {
+void parseRule(char* filename, RuleSet& ruleSet) {
+	//std::map<std::string, Rule> rules;
+	//std::map<std::string, float> attrs;
 
 	QFile file(filename);
 
@@ -28,16 +30,30 @@ std::map<std::string, Rule> parseRule(char* filename) {
 	doc.setContent(&file, true);
 	QDomElement root = doc.documentElement();
 
-	QDomNode rule_node = root.firstChild();
-	while (!rule_node.isNull()) {
-		if (rule_node.toElement().tagName() == "rule") {
-			if (!rule_node.toElement().hasAttribute("name")) {
+	QDomNode child_node = root.firstChild();
+	while (!child_node.isNull()) {
+		if (child_node.toElement().tagName() == "attr") {
+			if (!child_node.toElement().hasAttribute("name")) {
+				std::cout << "<attr> tag must contain name attribute." << std::endl;
+				throw "<attr> tag must contain name attribute.";
+			}
+			std::string name = child_node.toElement().attribute("name").toUtf8().constData();
+
+			if (!child_node.toElement().hasAttribute("value")) {
+				std::cout << "<attr> tag must contain value attribute." << std::endl;
+				throw "<attr> tag must contain value attribute.";
+			}
+			float value = child_node.toElement().attribute("value").toFloat();
+
+			ruleSet.addAttr(name, value);
+		} else if (child_node.toElement().tagName() == "rule") {
+			if (!child_node.toElement().hasAttribute("name")) {
 				std::cout << "<rule> tag must contain name attribute." << std::endl;
 				throw "<rule> tag must contain name attribute.";
 			}
-			std::string name = rule_node.toElement().attribute("name").toUtf8().constData();
+			std::string name = child_node.toElement().attribute("name").toUtf8().constData();
 
-			QDomNode operator_node = rule_node.firstChild();
+			QDomNode operator_node = child_node.firstChild();
 			while (!operator_node.isNull()) {
 				if (operator_node.toElement().tagName() == "operator") {
 					if (!operator_node.toElement().hasAttribute("name")) {
@@ -47,53 +63,52 @@ std::map<std::string, Rule> parseRule(char* filename) {
 					std::string operator_name = operator_node.toElement().attribute("name").toUtf8().constData();
 
 					if (operator_name == "color") {
-						rules[name].operators.push_back(parseColorOperator(operator_node));
+						ruleSet.addOperator(name, parseColorOperator(operator_node));
 					} else if (operator_name == "comp") {
-						rules[name].operators.push_back(parseCompOperator(operator_node));
+						ruleSet.addOperator(name, parseCompOperator(operator_node));
 					} else if (operator_name == "copy") {
-						rules[name].operators.push_back(parseCopyOperator(operator_node));
+						ruleSet.addOperator(name, parseCopyOperator(operator_node));
 					} else if (operator_name == "extrude") {
-						rules[name].operators.push_back(parseExtrudeOperator(operator_node));
+						ruleSet.addOperator(name, parseExtrudeOperator(operator_node));
 					} else if (operator_name == "insert") {
-						rules[name].operators.push_back(parseInsertOperator(operator_node));
+						ruleSet.addOperator(name, parseInsertOperator(operator_node));
 					} else if (operator_name == "offset") {
-						rules[name].operators.push_back(parseOffsetOperator(operator_node));
+						ruleSet.addOperator(name, parseOffsetOperator(operator_node));
 					} else if (operator_name == "roofHip") {
-						rules[name].operators.push_back(parseRoofHipOperator(operator_node));
+						ruleSet.addOperator(name, parseRoofHipOperator(operator_node));
 					} else if (operator_name == "rotate") {
-						rules[name].operators.push_back(parseRotateOperator(operator_node));
+						ruleSet.addOperator(name, parseRotateOperator(operator_node));
 					} else if (operator_name == "setupProjection") {
-						rules[name].operators.push_back(parseSetupProjectionOperator(operator_node));
+						ruleSet.addOperator(name, parseSetupProjectionOperator(operator_node));
 					} else if (operator_name == "shapeL") {
-						rules[name].operators.push_back(parseShapeLOperator(operator_node));
+						ruleSet.addOperator(name, parseShapeLOperator(operator_node));
 					} else if (operator_name == "size") {
-						rules[name].operators.push_back(parseSizeOperator(operator_node));
+						ruleSet.addOperator(name, parseSizeOperator(operator_node));
 					} else if (operator_name == "split") {
-						rules[name].operators.push_back(parseSplitOperator(operator_node));
+						ruleSet.addOperator(name, parseSplitOperator(operator_node));
 					} else if (operator_name == "taper") {
-						rules[name].operators.push_back(parseTaperOperator(operator_node));
+						ruleSet.addOperator(name, parseTaperOperator(operator_node));
 					} else if (operator_name == "texture") {
-						rules[name].operators.push_back(parseTextureOperator(operator_node));
+						ruleSet.addOperator(name, parseTextureOperator(operator_node));
 					} else if (operator_name == "translate") {
-						rules[name].operators.push_back(parseTranslateOperator(operator_node));
+						ruleSet.addOperator(name, parseTranslateOperator(operator_node));
 					}
-
 				} else if (operator_node.toElement().tagName() == "output") {
 					if (!operator_node.toElement().hasAttribute("name")) {
 						std::cout << "<output> tag must contain name attribute." << std::endl;
 						throw "<output> tag must contain name attribute.";
 					}
-					rules[name].output_name = operator_node.toElement().attribute("name").toUtf8().constData();
+					std::string output_name = operator_node.toElement().attribute("name").toUtf8().constData();
+
+					ruleSet.setRuleOutput(name, output_name);
 				}
 
 				operator_node = operator_node.nextSibling();
 			}
 		}
 
-		rule_node = rule_node.nextSibling();
+		child_node = child_node.nextSibling();
 	}
-
-	return rules;
 }
 
 Operator* parseColorOperator(const QDomNode& node) {

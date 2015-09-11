@@ -8,7 +8,7 @@
 
 namespace cga {
 
-std::map<std::string, Rule> parseRule(char* filename);
+void parseRule(char* filename, RuleSet& ruleSet);
 Operator* parseColorOperator(const QDomNode& node);
 Operator* parseCompOperator(const QDomNode& node);
 Operator* parseCopyOperator(const QDomNode& node);

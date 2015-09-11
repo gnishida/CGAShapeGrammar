@@ -38,7 +38,7 @@ public:
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, std::map<std::string, Rule>& rules, std::list<Shape*> stack, bool showScopeCoordinateSystem = false);
+	void generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<Shape*> stack, bool showScopeCoordinateSystem = false);
 };
 
 }

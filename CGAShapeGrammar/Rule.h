@@ -55,9 +55,24 @@ public:
 public:
 	Rule() {}
 
-	void apply(Shape* obj, std::list<Shape*>& stack);
+	void apply(Shape* obj, std::list<Shape*>& stack) const;
 	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
-	//static std::map<std::string, cga::Rule*> parseRule(char* filename);
+};
+
+class RuleSet {
+public:
+	std::map<std::string, float> attrs;
+	std::map<std::string, cga::Rule> rules;
+
+public:
+	RuleSet() {}
+
+	bool contain(const std::string& name) const;
+	Rule getRule(const std::string& name) const { return rules.at(name); }
+	Rule& getRule(const std::string& name) { return rules[name]; }
+	void addAttr(const std::string& name, float value);
+	void addOperator(const std::string& name, Operator* op);
+	void setRuleOutput(const std::string& name, const std::string& output_name);
 };
 
 }

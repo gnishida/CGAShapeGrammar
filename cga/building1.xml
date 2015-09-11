@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
+<attributes>
+	<attr name="buildingheight" value="20"/>
+</attributes>
 <rules>
 	<rule name="Lot">
 		<operator name="extrude">
