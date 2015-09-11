@@ -8,6 +8,7 @@
 			<param name="y" value="0"/>
 			<param name="z" value="0.3"/>
 		</operator>
+		<!--
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
@@ -17,6 +18,22 @@
 			<param name="name">
 				<element value="Parcel."/>
 				<element value="Parcel."/>
+			</param>
+		</operator>
+		-->
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="2.0"/>
+				<element type="floating" value="2.5" repeat="true"/>
+				<element type="floating" value="2.5" />
+				<element type="absolute" value="2.0"/>
+			</param>
+			<param name="name">
+				<element value="Wall"/>
+				<element value="Tile"/>
+				<element value="EntranceTile"/>
+				<element value="Wall"/>
 			</param>
 		</operator>
 	</rule>

@@ -50,7 +50,7 @@
 		</operator>
 	</rule>
 	
-	<!--
+	<!-- a side facade is subdivided into one bottom floor and upper floors. -->
 	<rule name="SideFacade">
 		<operator name="setupProjection">
 			<param name="coordinateType" value="absolute"/>
@@ -63,8 +63,8 @@
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="4.0"/>
-				<element type="floating" value="3.5" repeat="true"/>
+				<element type="absolute" value="groundfloor_height"/>
+				<element type="floating" value="floor_height" repeat="true"/>
 			</param>
 			<param name="name">
 				<element value="Floor"/>
@@ -72,21 +72,8 @@
 			</param>
 		</operator>
 	</rule>
-	<rule name="Floor">
-		<operator name="split">
-			<param name="splitAxis" value="x"/>
-			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="floating" value="3.0" repeat="true"/>
-				<element type="absolute" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall"/>
-				<element value="Tile"/>
-				<element value="Wall"/>
-			</param>
-		</operator>
-	</rule>
+	
+	<!-- a roof texture is applied to the roof face -->
 	<rule name="Roof">
 		<operator name="setupProjection">
 			<param name="coordinateType" value="relative"/>
@@ -97,6 +84,48 @@
 			<param name="texture" value="textures/roof.jpg"/>
 		</operator>
 	</rule>
+	
+	<!-- each floor is horizontally split into two narrow corner areas on 
+		each side of the floor, and into a set of window tiles in between -->
+	<rule name="Floor">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="1.0"/>
+				<element type="floating" value="tile_width" repeat="true"/>
+				<element type="absolute" value="1.0"/>
+			</param>
+			<param name="name">
+				<element value="Wall"/>
+				<element value="Tile"/>
+				<element value="Wall"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<!-- similarily, the front groundfloor is horizontally split into 
+		two narrow corner areas on each side of the floor, 
+		a special entrance tile on the right 
+		and into a set of window tiles in between -->
+	<rule name="Groundfloor">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="1.0"/>
+				<element type="floating" value="tile_width" repeat="true"/>
+				<element type="floating" value="tile_width" />
+				<element type="absolute" value="1.0"/>
+			</param>
+			<param name="name">
+				<element value="Wall"/>
+				<element value="Tile"/>
+				<element value="EntranceTile"/>
+				<element value="Wall"/>
+			</param>
+		</operator>
+	</rule>
+
+	<!--
 	<rule name="Tile">
 		<operator name="split">
 			<param name="splitAxis" value="x"/>
