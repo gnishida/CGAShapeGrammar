@@ -6,10 +6,10 @@
 			<param name="top_ratio" value="0.7"/>
 		</operator>
 		<operator name="comp">
-			<param name="front" value="Side"/>
-			<param name="side" value="Side"/>
+			<param name="front" value="Side."/>
+			<param name="side" value="Side."/>
 			<param name="top" value="Top"/>
-			<param name="bottom" value="Bottom"/>
+			<param name="bottom" value="Bottom."/>
 		</operator>
 	</rule>
 	<rule name="Top">
@@ -18,7 +18,7 @@
 		</operator>
 		<operator name="comp">
 			<param name="inside" value="X"/>
-			<param name="border" value="Y"/>
+			<param name="border" value="Y."/>
 		</operator>
 	</rule>
 	<rule name="X">

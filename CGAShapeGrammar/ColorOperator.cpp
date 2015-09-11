@@ -5,6 +5,7 @@
 namespace cga {
 
 ColorOperator::ColorOperator(const glm::vec3& color) {
+	this->name = "color";
 	this->color = color;
 }
 

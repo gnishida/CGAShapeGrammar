@@ -15,8 +15,8 @@
 				<element type="floating" value="1.5" repeat="true"/>
 			</param>
 			<param name="name">
-				<element value="Parcel"/>
-				<element value="Parcel"/>
+				<element value="Parcel."/>
+				<element value="Parcel."/>
 			</param>
 		</operator>
 	</rule>

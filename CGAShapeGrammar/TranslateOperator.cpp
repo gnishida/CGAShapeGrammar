@@ -5,6 +5,7 @@
 namespace cga {
 
 TranslateOperator::TranslateOperator(int mode, int coordSystem, const glm::vec3& vec) {
+	this->name = "translate";
 	this->mode = mode;
 	this->coordSystem = coordSystem;
 	this->vec = vec;

@@ -4,14 +4,16 @@
 		<operator name="extrude">
 			<param name="height" value="11"/>
 		</operator>
-		<output name="Building"/>
+		<operator name="copy">
+			<param name="name" value="Building"/>
+		</operator>
 	</rule>
 	<rule name="Building">
 		<operator name="comp">
 			<param name="front" value="FrontFacade"/>
 			<param name="side" value="SideFacade"/>
 			<param name="top" value="Roof"/>
-			<param name="bottom" value="Base"/>
+			<param name="bottom" value="Base."/>
 		</operator>
 	</rule>
 	<rule name="FrontFacade">
@@ -65,9 +67,9 @@
 				<element type="absolute" value="1.0"/>
 			</param>
 			<param name="name">
-				<element value="Wall"/>
+				<element value="Wall."/>
 				<element value="Tile"/>
-				<element value="Wall"/>
+				<element value="Wall."/>
 			</param>
 		</operator>
 	</rule>
@@ -90,9 +92,9 @@
 				<element type="floating" value="1.0"/>
 			</param>
 			<param name="name">
-				<element value="Wall"/>
+				<element value="Wall."/>
 				<element value="WallWindowWall"/>
-				<element value="Wall"/>
+				<element value="Wall."/>
 			</param>
 		</operator>
 	</rule>
@@ -105,9 +107,9 @@
 				<element type="floating" value="1.0"/>
 			</param>
 			<param name="name">
-				<element value="Wall"/>
+				<element value="Wall."/>
 				<element value="Window"/>
-				<element value="Wall"/>
+				<element value="Wall."/>
 			</param>
 		</operator>
 	</rule>

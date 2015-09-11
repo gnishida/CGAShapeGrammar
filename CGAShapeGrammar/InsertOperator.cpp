@@ -5,6 +5,7 @@
 namespace cga {
 
 InsertOperator::InsertOperator(const std::string& geometryPath) {
+	this->name = "insert";
 	this->geometryPath = geometryPath;
 }
 

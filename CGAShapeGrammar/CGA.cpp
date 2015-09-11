@@ -2,6 +2,7 @@
 #include "GLUtils.h"
 #include "OBJLoader.h"
 #include <map>
+#include <iostream>
 
 #include "Rectangle.h"
 #include "Polygon.h"
@@ -56,6 +57,9 @@ void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::li
 		if (ruleSet.contain(obj->_name)) {
 			ruleSet.getRule(obj->_name).apply(obj, ruleSet, stack);
 		} else {
+			if (obj->_name.back() != '!' && obj->_name.back() != '.') {
+				std::cout << "Warning: " << "no rule is found for " << obj->_name << "." << std::endl;
+			}
 			obj->generate(renderManager, showScopeCoordinateSystem);
 			delete obj;
 		}

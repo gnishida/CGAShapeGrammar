@@ -2,10 +2,10 @@
 <rules>
 	<rule name="Lot">
 		<operator name="extrude">
-			<param name="height" value="20"/>
+			<param name="height" value="5"/>
 		</operator>
 		<operator name="split">
-			<param name="splitAxis" value="x"/>
+			<param name="splitAxis" value="z"/>
 			<param name="size">
 				<element type="floating" value="1.5" repeat="true"/>
 			</param>
@@ -16,9 +16,9 @@
 	</rule>
 	<rule name="X">
 		<operator name="color">
-			<param name="r" value="1">
-			<param name="g" value="0">
-			<param name="b" value="0">
+			<param name="r" value="1"/>
+			<param name="g" value="0"/>
+			<param name="b" value="0"/>
 		</operator>
 	</rule>
 </rules>

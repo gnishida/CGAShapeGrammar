@@ -44,6 +44,9 @@ class RuleSet;
 
 class Operator {
 public:
+	std::string name;
+
+public:
 	Operator() {}
 
 	virtual Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) = 0;
@@ -51,7 +54,6 @@ public:
 
 class Rule {
 public:
-	std::string output_name;
 	std::vector<Operator*> operators;
 
 public:
@@ -73,8 +75,8 @@ public:
 	Rule getRule(const std::string& name) const { return rules.at(name); }
 	Rule& getRule(const std::string& name) { return rules[name]; }
 	void addAttr(const std::string& name, float value);
+	void addRule(const std::string& name);
 	void addOperator(const std::string& name, Operator* op);
-	void setRuleOutput(const std::string& name, const std::string& output_name);
 	float eval(const std::string& attr_name) const;
 };
 

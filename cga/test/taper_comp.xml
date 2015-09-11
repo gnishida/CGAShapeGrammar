@@ -12,10 +12,10 @@
 			<param name="height" value="3"/>
 		</operator>
 		<operator name="comp">
-			<param name="front" value="Facade"/>
-			<param name="side" value="Facade"/>
-			<param name="top" value="Roof"/>
-			<param name="bottom" value="Base"/>
+			<param name="front" value="Facade."/>
+			<param name="side" value="Facade."/>
+			<param name="top" value="Roof."/>
+			<param name="bottom" value="Base."/>
 		</operator>
 	</rule>
 </rules>

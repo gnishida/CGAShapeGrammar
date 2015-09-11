@@ -5,6 +5,7 @@
 namespace cga {
 
 RoofHipOperator::RoofHipOperator(float angle) {
+	this->name = "roofHip";
 	this->angle = angle;
 }
 

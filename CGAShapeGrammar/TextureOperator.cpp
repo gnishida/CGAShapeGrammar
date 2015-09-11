@@ -5,6 +5,7 @@
 namespace cga {
 
 TextureOperator::TextureOperator(const std::string& texture) {
+	this->name = "texture";
 	this->texture = texture;
 }
 

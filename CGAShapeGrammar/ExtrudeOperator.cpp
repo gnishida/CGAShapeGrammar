@@ -5,6 +5,7 @@
 namespace cga {
 
 ExtrudeOperator::ExtrudeOperator(const std::string& height) {
+	this->name = "extrude";
 	this->height = height;
 }
 

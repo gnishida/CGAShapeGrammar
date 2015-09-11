@@ -5,7 +5,7 @@
 			<param name="height" value="1"/>
 		</operator>
 		<operator name="copy">
-			<param name="name" value="B"/>
+			<param name="name" value="B."/>
 		</operator>
 		<operator name="translate">
 			<param name="mode" value="rel"/>
@@ -20,7 +20,7 @@
 	</rule>
 	<rule name="C">
 		<operator name="copy">
-			<param name="name" value="D"/>
+			<param name="name" value="D."/>
 		</operator>
 		<operator name="size">
 			<param name="xSize" value="2"/>
@@ -28,7 +28,7 @@
 			<param name="zSize" value="0.5"/>
 		</operator>
 		<operator name="copy">
-			<param name="name" value="E"/>
+			<param name="name" value="E."/>
 		</operator>
 	</rule>
 </rules>

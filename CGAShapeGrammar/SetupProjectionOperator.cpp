@@ -5,6 +5,7 @@
 namespace cga {
 
 SetupProjectionOperator::SetupProjectionOperator(int type, float texWidth, float texHeight) {
+	this->name = "setupProjection";
 	this->type = type;
 	this->texWidth = texWidth;
 	this->texHeight = texHeight;

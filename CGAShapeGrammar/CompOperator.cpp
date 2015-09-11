@@ -6,6 +6,7 @@
 namespace cga {
 
 CompOperator::CompOperator(const std::map<std::string, std::string>& name_map) {
+	this->name = "comp";
 	this->name_map = name_map;
 }
 

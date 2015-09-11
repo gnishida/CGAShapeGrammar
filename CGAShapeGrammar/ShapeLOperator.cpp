@@ -5,6 +5,7 @@
 namespace cga {
 
 ShapeLOperator::ShapeLOperator(float frontWidth, float leftWidth) {
+	this->name = "shapeL";
 	this->frontWidth = frontWidth;
 	this->leftWidth = leftWidth;
 }

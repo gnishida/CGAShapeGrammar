@@ -19,11 +19,7 @@
 
 namespace cga {
 
-//std::map<std::string, Rule> parseRule(char* filename) {
 void parseRule(char* filename, RuleSet& ruleSet) {
-	//std::map<std::string, Rule> rules;
-	//std::map<std::string, float> attrs;
-
 	QFile file(filename);
 
 	QDomDocument doc;
@@ -52,6 +48,8 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 				throw "<rule> tag must contain name attribute.";
 			}
 			std::string name = child_node.toElement().attribute("name").toUtf8().constData();
+
+			ruleSet.addRule(name);
 
 			QDomNode operator_node = child_node.firstChild();
 			while (!operator_node.isNull()) {
@@ -93,14 +91,6 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 					} else if (operator_name == "translate") {
 						ruleSet.addOperator(name, parseTranslateOperator(operator_node));
 					}
-				} else if (operator_node.toElement().tagName() == "output") {
-					if (!operator_node.toElement().hasAttribute("name")) {
-						std::cout << "<output> tag must contain name attribute." << std::endl;
-						throw "<output> tag must contain name attribute.";
-					}
-					std::string output_name = operator_node.toElement().attribute("name").toUtf8().constData();
-
-					ruleSet.setRuleOutput(name, output_name);
 				}
 
 				operator_node = operator_node.nextSibling();

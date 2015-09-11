@@ -1,6 +1,7 @@
 #include "Rule.h"
 #include "CGA.h"
 #include "Shape.h"
+#include <sstream>
 
 namespace cga {
 
@@ -38,8 +39,15 @@ void Rule::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) c
 	}
 	
 	if (obj != NULL) {
-		obj->_name = output_name;
-		stack.push_back(obj);
+		if (operators.size() == 0 || operators.back()->name == "copy") {
+			delete obj;
+			obj = NULL;
+		} else {
+			std::stringstream ss;
+			ss << obj->_name << "!";
+			obj->_name = ss.str();
+			stack.push_back(obj);
+		}
 	}
 }
 
@@ -112,12 +120,12 @@ void RuleSet::addAttr(const std::string& name, float value) {
 	attrs[name] = value;
 }
 
-void RuleSet::addOperator(const std::string& name, Operator* op) {
-	rules[name].operators.push_back(op);
+void RuleSet::addRule(const std::string& name) {
+	rules[name].operators.clear();
 }
 
-void RuleSet::setRuleOutput(const std::string& name, const std::string& output_name) {
-	rules[name].output_name = output_name;
+void RuleSet::addOperator(const std::string& name, Operator* op) {
+	rules[name].operators.push_back(op);
 }
 
 float RuleSet::eval(const std::string& attr_name) const {

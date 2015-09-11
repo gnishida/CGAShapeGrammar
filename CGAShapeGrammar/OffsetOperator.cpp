@@ -5,6 +5,7 @@
 namespace cga {
 
 OffsetOperator::OffsetOperator(float offsetDistance) {
+	this->name = "offset";
 	this->offsetDistance = offsetDistance;
 }
 

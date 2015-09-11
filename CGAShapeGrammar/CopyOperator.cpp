@@ -5,6 +5,7 @@
 namespace cga {
 
 CopyOperator::CopyOperator(const std::string& copy_name) {
+	this->name = "copy";
 	this->copy_name = copy_name;
 }
 

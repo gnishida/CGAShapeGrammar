@@ -7,8 +7,8 @@
 		<operator name="comp">
 			<param name="front" value="Facade"/>
 			<param name="side" value="Facade"/>
-			<param name="top" value="Roof"/>
-			<param name="bottom" value="Base"/>
+			<param name="top" value="Roof."/>
+			<param name="bottom" value="Base."/>
 		</operator>
 	</rule>
 	<rule name="Facade">
@@ -19,8 +19,8 @@
 				<element type="floating" value="1.5" repeat="true"/>
 			</param>
 			<param name="name">
-				<element value="Floor"/>
-				<element value="Floor"/>
+				<element value="Floor."/>
+				<element value="Floor."/>
 			</param>
 		</operator>
 	</rule>

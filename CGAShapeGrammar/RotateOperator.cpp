@@ -5,6 +5,7 @@
 namespace cga {
 
 RotateOperator::RotateOperator(float xAngle, float yAngle, float zAngle) {
+	this->name = "rotate";
 	this->xAngle = xAngle;
 	this->yAngle = yAngle;
 	this->zAngle = zAngle;

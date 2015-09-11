@@ -5,6 +5,7 @@
 namespace cga {
 
 TaperOperator::TaperOperator(float height, float top_ratio) {
+	this->name = "taper";
 	this->height = height;
 	this->top_ratio = top_ratio;
 }
