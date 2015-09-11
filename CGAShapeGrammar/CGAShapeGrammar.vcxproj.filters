@@ -164,6 +164,9 @@
     <ClCompile Include="Cuboid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NumberEval.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -287,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="Cuboid.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberEval.h">
+      <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <rules version="2010.3" author="andi">
 	<!-- Attributes -->
-	<attr name="groundfloor_height" value="4"/>
+	<attr name="groundf_height" value="4"/>
 	<attr name="floor_height" value="3.5"/>
 	<attr name="tile_width" value="3"/>
-	<attr name="height" value="11"/>
+	<attr name="bldg_height" value="11"/>
 	<attr name="wallColor" value="#ffffff"/>
 	<attr name="LOD" value="0"/>
 	
@@ -17,7 +17,7 @@
 	<!-- Initial Shape starting rule -->
 	<rule name="Lot">
 		<operator name="extrude">
-			<param name="height" value="height"/>
+			<param name="height" value="bldg_height"/>
 		</operator>
 		<operator name="copy">
 			<param name="name" value="Building"/>
@@ -46,7 +46,7 @@
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="groundfloor_height"/>
+				<element type="absolute" value="groundf_height"/>
 				<element type="floating" value="floor_height" repeat="true"/>
 			</param>
 			<param name="name">
@@ -69,7 +69,7 @@
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="groundfloor_height"/>
+				<element type="absolute" value="groundf_height"/>
 				<element type="floating" value="floor_height" repeat="true"/>
 			</param>
 			<param name="name">

@@ -1,7 +1,9 @@
 ﻿#include "Rule.h"
 #include "CGA.h"
 #include "Shape.h"
+#include "NumberEval.h"
 #include <sstream>
+#include <boost/algorithm/string/replace.hpp>
 
 namespace cga {
 
@@ -153,14 +155,24 @@ void RuleSet::addOperator(const std::string& name, Operator* op) {
 
 float RuleSet::evalFloat(const std::string& attr_name, Shape* shape) const {
 	// To be fixed
-	std::string decoded_str = attr_name;
-	std::replace(decoded_str.begin(), decoded_str.end(), "scope.sx", shape->_scope.x);
+	// 置換だと、変数BCが、変数ABCを置換してしまう。
+	// 対策は？
 
-	if (attrs.find(attr_name) == attrs.end()) {
-		return ::atof(attr_name.c_str());
-	} else {
-		return ::atof(attrs.at(attr_name).c_str());
+	// scope.sx|y|zを置換
+	std::string decoded_str = attr_name;
+	std::string scope_x = std::to_string((long double)shape->_scope.x);
+	std::string scope_y = std::to_string((long double)shape->_scope.y);
+	std::string scope_z = std::to_string((long double)shape->_scope.z);
+	boost::replace_all(decoded_str, "scope.sx", scope_x);
+	boost::replace_all(decoded_str, "scope.sy", scope_y);
+	boost::replace_all(decoded_str, "scope.sz", scope_z);
+
+	// 変数を置換
+	for (auto it = attrs.begin(); it != attrs.end(); ++it) {
+		boost::replace_all(decoded_str, it->first, it->second);
 	}
+
+	return calculate(decoded_str);
 }
 
 std::string RuleSet::evalString(const std::string& attr_name, Shape* shape) const {

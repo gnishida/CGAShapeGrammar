@@ -160,6 +160,7 @@
     <ClCompile Include="InsertOperator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="NumberEval.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="OffsetOperator.cpp" />
     <ClCompile Include="OffsetPolygon.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="GLUtils.h" />
     <ClInclude Include="HipRoof.h" />
     <ClInclude Include="InsertOperator.h" />
+    <ClInclude Include="NumberEval.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="OffsetOperator.h" />
     <ClInclude Include="OffsetPolygon.h" />
