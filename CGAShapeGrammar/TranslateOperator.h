@@ -13,7 +13,7 @@ private:
 
 public:
 	TranslateOperator(int mode, int coordSystem, const glm::vec3& vec);
-	Shape* apply(Shape* obj, std::list<Shape*>& stack);
+	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 
 }

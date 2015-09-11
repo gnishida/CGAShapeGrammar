@@ -192,7 +192,8 @@ Operator* parseCopyOperator(const QDomNode& node) {
 }
 
 Operator* parseExtrudeOperator(const QDomNode& node) {
-	float height;
+	//float height;
+	std::string height;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -200,7 +201,8 @@ Operator* parseExtrudeOperator(const QDomNode& node) {
 			QString name = child.toElement().attribute("name");
 
 			if (name == "height") {
-				height = child.toElement().attribute("value").toFloat();
+				//height = child.toElement().attribute("value").toFloat();
+				height = child.toElement().attribute("value").toUtf8().constData();
 			}
 		}
 

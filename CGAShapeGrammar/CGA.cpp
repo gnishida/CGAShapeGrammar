@@ -54,7 +54,7 @@ void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::li
 		stack.pop_front();
 
 		if (ruleSet.contain(obj->_name)) {
-			ruleSet.getRule(obj->_name).apply(obj, stack);
+			ruleSet.getRule(obj->_name).apply(obj, ruleSet, stack);
 		} else {
 			obj->generate(renderManager, showScopeCoordinateSystem);
 			delete obj;

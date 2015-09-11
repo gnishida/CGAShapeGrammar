@@ -4,12 +4,14 @@
 
 namespace cga {
 
-ExtrudeOperator::ExtrudeOperator(float height) {
+ExtrudeOperator::ExtrudeOperator(const std::string& height) {
 	this->height = height;
 }
 
-Shape* ExtrudeOperator::apply(Shape* obj, std::list<Shape*>& stack) {
-	return obj->extrude(obj->_name, height);
+Shape* ExtrudeOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+	float fHeight = ruleSet.eval(height);
+
+	return obj->extrude(obj->_name, fHeight);
 }
 
 }

@@ -40,11 +40,13 @@ public:
 	float getEstimateValue(float size);
 };
 
+class RuleSet;
+
 class Operator {
 public:
 	Operator() {}
 
-	virtual Shape* apply(Shape* obj, std::list<Shape*>& stack) = 0;
+	virtual Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) = 0;
 };
 
 class Rule {
@@ -55,7 +57,7 @@ public:
 public:
 	Rule() {}
 
-	void apply(Shape* obj, std::list<Shape*>& stack) const;
+	void apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) const;
 	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
 };
 
@@ -73,6 +75,7 @@ public:
 	void addAttr(const std::string& name, float value);
 	void addOperator(const std::string& name, Operator* op);
 	void setRuleOutput(const std::string& name, const std::string& output_name);
+	float eval(const std::string& attr_name) const;
 };
 
 }

@@ -10,7 +10,7 @@ SplitOperator::SplitOperator(int splitAxis, const std::vector<Value*>& sizes, co
 	this->output_names = output_names;
 }
 
-Shape* SplitOperator::apply(Shape* obj, std::list<Shape*>& stack) {
+Shape* SplitOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	std::vector<Shape*> floors;
 
 	std::vector<float> decoded_sizes;

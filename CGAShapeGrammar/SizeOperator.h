@@ -14,7 +14,7 @@ private:
 public:
 	SizeOperator(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
 
-	Shape* apply(Shape* obj, std::list<Shape*>& stack);
+	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 
 }

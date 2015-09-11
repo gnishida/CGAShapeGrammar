@@ -10,7 +10,7 @@ SizeOperator::SizeOperator(const SingleValue& xSize, const SingleValue& ySize, c
 	this->zSize = zSize;
 }
 
-Shape* SizeOperator::apply(Shape* obj, std::list<Shape*>& stack) {
+Shape* SizeOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	obj->size(xSize, ySize, zSize);
 	return obj;
 }

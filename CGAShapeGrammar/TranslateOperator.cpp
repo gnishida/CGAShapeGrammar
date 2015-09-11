@@ -10,7 +10,7 @@ TranslateOperator::TranslateOperator(int mode, int coordSystem, const glm::vec3&
 	this->vec = vec;
 }
 
-Shape* TranslateOperator::apply(Shape* obj, std::list<Shape*>& stack) {
+Shape* TranslateOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	obj->translate(mode, coordSystem, vec);
 	return obj;
 }

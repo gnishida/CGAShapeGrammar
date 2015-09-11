@@ -6,12 +6,12 @@ namespace cga {
 
 class ExtrudeOperator : public Operator {
 private:
-	float height;
+	std::string height;
 
 public:
-	ExtrudeOperator(float height);
+	ExtrudeOperator(const std::string& height);
 
-	Shape* apply(Shape* obj, std::list<Shape*>& stack);
+	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 
 }

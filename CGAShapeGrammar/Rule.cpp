@@ -31,9 +31,9 @@ float ValueSet::getEstimateValue(float size) {
 	return sum;
 }
 
-void Rule::apply(Shape* obj, std::list<Shape*>& stack) const {
+void Rule::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) const {
 	for (int i = 0; i < operators.size(); ++i) {
-		obj = operators[i]->apply(obj, stack);
+		obj = operators[i]->apply(obj, ruleSet, stack);
 		if (obj == NULL) break;
 	}
 	
@@ -118,6 +118,14 @@ void RuleSet::addOperator(const std::string& name, Operator* op) {
 
 void RuleSet::setRuleOutput(const std::string& name, const std::string& output_name) {
 	rules[name].output_name = output_name;
+}
+
+float RuleSet::eval(const std::string& attr_name) const {
+	if (attrs.find(attr_name) == attrs.end()) {
+		return ::atof(attr_name.c_str());
+	} else {
+		return attrs.at(attr_name);
+	}
 }
 
 }
