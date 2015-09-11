@@ -19,14 +19,14 @@ SetupProjectionOperator::SetupProjectionOperator(int type, float texWidth, float
 	this->output_name = output_name;
 }*/
 
-Shape* SetupProjectionOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+Shape* SetupProjectionOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	if (type == TYPE_RELATIVE) {
-		obj->setupProjection(obj->_scope.x, obj->_scope.y);
+		shape->setupProjection(shape->_scope.x, shape->_scope.y);
 	} else {
-		obj->setupProjection(texWidth, texHeight);
+		shape->setupProjection(texWidth, texHeight);
 	}
 
-	return obj;
+	return shape;
 }
 
 }

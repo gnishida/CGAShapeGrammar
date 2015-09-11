@@ -15,7 +15,7 @@ private:
 
 public:
 	TranslateOperator(int mode, int coordSystem, const SingleValue& x, const SingleValue& y, const SingleValue& z);
-	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
+	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 
 }

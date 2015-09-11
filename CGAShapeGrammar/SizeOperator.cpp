@@ -11,31 +11,31 @@ SizeOperator::SizeOperator(const SingleValue& xSize, const SingleValue& ySize, c
 	this->zSize = zSize;
 }
 
-Shape* SizeOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+Shape* SizeOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	float actual_xSize;
 	float actual_ySize;
 	float actual_zSize;
 
 	if (xSize.type == Value::TYPE_RELATIVE) {
-		actual_xSize = obj->_scope.x * ruleSet.evalFloat(xSize.value, obj);
+		actual_xSize = shape->_scope.x * ruleSet.evalFloat(xSize.value, shape);
 	} else {
-		actual_xSize = ruleSet.evalFloat(xSize.value, obj);
+		actual_xSize = ruleSet.evalFloat(xSize.value, shape);
 	}
 
 	if (ySize.type == Value::TYPE_RELATIVE) {
-		actual_ySize = obj->_scope.y * ruleSet.evalFloat(ySize.value, obj);
+		actual_ySize = shape->_scope.y * ruleSet.evalFloat(ySize.value, shape);
 	} else {
-		actual_ySize = ruleSet.evalFloat(ySize.value, obj);
+		actual_ySize = ruleSet.evalFloat(ySize.value, shape);
 	}
 
 	if (zSize.type == Value::TYPE_RELATIVE) {
-		actual_zSize = obj->_scope.z * ruleSet.evalFloat(zSize.value, obj);
+		actual_zSize = shape->_scope.z * ruleSet.evalFloat(zSize.value, shape);
 	} else {
-		actual_zSize = ruleSet.evalFloat(zSize.value, obj);
+		actual_zSize = ruleSet.evalFloat(zSize.value, shape);
 	}
 
-	obj->size(actual_xSize, actual_ySize, actual_zSize);
-	return obj;
+	shape->size(actual_xSize, actual_ySize, actual_zSize);
+	return shape;
 }
 
 }

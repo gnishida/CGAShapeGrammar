@@ -12,7 +12,7 @@ private:
 public:
 	ColorOperator(const std::vector<std::string>& color);
 
-	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
+	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 
 private:
 	static void decodeRGB(const std::string& str, float& r, float& g, float& b);

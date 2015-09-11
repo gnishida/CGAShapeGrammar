@@ -10,7 +10,7 @@ private:
 
 public:
 	TextureOperator(const std::string& texture);
-	Shape* apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack);
+	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 
 }

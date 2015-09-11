@@ -10,16 +10,16 @@ ColorOperator::ColorOperator(const std::vector<std::string>& color) {
 	this->color = color;
 }
 
-Shape* ColorOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+Shape* ColorOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	if (color.size() == 3) {
-		obj->_color.r = ruleSet.evalFloat(color[0], obj);
-		obj->_color.g = ruleSet.evalFloat(color[1], obj);
-		obj->_color.b = ruleSet.evalFloat(color[2], obj);
+		shape->_color.r = ruleSet.evalFloat(color[0], shape);
+		shape->_color.g = ruleSet.evalFloat(color[1], shape);
+		shape->_color.b = ruleSet.evalFloat(color[2], shape);
 	} else if (color.size() == 1) {
-		decodeRGB(ruleSet.evalString(color[0], obj), obj->_color.r, obj->_color.g, obj->_color.b);
+		decodeRGB(ruleSet.evalString(color[0], shape), shape->_color.r, shape->_color.g, shape->_color.b);
 	}
 
-	return obj;
+	return shape;
 }
 
 void ColorOperator::decodeRGB(const std::string& str, float& r, float& g, float& b) {

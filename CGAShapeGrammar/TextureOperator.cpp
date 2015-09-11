@@ -9,9 +9,9 @@ TextureOperator::TextureOperator(const std::string& texture) {
 	this->texture = texture;
 }
 
-Shape* TextureOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	obj->texture(ruleSet.evalString(texture, obj));
-	return obj;
+Shape* TextureOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+	shape->texture(ruleSet.evalString(texture, shape));
+	return shape;
 }
 
 }

@@ -10,8 +10,8 @@ ShapeLOperator::ShapeLOperator(float frontWidth, float leftWidth) {
 	this->leftWidth = leftWidth;
 }
 
-Shape* ShapeLOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	return obj->shapeL(obj->_name, frontWidth, leftWidth);
+Shape* ShapeLOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+	return shape->shapeL(shape->_name, frontWidth, leftWidth);
 }
 
 }

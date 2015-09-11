@@ -51,20 +51,19 @@ CGA::CGA() {
 
 void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<Shape*> stack, bool showScopeCoordinateSystem) {
 	while (!stack.empty()) {
-		Shape* obj = stack.front();
+		Shape* shape = stack.front();
 		stack.pop_front();
 
-		if (ruleSet.contain(obj->_name)) {
-			ruleSet.getRule(obj->_name).apply(obj, ruleSet, stack);
+		if (ruleSet.contain(shape->_name)) {
+			ruleSet.getRule(shape->_name).apply(shape, ruleSet, stack);
 		} else {
-			if (obj->_name.back() != '!' && obj->_name.back() != '.') {
-				std::cout << "Warning: " << "no rule is found for " << obj->_name << "." << std::endl;
+			if (shape->_name.back() != '!' && shape->_name.back() != '.') {
+				std::cout << "Warning: " << "no rule is found for " << shape->_name << "." << std::endl;
 			}
-			obj->generate(renderManager, showScopeCoordinateSystem);
-			delete obj;
+			shape->generate(renderManager, showScopeCoordinateSystem);
+			delete shape;
 		}
 	}
-
 }
 
 }
