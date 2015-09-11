@@ -5,13 +5,13 @@
 
 namespace cga {
 
-float SingleValue::getEstimateValue(float size, const RuleSet& ruleSet) {
+float SingleValue::getEstimateValue(float size, const RuleSet& ruleSet, Shape* obj) {
 	if (type == Value::TYPE_ABSOLUTE) {
-		return ruleSet.evalFloat(value);
+		return ruleSet.evalFloat(value, obj);
 	} else if (type == Value::TYPE_RELATIVE) {
-		return ruleSet.evalFloat(value) * size;
+		return ruleSet.evalFloat(value, obj) * size;
 	} else {
-		return ruleSet.evalFloat(value);
+		return ruleSet.evalFloat(value, obj);
 	}
 }
 
@@ -27,15 +27,15 @@ ValueSet::ValueSet(const std::vector<Value*>& values, bool repeat) {
 	this->repeat = repeat;
 }
 
-float ValueSet::getEstimateValue(float size, const RuleSet& ruleSet) {
+float ValueSet::getEstimateValue(float size, const RuleSet& ruleSet, Shape* obj) {
 	float sum = 0.0f;
 	for (int i = 0; i < values.size(); ++i) {
 		if (values[i]->type == Value::TYPE_ABSOLUTE) {
-			sum += ruleSet.evalFloat(values[i]->value);
+			sum += ruleSet.evalFloat(values[i]->value, obj);
 		} else if (values[i]->type == Value::TYPE_RELATIVE) {
-			sum += ruleSet.evalFloat(values[i]->value) * size;
+			sum += ruleSet.evalFloat(values[i]->value, obj) * size;
 		} else if (values[i]->type == Value::TYPE_FLOATING) {
-			sum += ruleSet.evalFloat(values[i]->value);
+			sum += ruleSet.evalFloat(values[i]->value, obj);
 		}
 	}
 
@@ -71,7 +71,7 @@ void Rule::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) c
  * @param decoded_sizes	[OUT]			計算された、各断片のサイズ
  * @param decoded_output_names [OUT]	計算された、各断片の名前
  */
-void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
+void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, Shape* obj, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
 	int regular_count = 0;
 	int floating_count = 0;
 	float regular_sum = 0.0f;
@@ -82,13 +82,13 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 	for (int i = 0; i < sizes.size(); ++i) {
 		if (sizes[i]->type == Value::TYPE_ABSOLUTE) {
 			regular_count++;
-			regular_sum += ruleSet.evalFloat(sizes[i]->value);
+			regular_sum += ruleSet.evalFloat(sizes[i]->value, obj);
 		} else if (sizes[i]->type == Value::TYPE_RELATIVE) {
 			regular_count++;
-			regular_sum += size * ruleSet.evalFloat(sizes[i]->value) * size;
+			regular_sum += size * ruleSet.evalFloat(sizes[i]->value, obj) * size;
 		} else if (sizes[i]->type == Value::TYPE_FLOATING) {
 			floating_count++;
-			floating_sum += ruleSet.evalFloat(sizes[i]->value);
+			floating_sum += ruleSet.evalFloat(sizes[i]->value, obj);
 		} else if (sizes[i]->type == Value::TYPE_SET) {
 			repeat_count++;
 		}
@@ -101,13 +101,13 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 
 	for (int i = 0; i < sizes.size(); ++i) {
 		if (sizes[i]->type == Value::TYPE_ABSOLUTE) {
-			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value));
+			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value, obj));
 			decoded_output_names.push_back(output_names[i]);
 		} else if (sizes[i]->type == Value::TYPE_RELATIVE) {
-			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value) * size);
+			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value, obj) * size);
 			decoded_output_names.push_back(output_names[i]);
 		} else if (sizes[i]->type == Value::TYPE_FLOATING) {
-			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value) * floating_scale);
+			decoded_sizes.push_back(ruleSet.evalFloat(sizes[i]->value, obj) * floating_scale);
 			decoded_output_names.push_back(output_names[i]);
 		} else if (sizes[i]->type == Value::TYPE_SET) {
 			if (sizes[i]->repeat) {
@@ -118,17 +118,17 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value*>& sizes, const 
 					temp_names[k] = output_names[i];
 				}
 
-				float s = sizes[i]->getEstimateValue(size - regular_sum, ruleSet);
+				float s = sizes[i]->getEstimateValue(size - regular_sum, ruleSet, obj);
 				int num = (size - regular_sum - floating_sum * floating_scale) / s;
 				for (int k = 0; k < num; ++k) {
-					decodeSplitSizes((size - regular_sum - floating_sum * floating_scale) / num, sizes[i]->values, temp_names, ruleSet, decoded_sizes, decoded_output_names);
+					decodeSplitSizes((size - regular_sum - floating_sum * floating_scale) / num, sizes[i]->values, temp_names, ruleSet, obj, decoded_sizes, decoded_output_names);
 				}
 			} else {
 				std::vector<Value*> temp_ratios(1);
 				temp_ratios[0] = sizes[i];
 				std::vector<std::string> temp_names(1);
 				temp_names[0] = output_names[i];
-				decodeSplitSizes(size - regular_sum - floating_sum * floating_scale, temp_ratios, temp_names, ruleSet, decoded_sizes, decoded_output_names);
+				decodeSplitSizes(size - regular_sum - floating_sum * floating_scale, temp_ratios, temp_names, ruleSet, obj, decoded_sizes, decoded_output_names);
 			}
 		}
 	}
@@ -151,7 +151,11 @@ void RuleSet::addOperator(const std::string& name, Operator* op) {
 	rules[name].operators.push_back(op);
 }
 
-float RuleSet::evalFloat(const std::string& attr_name) const {
+float RuleSet::evalFloat(const std::string& attr_name, Shape* shape) const {
+	// To be fixed
+	std::string decoded_str = attr_name;
+	std::replace(decoded_str.begin(), decoded_str.end(), "scope.sx", shape->_scope.x);
+
 	if (attrs.find(attr_name) == attrs.end()) {
 		return ::atof(attr_name.c_str());
 	} else {
@@ -159,7 +163,7 @@ float RuleSet::evalFloat(const std::string& attr_name) const {
 	}
 }
 
-std::string RuleSet::evalString(const std::string& attr_name) const {
+std::string RuleSet::evalString(const std::string& attr_name, Shape* shape) const {
 	if (attrs.find(attr_name) == attrs.end()) {
 		return attr_name;
 	} else {

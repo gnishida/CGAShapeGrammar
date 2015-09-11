@@ -17,11 +17,11 @@ Shape* SplitOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*
 	std::vector<float> decoded_sizes;
 	std::vector<std::string> decoded_output_names;
 	if (splitAxis == DIRECTION_X) {
-		Rule::decodeSplitSizes(obj->_scope.x, sizes, output_names, ruleSet, decoded_sizes, decoded_output_names);
+		Rule::decodeSplitSizes(obj->_scope.x, sizes, output_names, ruleSet, obj, decoded_sizes, decoded_output_names);
 	} else if (splitAxis == DIRECTION_Y) {
-		Rule::decodeSplitSizes(obj->_scope.y, sizes, output_names, ruleSet, decoded_sizes, decoded_output_names);
+		Rule::decodeSplitSizes(obj->_scope.y, sizes, output_names, ruleSet, obj, decoded_sizes, decoded_output_names);
 	} else if (splitAxis == DIRECTION_Z) {
-		Rule::decodeSplitSizes(obj->_scope.z, sizes, output_names, ruleSet, decoded_sizes, decoded_output_names);
+		Rule::decodeSplitSizes(obj->_scope.z, sizes, output_names, ruleSet, obj, decoded_sizes, decoded_output_names);
 	}
 
 	obj->split(splitAxis, decoded_sizes, decoded_output_names, floors);

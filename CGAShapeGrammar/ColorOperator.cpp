@@ -12,11 +12,11 @@ ColorOperator::ColorOperator(const std::vector<std::string>& color) {
 
 Shape* ColorOperator::apply(Shape* obj, const RuleSet& ruleSet, std::list<Shape*>& stack) {
 	if (color.size() == 3) {
-		obj->_color.r = ruleSet.evalFloat(color[0]);
-		obj->_color.g = ruleSet.evalFloat(color[1]);
-		obj->_color.b = ruleSet.evalFloat(color[2]);
+		obj->_color.r = ruleSet.evalFloat(color[0], obj);
+		obj->_color.g = ruleSet.evalFloat(color[1], obj);
+		obj->_color.b = ruleSet.evalFloat(color[2], obj);
 	} else if (color.size() == 1) {
-		decodeRGB(ruleSet.evalString(color[0]), obj->_color.r, obj->_color.g, obj->_color.b);
+		decodeRGB(ruleSet.evalString(color[0], obj), obj->_color.r, obj->_color.g, obj->_color.b);
 	}
 
 	return obj;
