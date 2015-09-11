@@ -102,9 +102,7 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 }
 
 Operator* parseColorOperator(const QDomNode& node) {
-	float r;
-	float g;
-	float b;
+	std::vector<std::string> color;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -112,18 +110,20 @@ Operator* parseColorOperator(const QDomNode& node) {
 			QString name = child.toElement().attribute("name");
 
 			if (name == "r") {
-				r = child.toElement().attribute("value").toFloat();
+				color.push_back(child.toElement().attribute("value").toUtf8().constData());
 			} else if (name == "g") {
-				g = child.toElement().attribute("value").toFloat();
+				color.push_back(child.toElement().attribute("value").toUtf8().constData());
 			} else if (name == "b") {
-				b = child.toElement().attribute("value").toFloat();
+				color.push_back(child.toElement().attribute("value").toUtf8().constData());
+			} else if (name == "s") {
+				color.push_back(child.toElement().attribute("value").toUtf8().constData());
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new ColorOperator(glm::vec3(r, g, b));
+	return new ColorOperator(color);
 }
 
 Operator* parseCompOperator(const QDomNode& node) {
