@@ -6,7 +6,13 @@
 namespace cga {
 
 float SingleValue::getEstimateValue(float size, const RuleSet& ruleSet) {
-	return ruleSet.evalFloat(value);
+	if (type == Value::TYPE_ABSOLUTE) {
+		return ruleSet.evalFloat(value);
+	} else if (type == Value::TYPE_RELATIVE) {
+		return ruleSet.evalFloat(value) * size;
+	} else {
+		return ruleSet.evalFloat(value);
+	}
 }
 
 ValueSet::ValueSet(Value* value, bool repeat) {
