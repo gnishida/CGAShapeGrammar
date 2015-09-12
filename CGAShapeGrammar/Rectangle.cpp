@@ -21,13 +21,14 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_textureEnabled = false;
 }
 
-Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const std::string& texture, float u1, float v1, float u2, float v2) {
+Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color, const std::string& texture, float u1, float v1, float u2, float v2) {
 	this->_name = name;
 	this->_removed = false;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_scope.x = width;
 	this->_scope.y = height;
+	this->_color = color;
 	this->_texture = texture;
 	this->_scope = glm::vec3(width, height, 0);
 
@@ -114,7 +115,7 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 			if (names[i] != "NIL") {
 				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
 				if (_textureEnabled) {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _texture,
+					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _color, _texture,
 						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * offset / _scope.x, _texCoords[0].y,
 						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _scope.x, _texCoords[2].y));
 				} else {
@@ -126,7 +127,7 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 			if (names[i] != "NIL") {
 				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
 				if (_textureEnabled) {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _texture,
+					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _color, _texture,
 						_texCoords[0].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * offset / _scope.y,
 						_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _scope.y));
 				} else {

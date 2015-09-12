@@ -24,7 +24,7 @@ Shape* Shape::inscribeCircle(const std::string& name) {
 Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 	std::vector<glm::vec3> points;
 	std::vector<glm::vec3> normals;
-	std::vector<glm::vec3> texCoords;
+	std::vector<glm::vec2> texCoords;
 	OBJLoader::load(geometryPath.c_str(), points, normals, texCoords);
 
 	// compute scale
@@ -33,14 +33,36 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 	float scaleZ = 1.0f;
 
 	BoundingBox bbox(points);
-	if (_scope.z == 0) {
-		scaleX = _scope.x / bbox.sx();
-		scaleY = _scope.y / bbox.sy();
-		scaleZ = (scaleX + scaleY) * 0.5f;
-	} else {
+	if (_scope.x != 0 && _scope.y != 0 && _scope.z != 0) {			// all non-zero
 		scaleX = _scope.x / bbox.sx();
 		scaleY = _scope.y / bbox.sy();
 		scaleZ = _scope.z / bbox.sz();
+	} else if (_scope.x == 0 && _scope.y != 0 && _scope.z != 0) {	// sx == 0
+		scaleY = _scope.y / bbox.sy();
+		scaleZ = _scope.z / bbox.sz();
+		scaleX = (scaleY + scaleZ) * 0.5f;
+	} else if (_scope.x != 0 && _scope.y == 0 && _scope.z != 0) {	// sy == 0
+		scaleX = _scope.x / bbox.sx();
+		scaleZ = _scope.z / bbox.sz();
+		scaleY = (scaleX + scaleZ) * 0.5f;
+	} else if (_scope.x != 0 && _scope.y != 0 && _scope.z == 0) {	// sz == 0
+		scaleX = _scope.x / bbox.sx();
+		scaleY = _scope.y / bbox.sy();
+		scaleZ = (scaleX + scaleY) * 0.5f;
+	} else if (_scope.x != 0) {										// sy == 0 && sz == 0
+		scaleX = _scope.x / bbox.sx();
+		scaleY = scaleX;
+		scaleZ = scaleX;
+	} else if (_scope.y != 0) {										// sx == 0 && sz == 0
+		scaleY = _scope.y / bbox.sy();
+		scaleX = scaleY;
+		scaleZ = scaleY;
+	} else if (_scope.z != 0) {										// sx == 0 && sy == 0
+		scaleZ = _scope.z / bbox.sz();
+		scaleX = scaleZ;
+		scaleY = scaleZ;
+	} else { // all zero
+		// do nothing
 	}
 
 	// scale the points
@@ -49,8 +71,8 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 		points[i].y = (points[i].y - bbox.minPt.y) * scaleY;
 		points[i].z = (points[i].z - bbox.minPt.z) * scaleZ;
 	}
-
-	return new GeneralObject(name, _pivot, _modelMat, points, normals, _color);
+	
+	return new GeneralObject(name, _pivot, _modelMat, points, normals, _color, texCoords, _texture);
 }
 
 void Shape::nil() {

@@ -214,18 +214,11 @@
 			<param name="y" value="0"/>
 			<param name="z" value="-0.25"/>
 		</operator>
-		<operator name="insert">
-			<param name="geometryPath" value="window_asset"/>
-		</operator>
-		<!--
-		<operator name="setupProjection">
-			<param name="axesSelector" value="scope.xy"/>
-			<param name="texWidth" type="absolute" value="scope.sx"/>
-			<param name="texHeight" type="absolute" value="scope.sy"/>
-		</operator>
-		-->
 		<operator name="texture">
 			<param name="texture" value="window_tex"/>
+		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="window_asset"/>
 		</operator>
 	</rule>
 	

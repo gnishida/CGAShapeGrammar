@@ -9,7 +9,7 @@ class Rectangle : public Shape {
 public:
 	Rectangle() {}
 	Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color);
-	Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const std::string& texture, float u1, float v1, float u2, float v2);
+	Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color, const std::string& texture, float u1, float v1, float u2, float v2);
 	Shape* clone(const std::string& name);
 	Shape* extrude(const std::string& name, float height);
 	Shape* inscribeCircle(const std::string& name);

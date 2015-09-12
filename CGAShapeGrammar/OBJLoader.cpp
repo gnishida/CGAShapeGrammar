@@ -138,7 +138,7 @@ void OBJLoader::load(const char* filename, std::vector<Vertex>& vertices) {
 /**
  * Load vertices data from a OBJ file.
  */
-void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::vector<glm::vec3>& normals, std::vector<glm::vec3>& texCoords) {
+void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& texCoords) {
 	QFile file(filename);
 	if (!file.open(QIODevice::ReadOnly)) {
 		return;
