@@ -9,7 +9,6 @@
 	<attr name="LOD" value="0"/>
 	
 	<!-- Assets -->
-	<attr name="window_asset" value="../assets/primitives/window.obj"/>
 	<attr name="frontdoor_tex" value="../assets/textures/shopdoor.tif"/>
 	<attr name="wall_tex" value="../assets/textures/brickwall.jpg"/>
 	<attr name="roof_tex" value="../assets/textures/roof.tif"/>
@@ -209,16 +208,11 @@
 			<param name="y" value="0"/>
 			<param name="z" value="-0.03"/>
 		</operator>
-		<operator name="insert">
-			<param name="geometryPath" value="window_asset"/>
-		</operator>
-		<!--
 		<operator name="setupProjection">
 			<param name="axesSelector" value="scope.xy"/>
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</operator>
-		-->
 		<operator name="texture">
 			<param name="texture" value="window_tex"/>
 		</operator>

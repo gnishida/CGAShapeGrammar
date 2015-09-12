@@ -14,8 +14,8 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_removed = false;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
-	this->_width = width;
-	this->_height = height;
+	this->_scope.x = width;
+	this->_scope.y = height;
 	this->_color = color;
 	this->_scope = glm::vec3(width, height, 0);
 	this->_textureEnabled = false;
@@ -26,8 +26,8 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_removed = false;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
-	this->_width = width;
-	this->_height = height;
+	this->_scope.x = width;
+	this->_scope.y = height;
 	this->_texture = texture;
 	this->_scope = glm::vec3(width, height, 0);
 
@@ -46,7 +46,7 @@ Shape* Rectangle::clone(const std::string& name) {
 }
 
 Shape* Rectangle::extrude(const std::string& name, float height) {
-	return new Cuboid(name, _pivot, _modelMat, _width, _height, height, _color);
+	return new Cuboid(name, _pivot, _modelMat, _scope.x, _scope.y, height, _color);
 	/*
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
@@ -64,9 +64,9 @@ Shape* Rectangle::inscribeCircle(const std::string& name) {
 Shape* Rectangle::offset(const std::string& name, float offsetDistance) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_width, 0);
-	points[2] = glm::vec2(_width, this->_height);
-	points[3] = glm::vec2(0, _height);
+	points[1] = glm::vec2(_scope.x, 0);
+	points[2] = glm::vec2(_scope.x, _scope.y);
+	points[3] = glm::vec2(0, _scope.y);
 
 	return new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture);
 }
@@ -74,38 +74,36 @@ Shape* Rectangle::offset(const std::string& name, float offsetDistance) {
 Shape* Rectangle::roofHip(const std::string& name, float angle) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_width, 0);
-	points[2] = glm::vec2(_width, _height);
-	points[3] = glm::vec2(0, _height);
+	points[1] = glm::vec2(_scope.x, 0);
+	points[2] = glm::vec2(_scope.x, _scope.y);
+	points[3] = glm::vec2(0, _scope.y);
 	return new HipRoof(name, _pivot, _modelMat, points, angle, _color);
 }
 
 void Rectangle::setupProjection(int axesSelector, float texWidth, float texHeight) {
 	_texCoords.resize(4);
 	_texCoords[0] = glm::vec2(0, 0);
-	_texCoords[1] = glm::vec2(_width / texWidth, 0);
-	_texCoords[2] = glm::vec2(_width / texWidth, _height / texHeight);
-	_texCoords[3] = glm::vec2(0, _height / texHeight);
+	_texCoords[1] = glm::vec2(_scope.x / texWidth, 0);
+	_texCoords[2] = glm::vec2(_scope.x / texWidth, _scope.y / texHeight);
+	_texCoords[3] = glm::vec2(0, _scope.y / texHeight);
 }
 
 Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	std::vector<glm::vec2> points(6);
 	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_width, 0);
-	points[2] = glm::vec2(_width, frontWidth);
+	points[1] = glm::vec2(_scope.x, 0);
+	points[2] = glm::vec2(_scope.x, frontWidth);
 	points[3] = glm::vec2(leftWidth, frontWidth);
-	points[4] = glm::vec2(leftWidth, _height);
-	points[5] = glm::vec2(0, _height);
+	points[4] = glm::vec2(leftWidth, _scope.y);
+	points[5] = glm::vec2(0, _scope.y);
 
 	return new Polygon(name, _pivot, _modelMat, points, _color, _texture);
 }
 
 void Rectangle::size(float xSize, float ySize, float zSize) {
 	_scope.x = xSize;
-	_width = xSize;
 	_scope.y = ySize;
-	_height = ySize;
-	_scope.z = 0.0f;	// XY平面の2Dなので、Z方向のサイズは0固定。
+	_scope.z = zSize;
 }
 
 void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
@@ -116,11 +114,11 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 			if (names[i] != "NIL") {
 				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
 				if (_textureEnabled) {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _height, _texture,
-						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * offset / _width, _texCoords[0].y,
-						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _width, _texCoords[2].y));
+					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _texture,
+						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * offset / _scope.x, _texCoords[0].y,
+						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _scope.x, _texCoords[2].y));
 				} else {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _height, _color));
+					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _color));
 				}
 			}
 			offset += sizes[i];
@@ -128,11 +126,11 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 			if (names[i] != "NIL") {
 				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
 				if (_textureEnabled) {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _width, sizes[i], _texture,
-						_texCoords[0].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * offset / _height,
-						_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _height));
+					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _texture,
+						_texCoords[0].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * offset / _scope.y,
+						_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _scope.y));
 				} else {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _width, sizes[i], _color));
+					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _color));
 				}
 			}
 			offset += sizes[i];
@@ -145,10 +143,10 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 Shape* Rectangle::taper(const std::string& name, float height, float top_ratio) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_width, 0);
-	points[2] = glm::vec2(_width, _height);
-	points[3] = glm::vec2(0, _height);
-	return new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_width * 0.5, _height * 0.5), height, top_ratio, _color, _texture);
+	points[1] = glm::vec2(_scope.x, 0);
+	points[2] = glm::vec2(_scope.x, _scope.y);
+	points[3] = glm::vec2(0, _scope.y);
+	return new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture);
 }
 
 void Rectangle::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
@@ -160,11 +158,11 @@ void Rectangle::generate(RenderManager* renderManager, bool showScopeCoordinateS
 
 	glm::vec4 p1(0, 0, 0, 1);
 	p1 = _pivot * _modelMat * p1;
-	glm::vec4 p2(_width, 0, 0, 1);
+	glm::vec4 p2(_scope.x, 0, 0, 1);
 	p2 = _pivot * _modelMat * p2;
-	glm::vec4 p3(_width, _height, 0, 1);
+	glm::vec4 p3(_scope.x, _scope.y, 0, 1);
 	p3 = _pivot * _modelMat * p3;
-	glm::vec4 p4(0, _height, 0, 1);
+	glm::vec4 p4(0, _scope.y, 0, 1);
 	p4 = _pivot * _modelMat * p4;
 
 	glm::vec4 normal(0, 0, 1, 0);

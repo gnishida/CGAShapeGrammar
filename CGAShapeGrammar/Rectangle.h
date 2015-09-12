@@ -7,10 +7,6 @@ namespace cga {
 
 class Rectangle : public Shape {
 public:
-	float _width;
-	float _height;
-
-public:
 	Rectangle() {}
 	Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color);
 	Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const std::string& texture, float u1, float v1, float u2, float v2);
