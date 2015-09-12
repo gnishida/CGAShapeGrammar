@@ -96,5 +96,73 @@
 	</rule>
 
 	<!-- Facade and Floors -->
+	<rule name="Facade">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="floating" value="groundfloorH"/>
+				<element type="floating" value="floorH" repeat="true"/>
+			</param>
+			<param name="name">
+				<element value="Floor"/>
+				<element value="Floor"/>
+			</param>
+		</operator>
+	</rule>
 	
+	<rule name="Floor">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="borderwallW"/>
+				<element type="floating" value="1"/>
+				<element type="absolute" value="borderwallW"/>
+			</param>
+			<param name="name">
+				<element value="Wall"/>
+				<element value="FloorSub"/>
+				<element value="Wall"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<rule name="FloorSub">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="floating" value="1"/>
+				<element type="absolute" value="ledgeH"/>
+			</param>
+			<param name="name">
+				<element value="TileRow"/>
+				<element value="Ledge"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<!-- Tiles -->
+	<rule name="TileRow">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="tileW*nSymmetries" repeat="true"/>
+			</param>
+			<param name="name">
+				<element value="DoubleTile"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="DoubleTile">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="milkGlassW"/>
+				<element type="floating" value="windowW"/>
+			</param>
+			<param name="name">
+				<element value="MilkGlass"/>
+				<element value="Tile"/>
+			</param>
+		</operator>
+	</rule>
 </rules>
