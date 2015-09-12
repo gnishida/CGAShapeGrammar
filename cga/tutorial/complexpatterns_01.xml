@@ -165,4 +165,268 @@
 			</param>
 		</operator>
 	</rule>
+	<rule name="Tile">
+		<operator name="setupProjection">
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
+		</operator>
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="frameW"/>
+				<element type="floating" value="1"/>
+				<element type="absolute" value="frameW"/>
+			</param>
+			<param name="name">
+				<element value="Frame Bracing"/>
+				<element value="FrameAndBlind"/>
+				<element value="Frame Bracing"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="FrameAndBlind">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="frameW"/>
+				<element type="floating" value="1"/>
+				<element type="absolute" value="frameW"/>
+				<element type="absolute" value="blindH"/>
+				<element type="absolute" value="frameW"/>
+			</param>
+			<param name="name">
+				<element value="Frame"/>
+				<element value="Window"/>
+				<element value="Frame"/>
+				<element value="Blind"/>
+				<element value="Frame"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<!-- Windows -->
+	<rule name="Window">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="1"/>
+				<element type="absolute" value="frameW"/>
+				<element type="floating" value="1"/>
+			</param>
+			<param name="name">
+				<element value="Subwindow"/>
+				<element value="Frame"/>
+				<element value="Glass"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="Subwindow">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="2"/>
+				<element type="floating" value="3"/>
+			</param>
+			<param name="name">
+				<element value="Glass"/>
+				<element value="RedWindow"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="RedWindow">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="frameW"/>
+				<element type="floating" value="1"/>
+			</param>
+			<param name="name">
+				<element value="RedFrame"/>
+				<element value="RedFrameAndGlass"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="RedFrameAndGlass">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="frameW"/>
+				<element type="floating" value="1"/>
+				<element type="absolute" value="frameW"/>
+			</param>
+			<param name="name">
+				<element value="RedFrame"/>
+				<element value="RedGlass"/>
+				<element value="RedFrame"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="RedGlass">
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="floating" value="1"/>
+				<element type="floating" value="frameW/2"/>
+				<element type="floating" value="1"/>
+			</param>
+			<param name="name">
+				<element value="Glass"/>
+				<element value="Frame"/>
+				<element value="Glass"/>
+			</param>
+		</operator>
+	</rule>
+	
+	<!-- Materials -->
+	<rule name="Wall">
+		<operator name="color">
+			<param name="s" value="darkblue"/>
+		</operator>
+	</rule>
+	<rule name="Blind">
+		<operator name="color">
+			<param name="s" value="grey"/>
+		</operator>
+	</rule>
+	<rule name="Frame">
+		<operator name="extrude">
+			<param name="height" value="frameW"/>
+		</operator>
+		<operator name="color">
+			<param name="s" value="white"/>
+		</operator>
+	</rule>
+	<rule name="RedFrame">
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-frameW"/>
+		</operator>
+		<operator name="extrude">
+			<param name="height" value="frameW*4"/>
+		</operator>
+		<operator name="color">
+			<param name="s" value="red"/>
+		</operator>
+	</rule>
+	<rule name="Glass">
+		<operator name="texture">
+			<param name="texture" value="window_tex"/>
+		</operator>
+		<operator name="color">
+			<param name="s" value="white"/>
+		</operator>
+	</rule>
+	<rule name="MilkGlass">
+		<operator name="size">
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="frameW*1.2"/>
+		</operator>
+		<operator name="color">
+			<param name="s" value="brightblue"/>
+		</operator>
+		<operator name="setupProjection">
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
+		</operator>
+		<operator name="texture">
+			<param name="texture" value="milkGlass_tex"/>
+		</operator>
+	</rule>
+	
+	<!-- Detail Elements -->
+	<rule name="Ledge">
+		<operator name="copy">
+			<param name="name" value="Wall"/>
+		</operato>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="-0.1"/>
+			<param name="z" value="0.2"/>
+		</operator>
+		<operator name="size">
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="absolute" value="scope.sy+0.1"/>
+			<param name="zSize" type="absolute" value="0.03"/>
+		</operator>
+	</rule>
+	<rule name="Railing">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="tileW/3" repeat="true"/>
+			</param>
+			<param name="name">
+				<element value="VBar"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="VBar">
+		<operator name="size">
+			<param name="xSize" type="absolute" value="barDiameter"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="barDiameter"/>
+		</operator>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-barDiameter"/>
+		</operator>
+		<operator name="color">
+			<param name="s" value="white"/>
+		</operator>
+	</rule>
+	<rule name="HBar">
+		<operator name="size">
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="absolute" value="barDiameter"/>
+			<param name="zSize" type="absolute" value="barDiameter"/>
+		</operator>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-barDiameter"/>
+		</operator>
+		<operator name="color">
+			<param name="s" value="white"/>
+		</operator>
+	</rule>
+	<rule name="Bracing">
+		<operator name="size">
+			<param name="xSize" type="absolute" value="barDiameter"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="0.15"/>
+		</operator>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="barDiameter/2"/>
+			<param name="y" value="0"/>
+			<param name="z" value="0"/>
+		</operator>
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="0.01"/>
+				<element type="floating" value="1"/>
+				<element type="absolute" value="0.01"/>
+			</param>
+			<param name="name">
+				<element value="Wall"/>
+				<element value="VBar"/>
+				<element value="Wall"/>
+			</param>
+		</operator>
+	</rule>
 </rules>
