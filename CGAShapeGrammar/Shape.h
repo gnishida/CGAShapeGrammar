@@ -26,7 +26,7 @@ public:
 	virtual Shape* offset(const std::string& name, float offsetDistance);
 	virtual Shape* roofHip(const std::string& name, float angle);
 	void rotate(const std::string& name, float xAngle, float yAngle, float zAngle);
-	virtual void setupProjection(float texWidth, float texHeight);
+	virtual void setupProjection(int axesSelector, float texWidth, float texHeight);
 	virtual Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
 	virtual void size(float xSize, float ySize, float zSize);
 	virtual void split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects);

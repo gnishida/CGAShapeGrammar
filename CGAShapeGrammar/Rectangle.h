@@ -19,7 +19,7 @@ public:
 	Shape* inscribeCircle(const std::string& name);
 	Shape* offset(const std::string& name, float offsetDistance);
 	Shape* roofHip(const std::string& name, float angle);
-	void setupProjection(float texWidth, float texHeight);
+	void setupProjection(int axesSelector, float texWidth, float texHeight);
 	Shape* shapeL(const std::string& name, float frontWidth, float leftWidth);
 	void size(float xSize, float ySize, float zSize);
 	void split(int splitAxis, const std::vector<float>& ratios, const std::vector<std::string>& names, std::vector<Shape*>& objects);

@@ -80,7 +80,7 @@ Shape* Rectangle::roofHip(const std::string& name, float angle) {
 	return new HipRoof(name, _pivot, _modelMat, points, angle, _color);
 }
 
-void Rectangle::setupProjection(float texWidth, float texHeight) {
+void Rectangle::setupProjection(int axesSelector, float texWidth, float texHeight) {
 	_texCoords.resize(4);
 	_texCoords[0] = glm::vec2(0, 0);
 	_texCoords[1] = glm::vec2(_width / texWidth, 0);

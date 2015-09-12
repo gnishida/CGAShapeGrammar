@@ -4,27 +4,30 @@
 
 namespace cga {
 
-SetupProjectionOperator::SetupProjectionOperator(int type, float texWidth, float texHeight) {
+SetupProjectionOperator::SetupProjectionOperator(int axesSelector, const SingleValue& texWidth, const SingleValue& texHeight) {
 	this->name = "setupProjection";
-	this->type = type;
+	this->axesSelector = axesSelector;
 	this->texWidth = texWidth;
 	this->texHeight = texHeight;
 }
 
-/*SetupProjectionRule::SetupProjectionRule(float u1, float v1, float u2, float v2, const std::string& output_name) {
-	this->u1 = u1;
-	this->v1 = v1;
-	this->u2 = u2;
-	this->v2 = v2;
-	this->output_name = output_name;
-}*/
-
 Shape* SetupProjectionOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	if (type == TYPE_RELATIVE) {
-		shape->setupProjection(shape->_scope.x, shape->_scope.y);
+	float actual_texWidth;
+	float actual_texHeight;
+
+	if (texWidth.type == Value::TYPE_RELATIVE) {
+		actual_texWidth = shape->_scope.x * ruleSet.evalFloat(texWidth.value, shape);
 	} else {
-		shape->setupProjection(texWidth, texHeight);
+		actual_texWidth = ruleSet.evalFloat(texWidth.value, shape);
 	}
+	if (texHeight.type == Value::TYPE_RELATIVE) {
+		actual_texHeight = shape->_scope.x * ruleSet.evalFloat(texHeight.value, shape);
+	} else {
+		actual_texHeight = ruleSet.evalFloat(texHeight.value, shape);
+	}
+
+
+	shape->setupProjection(axesSelector, actual_texWidth, actual_texHeight);
 
 	return shape;
 }

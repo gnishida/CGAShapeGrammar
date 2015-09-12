@@ -67,7 +67,7 @@ void Shape::rotate(const std::string& name, float xAngle, float yAngle, float zA
 	_modelMat = glm::rotate(_modelMat, zAngle * M_PI / 180.0f, glm::vec3(0, 0, 1));
 }
 
-void Shape::setupProjection(float texWidth, float texHeight) {
+void Shape::setupProjection(int axesSelector, float texWidth, float texHeight) {
 	throw "setupProjection() is not supported.";
 }
 

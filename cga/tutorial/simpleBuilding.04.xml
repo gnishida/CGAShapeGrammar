@@ -36,9 +36,9 @@
 	<!-- the front facade is subdivided into one front groundfloor and upper floors -->
 	<rule name="FrontFacade">
 		<operator name="setupProjection">
-			<param name="coordinateType" value="absolute"/>
-			<param name="texWidth" value="2.5"/>
-			<param name="texHeight" value="1"/>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="1.5"/>
+			<param name="texHeight" type="absolute" value="1"/>
 		</operator>
 		<operator name="texture">
 			<param name="texture" value="wall_tex"/>
@@ -59,9 +59,9 @@
 	<!-- a side facade is subdivided into one bottom floor and upper floors. -->
 	<rule name="SideFacade">
 		<operator name="setupProjection">
-			<param name="coordinateType" value="absolute"/>
-			<param name="texWidth" value="2.5"/>
-			<param name="texHeight" value="1"/>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="1.5"/>
+			<param name="texHeight" type="absolute" value="1"/>
 		</operator>
 		<operator name="texture">
 			<param name="texture" value="wall_tex"/>
@@ -82,9 +82,9 @@
 	<!-- a roof texture is applied to the roof face -->
 	<rule name="Roof">
 		<operator name="setupProjection">
-			<param name="coordinateType" value="relative"/>
-			<param name="texWidth" value="0"/>
-			<param name="texHeight" value="0"/>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</operator>
 		<operator name="texture">
 			<param name="texture" value="roof_tex"/>
@@ -209,9 +209,9 @@
 			<param name="z" value="-0.03"/>
 		</operator>
 		<operator name="setupProjection">
-			<param name="coordinateType" value="relative"/>
-			<param name="texWidth" value="0"/>
-			<param name="texHeight" value="0"/>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</operator>
 		<operator name="texture">
 			<param name="texture" value="window_tex"/>
@@ -230,9 +230,9 @@
 			<param name="z" value="-0.03"/>
 		</operator>
 		<operator name="setupProjection">
-			<param name="coordinateType" value="relative"/>
-			<param name="texWidth" value="0"/>
-			<param name="texHeight" value="0"/>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</operator>
 		<operator name="texture">
 			<param name="texture" value="frontdoor_tex"/>

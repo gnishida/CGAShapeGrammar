@@ -5,16 +5,13 @@
 namespace cga {
 
 class SetupProjectionOperator : public Operator {
-public:
-	static enum { TYPE_ABSOLUTE = 0, TYPE_RELATIVE };
-
 private:
-	int type;
-	float texWidth;
-	float texHeight;
+	int axesSelector;
+	SingleValue texWidth;
+	SingleValue texHeight;
 
 public:
-	SetupProjectionOperator(int type, float texWidth, float texHeight);
+	SetupProjectionOperator(int axesSelector, const SingleValue& texWidth, const SingleValue& texHeight);
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 

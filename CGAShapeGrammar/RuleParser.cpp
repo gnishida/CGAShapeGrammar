@@ -281,32 +281,49 @@ Operator* parseRotateOperator(const QDomNode& node) {
 }
 
 Operator* parseSetupProjectionOperator(const QDomNode& node) {
-	int coordinateType;
-	float texWidth;
-	float texHeight;
+	int axesSelector;
+	SingleValue texWidth;
+	SingleValue texHeight;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
 
-			if (name == "coordinateType") {
-				if (child.toElement().attribute("value") == "absolute") {
-					coordinateType = SetupProjectionOperator::TYPE_ABSOLUTE;
+			if (name == "axesSelector") {
+				if (child.toElement().attribute("value") == "scope.xy") {
+					axesSelector = AXES_SCOPE_XY;
+				} else if (child.toElement().attribute("value") == "scope.xz") {
+					axesSelector = AXES_SCOPE_XZ;
 				} else {
-					coordinateType = SetupProjectionOperator::TYPE_RELATIVE;
 				}
 			} else if (name == "texWidth") {
-				texWidth = child.toElement().attribute("value").toFloat();
+				std::string type =  child.toElement().attribute("type").toUtf8().constData();
+				std::string value =  child.toElement().attribute("value").toUtf8().constData();
+				if (type == "absolute") {
+					texWidth = SingleValue(Value::TYPE_ABSOLUTE, value);
+				} else if (type == "relative") {
+					texWidth = SingleValue(Value::TYPE_RELATIVE, value);
+				} else {
+					throw "type of texWidth for texture has to be either absolute or relative.";
+				}
 			} else if (name == "texHeight") {
-				texHeight = child.toElement().attribute("value").toFloat();
+				std::string type =  child.toElement().attribute("type").toUtf8().constData();
+				std::string value =  child.toElement().attribute("value").toUtf8().constData();
+				if (type == "absolute") {
+					texHeight = SingleValue(Value::TYPE_ABSOLUTE, value);
+				} else if (type == "relative") {
+					texHeight = SingleValue(Value::TYPE_RELATIVE, value);
+				} else {
+					throw "type of texHeight for texture has to be either absolute or relative.";
+				}
 			}
 		}
 
 		child = child.nextSibling();
 	}
 
-	return new SetupProjectionOperator(coordinateType, texWidth, texHeight);
+	return new SetupProjectionOperator(axesSelector, texWidth, texHeight);
 }
 
 Operator* parseShapeLOperator(const QDomNode& node) {
