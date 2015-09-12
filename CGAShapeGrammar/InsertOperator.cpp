@@ -10,7 +10,7 @@ InsertOperator::InsertOperator(const std::string& geometryPath) {
 }
 
 Shape* InsertOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	return shape->insert(shape->_name, geometryPath);
+	return shape->insert(shape->_name, ruleSet.evalString(geometryPath, shape));
 }
 
 }

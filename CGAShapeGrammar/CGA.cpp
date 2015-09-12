@@ -39,10 +39,10 @@ BoundingBox::BoundingBox(const std::vector<glm::vec3>& points) {
 	for (int i = 0; i < points.size(); ++i) {
 		minPt.x = min(minPt.x, points[i].x);
 		minPt.y = min(minPt.y, points[i].y);
-		minPt.z = min(minPt.y, points[i].z);
+		minPt.z = min(minPt.z, points[i].z);
 		maxPt.x = max(maxPt.x, points[i].x);
 		maxPt.y = max(maxPt.y, points[i].y);
-		maxPt.z = max(maxPt.y, points[i].z);
+		maxPt.z = max(maxPt.z, points[i].z);
 	}
 }
 

@@ -37,13 +37,17 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 		scaleX = _scope.x / bbox.sx();
 		scaleY = _scope.y / bbox.sy();
 		scaleZ = (scaleX + scaleY) * 0.5f;
+	} else {
+		scaleX = _scope.x / bbox.sx();
+		scaleY = _scope.y / bbox.sy();
+		scaleZ = _scope.z / bbox.sz();
 	}
 
 	// scale the points
 	for (int i = 0; i < points.size(); ++i) {
-		points[i].x = points[i].x * scaleX;
-		points[i].y = points[i].y * scaleY;
-		points[i].z = points[i].z * scaleZ;
+		points[i].x = (points[i].x - bbox.minPt.x) * scaleX;
+		points[i].y = (points[i].y - bbox.minPt.y) * scaleY;
+		points[i].z = (points[i].z - bbox.minPt.z) * scaleZ;
 	}
 
 	return new GeneralObject(name, _pivot, _modelMat, points, normals, _color);

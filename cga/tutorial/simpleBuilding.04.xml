@@ -202,12 +202,17 @@
 		secondly, one of nine window textures is randomly selected
 		finally, the window geometry asset is inserted -->
 	<rule name="Window">
+		<operator name="size">
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="0.4"/>
+		</operator>
 		<operator name="translate">
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
-			<param name="z" value="-0.03"/>
+			<param name="z" value="-0.25"/>
 		</operator>
 		<operator name="insert">
 			<param name="geometryPath" value="window_asset"/>
