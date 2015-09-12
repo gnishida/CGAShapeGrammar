@@ -71,8 +71,21 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 		points[i].y = (points[i].y - bbox.minPt.y) * scaleY;
 		points[i].z = (points[i].z - bbox.minPt.z) * scaleZ;
 	}
-	
-	return new GeneralObject(name, _pivot, _modelMat, points, normals, _color, texCoords, _texture);
+
+	// if texCoords are not defined in obj file, generate them automatically.
+	if (_texCoords.size() > 0 && texCoords.size() == 0) {
+		texCoords.resize(points.size());
+		for (int i = 0; i < points.size(); ++i) {
+			texCoords[i].x = points[i].x / _scope.x * (_texCoords[1].x - _texCoords[0].x) + _texCoords[0].x;
+			texCoords[i].y = points[i].y / _scope.y * (_texCoords[2].y - _texCoords[0].y) + _texCoords[0].y;
+		}
+	}
+
+	if (texCoords.size() > 0) {
+		return new GeneralObject(name, _pivot, _modelMat, points, normals, _color, texCoords, _texture);
+	} else {
+		return new GeneralObject(name, _pivot, _modelMat, points, normals, _color);
+	}
 }
 
 void Shape::nil() {

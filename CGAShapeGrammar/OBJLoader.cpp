@@ -211,7 +211,9 @@ void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::
 
 	points.resize(v_elements.size());
 	normals.resize(v_elements.size());
-	texCoords.resize(v_elements.size());
+	if (t_elements.size() > 0) {
+		texCoords.resize(v_elements.size());
+	}
 	for (int i = 0; i < v_elements.size(); i+=3) {
 		unsigned int ia = v_elements[i];
 		unsigned int ib = v_elements[i+1];
@@ -221,9 +223,6 @@ void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::
 			points[i][j] = raw_vertices[ia*3 + j];
 			points[i+1][j] = raw_vertices[ib*3 + j];
 			points[i+2][j] = raw_vertices[ic*3 + j];
-			/*vertices[i].position[j] = raw_vertices[ia*3 + j];
-			vertices[i+1].position[j] = raw_vertices[ib*3 + j];
-			vertices[i+2].position[j] = raw_vertices[ic*3 + j];*/
 		}
 
 		if (n_elements.size() > 0) {
@@ -231,10 +230,6 @@ void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::
 				normals[i][j] = raw_normals[n_elements[i]*3 + j];
 				normals[i+1][j] = raw_normals[n_elements[i+1]*3 + j];
 				normals[i+2][j] = raw_normals[n_elements[i+2]*3 + j];
-				/*
-				vertices[i].normal[j] = raw_normals[n_elements[i]*3 + j];
-				vertices[i+1].normal[j] = raw_normals[n_elements[i+1]*3 + j];
-				vertices[i+2].normal[j] = raw_normals[n_elements[i+2]*3 + j];*/
 			}
 		} else {
 			glm::vec3 normal = glm::cross(
@@ -246,10 +241,6 @@ void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::
 				normals[i][j] = j == 0 ? normal.x : (j == 1 ? normal.y : normal.z);
 				normals[i+1][j] = j == 0 ? normal.x : (j == 1 ? normal.y : normal.z);
 				normals[i+2][j] = j == 0 ? normal.x : (j == 1 ? normal.y : normal.z);
-				/*
-				vertices[i].normal[j] = j == 0 ? normal.x : (j == 1 ? normal.y : normal.z);
-				vertices[i+1].normal[j] = j == 0 ? normal.x : (j == 1 ? normal.y : normal.z);
-				vertices[i+2].normal[j] = j == 0 ? normal.x : (j == 1 ? normal.y : normal.z);*/
 			}
 		}
 
@@ -262,16 +253,6 @@ void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::
 				vertices[i].texCoord[j] = raw_texCoords[t_elements[i]*2 + j];
 				vertices[i+1].texCoord[j] = raw_texCoords[t_elements[i+1]*2 + j];
 				vertices[i+2].texCoord[j] = raw_texCoords[t_elements[i+2]*2 + j];*/
-			}
-		} else {
-			for (int j = 0; j < 3; ++j) {
-				texCoords[i][j] = 0.0f;
-				texCoords[i+1][j] = j == 0 ? 1.0f : 0.0f;
-				texCoords[i+2][j] = j == 0 ? 0.0f : 1.0f;
-				/*
-				vertices[i].texCoord[j] = 0.0f;
-				vertices[i+1].texCoord[j] = j == 0 ? 1.0f : 0.0f;
-				vertices[i+2].texCoord[j] = j == 0 ? 0.0f : 1.0f;*/
 			}
 		}
 	}

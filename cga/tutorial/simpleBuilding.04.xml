@@ -10,6 +10,7 @@
 	
 	<!-- Assets -->
 	<attr name="window_asset" value="../assets/primitives/window.obj"/>
+	<attr name="cube_notex" value="../assets/primitives/cube_notex.obj"/>
 	<attr name="frontdoor_tex" value="../assets/textures/shopdoor.tif"/>
 	<attr name="wall_tex" value="../assets/textures/brickwall.jpg"/>
 	<attr name="roof_tex" value="../assets/textures/roof.tif"/>
@@ -226,12 +227,17 @@
 		and geometry insert
 		TODO: fix door uv bug (problem with uv handling on split?) -->
 	<rule name="Door">
+		<operator name="size">
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="0.1"/>
+		</operator>
 		<operator name="translate">
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
-			<param name="z" value="-0.03"/>
+			<param name="z" value="-0.4"/>
 		</operator>
 		<operator name="setupProjection">
 			<param name="axesSelector" value="scope.xy"/>
@@ -254,6 +260,21 @@
 	<rule name="SolidWall">
 		<operator name="color">
 			<param name="s" value="wallColor"/>
+		</operator>
+		<operator name="size">
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="0.4"/>
+		</operator>
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-0.4"/>
+		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="cube_notex"/>
 		</operator>
 	</rule>
 </rules>
