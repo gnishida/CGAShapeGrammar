@@ -13,7 +13,7 @@
 	<attr name="frontdoor_tex" value="../assets/textures/shopdoor.tif"/>
 	<attr name="wall_tex" value="../assets/textures/brickwall.jpg"/>
 	<attr name="roof_tex" value="../assets/textures/roof.tif"/>
-	<attr name="window_tex" value="../assets/textures/window.1.tif"/>
+	<attr name="window_tex" value="../assets/textures/window.1b.tif"/>
 	
 	<!-- Initial Shape starting rule -->
 	<rule name="Lot">
