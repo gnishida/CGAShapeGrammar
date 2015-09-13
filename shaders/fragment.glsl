@@ -50,7 +50,7 @@ void main()
 	}
 
 	if (textureEnabled == 1) { // for texture mode
-		outputF = texture(tex0, fTexCoord.rg);
+		outputF = outputF * texture(tex0, fTexCoord.rg);
 	}
 
 	// lighting

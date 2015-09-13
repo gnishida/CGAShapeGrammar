@@ -13,7 +13,8 @@
 	<attr name="CornerWallWidth" value="1"/>
 	
 	<attr name="WallTexture" value="../assets/textures/bricks.jpg"/>
-	<attr name="ColorizeWall" value="#FCEFE2"/>
+	<!--<attr name="ColorizeWall" value="#FCEFE2"/>-->
+	<attr name="ColorizeWall" value="#CCBFB2"/>
 	<attr name="onStreet" value="true"/>
 	<attr name="winSideW" value="0.7"/>
 	<attr name="dividerW" value="0.25"/>
@@ -69,10 +70,11 @@
 		</split>
 	</rule>
 	<rule name="Mid">
+		<copy name="Ledge"/>
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="floating" value="FloorHeight" name="FloorAndLedge" repeat="true"/>
+				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 			</param>
 		</split>
 	</rule>
@@ -81,7 +83,7 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="floating" value="FloorHeight" name="FloorAndLedge" repeat="true"/>
+				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 			</param>
 		</split>
 	</rule>
@@ -91,10 +93,6 @@
 	</rule>
 	
 	<!-- Floor -->
-	<rule name="FloorAndLedge">
-		<copy name="Ledge"/>
-		<copy name="Floor"/>
-	</rule>
 	<rule name="Floor">
 		<split>
 			<param name="splitAxis" value="x"/>
@@ -140,7 +138,8 @@
 		</split>
 	</rule>
 	<rule name="Window">
-		<copy name="WindowOpening"/>
+		<copy name="Still"/>
+		<!--<copy name="WindowOpening"/>-->
 		<translate>
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
@@ -159,6 +158,9 @@
 		<insert>
 			<param name="geometryPath" value="../assets/primitives/win.single.05.sashwindow.obj"/>
 		</insert>
+		<texture>
+			<param name="texture" value="../assets/textures/windowTiles_200x256.jpg"/>
+		</texture>
 	</rule>
 	<rule name="WindowOpening">
 		<translate>
@@ -166,16 +168,32 @@
 			<param name="coordSystem" value="object"/>
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
-			<param name="z" value="-0.03"/>
+			<param name="z" value="-0.3"/>
 		</translate>
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
-			<param name="texWidth" type="absolute" value="scope.sx"/>
-			<param name="texHeight" type="absolute" value="scope.sy"/>
-		</setupProjection>
+		<comp>
+			<param name="side" value="WallOpening"/>
+		</comp>
+	</rule>
+	<rule name="Still">
+		<size>
+			<param name="xSize" type="absolute" value="scope.sx+dividerW"/>
+			<param name="ySize" type="absolute" value="SillSize"/>
+			<param name="zSize" type="absolute" value="0.1"/>
+		</size>
+		<translate>
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="-dividerW/2"/>
+			<param name="y" value="-SillSize"/>
+			<param name="z" value="0"/>
+		</translate>
+		<insert>
+			<param name="geometryPath" value="../assets/primitives/cube.obj"/>
+		</insert>
 		<texture>
 			<param name="texture" value="../assets/textures/still.jpg"/>
 		</texture>
+
 	</rule>
 
 	<!-- Wall -->
@@ -232,10 +250,9 @@
 	<rule name="Roof">
 		<setupProjection>
 			<param name="axesSelector" value="scope.xy"/>
-			<param name="texWidth" type="absolute" value="scope.sx"/>
-			<param name="texHeight" type="absolute" value="scope.sy"/>
+			<param name="texWidth" type="absolute" value="20"/>
+			<param name="texHeight" type="absolute" value="15"/>
 		</setupProjection>
-
 		<texture>
 			<param name="texture" value="../assets/textures/roof.jpg"/>
 		</texture>
