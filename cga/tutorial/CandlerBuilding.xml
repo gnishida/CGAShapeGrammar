@@ -33,19 +33,13 @@
 		</comp>
 	</rule>
 	<rule name="FrontFacade">
-		<copy>
-			<param name="name" value="Facade"/>
-		</copy>
+		<copy name="Facade"/>
 	</rule>
 	<rule name="RearFacade">
-		<copy>
-			<param name="name" value="Facade"/>
-		</copy>
+		<copy name="Facade"/>
 	</rule>
 	<rule name="SideFacade">
-		<copy>
-			<param name="name" value="Facade"/>
-		</copy>
+		<copy name="Facade"/>
 	</rule>
 
 	<!-- Facade -->
@@ -58,16 +52,10 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="floating" value="2.3"/>
-				<element type="floating" value="12"/>
-				<element type="floating" value="3"/>
-				<element type="absolute" value="2.5"/>
-			</param>
-			<param name="name">
-				<element value="Base"/>
-				<element value="Mid"/>
-				<element value="Upper"/>
-				<element value="Top"/>
+				<element type="floating" value="2.3" name="Base"/>
+				<element type="floating" value="12" name="Mid"/>
+				<element type="floating" value="3" name="Upper"/>
+				<element type="absolute" value="2.5" name="Top"/>
 			</param>
 		</split>
 	</rule>

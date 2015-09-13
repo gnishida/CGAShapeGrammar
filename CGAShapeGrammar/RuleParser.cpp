@@ -163,16 +163,11 @@ Operator* parseCompOperator(const QDomNode& node) {
 }
 
 Operator* parseCopyOperator(const QDomNode& node) {
-	std::string copy_name;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			copy_name = child.toElement().attribute("value").toUtf8().constData();
-		}
-
-		child = child.nextSibling();
+	if (!node.toElement().hasAttribute("name")) {
+		throw "copy node has to have name attribute.";
 	}
+
+	std::string copy_name = node.toElement().attribute("name").toUtf8().constData();
 
 	return new CopyOperator(copy_name);
 }
@@ -436,15 +431,8 @@ Operator* parseSplitOperator(const QDomNode& node) {
 								sizes.push_back(new SingleValue(Value::TYPE_FLOATING, value));
 							}
 						}
-					}
 
-					element = element.nextSibling();
-				}
-			} else if (name == "name") {
-				QDomNode element = child.firstChild();
-				while (!element.isNull()) {
-					if (element.toElement().tagName() == "element") {
-						names.push_back(element.toElement().attribute("value").toUtf8().constData());
+						names.push_back(element.toElement().attribute("name").toUtf8().constData());
 					}
 
 					element = element.nextSibling();

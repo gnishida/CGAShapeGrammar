@@ -21,9 +21,7 @@
 		<extrude>
 			<param name="height" value="bldg_height"/>
 		</extrude>
-		<copy>
-			<param name="name" value="Building"/>
-		</copy>
+		<copy name="Building"/>
 	</rule>
 	
 	<!-- split the building geometry into its facade components -->
@@ -48,12 +46,8 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="groundf_height"/>
-				<element type="floating" value="floor_height" repeat="true"/>
-			</param>
-			<param name="name">
-				<element value="Groundfloor"/>
-				<element value="Floor"/>
+				<element type="absolute" value="groundf_height" name="Groundfloor"/>
+				<element type="floating" value="floor_height" name="Floor" repeat="true"/>
 			</param>
 		</split>
 	</rule>
@@ -71,12 +65,8 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="groundf_height"/>
-				<element type="floating" value="floor_height" repeat="true"/>
-			</param>
-			<param name="name">
-				<element value="Floor"/>
-				<element value="Floor"/>
+				<element type="absolute" value="groundf_height" name="Floor"/>
+				<element type="floating" value="floor_height" name="Floor" repeat="true"/>
 			</param>
 		</split>
 	</rule>
@@ -99,14 +89,9 @@
 		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="floating" value="tile_width" repeat="true"/>
-				<element type="absolute" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall"/>
-				<element value="Tile"/>
-				<element value="Wall"/>
+				<element type="absolute" value="1.0" name="Wall"/>
+				<element type="floating" value="tile_width" name="Tile" repeat="true"/>
+				<element type="absolute" value="1.0" name="Wall"/>
 			</param>
 		</split>
 	</rule>
@@ -119,16 +104,10 @@
 		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="floating" value="tile_width" repeat="true"/>
-				<element type="floating" value="tile_width" />
-				<element type="absolute" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall"/>
-				<element value="Tile"/>
-				<element value="EntranceTile"/>
-				<element value="Wall"/>
+				<element type="absolute" value="1.0" name="Wall"/>
+				<element type="floating" value="tile_width" name="Tile" repeat="true"/>
+				<element type="floating" value="tile_width" name="EntranceTile"/>
+				<element type="absolute" value="1.0" name="Wall"/>
 			</param>
 		</split>
 	</rule>
@@ -139,14 +118,9 @@
 		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
-				<element type="floating" value="1.0"/>
-				<element type="absolute" value="2.0"/>
-				<element type="floating" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall"/>
-				<element value="WallWindowWall"/>
-				<element value="Wall"/>
+				<element type="floating" value="1.0" name="Wall"/>
+				<element type="absolute" value="2.0" name="WallWindowWall"/>
+				<element type="floating" value="1.0" name="Wall"/>
 			</param>
 		</split>
 	</rule>
@@ -155,14 +129,9 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="absolute" value="1.5"/>
-				<element type="floating" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall"/>
-				<element value="Window"/>
-				<element value="Wall"/>
+				<element type="absolute" value="1.0" name="Wall"/>
+				<element type="absolute" value="1.5" name="Window"/>
+				<element type="floating" value="1.0" name="Wall"/>
 			</param>
 		</split>
 	</rule>
@@ -173,14 +142,9 @@
 		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
-				<element type="floating" value="1.0"/>
-				<element type="absolute" value="2"/>
-				<element type="floating" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="SolidWall"/>
-				<element value="DoorAndSolidWall"/>
-				<element value="SolidWall"/>
+				<element type="floating" value="1.0" name="SolidWall"/>
+				<element type="absolute" value="2" name="DoorAndSolidWall"/>
+				<element type="floating" value="1.0" name="SolidWall"/>
 			</param>
 		</split>
 	</rule>
@@ -189,12 +153,8 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="2.5"/>
-				<element type="floating" value="2.0"/>
-			</param>
-			<param name="name">
-				<element value="Door"/>
-				<element value="SolidWall"/>
+				<element type="absolute" value="2.5" name="Door"/>
+				<element type="floating" value="2.0" name="SolidWall"/>
 			</param>
 		</split>
 	</rule>

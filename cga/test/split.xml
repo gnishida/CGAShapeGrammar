@@ -12,28 +12,18 @@
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="floating" value="1.5" repeat="true"/>
-			</param>
-			<param name="name">
-				<element value="Parcel."/>
-				<element value="Parcel."/>
+				<element type="absolute" value="1.0" name="Parcel."/>
+				<element type="floating" value="1.5" name="Parcel." repeat="true"/>
 			</param>
 		</operator>
 		-->
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="2.0"/>
-				<element type="floating" value="2.5" repeat="true"/>
-				<element type="floating" value="2.5" />
-				<element type="absolute" value="2.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall"/>
-				<element value="Tile"/>
-				<element value="EntranceTile"/>
-				<element value="Wall"/>
+				<element type="absolute" value="2.0" name="Wall"/>
+				<element type="floating" value="2.5" name="Tile" repeat="true"/>
+				<element type="floating" value="2.5" name="EntranceTile" />
+				<element type="absolute" value="2.0" name="Wall" />
 			</param>
 		</split>
 	</rule>

@@ -4,9 +4,7 @@
 		<extrude>
 			<param name="height" value="6"/>
 		</extrude>
-		<copy>
-			<param name="name" value="House"/>
-		</copy>
+		<copy name="House"/>
 	</rule>
 	<rule name="House">
 		<comp>
@@ -25,12 +23,8 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="relative" value="0.5"/>
-				<element type="relative" value="0.5"/>
-			</param>
-			<param name="name">
-				<element value="Entrance."/>
-				<element value="Floor"/>
+				<element type="relative" value="0.5" name="Entrance."/>
+				<element type="relative" value="0.5" name="Floor"/>
 			</param>
 		</split>
 	</rule>
@@ -38,12 +32,8 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="relative" value="0.5"/>
-				<element type="relative" value="0.5"/>
-			</param>
-			<param name="name">
-				<element value="Floor"/>
-				<element value="Floor"/>
+				<element type="relative" value="0.5" name="Floor"/>
+				<element type="relative" value="0.5" name="Floor"/>
 			</param>
 		</split>
 	</rule>
@@ -51,14 +41,9 @@
 		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="floating" value="3.0" repeat="true"/>
-				<element type="absolute" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall."/>
-				<element value="Tile"/>
-				<element value="Wall."/>
+				<element type="absolute" value="1.0" name="Wall."/>
+				<element type="floating" value="3.0" name="Tile" repeat="true"/>
+				<element type="absolute" value="1.0" name="Wall."/>
 			</param>
 		</split>
 	</rule>
@@ -66,14 +51,9 @@
 		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
-				<element type="floating" value="1.0"/>
-				<element type="absolute" value="2.0"/>
-				<element type="floating" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall."/>
-				<element value="WallWindowWall"/>
-				<element value="Wall."/>
+				<element type="floating" value="1.0" name="Wall."/>
+				<element type="absolute" value="2.0" name="WallWindowWall"/>
+				<element type="floating" value="1.0" name="Wall."/>
 			</param>
 		</split>
 	</rule>
@@ -81,14 +61,9 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="1.0"/>
-				<element type="absolute" value="1.5"/>
-				<element type="floating" value="1.0"/>
-			</param>
-			<param name="name">
-				<element value="Wall."/>
-				<element value="Window"/>
-				<element value="Wall."/>
+				<element type="absolute" value="1.0" name="Wall."/>
+				<element type="absolute" value="1.5" name="Window"/>
+				<element type="floating" value="1.0" name="Wall."/>
 			</param>
 		</split>
 	</rule>

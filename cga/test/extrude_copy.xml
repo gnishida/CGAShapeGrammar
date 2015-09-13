@@ -4,9 +4,7 @@
 		<extrude>
 			<param name="height" value="1"/>
 		</extrude>
-		<copy>
-			<param name="name" value="B."/>
-		</copy>
+		<copy name="B."/>
 		<translate>
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
@@ -14,21 +12,15 @@
 			<param name="y" value="0"/>
 			<param name="z" value="0"/>
 		</translate>
-		<copy>
-			<param name="name" value="C"/>
-		</copy>
+		<copy name="C"/>
 	</rule>
 	<rule name="C">
-		<copy>
-			<param name="name" value="D."/>
-		</copy>
+		<copy name="D."/>
 		<size>
 			<param name="xSize" value="2"/>
 			<param name="ySize" value="1.75"/>
 			<param name="zSize" value="0.5"/>
 		</size>
-		<copy>
-			<param name="name" value="E."/>
-		</copy>
+		<copy name="E."/>
 	</rule>
 </rules>

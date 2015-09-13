@@ -7,12 +7,8 @@
 		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="absolute" value="2.0"/>
-				<element type="floating" value="1.5" repeat="true"/>
-			</param>
-			<param name="name">
-				<element value="Floor."/>
-				<element value="Floor."/>
+				<element type="absolute" value="2.0" name="Floor."/>
+				<element type="floating" value="1.5" name="Floor." repeat="true"/>
 			</param>
 		</split>
 	</rule>
