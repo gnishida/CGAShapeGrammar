@@ -138,10 +138,10 @@ void OBJLoader::load(const char* filename, std::vector<Vertex>& vertices) {
 /**
  * Load vertices data from a OBJ file.
  */
-void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& texCoords) {
+bool OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& texCoords) {
 	QFile file(filename);
 	if (!file.open(QIODevice::ReadOnly)) {
-		return;
+		return false;
 	}
 
 	QTextStream in(&file);
@@ -249,11 +249,9 @@ void OBJLoader::load(const char* filename, std::vector<glm::vec3>& points, std::
 				texCoords[i][j] = raw_texCoords[t_elements[i]*2 + j];
 				texCoords[i+1][j] = raw_texCoords[t_elements[i+1]*2 + j];
 				texCoords[i+2][j] = raw_texCoords[t_elements[i+2]*2 + j];
-				/*
-				vertices[i].texCoord[j] = raw_texCoords[t_elements[i]*2 + j];
-				vertices[i+1].texCoord[j] = raw_texCoords[t_elements[i+1]*2 + j];
-				vertices[i+2].texCoord[j] = raw_texCoords[t_elements[i+2]*2 + j];*/
 			}
 		}
 	}
+
+	return true;
 }

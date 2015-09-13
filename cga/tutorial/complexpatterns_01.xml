@@ -79,14 +79,14 @@
 	<rule name="Balcony">
 		<operator name="size">
 			<param name="xSize" type="absolute" value="scope.sx-2*borderwallW"/>
-			<param name="ySize" type="absolute" value="0.7"/>
-			<param name="zSize" type="absolute" value="scope.sz-borderwallW"/>
+			<param name="ySize" type="absolute" value="scope.sy-borderwallW"/>
+			<param name="zSize" type="absolute" value="0.7"/>
 		</operator>
 		<operator name="translate">
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
 			<param name="x" value="borderwallW"/>
-			<param name="y" value="0"/>
+			<param name="y" value="borderwallW"/>
 			<param name="z" value="0"/>
 		</operator>
 		<operator name="comp">
@@ -371,17 +371,12 @@
 		</operator>
 		<operator name="copy">
 			<param name="name" value="Wall"/>
-		</operato>
+		</operator>
 	</rule>
 	<rule name="Railing">
-		<operator name="color">
-			<param name="s" value="grey"/>
-		</operator>
-		<!--
 		<operator name="copy">
 			<param name="name" value="HBar"/>
 		</operator>
-		-->
 		<operator name="split">
 			<param name="splitAxis" value="x"/>
 			<param name="size">
@@ -392,7 +387,6 @@
 			</param>
 		</operator>
 	</rule>
-	<!--
 	<rule name="HBar">
 		<operator name="translate">
 			<param name="mode" value="rel"/>
@@ -420,8 +414,6 @@
 			<param name="s" value="white"/>
 		</operator>
 	</rule>
-	-->
-	<!--
 	<rule name="VBar">
 		<operator name="size">
 			<param name="xSize" type="absolute" value="barDiameter"/>
@@ -435,10 +427,14 @@
 			<param name="y" value="0"/>
 			<param name="z" value="-barDiameter"/>
 		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="cyl_v"/>
+		</operator>
 		<operator name="color">
 			<param name="s" value="white"/>
 		</operator>
 	</rule>
+	-->
 	<rule name="Bracing">
 		<operator name="size">
 			<param name="xSize" type="absolute" value="barDiameter"/>
