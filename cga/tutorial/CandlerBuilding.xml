@@ -59,4 +59,187 @@
 			</param>
 		</split>
 	</rule>
+	<rule name="Base">
+		<split>
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="GroundfloorHeight" name="Floor"/>
+				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="Mid">
+		<split>
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="floating" value="FloorHeight" name="FloorAndLedge" repeat="true"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="Upper">
+		<copy name="Ledge"/>
+		<split>
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="floating" value="FloorHeight" name="FloorAndLedge" repeat="true"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="Top">
+		<copy name="Wall"/>
+		<copy name="Cornice"/>
+	</rule>
+	
+	<!-- Floor -->
+	<rule name="FloorAndLedge">
+		<copy name="Ledge"/>
+		<copy name="Floor"/>
+	</rule>
+	<rule name="Floor">
+		<split>
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="CornerWallWidth" name="Wall"/>
+				<element type="floating" value="TileWidth" name="Tile" repeat="true"/>
+				<element type="absolute" value="CornerWallWidth" name="Wall"/>
+			</param>
+		</split>
+	</rule>
+
+	<!-- Tile -->
+	<rule name="Tile">
+		<split>
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="absolute" value="winSideW" name="Wall"/>
+				<element type="floating" value="1" name="SubTile"/>
+				<element type="absolute" value="winSideW" name="Wall"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="SubTile">
+		<split>
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="absolute" value="sillH" name="Wall"/>
+				<element type="absolute" value="WindowHeight" name="Windows"/>
+				<element type="floating" value="1" name="Wall"/>
+			</param>
+		</split>
+	</rule>
+
+	<!-- Window -->
+	<rule name="Windows">
+		<split>
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="scope.sx/2" name="Window"/>
+				<element type="absolute" value="dividerW" name="Wall"/>
+				<element type="floating" value="scope.sx/2" name="Window"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="Window">
+		<copy name="WindowOpening"/>
+		<translate>
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-0.3"/>
+		</translate>
+		<copy name="WindowAsset"/>
+	</rule>
+	<rule name="WindowAsset">
+		<size>
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="0.15"/>
+		</size>
+		<insert>
+			<param name="geometryPath" value="../assets/primitives/win.single.05.sashwindow.obj"/>
+		</insert>
+	</rule>
+	<rule name="WindowOpening">
+		<translate>
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="-0.03"/>
+		</translate>
+		<setupProjection>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
+		</setupProjection>
+		<texture>
+			<param name="texture" value="../assets/textures/still.jpg"/>
+		</texture>
+	</rule>
+
+	<!-- Wall -->
+	<rule name="Wall">
+		<color>
+			<param name="s" value="ColorizeWall"/>
+		</color>
+		<texture>
+			<param name="texture" value="WallTexture"/>
+		</texture>
+	</rule>
+	<rule name="WallOpening">
+		<copy name="Wall"/>
+	</rule>
+
+	<!-- Ledges -->
+	<rule name="Ledge">
+		<size>
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="absolute" value="0.6"/>
+			<param name="zSize" type="absolute" value="0.6"/>
+		</size>
+		<translate>
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="sillH-0.6+0.02"/>
+			<param name="z" value="0"/>
+		</translate>
+		<insert>
+			<param name="geometryPath" value="../assets/primitives/ledgeSmall.obj"/>
+		</insert>
+		<texture>
+			<param name="texture" value="../assets/textures/ledge.jpg"/>
+		</texture>
+	</rule>
+
+	<!-- Cornice -->
+	<rule name="Cornice">
+		<size>
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="CorniceOverhang"/>
+		</size>
+		<insert>
+			<param name="geometryPath" value="../assets/primitives/ledgeLarge.obj"/>
+		</insert>
+		<texture>
+			<param name="texture" value="../assets/textures/ledge.jpg"/>
+		</texture>
+	</rule>
+	
+	<!-- Roof -->
+	<rule name="Roof">
+		<setupProjection>
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
+		</setupProjection>
+
+		<texture>
+			<param name="texture" value="../assets/textures/roof.jpg"/>
+		</texture>
+	</rule>
+
 </rules>
+

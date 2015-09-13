@@ -2,6 +2,7 @@
 #include "OBJLoader.h"
 #include "GeneralObject.h"
 #include "GLUtils.h"
+#include <iostream>
 #include <sstream>
 
 namespace cga {
@@ -28,7 +29,8 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 	std::vector<glm::vec2> texCoords;
 	if (!OBJLoader::load(geometryPath.c_str(), points, normals, texCoords)) {
 		std::stringstream ss;
-		ss << "OBJ file cannot be read: " << name << "." << std::endl;
+		ss << "OBJ file cannot be read: " << geometryPath.c_str() << "." << std::endl;
+		std::cout << ss.str() << std::endl;
 		throw ss.str();
 	}
 
