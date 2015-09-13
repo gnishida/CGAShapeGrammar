@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<rules version="2014.0" author="Esri R+D Center Zurich">
+	<!-- Attributes -->
+	<attr name="BuildingHeight" value="62"/>
+	<attr name="FloorHeight" value="3.5"/>
+	<attr name="GroundfloorHeight" value="4.3"/>
+	<attr name="TileWidth" value="3.55"/>
+	<attr name="CorniceOverhang" value="1.2"/>
+	<attr name="WindowHeight" value="2.05"/>
+	<attr name="FrontWindowWidth" value="2.15"/>
+	<attr name="RearWindowWidth" value="1.2"/>
+	<attr name="SillSize" value="0.26"/>
+	<attr name="CornerWallWidth" value="1"/>
+	
+	<attr name="WallTexture" value="../assets/textures/bricks.jpg"/>
+	<attr name="ColorizeWall" value="#FCEFE2"/>
+	<attr name="onStreet" value="true"/>
+	<attr name="winSideW" value="0.7"/>
+	<attr name="dividerW" value="0.25"/>
+	<attr name="sillH" value="0.957"/>
+	
+	<!-- Volume -->
+	<rule name="Lot">
+		<operator name="extrude">
+			<param name="height" value="BuildingHeight"/>
+		</operator>
+		<operator name="comp">
+			<param name="front" value="FrontFacade"/>
+			<param name="back" value="RearFacade"/>
+			<param name="left" value="SideFacade"/>
+			<param name="right" value="SideFacade"/>
+			<param name="top" value="Roof"/>
+		</operator>
+	</rule>
+	<rule name="FrontFacade">
+		<operator name="copy">
+			<param name="name" value="Facade"/>
+		</operator>
+	</rule>
+	<rule name="RearFacade">
+		<operator name="copy">
+			<param name="name" value="Facade"/>
+		</operator>
+	</rule>
+	<rule name="SideFacade">
+		<operator name="copy">
+			<param name="name" value="Facade"/>
+		</operator>
+	</rule>
+
+	<!-- Facade -->
+	<rule name="Facade">
+		<operator name="setupProjection">
+			<param name="axesSelector" value="scope.xy"/>
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</operator>	</rule>
+		<operator name="split">
+			<param name="splitAxis" value="y"/>
+			<param name="size">
+				<element type="floating" value="2.3"/>
+				<element type="floating" value="12"/>
+				<element type="floating" value="3"/>
+				<element type="absolute" value="2.5"/>
+			</param>
+			<param name="name">
+				<element value="Base"/>
+				<element value="Mid"/>
+				<element value="Upper"/>
+				<element value="Top"/>
+			</param>
+		</operator>
+	</rule>
+</rules>

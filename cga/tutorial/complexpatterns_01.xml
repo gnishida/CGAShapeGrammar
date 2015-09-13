@@ -64,7 +64,7 @@
 		<operator name="comp">
 			<param name="front" value="Facade"/>
 			<param name="side" value="Wall"/>
-			<param name="top" value="Roof"/>
+			<param name="top" value="Roof."/>
 		</operator>
 	</rule>
 	
@@ -72,7 +72,7 @@
 		<operator name="comp">
 			<param name="front" value="Floor"/>
 			<param name="side" value="Wall"/>
-			<param name="top" value="Roof"/>
+			<param name="top" value="Roof."/>
 		</operator>
 	</rule>
 	
@@ -189,10 +189,18 @@
 				<element type="absolute" value="frameW"/>
 			</param>
 			<param name="name">
-				<element value="Frame Bracing"/>
+				<element value="FrameAndBracing"/>
 				<element value="FrameAndBlind"/>
-				<element value="Frame Bracing"/>
+				<element value="FrameAndBracing"/>
 			</param>
+		</operator>
+	</rule>
+	<rule name="FrameAndBracing">
+		<operator name="copy">
+			<param name="name" value="Frame"/>
+		</operator>
+		<operator name="copy">
+			<param name="name" value="Bracing"/>
 		</operator>
 	</rule>
 	<rule name="FrameAndBlind">
@@ -434,7 +442,6 @@
 			<param name="s" value="white"/>
 		</operator>
 	</rule>
-	-->
 	<rule name="Bracing">
 		<operator name="size">
 			<param name="xSize" type="absolute" value="barDiameter"/>
@@ -462,5 +469,4 @@
 			</param>
 		</operator>
 	</rule>
-	-->
 </rules>
