@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<operator name="extrude">
+		<extrude>
 			<param name="height" value="5"/>
-		</operator>
-		<operator name="split">
+		</extrude>
+		<split>
 			<param name="splitAxis" value="z"/>
 			<param name="size">
 				<element type="floating" value="1.5" repeat="true"/>
@@ -12,21 +12,21 @@
 			<param name="name">
 				<element value="X"/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 	<!--
 	<rule name="X">
-		<operator name="color">
+		<color>
 			<param name="r" value="1"/>
 			<param name="g" value="0"/>
 			<param name="b" value="0"/>
-		</operator>
+		</color>
 	</rule>
 	-->
 	<rule name="X">
-		<operator name="color">
+		<color>
 			<param name="s" value="#ff0000"/>
-		</operator>
+		</color>
 	</rule>
 
 </rules>

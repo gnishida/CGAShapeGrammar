@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<operator name="roofHip">
+		<roofHip>
 			<param name="angle" value="30"/>
-		</operator>
+		</roofHip>
 	</rule>
 </rules>

@@ -53,44 +53,38 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 
 			QDomNode operator_node = child_node.firstChild();
 			while (!operator_node.isNull()) {
-				if (operator_node.toElement().tagName() == "operator") {
-					if (!operator_node.toElement().hasAttribute("name")) {
-						std::cout << "<operator> tag must contain name attribute." << std::endl;
-						throw "<operator> tag must contain name attribute.";
-					}
-					std::string operator_name = operator_node.toElement().attribute("name").toUtf8().constData();
+				std::string operator_name = operator_node.toElement().tagName().toUtf8().constData();
 
-					if (operator_name == "color") {
-						ruleSet.addOperator(name, parseColorOperator(operator_node));
-					} else if (operator_name == "comp") {
-						ruleSet.addOperator(name, parseCompOperator(operator_node));
-					} else if (operator_name == "copy") {
-						ruleSet.addOperator(name, parseCopyOperator(operator_node));
-					} else if (operator_name == "extrude") {
-						ruleSet.addOperator(name, parseExtrudeOperator(operator_node));
-					} else if (operator_name == "insert") {
-						ruleSet.addOperator(name, parseInsertOperator(operator_node));
-					} else if (operator_name == "offset") {
-						ruleSet.addOperator(name, parseOffsetOperator(operator_node));
-					} else if (operator_name == "roofHip") {
-						ruleSet.addOperator(name, parseRoofHipOperator(operator_node));
-					} else if (operator_name == "rotate") {
-						ruleSet.addOperator(name, parseRotateOperator(operator_node));
-					} else if (operator_name == "setupProjection") {
-						ruleSet.addOperator(name, parseSetupProjectionOperator(operator_node));
-					} else if (operator_name == "shapeL") {
-						ruleSet.addOperator(name, parseShapeLOperator(operator_node));
-					} else if (operator_name == "size") {
-						ruleSet.addOperator(name, parseSizeOperator(operator_node));
-					} else if (operator_name == "split") {
-						ruleSet.addOperator(name, parseSplitOperator(operator_node));
-					} else if (operator_name == "taper") {
-						ruleSet.addOperator(name, parseTaperOperator(operator_node));
-					} else if (operator_name == "texture") {
-						ruleSet.addOperator(name, parseTextureOperator(operator_node));
-					} else if (operator_name == "translate") {
-						ruleSet.addOperator(name, parseTranslateOperator(operator_node));
-					}
+				if (operator_name == "color") {
+					ruleSet.addOperator(name, parseColorOperator(operator_node));
+				} else if (operator_name == "comp") {
+					ruleSet.addOperator(name, parseCompOperator(operator_node));
+				} else if (operator_name == "copy") {
+					ruleSet.addOperator(name, parseCopyOperator(operator_node));
+				} else if (operator_name == "extrude") {
+					ruleSet.addOperator(name, parseExtrudeOperator(operator_node));
+				} else if (operator_name == "insert") {
+					ruleSet.addOperator(name, parseInsertOperator(operator_node));
+				} else if (operator_name == "offset") {
+					ruleSet.addOperator(name, parseOffsetOperator(operator_node));
+				} else if (operator_name == "roofHip") {
+					ruleSet.addOperator(name, parseRoofHipOperator(operator_node));
+				} else if (operator_name == "rotate") {
+					ruleSet.addOperator(name, parseRotateOperator(operator_node));
+				} else if (operator_name == "setupProjection") {
+					ruleSet.addOperator(name, parseSetupProjectionOperator(operator_node));
+				} else if (operator_name == "shapeL") {
+					ruleSet.addOperator(name, parseShapeLOperator(operator_node));
+				} else if (operator_name == "size") {
+					ruleSet.addOperator(name, parseSizeOperator(operator_node));
+				} else if (operator_name == "split") {
+					ruleSet.addOperator(name, parseSplitOperator(operator_node));
+				} else if (operator_name == "taper") {
+					ruleSet.addOperator(name, parseTaperOperator(operator_node));
+				} else if (operator_name == "texture") {
+					ruleSet.addOperator(name, parseTextureOperator(operator_node));
+				} else if (operator_name == "translate") {
+					ruleSet.addOperator(name, parseTranslateOperator(operator_node));
 				}
 
 				operator_node = operator_node.nextSibling();

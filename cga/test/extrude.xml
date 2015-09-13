@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<operator name="translate">
+		<translate>
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="world"/>
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="0.3"/>
-		</operator>
-		<operator name="extrude">
+		</translate>
+		<extrude>
 			<param name="height" value="5"/>
-		</operator>
+		</extrude>
 	</rule>
 </rules>

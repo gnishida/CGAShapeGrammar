@@ -21,41 +21,41 @@
 	
 	<!-- Volume -->
 	<rule name="Lot">
-		<operator name="extrude">
+		<extrude>
 			<param name="height" value="BuildingHeight"/>
-		</operator>
-		<operator name="comp">
+		</extrude>
+		<comp>
 			<param name="front" value="FrontFacade"/>
 			<param name="back" value="RearFacade"/>
 			<param name="left" value="SideFacade"/>
 			<param name="right" value="SideFacade"/>
 			<param name="top" value="Roof"/>
-		</operator>
+		</comp>
 	</rule>
 	<rule name="FrontFacade">
-		<operator name="copy">
+		<copy>
 			<param name="name" value="Facade"/>
-		</operator>
+		</copy>
 	</rule>
 	<rule name="RearFacade">
-		<operator name="copy">
+		<copy>
 			<param name="name" value="Facade"/>
-		</operator>
+		</copy>
 	</rule>
 	<rule name="SideFacade">
-		<operator name="copy">
+		<copy>
 			<param name="name" value="Facade"/>
-		</operator>
+		</copy>
 	</rule>
 
 	<!-- Facade -->
 	<rule name="Facade">
-		<operator name="setupProjection">
+		<setupProjection>
 			<param name="axesSelector" value="scope.xy"/>
 			<param name="texWidth" type="absolute" value="5"/>
 			<param name="texHeight" type="absolute" value="5"/>
-		</operator>	</rule>
-		<operator name="split">
+		</setupProjection>
+		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="floating" value="2.3"/>
@@ -69,6 +69,6 @@
 				<element value="Upper"/>
 				<element value="Top"/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 </rules>

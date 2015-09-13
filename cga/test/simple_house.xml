@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<operator name="extrude">
+		<extrude>
 			<param name="height" value="6"/>
-		</operator>
-		<operator name="copy">
+		</extrude>
+		<copy>
 			<param name="name" value="House"/>
-		</operator>
+		</copy>
 	</rule>
 	<rule name="House">
-		<operator name="comp">
+		<comp>
 			<param name="front" value="FrontFacade"/>
 			<param name="side" value="SideFacade"/>
 			<param name="top" value="Roof"/>
 			<param name="bottom" value="Base."/>
-		</operator>
+		</comp>
 	</rule>
 	<rule name="Roof">
-		<operator name="roofHip">
+		<roofHip>
 			<param name="angle" value="30"/>
-		</operator>
+		</roofHip>
 	</rule>
 	<rule name="FrontFacade">
-		<operator name="split">
+		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="relative" value="0.5"/>
@@ -32,10 +32,10 @@
 				<element value="Entrance."/>
 				<element value="Floor"/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 	<rule name="SideFacade">
-		<operator name="split">
+		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="relative" value="0.5"/>
@@ -45,10 +45,10 @@
 				<element value="Floor"/>
 				<element value="Floor"/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 	<rule name="Floor">
-		<operator name="split">
+		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
 				<element type="absolute" value="1.0"/>
@@ -60,10 +60,10 @@
 				<element value="Tile"/>
 				<element value="Wall."/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 	<rule name="Tile">
-		<operator name="split">
+		<split>
 			<param name="splitAxis" value="x"/>
 			<param name="size">
 				<element type="floating" value="1.0"/>
@@ -75,10 +75,10 @@
 				<element value="WallWindowWall"/>
 				<element value="Wall."/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 	<rule name="WallWindowWall">
-		<operator name="split">
+		<split>
 			<param name="splitAxis" value="y"/>
 			<param name="size">
 				<element type="absolute" value="1.0"/>
@@ -90,23 +90,23 @@
 				<element value="Window"/>
 				<element value="Wall."/>
 			</param>
-		</operator>
+		</split>
 	</rule>
 	<rule name="Window">
-		<operator name="translate">
+		<translate>
 			<param name="mode" value="rel"/>
 			<param name="coordSystem" value="object"/>
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.05"/>
-		</operator>
-		<operator name="setupProjection">
+		</translate>
+		<setupProjection>
 			<param name="coordinateType" value="relative"/>
-			<param name="texWidth" value="0"/>
-			<param name="texHeight" value="0"/>
-		</operator>
-		<operator name="texture">
-			<param name="texture" value="textures/window.jpg"/>
-		</operator>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
+		</setupProjection>
+		<texture>
+			<param name="texture" value="../assets/textures/window.1.tif"/>
+		</texture>
 	</rule>
 </rules>
