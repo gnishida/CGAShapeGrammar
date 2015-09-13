@@ -143,6 +143,12 @@ Operator* parseCompOperator(const QDomNode& node) {
 
 			if (name == "front") {
 				name_map["front"] = value;
+			} else if (name == "right") {
+				name_map["right"] = value;
+			} else if (name == "left") {
+				name_map["left"] = value;
+			} else if (name == "back") {
+				name_map["back"] = value;
 			} else if (name == "side") {
 				name_map["side"] = value;
 			} else if (name == "top") {

@@ -3,14 +3,14 @@
 	<!-- Attributes -->
 	<attr name="buildingH" value="27"/>
 	<attr name="floorH" value="3.5"/>
-	<attr name="groundfloorH" value="4.5"/>
+	<attr name="groundflH" value="4.5"/>
 	<attr name="nSymmetries" value="2"/>
 	<attr name="borderwallW" value="0.3"/>
 	<attr name="ledgeH" value="0.3"/>
 	<attr name="windowW" value="2.5"/>
 	<attr name="milkGlassW" value="1.25"/>
 	<attr name="blindH" value="0.8"/>
-	<attr name="frameW" value="0.7"/>
+	<attr name="frameW" value="0.07"/>
 	<attr name="balconyDepth" value="2"/>
 	<attr name="brightblue" value="#86b1c7"/>
 	<attr name="darkblue" value="#33556c"/>
@@ -26,6 +26,7 @@
 	<attr name="cyl_h" value="../assets/primitives/cylinder.hor.8.notop.tex.obj"/>
 	<attr name="window_tex" value="../assets/textures/1_glass_2_blue.tif"/>
 	<attr name="milkGlass_tex" value="../assets/textures/blend_tex.png"/>
+	<attr name="cube" value="../assets/primitives/cube.obj"/>
 	
 	<!-- Volume -->
 	<rule name="Lot">
@@ -100,7 +101,7 @@
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
 			<param name="size">
-				<element type="floating" value="groundfloorH"/>
+				<element type="floating" value="groundflH"/>
 				<element type="floating" value="floorH" repeat="true"/>
 			</param>
 			<param name="name">
@@ -109,7 +110,6 @@
 			</param>
 		</operator>
 	</rule>
-	
 	<rule name="Floor">
 		<operator name="split">
 			<param name="splitAxis" value="x"/>
@@ -125,7 +125,6 @@
 			</param>
 		</operator>
 	</rule>
-	
 	<rule name="FloorSub">
 		<operator name="split">
 			<param name="splitAxis" value="y"/>
@@ -153,6 +152,17 @@
 		</operator>
 	</rule>
 	<rule name="DoubleTile">
+		<operator name="split">
+			<param name="splitAxis" value="x"/>
+			<param name="size">
+				<element type="floating" value="milkGlassW+windowW" repeat="true"/>
+			</param>
+			<param name="name">
+				<element value="MilkGlassAndTile"/>
+			</param>
+		</operator>
+	</rule>
+	<rule name="MilkGlassAndTile">
 		<operator name="split">
 			<param name="splitAxis" value="x"/>
 			<param name="size">
@@ -326,14 +336,19 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="frameW*1.2"/>
 		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="cube"/>
+		</operator>
 		<operator name="color">
 			<param name="s" value="brightblue"/>
 		</operator>
+		<!--
 		<operator name="setupProjection">
 			<param name="axesSelector" value="scope.xy"/>
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</operator>
+		-->
 		<operator name="texture">
 			<param name="texture" value="milkGlass_tex"/>
 		</operator>
@@ -341,23 +356,32 @@
 	
 	<!-- Detail Elements -->
 	<rule name="Ledge">
+		<!--
 		<operator name="copy">
 			<param name="name" value="Wall"/>
 		</operato>
-		<operator name="translate">
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
-			<param name="x" value="0"/>
-			<param name="y" value="-0.1"/>
-			<param name="z" value="0.2"/>
-		</operator>
+		-->
 		<operator name="size">
 			<param name="xSize" type="relative" value="1"/>
-			<param name="ySize" type="absolute" value="scope.sy+0.1"/>
-			<param name="zSize" type="absolute" value="0.03"/>
+			<param name="ySize" type="relative" value="0.9"/>
+			<param name="zSize" type="absolute" value="0.2"/>
 		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="cube"/>
+		</operator>
+		<operator name="copy">
+			<param name="name" value="Wall"/>
+		</operato>
 	</rule>
 	<rule name="Railing">
+		<operator name="color">
+			<param name="s" value="grey"/>
+		</operator>
+		<!--
+		<operator name="copy">
+			<param name="name" value="HBar"/>
+		</operator>
+		-->
 		<operator name="split">
 			<param name="splitAxis" value="x"/>
 			<param name="size">
@@ -368,10 +392,18 @@
 			</param>
 		</operator>
 	</rule>
-	<rule name="VBar">
+	<!--
+	<rule name="HBar">
+		<operator name="translate">
+			<param name="mode" value="rel"/>
+			<param name="coordSystem" value="object"/>
+			<param name="x" value="0"/>
+			<param name="y" value="scope.sy-barDiameter/2"/>
+			<param name="z" value="0"/>
+		</operator>
 		<operator name="size">
-			<param name="xSize" type="absolute" value="barDiameter"/>
-			<param name="ySize" type="relative" value="1"/>
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="absolute" value="barDiameter"/>
 			<param name="zSize" type="absolute" value="barDiameter"/>
 		</operator>
 		<operator name="translate">
@@ -381,14 +413,19 @@
 			<param name="y" value="0"/>
 			<param name="z" value="-barDiameter"/>
 		</operator>
+		<operator name="insert">
+			<param name="geometryPath" value="cyl_h"/>
+		</operator>
 		<operator name="color">
 			<param name="s" value="white"/>
 		</operator>
 	</rule>
-	<rule name="HBar">
+	-->
+	<!--
+	<rule name="VBar">
 		<operator name="size">
-			<param name="xSize" type="relative" value="1"/>
-			<param name="ySize" type="absolute" value="barDiameter"/>
+			<param name="xSize" type="absolute" value="barDiameter"/>
+			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="barDiameter"/>
 		</operator>
 		<operator name="translate">
@@ -429,4 +466,5 @@
 			</param>
 		</operator>
 	</rule>
+	-->
 </rules>
