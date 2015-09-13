@@ -9,12 +9,12 @@ class TranslateOperator : public Operator {
 private:
 	int mode;
 	int coordSystem;
-	SingleValue x;
-	SingleValue y;
-	SingleValue z;
+	Value x;
+	Value y;
+	Value z;
 
 public:
-	TranslateOperator(int mode, int coordSystem, const SingleValue& x, const SingleValue& y, const SingleValue& z);
+	TranslateOperator(int mode, int coordSystem, const Value& x, const Value& y, const Value& z);
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
 

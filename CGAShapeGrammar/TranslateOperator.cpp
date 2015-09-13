@@ -4,7 +4,7 @@
 
 namespace cga {
 
-TranslateOperator::TranslateOperator(int mode, int coordSystem, const SingleValue& x, const SingleValue& y, const SingleValue& z) {
+TranslateOperator::TranslateOperator(int mode, int coordSystem, const Value& x, const Value& y, const Value& z) {
 	this->name = "translate";
 	this->mode = mode;
 	this->coordSystem = coordSystem;

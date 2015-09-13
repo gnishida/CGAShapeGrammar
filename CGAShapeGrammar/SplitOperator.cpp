@@ -4,7 +4,7 @@
 
 namespace cga {
 
-SplitOperator::SplitOperator(int splitAxis, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names) {
+SplitOperator::SplitOperator(int splitAxis, const std::vector<Value>& sizes, const std::vector<std::string>& output_names) {
 	this->name = "split";
 	this->splitAxis = splitAxis;
 	this->sizes = sizes;

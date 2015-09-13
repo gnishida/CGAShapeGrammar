@@ -7,12 +7,12 @@ namespace cga {
 
 class SizeOperator : public Operator {
 private:
-	SingleValue xSize;
-	SingleValue ySize;
-	SingleValue zSize;
+	Value xSize;
+	Value ySize;
+	Value zSize;
 
 public:
-	SizeOperator(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize);
+	SizeOperator(const Value& xSize, const Value& ySize, const Value& zSize);
 
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };

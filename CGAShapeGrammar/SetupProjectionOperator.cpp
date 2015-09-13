@@ -4,7 +4,7 @@
 
 namespace cga {
 
-SetupProjectionOperator::SetupProjectionOperator(int axesSelector, const SingleValue& texWidth, const SingleValue& texHeight) {
+SetupProjectionOperator::SetupProjectionOperator(int axesSelector, const Value& texWidth, const Value& texHeight) {
 	this->name = "setupProjection";
 	this->axesSelector = axesSelector;
 	this->texWidth = texWidth;

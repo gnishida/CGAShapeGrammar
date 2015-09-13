@@ -12,33 +12,18 @@ class RuleSet;
 
 class Value  {
 public:
-	static enum { TYPE_ABSOLUTE = 0, TYPE_RELATIVE, TYPE_FLOATING, TYPE_SET };
+	static enum { TYPE_ABSOLUTE = 0, TYPE_RELATIVE, TYPE_FLOATING };
 
 public:
 	int type;
 	std::string value;
-	std::vector<Value*> values;
 	bool repeat;
 
 public:
-	virtual float getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape) = 0;
-};
-
-class SingleValue : public Value {
-public:
-	SingleValue() { this->type = TYPE_ABSOLUTE; this->value = ""; this->repeat = false; }
-	SingleValue(int type, const std::string& value) { this->type = type; this->value = value; this->repeat = false; }
-
-	float getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape);
-};
-
-
-class ValueSet : public Value {
-public:
-	ValueSet(Value* value, bool repeat = false);
-	ValueSet(const std::vector<Value*>& values, bool repeat = false);
-
-	float getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape);
+	Value() : type(TYPE_ABSOLUTE), value(""), repeat(false) {}
+	Value(int type, const std::string& value, bool repeat = false) : type(type), value(value), repeat(repeat) {}
+	
+	float getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape) const;
 };
 
 class RuleSet;
@@ -61,7 +46,7 @@ public:
 	Rule() {}
 
 	void apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) const;
-	static void decodeSplitSizes(float size, const std::vector<Value*>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, Shape* shape, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
+	static void decodeSplitSizes(float size, const std::vector<Value>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, Shape* shape, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
 };
 
 class RuleSet {

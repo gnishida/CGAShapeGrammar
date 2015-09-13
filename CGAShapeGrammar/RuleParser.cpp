@@ -277,8 +277,8 @@ Operator* parseRotateOperator(const QDomNode& node) {
 
 Operator* parseSetupProjectionOperator(const QDomNode& node) {
 	int axesSelector;
-	SingleValue texWidth;
-	SingleValue texHeight;
+	Value texWidth;
+	Value texHeight;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -296,9 +296,9 @@ Operator* parseSetupProjectionOperator(const QDomNode& node) {
 				std::string type =  child.toElement().attribute("type").toUtf8().constData();
 				std::string value =  child.toElement().attribute("value").toUtf8().constData();
 				if (type == "absolute") {
-					texWidth = SingleValue(Value::TYPE_ABSOLUTE, value);
+					texWidth = Value(Value::TYPE_ABSOLUTE, value);
 				} else if (type == "relative") {
-					texWidth = SingleValue(Value::TYPE_RELATIVE, value);
+					texWidth = Value(Value::TYPE_RELATIVE, value);
 				} else {
 					throw "type of texWidth for texture has to be either absolute or relative.";
 				}
@@ -306,9 +306,9 @@ Operator* parseSetupProjectionOperator(const QDomNode& node) {
 				std::string type =  child.toElement().attribute("type").toUtf8().constData();
 				std::string value =  child.toElement().attribute("value").toUtf8().constData();
 				if (type == "absolute") {
-					texHeight = SingleValue(Value::TYPE_ABSOLUTE, value);
+					texHeight = Value(Value::TYPE_ABSOLUTE, value);
 				} else if (type == "relative") {
-					texHeight = SingleValue(Value::TYPE_RELATIVE, value);
+					texHeight = Value(Value::TYPE_RELATIVE, value);
 				} else {
 					throw "type of texHeight for texture has to be either absolute or relative.";
 				}
@@ -344,9 +344,9 @@ Operator* parseShapeLOperator(const QDomNode& node) {
 }
 
 Operator* parseSizeOperator(const QDomNode& node) {
-	SingleValue xSize;
-	SingleValue ySize;
-	SingleValue zSize;
+	Value xSize;
+	Value ySize;
+	Value zSize;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -360,21 +360,21 @@ Operator* parseSizeOperator(const QDomNode& node) {
 
 			if (name == "xSize") {
 				if (type == "relative") {
-					xSize = SingleValue(Value::TYPE_RELATIVE, value);
+					xSize = Value(Value::TYPE_RELATIVE, value);
 				} else {
-					xSize = SingleValue(Value::TYPE_ABSOLUTE, value);
+					xSize = Value(Value::TYPE_ABSOLUTE, value);
 				}
 			} else if (name == "ySize") {
 				if (type == "relative") {
-					ySize = SingleValue(Value::TYPE_RELATIVE, value);
+					ySize = Value(Value::TYPE_RELATIVE, value);
 				} else {
-					ySize = SingleValue(Value::TYPE_ABSOLUTE, value);
+					ySize = Value(Value::TYPE_ABSOLUTE, value);
 				}
 			} else if (name == "zSize") {
 				if (type == "relative") {
-					zSize = SingleValue(Value::TYPE_RELATIVE, value);
+					zSize = Value(Value::TYPE_RELATIVE, value);
 				} else {
-					zSize = SingleValue(Value::TYPE_ABSOLUTE, value);
+					zSize = Value(Value::TYPE_ABSOLUTE, value);
 				}
 			}
 		}
@@ -387,7 +387,7 @@ Operator* parseSizeOperator(const QDomNode& node) {
 
 Operator* parseSplitOperator(const QDomNode& node) {
 	int splitAxis;
-	std::vector<Value*> sizes;
+	std::vector<Value> sizes;
 	std::vector<std::string> names;
 
 	QDomNode child = node.firstChild();
@@ -416,19 +416,19 @@ Operator* parseSplitOperator(const QDomNode& node) {
 
 						if (repeat) {
 							if (type == "absolute") {
-								sizes.push_back(new ValueSet(new SingleValue(Value::TYPE_ABSOLUTE, value), true));
+								sizes.push_back(Value(Value::TYPE_ABSOLUTE, value, true));
 							} else if (type == "relative") {
-								sizes.push_back(new ValueSet(new SingleValue(Value::TYPE_RELATIVE, value), true));
+								sizes.push_back(Value(Value::TYPE_RELATIVE, value, true));
 							} else {
-								sizes.push_back(new ValueSet(new SingleValue(Value::TYPE_FLOATING, value), true));
+								sizes.push_back(Value(Value::TYPE_FLOATING, value, true));
 							}
 						} else {
 							if (type == "absolute") {
-								sizes.push_back(new SingleValue(Value::TYPE_ABSOLUTE, value));
+								sizes.push_back(Value(Value::TYPE_ABSOLUTE, value));
 							} else if (type == "relative") {
-								sizes.push_back(new SingleValue(Value::TYPE_RELATIVE, value));
+								sizes.push_back(Value(Value::TYPE_RELATIVE, value));
 							} else {
-								sizes.push_back(new SingleValue(Value::TYPE_FLOATING, value));
+								sizes.push_back(Value(Value::TYPE_FLOATING, value));
 							}
 						}
 
@@ -490,9 +490,9 @@ Operator* parseTextureOperator(const QDomNode& node) {
 Operator* parseTranslateOperator(const QDomNode& node) {
 	int mode;
 	int coordSystem;
-	SingleValue x;
-	SingleValue y;
-	SingleValue z;
+	Value x;
+	Value y;
+	Value z;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
@@ -516,11 +516,14 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 					throw "coordSystem has to be either world or object.";
 				}
 			} else if (name == "x") {
-				x = SingleValue(Value::TYPE_ABSOLUTE, child.toElement().attribute("value").toUtf8().constData());
+				std::string value = child.toElement().attribute("value").toUtf8().constData();
+				x = Value(Value::TYPE_ABSOLUTE, value);
 			} else if (name == "y") {
-				y = SingleValue(Value::TYPE_ABSOLUTE, child.toElement().attribute("value").toUtf8().constData());
+				std::string value = child.toElement().attribute("value").toUtf8().constData();
+				y = Value(Value::TYPE_ABSOLUTE, value);
 			} else if (name == "z") {
-				z = SingleValue(Value::TYPE_ABSOLUTE, child.toElement().attribute("value").toUtf8().constData());
+				std::string value = child.toElement().attribute("value").toUtf8().constData();
+				z = Value(Value::TYPE_ABSOLUTE, value);
 			}
 		}
 

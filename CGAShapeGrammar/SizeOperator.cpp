@@ -4,7 +4,7 @@
 
 namespace cga {
 
-SizeOperator::SizeOperator(const SingleValue& xSize, const SingleValue& ySize, const SingleValue& zSize) {
+SizeOperator::SizeOperator(const Value& xSize, const Value& ySize, const Value& zSize) {
 	this->name = "size";
 	this->xSize = xSize;
 	this->ySize = ySize;
