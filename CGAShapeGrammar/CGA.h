@@ -31,7 +31,17 @@ public:
 	float sz() { return maxPt.z - minPt.z; }
 };
 
+class Asset {
+public:
+	std::vector<glm::vec3> points;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec2> texCoords;
+	//BoundingBox bbox;
 
+public:
+	Asset();
+	Asset(const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const std::vector<glm::vec2>& texCoords);
+};
 
 class CGA {
 public:

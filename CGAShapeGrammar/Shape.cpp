@@ -7,6 +7,8 @@
 
 namespace cga {
 
+std::map<std::string, Asset> Shape::assets;
+
 Shape* Shape::clone(const std::string& name) {
 	throw "clone() is not supported.";
 }
@@ -24,6 +26,8 @@ Shape* Shape::inscribeCircle(const std::string& name) {
 }
 
 Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
+	Asset asset = getAsset(geometryPath);
+	/*
 	std::vector<glm::vec3> points;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec2> texCoords;
@@ -33,13 +37,14 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 		std::cout << ss.str() << std::endl;
 		throw ss.str();
 	}
+	*/
 
 	// compute scale
 	float scaleX = 1.0f;
 	float scaleY = 1.0f;
 	float scaleZ = 1.0f;
 
-	BoundingBox bbox(points);
+	BoundingBox bbox(asset.points);
 	if (_scope.x != 0 && _scope.y != 0 && _scope.z != 0) {			// all non-zero
 		scaleX = _scope.x / bbox.sx();
 		scaleY = _scope.y / bbox.sy();
@@ -73,25 +78,25 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 	}
 
 	// scale the points
-	for (int i = 0; i < points.size(); ++i) {
-		points[i].x = (points[i].x - bbox.minPt.x) * scaleX;
-		points[i].y = (points[i].y - bbox.minPt.y) * scaleY;
-		points[i].z = (points[i].z - bbox.minPt.z) * scaleZ;
+	for (int i = 0; i < asset.points.size(); ++i) {
+		asset.points[i].x = (asset.points[i].x - bbox.minPt.x) * scaleX;
+		asset.points[i].y = (asset.points[i].y - bbox.minPt.y) * scaleY;
+		asset.points[i].z = (asset.points[i].z - bbox.minPt.z) * scaleZ;
 	}
 
 	// if texCoords are not defined in obj file, generate them automatically.
-	if (_texCoords.size() > 0 && texCoords.size() == 0) {
-		texCoords.resize(points.size());
-		for (int i = 0; i < points.size(); ++i) {
-			texCoords[i].x = points[i].x / _scope.x * (_texCoords[1].x - _texCoords[0].x) + _texCoords[0].x;
-			texCoords[i].y = points[i].y / _scope.y * (_texCoords[2].y - _texCoords[0].y) + _texCoords[0].y;
+	if (_texCoords.size() > 0 && asset.texCoords.size() == 0) {
+		asset.texCoords.resize(asset.points.size());
+		for (int i = 0; i < asset.points.size(); ++i) {
+			asset.texCoords[i].x = asset.points[i].x / _scope.x * (_texCoords[1].x - _texCoords[0].x) + _texCoords[0].x;
+			asset.texCoords[i].y = asset.points[i].y / _scope.y * (_texCoords[2].y - _texCoords[0].y) + _texCoords[0].y;
 		}
 	}
 
-	if (texCoords.size() > 0) {
-		return new GeneralObject(name, _pivot, _modelMat, points, normals, _color, texCoords, _texture);
+	if (asset.texCoords.size() > 0) {
+		return new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color, asset.texCoords, _texture);
 	} else {
-		return new GeneralObject(name, _pivot, _modelMat, points, normals, _color);
+		return new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color);
 	}
 }
 
@@ -170,6 +175,24 @@ void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) {
 	std::vector<Vertex> vertices;
 	glutils::drawAxes(0.1, 3, modelMat, vertices);
 	renderManager->addObject("axis", "", vertices);
+}
+
+Asset Shape::getAsset(const std::string& filename) {
+	if (assets.find(filename) == assets.end()) {
+		std::vector<glm::vec3> points;
+		std::vector<glm::vec3> normals;
+		std::vector<glm::vec2> texCoords;
+		if (!OBJLoader::load(filename.c_str(), points, normals, texCoords)) {
+			std::stringstream ss;
+			ss << "OBJ file cannot be read: " << filename.c_str() << "." << std::endl;
+			std::cout << ss.str() << std::endl;
+			throw ss.str();
+		}
+
+		assets[filename] = Asset(points, normals, texCoords);
+	}
+
+	return assets[filename];
 }
 
 }

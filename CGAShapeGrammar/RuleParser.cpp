@@ -131,6 +131,7 @@ Operator* parseCompOperator(const QDomNode& node) {
 	std::string bottom_name;
 	std::string inside_name;
 	std::string border_name;
+	std::string vertical_name;
 	std::map<std::string, std::string> name_map;
 
 	QDomNode child = node.firstChild();
@@ -157,6 +158,8 @@ Operator* parseCompOperator(const QDomNode& node) {
 				name_map["inside"] = value;
 			} else if (name == "border") {
 				name_map["border"] = value;
+			} else if (name == "vertical") {
+				name_map["vertical"] = value;
 			}
 		}
 
@@ -514,16 +517,43 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
+			if (!child.toElement().hasAttribute("name")) {
+				throw "param has to have name attribute.";
+			}
+			std::string name = child.toElement().attribute("name").toUtf8().constData();
+			if (!child.toElement().hasAttribute("value")) {
+				throw "param has to have value attribute.";
+			}
 			std::string value = child.toElement().attribute("value").toUtf8().constData();
+			if (!child.toElement().hasAttribute("type")) {
+				throw "param has to have type attribute.";
+			}
 			std::string type = child.toElement().attribute("type").toUtf8().constData();
 
 			if (name == "x") {
-				x = Value(Value::TYPE_ABSOLUTE, value);
+				if (type == "absolute") {
+					x = Value(Value::TYPE_ABSOLUTE, value);
+				} else if (type == "relative") {
+					x = Value(Value::TYPE_RELATIVE, value);
+				} else {
+					throw "type of param for translate has to be either absolute or relative.";
+				}
 			} else if (name == "y") {
-				y = Value(Value::TYPE_ABSOLUTE, value);
+				if (type == "absolute") {
+					y = Value(Value::TYPE_ABSOLUTE, value);
+				} else if (type == "relative") {
+					y = Value(Value::TYPE_RELATIVE, value);
+				} else {
+					throw "type of param for translate has to be either absolute or relative.";
+				}
 			} else if (name == "z") {
-				z = Value(Value::TYPE_ABSOLUTE, value);
+				if (type == "absolute") {
+					z = Value(Value::TYPE_ABSOLUTE, value);
+				} else if (type == "relative") {
+					z = Value(Value::TYPE_RELATIVE, value);
+				} else {
+					throw "type of param for translate has to be either absolute or relative.";
+				}
 			}
 		}
 

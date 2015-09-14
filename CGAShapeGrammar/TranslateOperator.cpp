@@ -14,9 +14,28 @@ TranslateOperator::TranslateOperator(int mode, int coordSystem, const Value& x, 
 }
 
 Shape* TranslateOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	float actual_x = ruleSet.evalFloat(x.value, shape);
-	float actual_y = ruleSet.evalFloat(y.value, shape);
-	float actual_z = ruleSet.evalFloat(z.value, shape);
+	float actual_x;
+	float actual_y;
+	float actual_z;
+
+	if (x.type == Value::TYPE_RELATIVE) {
+		actual_x = shape->_scope.x * ruleSet.evalFloat(x.value, shape);
+	} else {
+		actual_x = ruleSet.evalFloat(x.value, shape);
+	}
+
+	if (y.type == Value::TYPE_RELATIVE) {
+		actual_y = shape->_scope.y * ruleSet.evalFloat(y.value, shape);
+	} else {
+		actual_y = ruleSet.evalFloat(y.value, shape);
+	}
+
+	if (z.type == Value::TYPE_RELATIVE) {
+		actual_z = shape->_scope.z * ruleSet.evalFloat(z.value, shape);
+	} else {
+		actual_z = ruleSet.evalFloat(z.value, shape);
+	}
+
 	shape->translate(mode, coordSystem, actual_x, actual_y, actual_z);
 	return shape;
 }

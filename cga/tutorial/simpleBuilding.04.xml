@@ -159,9 +159,9 @@
 			<param name="zSize" type="absolute" value="0.4"/>
 		</size>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="0"/>
-			<param name="y" value="0"/>
-			<param name="z" value="-0.25"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="-0.25"/>
 		</translate>
 		<texture>
 			<param name="texture" value="window_tex"/>
@@ -179,9 +179,9 @@
 			<param name="zSize" type="absolute" value="0.1"/>
 		</size>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="0"/>
-			<param name="y" value="0"/>
-			<param name="z" value="-0.4"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="-0.4"/>
 		</translate>
 		<setupProjection>
 			<param name="axesSelector" value="scope.xy"/>
@@ -207,9 +207,9 @@
 			<param name="zSize" type="absolute" value="0.4"/>
 		</size>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="0"/>
-			<param name="y" value="0"/>
-			<param name="z" value="-0.4"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="-0.4"/>
 		</translate>
 		<insert geometryPath="cube_notex"/>
 	</rule>

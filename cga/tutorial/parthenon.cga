@@ -363,10 +363,14 @@ Triglyphs -->
 	color( Triglyph_Color )
 	t(0,0,-0.007) 
 	split(x){ triglyphWidth : s('1,'1,triglyphD) i("builtin:cube") TriglyphWithGuttae 
-			| { ~ Spacing : split(x){~1:NIL 
-								  	      | triglyphWidth : s('1,'1,triglyphD) i("builtin:cube") TriglyphWithGuttae 
-								          | ~1:NIL 
-								          | triglyphWidth : s('1,'1,triglyphD) i("builtin:cube") TriglyphWithGuttae } }* }
+			| { ~ Spacing : split(x)
+				{~1:NIL 
+				| triglyphWidth : s('1,'1,triglyphD) i("builtin:cube") TriglyphWithGuttae 
+				| ~1:NIL 
+    				| triglyphWidth : s('1,'1,triglyphD) i("builtin:cube") TriglyphWithGuttae
+				}
+			  }*
+                }
 
 TriglyphWithGuttae -->             										# handling exceptions (in this case the TriglyphWithRegulaGuttae-box got trimmed, e.g. smaller angle etc 
 	case scope.sx < triglyphWidth*0.6:   										# in this case force half-size

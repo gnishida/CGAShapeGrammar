@@ -2,9 +2,9 @@
 <rules>
 	<rule name="Lot">
 		<translate mode="rel" coordSystem="world">
-			<param name="x" value="0"/>
-			<param name="y" value="0"/>
-			<param name="z" value="0.3"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="0.3"/>
 		</translate>
 		<!--
 		<split splitAxis="z">

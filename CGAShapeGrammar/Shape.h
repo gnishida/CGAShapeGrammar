@@ -16,6 +16,8 @@ public:
 	glm::vec3 _scope;
 	glm::mat4 _pivot;
 
+	static std::map<std::string, Asset> assets;
+
 public:
 	virtual Shape* clone(const std::string& name);
 	virtual void comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes);
@@ -38,6 +40,7 @@ public:
 
 protected:
 	void drawAxes(RenderManager* renderManager, const glm::mat4& modelMat);
+	static Asset getAsset(const std::string& filename);
 };
 
 }

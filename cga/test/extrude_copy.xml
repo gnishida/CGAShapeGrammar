@@ -4,9 +4,9 @@
 		<extrude height="1"/>
 		<copy name="B."/>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="3"/>
-			<param name="y" value="0"/>
-			<param name="z" value="0"/>
+			<param name="x" type="absolute" value="3"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<copy name="C"/>
 	</rule>

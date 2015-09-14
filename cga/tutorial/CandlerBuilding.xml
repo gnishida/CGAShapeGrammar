@@ -131,9 +131,9 @@
 		<copy name="Still"/>
 		<!--<copy name="WindowOpening"/>-->
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="0"/>
-			<param name="y" value="0"/>
-			<param name="z" value="-0.3"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="-0.3"/>
 		</translate>
 		<copy name="WindowAsset"/>
 	</rule>
@@ -150,9 +150,9 @@
 	</rule>
 	<rule name="WindowOpening">
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="0"/>
-			<param name="y" value="0"/>
-			<param name="z" value="-0.3"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="-0.3"/>
 		</translate>
 		<comp>
 			<param name="side" value="WallOpening"/>
@@ -165,9 +165,9 @@
 			<param name="zSize" type="absolute" value="0.1"/>
 		</size>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="-dividerW/2"/>
-			<param name="y" value="-SillSize"/>
-			<param name="z" value="0"/>
+			<param name="x" type="absolute" value="-dividerW/2"/>
+			<param name="y" type="absolute" value="-SillSize"/>
+			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<insert geometryPath="../assets/primitives/cube.obj"/>
 		<texture>
@@ -195,9 +195,9 @@
 			<param name="zSize" type="absolute" value="0.6"/>
 		</size>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" value="0"/>
-			<param name="y" value="sillH-0.6+0.02"/>
-			<param name="z" value="0"/>
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="sillH-0.6+0.02"/>
+			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<insert geometryPath="../assets/primitives/ledgeSmall.obj"/>
 		<texture>
