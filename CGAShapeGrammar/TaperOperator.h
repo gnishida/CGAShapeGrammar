@@ -6,11 +6,11 @@ namespace cga {
 
 class TaperOperator : public Operator {
 private:
-	float height;
-	float top_ratio;
+	std::string height;
+	std::string top_ratio;
 
 public:
-	TaperOperator(float height, float top_ratio);
+	TaperOperator(const std::string& height, const std::string& top_ratio);
 
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };

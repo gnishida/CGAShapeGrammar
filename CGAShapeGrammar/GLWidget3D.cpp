@@ -53,7 +53,7 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  */
 void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 8192);
-	showWireframe = true;
+	showWireframe = false;
 	showScopeCoordinateSystem = false;
 
 	// set the clear color for the screen

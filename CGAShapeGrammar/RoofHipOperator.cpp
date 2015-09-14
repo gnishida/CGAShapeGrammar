@@ -4,13 +4,14 @@
 
 namespace cga {
 
-RoofHipOperator::RoofHipOperator(float angle) {
+RoofHipOperator::RoofHipOperator(const std::string& angle) {
 	this->name = "roofHip";
 	this->angle = angle;
 }
 
 Shape* RoofHipOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	return shape->roofHip(shape->_name, angle);
+	float actual_angle = ruleSet.evalFloat(angle, shape);
+	return shape->roofHip(shape->_name, actual_angle);
 }
 
 }

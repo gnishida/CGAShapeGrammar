@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<taper>
-			<param name="height" value="3"/>
-			<param name="top_ratio" value="0.7"/>
-		</taper>
+		<taper height="3" top_ratio="0.7"/>
 		<comp>
 			<param name="front" value="Side."/>
 			<param name="side" value="Side."/>
@@ -22,8 +19,6 @@
 		</comp>
 	</rule>
 	<rule name="X">
-		<extrude>
-			<param name="height" value="2"/>
-		</extrude>
+		<extrude height="2"/>
 	</rule>
 </rules>

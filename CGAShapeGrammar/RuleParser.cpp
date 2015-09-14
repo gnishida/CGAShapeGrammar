@@ -96,28 +96,29 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 }
 
 Operator* parseColorOperator(const QDomNode& node) {
-	std::vector<std::string> color;
+	std::string r;
+	std::string g;
+	std::string b;
+	std::string s;
 
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "r") {
-				color.push_back(child.toElement().attribute("value").toUtf8().constData());
-			} else if (name == "g") {
-				color.push_back(child.toElement().attribute("value").toUtf8().constData());
-			} else if (name == "b") {
-				color.push_back(child.toElement().attribute("value").toUtf8().constData());
-			} else if (name == "s") {
-				color.push_back(child.toElement().attribute("value").toUtf8().constData());
-			}
-		}
-
-		child = child.nextSibling();
+	if (node.toElement().hasAttribute("r")) {
+		r = node.toElement().attribute("r").toUtf8().constData();
+	}
+	if (node.toElement().hasAttribute("g")) {
+		g = node.toElement().attribute("g").toUtf8().constData();
+	}
+	if (node.toElement().hasAttribute("b")) {
+		b = node.toElement().attribute("b").toUtf8().constData();
+	}
+	if (node.toElement().hasAttribute("s")) {
+		s = node.toElement().attribute("s").toUtf8().constData();
 	}
 
-	return new ColorOperator(color);
+	if (s.empty()) {
+		return new ColorOperator(r, g, b);
+	} else {
+		return new ColorOperator(s);
+	}
 }
 
 Operator* parseCompOperator(const QDomNode& node) {
@@ -173,79 +174,41 @@ Operator* parseCopyOperator(const QDomNode& node) {
 }
 
 Operator* parseExtrudeOperator(const QDomNode& node) {
-	//float height;
-	std::string height;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "height") {
-				//height = child.toElement().attribute("value").toFloat();
-				height = child.toElement().attribute("value").toUtf8().constData();
-			}
-		}
-
-		child = child.nextSibling();
+	if (!node.toElement().hasAttribute("height")) {
+		throw "extrude node has to have height attribute.";
 	}
+
+	std::string height = node.toElement().attribute("height").toUtf8().constData();
 
 	return new ExtrudeOperator(height);
 }
 
 Operator* parseInsertOperator(const QDomNode& node) {
-	std::string geometryPath;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "geometryPath") {
-				geometryPath = child.toElement().attribute("value").toUtf8().constData();
-			}
-		}
-
-		child = child.nextSibling();
+	if (!node.toElement().hasAttribute("geometryPath")) {
+		throw "insert node has to have geometryPath attribute.";
 	}
+
+	std::string geometryPath = node.toElement().attribute("geometryPath").toUtf8().constData();
 
 	return new InsertOperator(geometryPath);
 }
 
 Operator* parseOffsetOperator(const QDomNode& node) {
-	float offsetDistance;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "offsetDistance") {
-				offsetDistance = child.toElement().attribute("value").toFloat();
-			}
-		}
-
-		child = child.nextSibling();
+	if (!node.toElement().hasAttribute("offsetDistance")) {
+		throw "offset node has to have offsetDistance attribute.";
 	}
+
+	std::string offsetDistance = node.toElement().attribute("offsetDistance").toUtf8().constData();
 
 	return new OffsetOperator(offsetDistance);
 }
 
 Operator* parseRoofHipOperator(const QDomNode& node) {
-	float angle = 0.0f;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "angle") {
-				angle = child.toElement().attribute("value").toFloat();
-			}
-		}
-
-		child = child.nextSibling();
+	if (!node.toElement().hasAttribute("angle")) {
+		throw "roofHip node has to have angle attribute.";
 	}
+
+	std::string angle = node.toElement().attribute("angle").toUtf8().constData();
 
 	return new RoofHipOperator(angle);
 }
@@ -353,28 +316,37 @@ Operator* parseSizeOperator(const QDomNode& node) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
 			QString type;
-			if (child.toElement().hasAttribute("type")) {
-				type = child.toElement().attribute("type");
+
+			if (!child.toElement().hasAttribute("type")) {
+				throw "param node under size node has to have type attribute.";
 			}
+
+			type = child.toElement().attribute("type");
 			std::string value = child.toElement().attribute("value").toUtf8().constData();
 
 			if (name == "xSize") {
 				if (type == "relative") {
 					xSize = Value(Value::TYPE_RELATIVE, value);
-				} else {
+				} else if (type == "absolute") {
 					xSize = Value(Value::TYPE_ABSOLUTE, value);
+				} else {
+					throw "type attribute under size node has to be either relative or absolute.";
 				}
 			} else if (name == "ySize") {
 				if (type == "relative") {
 					ySize = Value(Value::TYPE_RELATIVE, value);
-				} else {
+				} else if (type == "absolute") {
 					ySize = Value(Value::TYPE_ABSOLUTE, value);
+				} else {
+					throw "type attribute under size node has to be either relative or absolute.";
 				}
 			} else if (name == "zSize") {
 				if (type == "relative") {
 					zSize = Value(Value::TYPE_RELATIVE, value);
-				} else {
+				} else if (type == "absolute") {
 					zSize = Value(Value::TYPE_ABSOLUTE, value);
+				} else {
+					throw "type attribute under size node has to be either relative or absolute.";
 				}
 			}
 		}
@@ -390,20 +362,23 @@ Operator* parseSplitOperator(const QDomNode& node) {
 	std::vector<Value> sizes;
 	std::vector<std::string> names;
 
+	if (!node.toElement().hasAttribute("splitAxis")) {
+		throw "split node has to have splitAxis attribute.";
+	}
+	if (node.toElement().attribute("splitAxis") == "x") {
+		splitAxis = DIRECTION_X;
+	} else if (node.toElement().attribute("splitAxis") == "y") {
+		splitAxis = DIRECTION_Y;
+	} else {
+		splitAxis = DIRECTION_Z;
+	}
+
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
 
-			if (name == "splitAxis") {
-				if (child.toElement().attribute("value") == "x") {
-					splitAxis = DIRECTION_X;
-				} else if (child.toElement().attribute("value") == "y") {
-					splitAxis = DIRECTION_Y;
-				} else if (child.toElement().attribute("value") == "z") {
-					splitAxis = DIRECTION_Z;
-				}
-			} else if (name == "size") {
+			if (name == "size") {
 				QDomNode element = child.firstChild();
 				while (!element.isNull()) {
 					if (element.toElement().tagName() == "element") {
@@ -447,22 +422,18 @@ Operator* parseSplitOperator(const QDomNode& node) {
 }
 
 Operator* parseTaperOperator(const QDomNode& node) {
-	float height;
-	float top_ratio = 0.0f;
+	if (!node.toElement().hasAttribute("height")) {
+		throw "taper node has to have height attribute.";
+	}
 
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
+	std::string height = node.toElement().attribute("height").toUtf8().constData();
 
-			if (name == "height") {
-				height = child.toElement().attribute("value").toFloat();
-			} else if (name == "top_ratio") {
-				top_ratio = child.toElement().attribute("value").toFloat();
-			}
-		}
+	std::string top_ratio;
+	if (node.toElement().hasAttribute("top_ratio")) {
+		top_ratio = node.toElement().attribute("top_ratio").toUtf8().constData();
 
-		child = child.nextSibling();
+	} else {
+		top_ratio = "0.0";
 	}
 
 	return new TaperOperator(height, top_ratio);
@@ -494,35 +465,40 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 	Value y;
 	Value z;
 
+	if (!node.toElement().hasAttribute("mode")) {
+		throw "translate node has to have mode attribute.";
+	}
+	if (node.toElement().attribute("mode") == "abs") {
+		mode = MODE_ABSOLUTE;
+	} else if (node.toElement().attribute("mode") == "rel") {
+		mode = MODE_RELATIVE;
+	} else {
+		throw "mode has to be either abs or rel.";
+	}
+
+	if (!node.toElement().hasAttribute("coordSystem")) {
+		throw "translate node has to have coordSystem attribute.";
+	}
+	if (node.toElement().attribute("coordSystem") == "world") {
+		coordSystem = COORD_SYSTEM_WORLD;
+	} else if (node.toElement().attribute("coordSystem") == "object") {
+		coordSystem = COORD_SYSTEM_OBJECT;
+	} else {
+		throw "coordSystem has to be either world or object.";
+	}
+
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
+			std::string value = child.toElement().attribute("value").toUtf8().constData();
+			std::string type = child.toElement().attribute("type").toUtf8().constData();
 
-			if (name == "mode") {
-				if (child.toElement().attribute("value") == "abs") {
-					mode = MODE_ABSOLUTE;
-				} else if (child.toElement().attribute("value") == "rel") {
-					mode = MODE_RELATIVE;
-				} else {
-					throw "mode has to be either abs or rel.";
-				}
-			} else if (name == "coordSystem") {
-				if (child.toElement().attribute("value") == "world") {
-					coordSystem = COORD_SYSTEM_WORLD;
-				} else if (child.toElement().attribute("value") == "object") {
-					coordSystem = COORD_SYSTEM_OBJECT;
-				} else {
-					throw "coordSystem has to be either world or object.";
-				}
-			} else if (name == "x") {
-				std::string value = child.toElement().attribute("value").toUtf8().constData();
+			if (name == "x") {
 				x = Value(Value::TYPE_ABSOLUTE, value);
 			} else if (name == "y") {
-				std::string value = child.toElement().attribute("value").toUtf8().constData();
 				y = Value(Value::TYPE_ABSOLUTE, value);
 			} else if (name == "z") {
-				std::string value = child.toElement().attribute("value").toUtf8().constData();
 				z = Value(Value::TYPE_ABSOLUTE, value);
 			}
 		}

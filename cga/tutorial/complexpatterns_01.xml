@@ -30,11 +30,8 @@
 	
 	<!-- Volume -->
 	<rule name="Lot">
-		<extrude>
-			<param name="height" value="buildingH"/>
-		</extrude>
-		<split>
-			<param name="splitAxis" value="z"/>
+		<extrude height="buildingH"/>
+		<split splitAxis="z">
 			<param name="size">
 				<element type="floating" value="1" name="MainPart"/>
 				<element type="absolute" value="floorH" name="UpperPart"/>
@@ -43,8 +40,7 @@
 	</rule>
 	
 	<rule name="UpperPart">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="balconyDepth" name="Balcony"/>
 				<element type="floating" value="1" name="TopFloor"/>
@@ -74,9 +70,7 @@
 			<param name="ySize" type="absolute" value="scope.sy-borderwallW"/>
 			<param name="zSize" type="absolute" value="0.7"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="borderwallW"/>
 			<param name="y" value="borderwallW"/>
 			<param name="z" value="0"/>
@@ -90,8 +84,7 @@
 
 	<!-- Facade and Floors -->
 	<rule name="Facade">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="floating" value="groundflH" name="Floor"/>
 				<element type="floating" value="floorH" name="Floor" repeat="true"/>
@@ -99,8 +92,7 @@
 		</split>
 	</rule>
 	<rule name="Floor">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="borderwallW" name="Wall"/>
 				<element type="floating" value="1" name="FloorSub"/>
@@ -109,8 +101,7 @@
 		</split>
 	</rule>
 	<rule name="FloorSub">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="floating" value="1" name="TileRow"/>
 				<element type="absolute" value="ledgeH" name="Ledge"/>
@@ -120,24 +111,21 @@
 	
 	<!-- Tiles -->
 	<rule name="TileRow">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="tileW*nSymmetries" name="DoubleTile" repeat="true"/>
 			</param>
 		</split>
 	</rule>
 	<rule name="DoubleTile">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="milkGlassW+windowW" name="MilkGlassAndTile" repeat="true"/>
 			</param>
 		</split>
 	</rule>
 	<rule name="MilkGlassAndTile">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="milkGlassW" name="MilkGlass"/>
 				<element type="floating" value="windowW" name="Tile"/>
@@ -150,8 +138,7 @@
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="frameW" name="FrameAndBracing"/>
 				<element type="floating" value="1" name="FrameAndBlind"/>
@@ -164,8 +151,7 @@
 		<copy name="Bracing"/>
 	</rule>
 	<rule name="FrameAndBlind">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="frameW" name="Frame"/>
 				<element type="floating" value="1" name="Window"/>
@@ -178,8 +164,7 @@
 	
 	<!-- Windows -->
 	<rule name="Window">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="1" name="Subwindow"/>
 				<element type="absolute" value="frameW" name="Frame"/>
@@ -188,8 +173,7 @@
 		</split>
 	</rule>
 	<rule name="Subwindow">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="2" name="Glass"/>
 				<element type="floating" value="3" name="RedWindow"/>
@@ -197,8 +181,7 @@
 		</split>
 	</rule>
 	<rule name="RedWindow">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="frameW" name="RedFrame"/>
 				<element type="floating" value="1" name="RedFrameAndGlass"/>
@@ -206,8 +189,7 @@
 		</split>
 	</rule>
 	<rule name="RedFrameAndGlass">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="frameW" name="RedFrame"/>
 				<element type="floating" value="1" name="RedGlass"/>
@@ -216,8 +198,7 @@
 		</split>
 	</rule>
 	<rule name="RedGlass">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="floating" value="1" name="Glass"/>
 				<element type="floating" value="frameW/2" name="Frame"/>
@@ -228,45 +209,29 @@
 	
 	<!-- Materials -->
 	<rule name="Wall">
-		<color>
-			<param name="s" value="darkblue"/>
-		</color>
+		<color s="darkblue"/>
 	</rule>
 	<rule name="Blind">
-		<color>
-			<param name="s" value="grey"/>
-		</color>
+		<color s="grey"/>
 	</rule>
 	<rule name="Frame">
-		<extrude>
-			<param name="height" value="frameW"/>
-		</extrude>
-		<color>
-			<param name="s" value="white"/>
-		</color>
+		<extrude height="frameW"/>
+		<color s="white"/>
 	</rule>
 	<rule name="RedFrame">
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-frameW"/>
 		</translate>
-		<extrude>
-			<param name="height" value="frameW*4"/>
-		</extrude>
-		<color>
-			<param name="s" value="red"/>
-		</color>
+		<extrude height="frameW*4"/>
+		<color s="red"/>
 	</rule>
 	<rule name="Glass">
 		<texture>
 			<param name="texture" value="window_tex"/>
 		</texture>
-		<color>
-			<param name="s" value="white"/>
-		</color>
+		<color s="white"/>
 	</rule>
 	<rule name="MilkGlass">
 		<size>
@@ -274,12 +239,8 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="frameW*1.2"/>
 		</size>
-		<insert>
-			<param name="geometryPath" value="cube"/>
-		</insert>
-		<color>
-			<param name="s" value="brightblue"/>
-		</color>
+		<insert geometryPath="cube"/>
+		<color s="brightblue"/>
 		<!--
 		<setupProjection>
 			<param name="axesSelector" value="scope.xy"/>
@@ -302,24 +263,19 @@
 			<param name="ySize" type="relative" value="0.9"/>
 			<param name="zSize" type="absolute" value="0.2"/>
 		</size>
-		<insert>
-			<param name="geometryPath" value="cube"/>
-		</insert>
+		<insert geometryPath="cube"/>
 		<copy name="Wall"/>
 	</rule>
 	<rule name="Railing">
 		<copy name="HBar"/>
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="tileW/3" name="VBar" repeat="true"/>
 			</param>
 		</split>
 	</rule>
 	<rule name="HBar">
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="scope.sy-barDiameter/2"/>
 			<param name="z" value="0"/>
@@ -329,19 +285,13 @@
 			<param name="ySize" type="absolute" value="barDiameter"/>
 			<param name="zSize" type="absolute" value="barDiameter"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-barDiameter"/>
 		</translate>
-		<insert>
-			<param name="geometryPath" value="cyl_h"/>
-		</insert>
-		<color>
-			<param name="s" value="white"/>
-		</color>
+		<insert geometryPath="cyl_h"/>
+		<color s="white"/>
 	</rule>
 	<rule name="VBar">
 		<size>
@@ -349,19 +299,13 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="barDiameter"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-barDiameter"/>
 		</translate>
-		<insert>
-			<param name="geometryPath" value="cyl_v"/>
-		</insert>
-		<color>
-			<param name="s" value="white"/>
-		</color>
+		<insert geometryPath="cyl_v"/>
+		<color s="white"/>
 	</rule>
 	<rule name="Bracing">
 		<size>
@@ -369,15 +313,12 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="0.15"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="barDiameter/2"/>
 			<param name="y" value="0"/>
 			<param name="z" value="0"/>
 		</translate>
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="0.01" name="Wall"/>
 				<element type="floating" value="1" name="VBar"/>

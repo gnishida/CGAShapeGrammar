@@ -10,9 +10,9 @@ ExtrudeOperator::ExtrudeOperator(const std::string& height) {
 }
 
 Shape* ExtrudeOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	float fHeight = ruleSet.evalFloat(height, shape);
+	float actual_height = ruleSet.evalFloat(height, shape);
 
-	return shape->extrude(shape->_name, fHeight);
+	return shape->extrude(shape->_name, actual_height);
 }
 
 }

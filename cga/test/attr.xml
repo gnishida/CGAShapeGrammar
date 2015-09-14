@@ -2,8 +2,6 @@
 <rules>
 	<attr name="buildingheight" value="5"/>
 	<rule name="Lot">
-		<extrude>
-			<param name="height" value="buildingheight"/>
-		</extrude>
+		<extrude height="buildingheight"/>
 	</rule>
 </rules>

@@ -6,10 +6,10 @@ namespace cga {
 
 class OffsetOperator : public Operator {
 private:
-	float offsetDistance;
+	std::string offsetDistance;
 
 public:
-	OffsetOperator(float offsetDistance);
+	OffsetOperator(const std::string& offsetDistance);
 
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };

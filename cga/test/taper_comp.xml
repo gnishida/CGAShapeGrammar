@@ -1,16 +1,12 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="world"/>
+		<translate mode="rel" coordSystem="world">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="0.3"/>
 		</translate>
-		<taper>
-			<param name="height" value="3"/>
-		</taper>
+		<taper height="3"/>
 		<comp>
 			<param name="front" value="Facade."/>
 			<param name="side" value="Facade."/>

@@ -18,9 +18,7 @@
 	
 	<!-- Initial Shape starting rule -->
 	<rule name="Lot">
-		<extrude>
-			<param name="height" value="bldg_height"/>
-		</extrude>
+		<extrude height="bldg_height"/>
 		<copy name="Building"/>
 	</rule>
 	
@@ -43,8 +41,7 @@
 		<texture>
 			<param name="texture" value="wall_tex"/>
 		</texture>
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="groundf_height" name="Groundfloor"/>
 				<element type="floating" value="floor_height" name="Floor" repeat="true"/>
@@ -62,8 +59,7 @@
 		<texture>
 			<param name="texture" value="wall_tex"/>
 		</texture>
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="groundf_height" name="Floor"/>
 				<element type="floating" value="floor_height" name="Floor" repeat="true"/>
@@ -86,8 +82,7 @@
 	<!-- each floor is horizontally split into two narrow corner areas on 
 		each side of the floor, and into a set of window tiles in between -->
 	<rule name="Floor">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="1.0" name="Wall"/>
 				<element type="floating" value="tile_width" name="Tile" repeat="true"/>
@@ -101,8 +96,7 @@
 		a special entrance tile on the right 
 		and into a set of window tiles in between -->
 	<rule name="Groundfloor">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="1.0" name="Wall"/>
 				<element type="floating" value="tile_width" name="Tile" repeat="true"/>
@@ -115,8 +109,7 @@
 	<!-- a tile consists of a centered window element and 
 		wall elements above, below, left and right -->
 	<rule name="Tile">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="1.0" name="Wall"/>
 				<element type="absolute" value="2.0" name="WallWindowWall"/>
@@ -126,8 +119,7 @@
 	</rule>
 	
 	<rule name="WallWindowWall">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="1.0" name="Wall"/>
 				<element type="absolute" value="1.5" name="Window"/>
@@ -139,8 +131,7 @@
 	<!-- similarily, the EntranceTile contains a centered Door element,
 		but with no wall on spacing below -->
 	<rule name="EntranceTile">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="1.0" name="SolidWall"/>
 				<element type="absolute" value="2" name="DoorAndSolidWall"/>
@@ -150,8 +141,7 @@
 	</rule>
 	
 	<rule name="DoorAndSolidWall">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="2.5" name="Door"/>
 				<element type="floating" value="2.0" name="SolidWall"/>
@@ -168,9 +158,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="0.4"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.25"/>
@@ -178,9 +166,7 @@
 		<texture>
 			<param name="texture" value="window_tex"/>
 		</texture>
-		<insert>
-			<param name="geometryPath" value="window_asset"/>
-		</insert>
+		<insert geometryPath="window_asset"/>
 	</rule>
 	
 	<!-- same for the door asset. Scaling, positioning, texture selection
@@ -192,9 +178,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="0.1"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.4"/>
@@ -212,29 +196,21 @@
 	<!-- for the wall asset, setting the texture scale params u and v 
 		guarantees a texture mapping that nicely fits over the whole facade -->
 	<rule name="Wall">
-		<color>
-			<param name="s" value="wallColor"/>
-		</color>
+		<color s="wallColor"/>
 	</rule>
 	
 	<rule name="SolidWall">
-		<color>
-			<param name="s" value="wallColor"/>
-		</color>
+		<color s="wallColor"/>
 		<size>
 			<param name="xSize" type="relative" value="1"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="0.4"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.4"/>
 		</translate>
-		<insert>
-			<param name="geometryPath" value="cube_notex"/>
-		</insert>
+		<insert geometryPath="cube_notex"/>
 	</rule>
 </rules>

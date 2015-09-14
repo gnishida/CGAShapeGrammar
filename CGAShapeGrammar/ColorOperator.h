@@ -7,10 +7,14 @@ namespace cga {
 
 class ColorOperator : public Operator {
 private:
-	std::vector<std::string> color;
+	std::string r;
+	std::string g;
+	std::string b;
+	std::string s;
 
 public:
-	ColorOperator(const std::vector<std::string>& color);
+	ColorOperator(const std::string& r, const std::string& g, const std::string& b);
+	ColorOperator(const std::string& s);
 
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 

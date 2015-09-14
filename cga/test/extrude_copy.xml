@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<extrude>
-			<param name="height" value="1"/>
-		</extrude>
+		<extrude height="1"/>
 		<copy name="B."/>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="3"/>
 			<param name="y" value="0"/>
 			<param name="z" value="0"/>
@@ -17,9 +13,9 @@
 	<rule name="C">
 		<copy name="D."/>
 		<size>
-			<param name="xSize" value="2"/>
-			<param name="ySize" value="1.75"/>
-			<param name="zSize" value="0.5"/>
+			<param name="xSize" type="absolute" value="2"/>
+			<param name="ySize" type="absolute" value="1.75"/>
+			<param name="zSize" type="absolute" value="0.5"/>
 		</size>
 		<copy name="E."/>
 	</rule>

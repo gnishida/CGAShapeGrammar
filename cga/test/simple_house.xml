@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <rules>
 	<rule name="Lot">
-		<extrude>
-			<param name="height" value="6"/>
-		</extrude>
+		<extrude height="6"/>
 		<copy name="House"/>
 	</rule>
 	<rule name="House">
@@ -20,8 +18,7 @@
 		</roofHip>
 	</rule>
 	<rule name="FrontFacade">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="relative" value="0.5" name="Entrance."/>
 				<element type="relative" value="0.5" name="Floor"/>
@@ -29,8 +26,7 @@
 		</split>
 	</rule>
 	<rule name="SideFacade">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="relative" value="0.5" name="Floor"/>
 				<element type="relative" value="0.5" name="Floor"/>
@@ -38,8 +34,7 @@
 		</split>
 	</rule>
 	<rule name="Floor">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="1.0" name="Wall."/>
 				<element type="floating" value="3.0" name="Tile" repeat="true"/>
@@ -48,8 +43,7 @@
 		</split>
 	</rule>
 	<rule name="Tile">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="1.0" name="Wall."/>
 				<element type="absolute" value="2.0" name="WallWindowWall"/>
@@ -58,8 +52,7 @@
 		</split>
 	</rule>
 	<rule name="WallWindowWall">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="1.0" name="Wall."/>
 				<element type="absolute" value="1.5" name="Window"/>
@@ -68,9 +61,7 @@
 		</split>
 	</rule>
 	<rule name="Window">
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.05"/>

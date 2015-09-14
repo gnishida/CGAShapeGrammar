@@ -5,18 +5,29 @@
 
 namespace cga {
 
-ColorOperator::ColorOperator(const std::vector<std::string>& color) {
+ColorOperator::ColorOperator(const std::string& r, const std::string& g, const std::string& b) {
 	this->name = "color";
-	this->color = color;
+	this->r = r;
+	this->g = g;
+	this->b = b;
+	this->s = "";
+}
+
+ColorOperator::ColorOperator(const std::string& s) {
+	this->name = "color";
+	this->r = "";
+	this->g = "";
+	this->b = "";
+	this->s = s;
 }
 
 Shape* ColorOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	if (color.size() == 3) {
-		shape->_color.r = ruleSet.evalFloat(color[0], shape);
-		shape->_color.g = ruleSet.evalFloat(color[1], shape);
-		shape->_color.b = ruleSet.evalFloat(color[2], shape);
-	} else if (color.size() == 1) {
-		decodeRGB(ruleSet.evalString(color[0], shape), shape->_color.r, shape->_color.g, shape->_color.b);
+	if (s.empty()) {
+		shape->_color.r = ruleSet.evalFloat(r, shape);
+		shape->_color.g = ruleSet.evalFloat(g, shape);
+		shape->_color.b = ruleSet.evalFloat(b, shape);
+	} else {
+		decodeRGB(ruleSet.evalString(s, shape), shape->_color.r, shape->_color.g, shape->_color.b);
 	}
 
 	return shape;

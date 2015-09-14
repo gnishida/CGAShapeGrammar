@@ -22,9 +22,7 @@
 	
 	<!-- Volume -->
 	<rule name="Lot">
-		<extrude>
-			<param name="height" value="BuildingHeight"/>
-		</extrude>
+		<extrude height="BuildingHeight"/>
 		<comp>
 			<param name="front" value="FrontFacade"/>
 			<param name="back" value="RearFacade"/>
@@ -50,8 +48,7 @@
 			<param name="texWidth" type="absolute" value="5"/>
 			<param name="texHeight" type="absolute" value="5"/>
 		</setupProjection>
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="floating" value="2.3" name="Base"/>
 				<element type="floating" value="12" name="Mid"/>
@@ -61,8 +58,7 @@
 		</split>
 	</rule>
 	<rule name="Base">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="GroundfloorHeight" name="Floor"/>
 				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
@@ -71,8 +67,7 @@
 	</rule>
 	<rule name="Mid">
 		<copy name="Ledge"/>
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 			</param>
@@ -80,8 +75,7 @@
 	</rule>
 	<rule name="Upper">
 		<copy name="Ledge"/>
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 			</param>
@@ -94,8 +88,7 @@
 	
 	<!-- Floor -->
 	<rule name="Floor">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="CornerWallWidth" name="Wall"/>
 				<element type="floating" value="TileWidth" name="Tile" repeat="true"/>
@@ -106,8 +99,7 @@
 
 	<!-- Tile -->
 	<rule name="Tile">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="absolute" value="winSideW" name="Wall"/>
 				<element type="floating" value="1" name="SubTile"/>
@@ -116,8 +108,7 @@
 		</split>
 	</rule>
 	<rule name="SubTile">
-		<split>
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="y">
 			<param name="size">
 				<element type="absolute" value="sillH" name="Wall"/>
 				<element type="absolute" value="WindowHeight" name="Windows"/>
@@ -128,8 +119,7 @@
 
 	<!-- Window -->
 	<rule name="Windows">
-		<split>
-			<param name="splitAxis" value="x"/>
+		<split splitAxis="x">
 			<param name="size">
 				<element type="floating" value="scope.sx/2" name="Window"/>
 				<element type="absolute" value="dividerW" name="Wall"/>
@@ -140,9 +130,7 @@
 	<rule name="Window">
 		<copy name="Still"/>
 		<!--<copy name="WindowOpening"/>-->
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.3"/>
@@ -155,17 +143,13 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="0.15"/>
 		</size>
-		<insert>
-			<param name="geometryPath" value="../assets/primitives/win.single.05.sashwindow.obj"/>
-		</insert>
+		<insert geometryPath="../assets/primitives/win.single.05.sashwindow.obj"/>
 		<texture>
 			<param name="texture" value="../assets/textures/windowTiles_200x256.jpg"/>
 		</texture>
 	</rule>
 	<rule name="WindowOpening">
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
 			<param name="z" value="-0.3"/>
@@ -180,16 +164,12 @@
 			<param name="ySize" type="absolute" value="SillSize"/>
 			<param name="zSize" type="absolute" value="0.1"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="-dividerW/2"/>
 			<param name="y" value="-SillSize"/>
 			<param name="z" value="0"/>
 		</translate>
-		<insert>
-			<param name="geometryPath" value="../assets/primitives/cube.obj"/>
-		</insert>
+		<insert geometryPath="../assets/primitives/cube.obj"/>
 		<texture>
 			<param name="texture" value="../assets/textures/still.jpg"/>
 		</texture>
@@ -198,9 +178,7 @@
 
 	<!-- Wall -->
 	<rule name="Wall">
-		<color>
-			<param name="s" value="ColorizeWall"/>
-		</color>
+		<color s="ColorizeWall"/>
 		<texture>
 			<param name="texture" value="WallTexture"/>
 		</texture>
@@ -216,16 +194,12 @@
 			<param name="ySize" type="absolute" value="0.6"/>
 			<param name="zSize" type="absolute" value="0.6"/>
 		</size>
-		<translate>
-			<param name="mode" value="rel"/>
-			<param name="coordSystem" value="object"/>
+		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="sillH-0.6+0.02"/>
 			<param name="z" value="0"/>
 		</translate>
-		<insert>
-			<param name="geometryPath" value="../assets/primitives/ledgeSmall.obj"/>
-		</insert>
+		<insert geometryPath="../assets/primitives/ledgeSmall.obj"/>
 		<texture>
 			<param name="texture" value="../assets/textures/ledge.jpg"/>
 		</texture>
@@ -238,9 +212,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="CorniceOverhang"/>
 		</size>
-		<insert>
-			<param name="geometryPath" value="../assets/primitives/ledgeLarge.obj"/>
-		</insert>
+		<insert geometryPath="../assets/primitives/ledgeLarge.obj"/>
 		<texture>
 			<param name="texture" value="../assets/textures/ledge.jpg"/>
 		</texture>

@@ -6,10 +6,10 @@ namespace cga {
 
 class RoofHipOperator : public Operator {
 private:
-	float angle;
+	std::string angle;
 
 public:
-	RoofHipOperator(float angle);
+	RoofHipOperator(const std::string& angle);
 
 	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
 };
