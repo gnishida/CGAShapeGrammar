@@ -32,19 +32,15 @@
 	<rule name="Lot">
 		<extrude height="buildingH"/>
 		<split splitAxis="z">
-			<param name="size">
-				<element type="floating" value="1" name="MainPart"/>
-				<element type="absolute" value="floorH" name="UpperPart"/>
-			</param>
+			<param type="floating" value="1" name="MainPart"/>
+			<param type="absolute" value="floorH" name="UpperPart"/>
 		</split>
 	</rule>
 	
 	<rule name="UpperPart">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="balconyDepth" name="Balcony"/>
-				<element type="floating" value="1" name="TopFloor"/>
-			</param>
+			<param type="absolute" value="balconyDepth" name="Balcony"/>
+			<param type="floating" value="1" name="TopFloor"/>
 		</split>
 	</rule>
 	
@@ -85,51 +81,39 @@
 	<!-- Facade and Floors -->
 	<rule name="Facade">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="groundflH" name="Floor"/>
-				<element type="floating" value="floorH" name="Floor" repeat="true"/>
-			</param>
+			<param type="floating" value="groundflH" name="Floor"/>
+			<param type="floating" value="floorH" name="Floor" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="Floor">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="borderwallW" name="Wall"/>
-				<element type="floating" value="1" name="FloorSub"/>
-				<element type="absolute" value="borderwallW" name="Wall"/>
-			</param>
+			<param type="absolute" value="borderwallW" name="Wall"/>
+			<param type="floating" value="1" name="FloorSub"/>
+			<param type="absolute" value="borderwallW" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="FloorSub">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="1" name="TileRow"/>
-				<element type="absolute" value="ledgeH" name="Ledge"/>
-			</param>
+			<param type="floating" value="1" name="TileRow"/>
+			<param type="absolute" value="ledgeH" name="Ledge"/>
 		</split>
 	</rule>
 	
 	<!-- Tiles -->
 	<rule name="TileRow">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="tileW*nSymmetries" name="DoubleTile" repeat="true"/>
-			</param>
+			<param type="floating" value="tileW*nSymmetries" name="DoubleTile" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="DoubleTile">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="milkGlassW+windowW" name="MilkGlassAndTile" repeat="true"/>
-			</param>
+			<param type="floating" value="milkGlassW+windowW" name="MilkGlassAndTile" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="MilkGlassAndTile">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="milkGlassW" name="MilkGlass"/>
-				<element type="floating" value="windowW" name="Tile"/>
-			</param>
+			<param type="floating" value="milkGlassW" name="MilkGlass"/>
+			<param type="floating" value="windowW" name="Tile"/>
 		</split>
 	</rule>
 	<rule name="Tile">
@@ -139,11 +123,9 @@
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="frameW" name="FrameAndBracing"/>
-				<element type="floating" value="1" name="FrameAndBlind"/>
-				<element type="absolute" value="frameW" name="FrameAndBracing"/>
-			</param>
+			<param type="absolute" value="frameW" name="FrameAndBracing"/>
+			<param type="floating" value="1" name="FrameAndBlind"/>
+			<param type="absolute" value="frameW" name="FrameAndBracing"/>
 		</split>
 	</rule>
 	<rule name="FrameAndBracing">
@@ -152,58 +134,46 @@
 	</rule>
 	<rule name="FrameAndBlind">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="frameW" name="Frame"/>
-				<element type="floating" value="1" name="Window"/>
-				<element type="absolute" value="frameW" name="Frame"/>
-				<element type="absolute" value="blindH" name="Blind"/>
-				<element type="absolute" value="frameW" name="Frame"/>
-			</param>
+			<param type="absolute" value="frameW" name="Frame"/>
+			<param type="floating" value="1" name="Window"/>
+			<param type="absolute" value="frameW" name="Frame"/>
+			<param type="absolute" value="blindH" name="Blind"/>
+			<param type="absolute" value="frameW" name="Frame"/>
 		</split>
 	</rule>
 	
 	<!-- Windows -->
 	<rule name="Window">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="1" name="Subwindow"/>
-				<element type="absolute" value="frameW" name="Frame"/>
-				<element type="floating" value="1" name="Glass"/>
-			</param>
+			<param type="floating" value="1" name="Subwindow"/>
+			<param type="absolute" value="frameW" name="Frame"/>
+			<param type="floating" value="1" name="Glass"/>
 		</split>
 	</rule>
 	<rule name="Subwindow">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="2" name="Glass"/>
-				<element type="floating" value="3" name="RedWindow"/>
-			</param>
+			<param type="floating" value="2" name="Glass"/>
+			<param type="floating" value="3" name="RedWindow"/>
 		</split>
 	</rule>
 	<rule name="RedWindow">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="frameW" name="RedFrame"/>
-				<element type="floating" value="1" name="RedFrameAndGlass"/>
-			</param>
+			<param type="absolute" value="frameW" name="RedFrame"/>
+			<param type="floating" value="1" name="RedFrameAndGlass"/>
 		</split>
 	</rule>
 	<rule name="RedFrameAndGlass">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="frameW" name="RedFrame"/>
-				<element type="floating" value="1" name="RedGlass"/>
-				<element type="absolute" value="frameW" name="RedFrame"/>
-			</param>
+			<param type="absolute" value="frameW" name="RedFrame"/>
+			<param type="floating" value="1" name="RedGlass"/>
+			<param type="absolute" value="frameW" name="RedFrame"/>
 		</split>
 	</rule>
 	<rule name="RedGlass">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="1" name="Glass"/>
-				<element type="floating" value="frameW/2" name="Frame"/>
-				<element type="floating" value="1" name="Glass"/>
-			</param>
+			<param type="floating" value="1" name="Glass"/>
+			<param type="floating" value="frameW/2" name="Frame"/>
+			<param type="floating" value="1" name="Glass"/>
 		</split>
 	</rule>
 	
@@ -269,9 +239,7 @@
 	<rule name="Railing">
 		<copy name="HBar"/>
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="tileW/3" name="VBar" repeat="true"/>
-			</param>
+			<param type="floating" value="tileW/3" name="VBar" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="HBar">
@@ -319,11 +287,9 @@
 			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="0.01" name="Wall"/>
-				<element type="floating" value="1" name="VBar"/>
-				<element type="absolute" value="0.01" name="Wall"/>
-			</param>
+			<param type="absolute" value="0.01" name="Wall"/>
+			<param type="floating" value="1" name="VBar"/>
+			<param type="absolute" value="0.01" name="Wall"/>
 		</split>
 	</rule>
 </rules>

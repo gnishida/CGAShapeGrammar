@@ -8,20 +8,16 @@
 		</translate>
 		<!--
 		<split splitAxis="z">
-			<param name="size">
-				<element type="absolute" value="10" name="Parcel."/>
-				<element type="floating" value="1" name="Parcel."/>
-				<element type="absolute" value="10" name="Parcel."/>
-			</param>
+			<param type="absolute" value="10" name="Parcel."/>
+			<param type="floating" value="1" name="Parcel."/>
+			<param type="absolute" value="10" name="Parcel."/>
 		</operator>
 		-->
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="2.0" name="Wall"/>
-				<element type="floating" value="2.5" name="Tile" repeat="true"/>
-				<element type="floating" value="2.5" name="EntranceTile" />
-				<element type="absolute" value="2.0" name="Wall" />
-			</param>
+			<param type="absolute" value="2.0" name="Wall"/>
+			<param type="floating" value="2.5" name="Tile" repeat="true"/>
+			<param type="floating" value="2.5" name="EntranceTile" />
+			<param type="absolute" value="2.0" name="Wall" />
 		</split>
 	</rule>
 </rules>

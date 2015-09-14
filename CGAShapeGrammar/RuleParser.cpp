@@ -403,43 +403,32 @@ Operator* parseSplitOperator(const QDomNode& node) {
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
+			QString type = child.toElement().attribute("type");
+			std::string value = child.toElement().attribute("value").toUtf8().constData();
+			bool repeat = false;
+			if (child.toElement().hasAttribute("repeat")) {
+				repeat = true;
+			}
 
-			if (name == "size") {
-				QDomNode element = child.firstChild();
-				while (!element.isNull()) {
-					if (element.toElement().tagName() == "element") {
-						QString type = element.toElement().attribute("type");
-						std::string value = element.toElement().attribute("value").toUtf8().constData();
-						bool repeat = false;
-						if (element.toElement().hasAttribute("repeat")) {
-							repeat = true;
-						}
-
-						if (repeat) {
-							if (type == "absolute") {
-								sizes.push_back(Value(Value::TYPE_ABSOLUTE, value, true));
-							} else if (type == "relative") {
-								sizes.push_back(Value(Value::TYPE_RELATIVE, value, true));
-							} else {
-								sizes.push_back(Value(Value::TYPE_FLOATING, value, true));
-							}
-						} else {
-							if (type == "absolute") {
-								sizes.push_back(Value(Value::TYPE_ABSOLUTE, value));
-							} else if (type == "relative") {
-								sizes.push_back(Value(Value::TYPE_RELATIVE, value));
-							} else {
-								sizes.push_back(Value(Value::TYPE_FLOATING, value));
-							}
-						}
-
-						names.push_back(element.toElement().attribute("name").toUtf8().constData());
-					}
-
-					element = element.nextSibling();
+			if (repeat) {
+				if (type == "absolute") {
+					sizes.push_back(Value(Value::TYPE_ABSOLUTE, value, true));
+				} else if (type == "relative") {
+					sizes.push_back(Value(Value::TYPE_RELATIVE, value, true));
+				} else {
+					sizes.push_back(Value(Value::TYPE_FLOATING, value, true));
+				}
+			} else {
+				if (type == "absolute") {
+					sizes.push_back(Value(Value::TYPE_ABSOLUTE, value));
+				} else if (type == "relative") {
+					sizes.push_back(Value(Value::TYPE_RELATIVE, value));
+				} else {
+					sizes.push_back(Value(Value::TYPE_FLOATING, value));
 				}
 			}
+
+			names.push_back(child.toElement().attribute("name").toUtf8().constData());
 		}
 
 		child = child.nextSibling();

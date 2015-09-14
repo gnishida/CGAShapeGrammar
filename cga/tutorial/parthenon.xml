@@ -148,30 +148,24 @@
 		<copy name="InnerPeristylium"/>
 		<extrude height="Column_Height"/>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="Portico_Length" name="PorchWalls"/>
-				<element type="floating" value="1" name="Sanctuary"/>
-				<element type="absolute" value="Posticum_Length" name="PorchWalls"/>
-			</param>
+			<param type="absolute" value="Portico_Length" name="PorchWalls"/>
+			<param type="floating" value="1" name="Sanctuary"/>
+			<param type="absolute" value="Posticum_Length" name="PorchWalls"/>
 		</split>
 	</rule>
 	<rule name="InnerPeristylium">
 		<offset offsetDistance="-wallThickness*0.5" offsetSelector="inside"/>
 		<extrude height="peristyliumHeight"/>
 		<split splitAxis="z">
-			<param name="size">
-				<element type="absolute" value="Column_Height" name="InnerPeristyliumSub1"/>
-				<element type="absolute" value="architraveHeight + Frieze_Height" name="InnerPeristyliumSub2"/>
-			</param>
+			<param type="absolute" value="Column_Height" name="InnerPeristyliumSub1"/>
+			<param type="absolute" value="architraveHeight + Frieze_Height" name="InnerPeristyliumSub2"/>
 		</split>
 	</rule>
 	<rule name="InnerPeristyliumSub1">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="Portico_Length-Spacing-wallThickness*0.5" name="PorchColonnades"/>
-				<element type="floating" value="1" name="NIL"/>
-				<element type="absolute" value="Posticum_Length-Spacing-wallThickness*0.5" name="PorchColonnades"/>
-			</param>
+			<param type="absolute" value="Portico_Length-Spacing-wallThickness*0.5" name="PorchColonnades"/>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="Posticum_Length-Spacing-wallThickness*0.5" name="PorchColonnades"/>
 		</split>
 	</rule>
 	<rule name="InnerPeristyliumSub2">
@@ -181,10 +175,8 @@
 	</rule>
 	<rule name="PorchWalls">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="1" name="NIL"/>
-				<element type="absolute" value="prostyleLength" name="PorchWallsSub"/>
-			</param>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="prostyleLength" name="PorchWallsSub"/>
 		</split>
 	</rule>
 	<rule name="PorchWallsSub">
@@ -225,19 +217,15 @@
 			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="1" name="Wall"/>
-				<element type="absolute" value="entranceW" name="EntranceWallSub"/>
-				<element type="floating" value="1" name="Wall"/>
-			</param>
+			<param type="floating" value="1" name="Wall"/>
+			<param type="absolute" value="entranceW" name="EntranceWallSub"/>
+			<param type="floating" value="1" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="EntranceWallSub">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="entranceH" name="Entrance"/>
-				<element type="floating" value="1" name="Wall"/>
-			</param>
+			<param type="absolute" value="entranceH" name="Entrance"/>
+			<param type="floating" value="1" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="Entrance">
@@ -247,11 +235,9 @@
 			<param name="z" type="absolute" value="-podiumTreadDepth *0.2"/>
 		</translate>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="podiumRiserHeight *0.5" name="EntranceSub1"/>
-				<element type="floating" value="1" name="EntranceSub2"/>
-				<element type="absolute" value="entranceFrameW" name="Wall"/>
-			</param>
+			<param type="absolute" value="podiumRiserHeight *0.5" name="EntranceSub1"/>
+			<param type="floating" value="1" name="EntranceSub2"/>
+			<param type="absolute" value="entranceFrameW" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="EntranceSub1">
@@ -264,11 +250,9 @@
 	</rule>
 	<rule name="EntranceSub2">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="entranceFrameW" name="Wall"/>
-				<element type="floating" value="1" name="DoorMain"/>
-				<element type="absolute" value="entranceFrameW" name="Wall"/>
-			</param>
+			<param type="absolute" value="entranceFrameW" name="Wall"/>
+			<param type="floating" value="1" name="DoorMain"/>
+			<param type="absolute" value="entranceFrameW" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="DoorMain">
@@ -279,20 +263,16 @@
 			<param name="z" type="absolute" value="-wallThickness*0.15"/>
 		</translate>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="1" name="DoorMainSub"/>
-				<element type="absolute" value="doorFrameH" name="Wall"/>
-				<element type="absolute" value="doorWindowH" name="DoorWindows"/>
-			</param>
+			<param type="floating" value="1" name="DoorMainSub"/>
+			<param type="absolute" value="doorFrameH" name="Wall"/>
+			<param type="absolute" value="doorWindowH" name="DoorWindows"/>
 		</split>
 	</rule>
 	<rule name="DoorMainSub">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="doorFrameW" name="Wall"/>
-				<element type="floating" value="1" name="Door"/>
-				<element type="absolute" value="doorFrameW" name="Wall"/>
-			</param>
+			<param type="absolute" value="doorFrameW" name="Wall"/>
+			<param type="floating" value="1" name="Door"/>
+			<param type="absolute" value="doorFrameW" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="Door">
@@ -320,9 +300,7 @@
 			<param name="z" type="relative" value="-1"/>
 		</translate>
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="scope.sy" name="DoorWindow" repeat="true"/>
-			</param>
+			<param type="floating" value="scope.sy" name="DoorWindow" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="DoorWindow">
@@ -357,30 +335,24 @@
 	</rule>
 	<rule name="PeristyliumSub">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="Column_Height" name="Colonnade"/>
-				<element type="floating" value="1" name="Entablature"/>
-			</param>
+			<param type="absolute" value="Column_Height" name="Colonnade"/>
+			<param type="floating" value="1" name="Entablature"/>
 		</split>
 	</rule>
 	
 	<!-- Columns -->
 	<rule name="Colonnade">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ColumnTile"/>
-				<element type="floating" value="Spacing" name="ColumnTile" repeat="true"/>
-				<element type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ColumnTile"/>
-				<element type="absolute" value="0.001" name="ColumnTile"/>
-			</param>
+			<param type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ColumnTile"/>
+			<param type="floating" value="Spacing" name="ColumnTile" repeat="true"/>
+			<param type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ColumnTile"/>
+			<param type="absolute" value="0.001" name="ColumnTile"/>
 		</split>
 	</rule>
 	<rule name="Colonnade2">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="Spacing" name="ColumnTile" repeat="true"/>
-				<element type="absolute" value="0.001" name="ColumnTile"/>
-			</param>
+			<param type="floating" value="Spacing" name="ColumnTile" repeat="true"/>
+			<param type="absolute" value="0.001" name="ColumnTile"/>
 		</split>
 	</rule>
 	<rule name="ColumnTile">
@@ -400,10 +372,8 @@
 	</rule>
 	<rule name="Column">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="1" name="Shaft"/>
-				<element type="absolute" value="capitalHeight" name="Capital"/>
-			</param>
+			<param type="floating" value="1" name="Shaft"/>
+			<param type="absolute" value="capitalHeight" name="Capital"/>
 		</split>
 	</rule>
 	<rule name="Shaft">
@@ -421,10 +391,8 @@
 			<param name="zSize" type="absolute" value="capitalWidth"/>
 		</size>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="echinusPartsHeight" name="Echinus"/>
-				<element type="floating" value="abacusPartsHeight" name="Abacus"/>
-			</param>
+			<param type="floating" value="echinusPartsHeight" name="Echinus"/>
+			<param type="floating" value="abacusPartsHeight" name="Abacus"/>
 		</split>
 	</rule>
 	<rule name="Echinus">
@@ -437,21 +405,17 @@
 	<!-- Entablature -->
 	<rule name="Entablature">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="architraveHeight" name="Architraves"/>
-				<element type="absolute" value="Frieze_Height" name="Frieze"/>
-				<element type="floating" value="1" name="Cornice"/>
-			</param>
+			<param type="absolute" value="architraveHeight" name="Architraves"/>
+			<param type="absolute" value="Frieze_Height" name="Frieze"/>
+			<param type="floating" value="1" name="Cornice"/>
 		</split>
 	</rule>
 	<rule name="Architraves">
 		<color s="architraveC"/>
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ArchitravesSub1"/>
-				<element type="floating" value="Spacing" name="Architrave" repeat="true"/>
-				<element type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ArchitravesSub2"/>
-			</param>
+			<param type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ArchitravesSub1"/>
+			<param type="floating" value="Spacing" name="Architrave" repeat="true"/>
+			<param type="floating" value="Spacing + triglyphWidth *0.5-architraveD*0.5" name="ArchitravesSub2"/>
 		</split>
 	</rule>
 	<rule name="ArchitravesSub1">
@@ -482,10 +446,8 @@
 			<param name="z" type="absolute" value="-architraveD*0.5"/>
 		</translate>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="1" name="ArchitraveSub"/>
-				<element type="floating" value="taeniaH" name="Taenia"/>
-			</param>
+			<param type="floating" value="1" name="ArchitraveSub"/>
+			<param type="floating" value="taeniaH" name="Taenia"/>
 		</split>
 	</rule>
 	<rule name="ArchitraveSub">
@@ -545,20 +507,16 @@
 			<param name="z" type="absolute" value="-0.007"/>
 		</translate>
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="triglyphWidth" name="TriglyphWithGuttae"/>
-				<element type="floating" value="Spacing" name="TriglyphsSub" repeat="true"/>
-			</param>
+			<param type="absolute" value="triglyphWidth" name="TriglyphWithGuttae"/>
+			<param type="floating" value="Spacing" name="TriglyphsSub" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="TriglyphsSub">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="1" name="NIL"/>
-				<element type="absolute" value="triglyphWidth" name="TriglyphsSubSub"/>
-				<element type="floating" value="1" name="NIL"/>
-				<element type="absolute" value="triglyphWidth" name="TriglyphsSubSub"/>
-			</param>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="triglyphWidth" name="TriglyphsSubSub"/>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="triglyphWidth" name="TriglyphsSubSub"/>
 		</split>
 	</rule>
 	<rule name="TriglyphsSubSub">
@@ -609,11 +567,9 @@
 	</rule>
 	<rule name="Geisons">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="Spacing /4" name="GeisonsSub1"/>
-				<element type="floating" value="Spacing" name="GeisonsSub2"/>
-				<element type="floating" value="Spacing" name="GeisonsSub3"/>
-			</param>
+			<param type="floating" value="Spacing /4" name="GeisonsSub1"/>
+			<param type="floating" value="Spacing" name="GeisonsSub2"/>
+			<param type="floating" value="Spacing" name="GeisonsSub3"/>
 		</split>
 	</rule>
 	<!--
@@ -633,17 +589,13 @@
 	</rule>
 	<rule name="GeisonsSub2">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="relative" value="0.25" name="MutuleAndGeison" repeat="true"/>
-			</param>
+			<param type="relative" value="0.25" name="MutuleAndGeison" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="GeisonsSub3">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="relative" value="0.25" name="MutuleAndGeison" repeat="true"/>
-				<element type="relative" value="0.25" name="MutuleAndGeison2"/>
-			</param>
+			<param type="relative" value="0.25" name="MutuleAndGeison" repeat="true"/>
+			<param type="relative" value="0.25" name="MutuleAndGeison2"/>
 		</split>
 	</rule>
 	<rule name="MutuleAndGeison">

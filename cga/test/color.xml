@@ -3,9 +3,7 @@
 	<rule name="Lot">
 		<extrude height="5"/>
 		<split splitAxis="z">
-			<param name="size">
-				<element type="floating" value="1.5" name="X" repeat="true"/>
-			</param>
+			<param type="floating" value="1.5" name="X" repeat="true"/>
 		</split>
 	</rule>
 	<!--

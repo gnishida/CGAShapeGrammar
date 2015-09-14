@@ -49,36 +49,28 @@
 			<param name="texHeight" type="absolute" value="5"/>
 		</setupProjection>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="2.3" name="Base"/>
-				<element type="floating" value="12" name="Mid"/>
-				<element type="floating" value="3" name="Upper"/>
-				<element type="absolute" value="2.5" name="Top"/>
-			</param>
+			<param type="floating" value="2.3" name="Base"/>
+			<param type="floating" value="12" name="Mid"/>
+			<param type="floating" value="3" name="Upper"/>
+			<param type="absolute" value="2.5" name="Top"/>
 		</split>
 	</rule>
 	<rule name="Base">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="GroundfloorHeight" name="Floor"/>
-				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
-			</param>
+			<param type="absolute" value="GroundfloorHeight" name="Floor"/>
+			<param type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="Mid">
 		<copy name="Ledge"/>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
-			</param>
+			<param type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="Upper">
 		<copy name="Ledge"/>
 		<split splitAxis="y">
-			<param name="size">
-				<element type="floating" value="FloorHeight" name="Floor" repeat="true"/>
-			</param>
+			<param type="floating" value="FloorHeight" name="Floor" repeat="true"/>
 		</split>
 	</rule>
 	<rule name="Top">
@@ -89,42 +81,34 @@
 	<!-- Floor -->
 	<rule name="Floor">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="CornerWallWidth" name="Wall"/>
-				<element type="floating" value="TileWidth" name="Tile" repeat="true"/>
-				<element type="absolute" value="CornerWallWidth" name="Wall"/>
-			</param>
+			<param type="absolute" value="CornerWallWidth" name="Wall"/>
+			<param type="floating" value="TileWidth" name="Tile" repeat="true"/>
+			<param type="absolute" value="CornerWallWidth" name="Wall"/>
 		</split>
 	</rule>
 
 	<!-- Tile -->
 	<rule name="Tile">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="absolute" value="winSideW" name="Wall"/>
-				<element type="floating" value="1" name="SubTile"/>
-				<element type="absolute" value="winSideW" name="Wall"/>
-			</param>
+			<param type="absolute" value="winSideW" name="Wall"/>
+			<param type="floating" value="1" name="SubTile"/>
+			<param type="absolute" value="winSideW" name="Wall"/>
 		</split>
 	</rule>
 	<rule name="SubTile">
 		<split splitAxis="y">
-			<param name="size">
-				<element type="absolute" value="sillH" name="Wall"/>
-				<element type="absolute" value="WindowHeight" name="Windows"/>
-				<element type="floating" value="1" name="Wall"/>
-			</param>
+			<param type="absolute" value="sillH" name="Wall"/>
+			<param type="absolute" value="WindowHeight" name="Windows"/>
+			<param type="floating" value="1" name="Wall"/>
 		</split>
 	</rule>
 
 	<!-- Window -->
 	<rule name="Windows">
 		<split splitAxis="x">
-			<param name="size">
-				<element type="floating" value="scope.sx/2" name="Window"/>
-				<element type="absolute" value="dividerW" name="Wall"/>
-				<element type="floating" value="scope.sx/2" name="Window"/>
-			</param>
+			<param type="floating" value="scope.sx/2" name="Window"/>
+			<param type="absolute" value="dividerW" name="Wall"/>
+			<param type="floating" value="scope.sx/2" name="Window"/>
 		</split>
 	</rule>
 	<rule name="Window">
