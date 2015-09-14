@@ -408,12 +408,12 @@
 	</rule>
 	<rule name="ArchitravesSub1">
 		<translate mode="rel" coordSystem="object">
-			<param name="x" type="relative" value="-1"/>
+			<param name="x" type="relative" value="-0.2"/>
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<size>
-			<param name="xSize" type="relative" value="2"/>
+			<param name="xSize" type="relative" value="1.2"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
@@ -421,7 +421,7 @@
 	</rule>
 	<rule name="ArchitravesSub2">
 		<size>
-			<param name="xSize" type="relative" value="2"/>
+			<param name="xSize" type="relative" value="1.2"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
