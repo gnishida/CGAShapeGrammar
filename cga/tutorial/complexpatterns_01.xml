@@ -66,8 +66,9 @@
 			<param name="ySize" type="absolute" value="scope.sy-borderwallW"/>
 			<param name="zSize" type="absolute" value="0.7"/>
 		</size>
+		<center axesSelector="x"/>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="borderwallW"/>
+			<param name="x" type="absolute" value="0"/>
 			<param name="y" type="absolute" value="borderwallW"/>
 			<param name="z" type="absolute" value="0"/>
 		</translate>
@@ -281,11 +282,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="0.15"/>
 		</size>
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="barDiameter/2"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="0"/>
-		</translate>
+		<center axesSelector="x"/>
 		<split splitAxis="y">
 			<param type="absolute" value="0.01" name="Wall"/>
 			<param type="floating" value="1" name="VBar"/>

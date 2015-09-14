@@ -9,6 +9,7 @@
 namespace cga {
 
 void parseRule(char* filename, RuleSet& ruleSet);
+Operator* parseCenterOperator(const QDomNode& node);
 Operator* parseColorOperator(const QDomNode& node);
 Operator* parseCompOperator(const QDomNode& node);
 Operator* parseCopyOperator(const QDomNode& node);

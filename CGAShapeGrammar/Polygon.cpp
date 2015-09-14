@@ -92,6 +92,8 @@ void Polygon::setupProjection(float texWidth, float texHeight) {
 }
 
 void Polygon::size(float xSize, float ySize, float zSize) {
+	_prev_scope = _scope;
+
 	float scaleX = xSize / _scope.x;
 	float scaleY = ySize / _scope.y;
 	for (int i = 0; i < _points.size(); ++i) {

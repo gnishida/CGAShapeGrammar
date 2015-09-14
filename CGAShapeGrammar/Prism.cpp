@@ -70,6 +70,8 @@ void Prism::setupProjection(float texWidth, float texHeight) {
 }
 
 void Prism::size(float xSize, float ySize, float zSize) {
+	_prev_scope = _scope;
+
 	float scale_x = xSize / _scope.x;
 	float scale_y = ySize / _scope.y;
 	_height = zSize;

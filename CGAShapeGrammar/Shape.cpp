@@ -9,6 +9,20 @@ namespace cga {
 
 std::map<std::string, Asset> Shape::assets;
 
+void Shape::center(int axesSelector) {
+	if (axesSelector == AXES_SELECTOR_XYZ || axesSelector == AXES_SELECTOR_XY || axesSelector == AXES_SELECTOR_XZ || axesSelector == AXES_SELECTOR_X) {
+		_modelMat = glm::translate(_modelMat, glm::vec3((_prev_scope.x - _scope.x) * 0.5, 0, 0));
+	}
+	if (axesSelector == AXES_SELECTOR_XYZ || axesSelector == AXES_SELECTOR_XY || axesSelector == AXES_SELECTOR_YZ || axesSelector == AXES_SELECTOR_Y) {
+		_modelMat = glm::translate(_modelMat, glm::vec3(0, (_prev_scope.y - _scope.y) * 0.5, 0));
+	}
+	if (axesSelector == AXES_SELECTOR_XYZ || axesSelector == AXES_SELECTOR_XZ || axesSelector == AXES_SELECTOR_YZ || axesSelector == AXES_SELECTOR_Z) {
+		_modelMat = glm::translate(_modelMat, glm::vec3(0, 0, (_prev_scope.z - _scope.z) * 0.5));
+	}
+
+	_prev_scope = _scope;
+}
+
 Shape* Shape::clone(const std::string& name) {
 	throw "clone() is not supported.";
 }

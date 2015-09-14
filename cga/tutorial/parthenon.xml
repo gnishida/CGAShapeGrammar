@@ -198,11 +198,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="relative" value="-0.05"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="0"/>
-		</translate>
+		<center axesSelector="x"/>
 		<copy name="Wall"/>
 	</rule>
 	<rule name="EntranceWall">
@@ -211,11 +207,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="relative" value="-0.05"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="0"/>
-		</translate>
+		<center axesSelector="x"/>
 		<split splitAxis="x">
 			<param type="floating" value="1" name="Wall"/>
 			<param type="absolute" value="entranceW" name="EntranceWallSub"/>
@@ -380,16 +372,12 @@
 		<insert geometryPath="shaftAsset"/>
 	</rule>
 	<rule name="Capital">
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="scope.sx/2-capitalWidth/2"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="scope.sz/2-capitalWidth/2"/>
-		</translate>
 		<size>
 			<param name="xSize" type="absolute" value="capitalWidth"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="capitalWidth"/>
 		</size>
+		<center axesSelector="xz"/>
 		<split splitAxis="y">
 			<param type="floating" value="echinusPartsHeight" name="Echinus"/>
 			<param type="floating" value="abacusPartsHeight" name="Abacus"/>
@@ -472,11 +460,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="-architraveD/2"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="0"/>
-		</translate>
+		<center axesSelector="x"/>
 		<copy name="Metopes"/>
 		<translate mode="rel" coordSystem="object">
 			<param name="x" type="absolute" value="0"/>
@@ -486,18 +470,14 @@
 		<copy name="Triglyphs"/>
 	</rule>
 	<rule name="Metopes">
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="0"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="scope.sz/2-architraveD/2-triglyphWidth/30"/>
-		</translate>
 		<size>
 			<param name="xSize" type="relative" value="1"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="architraveD+ triglyphWidth /15"/>
 		</size>
-		<color s="Metopes_Color"/>
+		<center axesSelector="z"/>
 		<insert geometryPath="friezeAsset"/>
+		<color s="Metopes_Color"/>
 	</rule>
 	<rule name="Triglyphs">
 		<color s="Triglyph_Color"/>
@@ -553,16 +533,12 @@
 	</rule>
 	<rule name="Cornice">
 		<color s="corniceC"/>
-		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="architraveD*0.5+ Spacing *0.125- triglyphWidth*0.5"/>
-			<param name="y" type="absolute" value="0"/>
-			<param name="z" type="absolute" value="0"/>
-		</translate>
 		<size>
 			<param name="xSize" type="absolute" value="scope.sx+architraveD+ Spacing *0.25- triglyphWidth"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
+		<center axesSelector="x"/>
 		<copy name="Geisons"/>
 	</rule>
 	<rule name="Geisons">
@@ -627,7 +603,7 @@
 	<rule name="Mutule">
 		<color s="Triglyph_Color"/>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" type="relative" value="0.5-triglyphWidth/Spacing*2"/>
+			<param name="x" type="relative" value="0"/>
 			<param name="y" type="relative" value="0.05"/>
 			<param name="z" type="absolute" value="architraveD/2+geisonProjection*0.2"/>
 		</translate>
@@ -636,6 +612,7 @@
 			<param name="ySize" type="absolute" value="geisonProjection*0.25"/>
 			<param name="zSize" type="absolute" value="geisonProjection*0.65"/>
 		</size>
+		<center axesSelector="x"/>
 		<insert geometryPath="mutuleAsset"/>
 	</rule>
 	-->
@@ -663,7 +640,7 @@
 	<!-- pediment with simas -->
 	<rule name="Pediment">
 		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="scope.sx * 0.0025"/>
+			<param name="x" type="absolute" value="0"/>
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="-pedimentWidth"/>
 		</translate>
@@ -672,6 +649,7 @@
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
+		<center axesSelector="x"/>
 		<extrude height="pedimentWidth-geisonProjection"/>
 	</rule>
 </rules>

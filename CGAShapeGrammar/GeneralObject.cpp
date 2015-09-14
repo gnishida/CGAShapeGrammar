@@ -32,6 +32,21 @@ Shape* GeneralObject::clone(const std::string& name) {
 	return copy;
 }
 
+void GeneralObject::size(float xSize, float ySize, float zSize) {
+	_prev_scope = _scope;
+
+	BoundingBox bbox(_points);
+	float scale_x = xSize / bbox.sx();
+	float scale_y = xSize / bbox.sy();
+	float scale_z = xSize / bbox.sz();
+
+	for (int i =  0; i < _points.size(); ++i) {
+		_points[i].x *= scale_x;
+		_points[i].y *= scale_y;
+		_points[i].z *= scale_z;
+	}
+}
+
 void GeneralObject::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	if (_removed) return;
 

@@ -135,6 +135,8 @@ Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWi
 }
 
 void Rectangle::size(float xSize, float ySize, float zSize) {
+	_prev_scope = _scope;
+
 	_scope.x = xSize;
 	_scope.y = ySize;
 	_scope.z = zSize;

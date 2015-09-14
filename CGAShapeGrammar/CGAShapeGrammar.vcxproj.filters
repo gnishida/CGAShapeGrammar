@@ -173,6 +173,9 @@
     <ClCompile Include="GableRoof.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="CenterOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -305,6 +308,9 @@
     </ClInclude>
     <ClInclude Include="GableRoof.h">
       <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="CenterOperator.h">
+      <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

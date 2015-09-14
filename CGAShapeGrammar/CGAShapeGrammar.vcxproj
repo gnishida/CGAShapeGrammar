@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CenterOperator.cpp" />
     <ClCompile Include="CGA.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ColorOperator.cpp" />
@@ -229,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CenterOperator.h" />
     <ClInclude Include="CGA.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="ColorOperator.h" />

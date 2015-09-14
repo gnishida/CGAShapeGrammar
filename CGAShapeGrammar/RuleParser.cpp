@@ -1,4 +1,5 @@
 #include "RuleParser.h"
+#include "CenterOperator.h"
 #include "ColorOperator.h"
 #include "CompOperator.h"
 #include "CopyOperator.h"
@@ -56,7 +57,9 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 			while (!operator_node.isNull()) {
 				std::string operator_name = operator_node.toElement().tagName().toUtf8().constData();
 
-				if (operator_name == "color") {
+				if (operator_name == "center") {
+					ruleSet.addOperator(name, parseCenterOperator(operator_node));
+				} else if (operator_name == "color") {
 					ruleSet.addOperator(name, parseColorOperator(operator_node));
 				} else if (operator_name == "comp") {
 					ruleSet.addOperator(name, parseCompOperator(operator_node));
@@ -96,6 +99,32 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 
 		child_node = child_node.nextSibling();
 	}
+}
+
+Operator* parseCenterOperator(const QDomNode& node) {
+	int axesSelector;
+
+	if (!node.toElement().hasAttribute("axesSelector")) {
+		throw "center node has to have axesSelector attribute.";
+	}
+
+	if (node.toElement().attribute("axesSelector") == "xyz") {
+		axesSelector = AXES_SELECTOR_XYZ;
+	} else if (node.toElement().attribute("axesSelector") == "x") {
+		axesSelector = AXES_SELECTOR_X;
+	} else if (node.toElement().attribute("axesSelector") == "y") {
+		axesSelector = AXES_SELECTOR_Y;
+	} else if (node.toElement().attribute("axesSelector") == "z") {
+		axesSelector = AXES_SELECTOR_Z;
+	} else if (node.toElement().attribute("axesSelector") == "xy") {
+		axesSelector = AXES_SELECTOR_XY;
+	} else if (node.toElement().attribute("axesSelector") == "xz") {
+		axesSelector = AXES_SELECTOR_XZ;
+	} else {
+		axesSelector = AXES_SELECTOR_YZ;
+	}
+
+	return new CenterOperator(axesSelector);
 }
 
 Operator* parseColorOperator(const QDomNode& node) {

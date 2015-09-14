@@ -148,8 +148,9 @@
 			<param name="ySize" type="absolute" value="SillSize"/>
 			<param name="zSize" type="absolute" value="0.1"/>
 		</size>
+		<center axesSelector="x"/>
 		<translate mode="rel" coordSystem="object">
-			<param name="x" type="absolute" value="-dividerW/2"/>
+			<param name="x" type="absolute" value="0"/>
 			<param name="y" type="absolute" value="-SillSize"/>
 			<param name="z" type="absolute" value="0"/>
 		</translate>

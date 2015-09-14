@@ -14,11 +14,13 @@ public:
 	std::string _texture;
 	std::vector<glm::vec2> _texCoords;
 	glm::vec3 _scope;
+	glm::vec3 _prev_scope;
 	glm::mat4 _pivot;
 
 	static std::map<std::string, Asset> assets;
 
 public:
+	void center(int axesSelector);
 	virtual Shape* clone(const std::string& name);
 	virtual void comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes);
 	virtual Shape* extrude(const std::string& name, float height);
