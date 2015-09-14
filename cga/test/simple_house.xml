@@ -13,9 +13,7 @@
 		</comp>
 	</rule>
 	<rule name="Roof">
-		<roofHip>
-			<param name="angle" value="30"/>
-		</roofHip>
+		<roofHip angle="30"/>
 	</rule>
 	<rule name="FrontFacade">
 		<split splitAxis="y">

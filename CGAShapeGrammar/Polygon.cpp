@@ -1,8 +1,10 @@
 #include "Polygon.h"
 #include "Pyramid.h"
+#include "GableRoof.h"
 #include "HipRoof.h"
 #include "OffsetPolygon.h"
 #include "Prism.h"
+#include "GeneralObject.h"
 #include "GLUtils.h"
 
 namespace cga {
@@ -40,12 +42,46 @@ Shape* Polygon::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-Shape* Polygon::offset(const std::string& name, float offsetDistance) {
-	return new OffsetPolygon(name, _pivot, _modelMat, _points, offsetDistance, _color, _texture);
+Shape* Polygon::offset(const std::string& name, float offsetDistance, int offsetSelector) {
+	if (offsetSelector == SELECTOR_ALL) {
+		return new OffsetPolygon(name, _pivot, _modelMat, _points, offsetDistance, _color, _texture);
+	} else if (offsetSelector == SELECTOR_INSIDE) {
+		std::vector<glm::vec2> offset_points;
+		glutils::offsetPolygon(_points, offsetDistance, offset_points);
+		return new Polygon(name, _pivot, _modelMat, offset_points, _color, _texture);
+	} else {
+		std::vector<glm::vec2> offset_points;
+		glutils::offsetPolygon(_points, offsetDistance, offset_points);
+
+		std::vector<glm::vec3> pts;
+		std::vector<glm::vec3> normals;
+		for (int i = 0; i < _points.size(); ++i) {
+			pts.push_back(glm::vec3(offset_points[i], 0));
+			pts.push_back(glm::vec3(_points[i], 0));
+			pts.push_back(glm::vec3(_points[(i+1) % _points.size()], 0));
+
+			pts.push_back(glm::vec3(offset_points[i], 0));
+			pts.push_back(glm::vec3(_points[(i+1) % _points.size()], 0));
+			pts.push_back(glm::vec3(offset_points[(i+1) % offset_points.size()], 0));
+
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+			normals.push_back(glm::vec3(0, 0, 1));
+		}
+		
+		return new GeneralObject(name, _pivot, _modelMat, pts, normals, _color);
+	}
 }
 
 Shape* Polygon::roofHip(const std::string& name, float angle) {
 	return new HipRoof(name, _pivot, _modelMat, _points, angle, _color);
+}
+
+Shape* Polygon::roofGable(const std::string& name, float angle) {
+	return new GableRoof(name, _pivot, _modelMat, _points, angle, _color);
 }
 
 void Polygon::setupProjection(float texWidth, float texHeight) {

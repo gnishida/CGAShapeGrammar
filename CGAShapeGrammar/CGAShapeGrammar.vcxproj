@@ -135,6 +135,7 @@
     <ClCompile Include="CopyOperator.cpp" />
     <ClCompile Include="Cuboid.cpp" />
     <ClCompile Include="ExtrudeOperator.cpp" />
+    <ClCompile Include="GableRoof.cpp" />
     <ClCompile Include="GeneralObject.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_MainWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -169,6 +170,7 @@
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="RoofGableOperator.cpp" />
     <ClCompile Include="RoofHipOperator.cpp" />
     <ClCompile Include="RotateOperator.cpp" />
     <ClCompile Include="Rule.cpp" />
@@ -234,6 +236,7 @@
     <ClInclude Include="CopyOperator.h" />
     <ClInclude Include="Cuboid.h" />
     <ClInclude Include="ExtrudeOperator.h" />
+    <ClInclude Include="GableRoof.h" />
     <ClInclude Include="GeneralObject.h" />
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />
     <ClInclude Include="GLUtils.h" />
@@ -248,6 +251,7 @@
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="RoofGableOperator.h" />
     <ClInclude Include="RoofHipOperator.h" />
     <ClInclude Include="RotateOperator.h" />
     <ClInclude Include="Rule.h" />

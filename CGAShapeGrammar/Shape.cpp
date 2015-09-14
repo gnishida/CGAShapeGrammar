@@ -99,8 +99,12 @@ void Shape::nil() {
 	_removed = true;
 }
 
-Shape* Shape::offset(const std::string& name, float offsetDistance) {
+Shape* Shape::offset(const std::string& name, float offsetDistance, int offsetSelector) {
 	throw "offset() is not supported.";
+}
+
+Shape* Shape::roofGable(const std::string& name, float angle) {
+	throw "roofGable() is not supported.";
 }
 
 Shape* Shape::roofHip(const std::string& name, float angle) {

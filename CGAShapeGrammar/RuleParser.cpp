@@ -5,6 +5,7 @@
 #include "ExtrudeOperator.h"
 #include "InsertOperator.h"
 #include "OffsetOperator.h"
+#include "RoofGableOperator.h"
 #include "RoofHipOperator.h"
 #include "RotateOperator.h"
 #include "SetupProjectionOperator.h"
@@ -67,6 +68,8 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 					ruleSet.addOperator(name, parseInsertOperator(operator_node));
 				} else if (operator_name == "offset") {
 					ruleSet.addOperator(name, parseOffsetOperator(operator_node));
+				} else if (operator_name == "roofGable") {
+					ruleSet.addOperator(name, parseRoofGableOperator(operator_node));
 				} else if (operator_name == "roofHip") {
 					ruleSet.addOperator(name, parseRoofHipOperator(operator_node));
 				} else if (operator_name == "rotate") {
@@ -200,7 +203,28 @@ Operator* parseOffsetOperator(const QDomNode& node) {
 
 	std::string offsetDistance = node.toElement().attribute("offsetDistance").toUtf8().constData();
 
-	return new OffsetOperator(offsetDistance);
+	int offsetSelector = SELECTOR_ALL;
+	if (node.toElement().hasAttribute("offsetSelector")) {
+		if (node.toElement().attribute("offsetSelector") == "all") {
+			offsetSelector = SELECTOR_ALL;
+		} else if (node.toElement().attribute("offsetSelector") == "inside") {
+			offsetSelector = SELECTOR_INSIDE;
+		} else {
+			offsetSelector = SELECTOR_BORDER;
+		}
+	}
+
+	return new OffsetOperator(offsetDistance, offsetSelector);
+}
+
+Operator* parseRoofGableOperator(const QDomNode& node) {
+	if (!node.toElement().hasAttribute("angle")) {
+		throw "roofGable node has to have angle attribute.";
+	}
+
+	std::string angle = node.toElement().attribute("angle").toUtf8().constData();
+
+	return new RoofGableOperator(angle);
 }
 
 Operator* parseRoofHipOperator(const QDomNode& node) {

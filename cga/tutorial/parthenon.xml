@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<rules version="2011.1" author="Pascal Mueller">
+	<!-- model parameters -->
+	<attr name="Temple_Color" value="#EDE6CD"/>
+	
+	<!-- column parameters -->
+	<attr name="Diameter" value="1.92"/>
+	<attr name="Column_Height" value="10.43"/>
+	<attr name="Spacing" value="4.29"/>
+	<attr name="capitalHeight" value="0.864864"/>
+	<attr name="capitalWidth" value="2.112"/>
+	<attr name="echinusPartsHeight" value="1"/>
+	<attr name="abacusPartsHeight" value="1.15"/>
+	<attr name="Column_Color" value="#F4F1D4"/>
+	<attr name="peristyliumHeight" value="13.73"/>
+
+	<!-- entablature parameters -->
+	<attr name="Entablature_Height" value="3.3"/>
+	<attr name="Frieze_Height" value="1.3"/>
+	<attr name="architraveHeight" value="1.386"/>
+	<attr name="architraveD" value="1.632"/>
+	<attr name="corniceHeight" value="0.614"/>
+	<attr name="geisonProjection" value="0.96"/>
+	<attr name="triglyphWidth" value="0.8448"/>
+	<attr name="triglyphD" value="0.0938666"/>
+	<attr name="taeniaH" value="0.1386"/>
+	<attr name="taeniaD" value="0.064"/>
+	<attr name="architraveC" value="#EDE6CD"/>
+	<attr name="corniceC" value="#EDE6CD"/>
+	<attr name="Metopes_Color" value="#DB8C6C"/>
+	<attr name="Triglyph_Color" value="#576484"/>
+	
+	<!-- cella parameters -->
+	<attr name="Cella_Setback" value="4.97"/>
+	<attr name="Type" value="Prostyle"/>
+	<attr name="Portico_Length" value="5.5"/>
+	<attr name="Posticum_Length" value="5.4"/>
+	<attr name="wallThickness" value="1.4688"/>
+	<attr name="prostyle" value="true"/>
+	<attr name="Posticum_Door" value="true"/>
+	<attr name="Door_Height" value="7.2"/>
+	<attr name="Door_Width" value="3.5"/>
+	<attr name="doorD" value="0.4"/>
+	<attr name="doorWindowH" value="1.08"/>
+	<attr name="doorFrameW" value="0.4"/>
+	<attr name="doorFrameH" value="0.6"/>
+	<attr name="entranceFrameW" value="0.5"/>
+	<attr name="entranceH" value="9.09"/>
+	<attr name="entranceW" value="5.3"/>
+	<attr name="corniceProjection" value="0.192"/>
+	<attr name="prostyleLength" value="1.152"/>
+
+	<!-- podium parameters -->
+	<attr name="No_of_Steps" value="3"/>
+	<attr name="podiumTreadDepth" value="0.72"/>
+	<attr name="podiumRiserHeight" value="0.41"/>
+	<attr name="Podium_Color" value="#CDC6AD"/>
+	<attr name="podiumH" value="1.23"/>
+
+	<!-- roof parameters -->
+	<attr name="Roof_Type" value="Gable"/>
+	<attr name="Angle" value="15"/>
+	<attr name="roofBrickW" value="1.0725"/>
+	<attr name="roofBrickH" value="1.5015"/>
+	<attr name="pedimentWidth" value="1.92"/>
+	<attr name="simaLength" value="2.112"/>
+	<attr name="simaHeight" value="0.5184"/>
+	<attr name="simaWidth" value="2.145"/>
+	<attr name="Roof_Color" value="#886644"/>
+
+	<!-- assets -->
+	<attr name="doorAsset" value="../assets/primitives/door_parthenon.obj"/>
+	<attr name="doorCorniceAsset" value="../assets/primitives/door-cornice_parthenon.obj"/>
+	<attr name="topdoorAsset" value="../assets/primitives/topdoor-element_parthenon.obj"/>
+	<attr name="shaftAsset" value="../assets/primitives/shaft_parthenon.obj"/>
+	<attr name="echinusAsset" value="../assets/primitives/echinus_parthenon.obj"/>
+	<attr name="abacusAsset" value="../assets/primitives/abacus_parthenon.obj"/>
+	<attr name="architraveAsset" value="../assets/primitives/architrave_parthenon.obj"/>
+	<attr name="friezeAsset" value="../assets/primitives/frieze_parthenon.obj"/>
+	<attr name="geisonAsset" value="../assets/primitives/geison_parthenon.obj"/>
+	<attr name="triglyphAsset" value="../assets/primitives/triglyph_parthenon.obj"/>
+	<attr name="guttaeAsset" value="../assets/primitives/guttae_parthenon.obj"/>
+	<attr name="mutuleAsset" value="../assets/primitives/mutule.obj"/>
+	<attr name="antefixAsset" value="../assets/primitives/antefix.obj"/>
+	<attr name="roofBrickBottomAsset" value="../assets/primitives/roofbrick_bottom.obj"/>
+	<attr name="roofBrickRound" value="../assets/primitives/roofbrick_round.obj"/>
+	<attr name="simaAsset" value="../assets/primitives/simaAsset.obj"/>
+
+	<!-- START -->
+	<rule name="Lot">
+		<!--<copy name="Podium"/>-->
+		<translate mode="rel" coordSystem="object">
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="podiumH"/>
+		</translate>
+		<color s="Temple_Color"/>
+		<!--<copy name="Temple1"/>-->
+		<!--<copy name="Temple2"/>-->
+		<translate mode="rel" coordSystem="object">
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="peristyliumHeight"/>
+		</translate>
+		<offset offsetDistance="-Diameter/2+geisonProjection+architraveD/2" offsetSelector="inside"/>
+		<copy name="Roof"/>
+	</rule>
+	<rule name="Temple1">
+		<offset offsetDistance="- Diameter /2"/>
+		<extrude height="peristyliumHeight"/>
+		<copy name="Peristylium"/>
+	</rule>
+	<rule name="Temple2">
+		<offset offsetDistance="-Cella_Setback"/>
+		<copy name="Cella"/>
+	</rule>
+	
+	<!-- Roof -->
+	<rule name="Roof">
+		<roofGable angle="Angle"/>
+	</rule>
+</rules>
+

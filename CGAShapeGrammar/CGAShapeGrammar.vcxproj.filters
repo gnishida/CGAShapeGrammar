@@ -167,6 +167,12 @@
     <ClCompile Include="Cuboid.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="RoofGableOperator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GableRoof.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -292,6 +298,12 @@
       <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="Cuboid.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="RoofGableOperator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GableRoof.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>

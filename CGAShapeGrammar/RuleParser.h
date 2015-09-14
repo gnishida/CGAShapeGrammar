@@ -15,6 +15,7 @@ Operator* parseCopyOperator(const QDomNode& node);
 Operator* parseExtrudeOperator(const QDomNode& node);
 Operator* parseInsertOperator(const QDomNode& node);
 Operator* parseOffsetOperator(const QDomNode& node);
+Operator* parseRoofGableOperator(const QDomNode& node);
 Operator* parseRoofHipOperator(const QDomNode& node);
 Operator* parseRotateOperator(const QDomNode& node);
 Operator* parseSetupProjectionOperator(const QDomNode& node);

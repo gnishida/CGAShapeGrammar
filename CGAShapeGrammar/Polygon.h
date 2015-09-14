@@ -16,7 +16,8 @@ public:
 	Shape* clone(const std::string& name);
 	Shape* extrude(const std::string& name, float height);
 	Shape* inscribeCircle(const std::string& name);
-	Shape* offset(const std::string& name, float offsetDistance);
+	Shape* offset(const std::string& name, float offsetDistance, int offsetSelector);
+	Shape* roofGable(const std::string& name, float angle);
 	Shape* roofHip(const std::string& name, float angle);
 	void setupProjection(float texWidth, float texHeight);
 	void size(float xSize, float ySize, float zSize);

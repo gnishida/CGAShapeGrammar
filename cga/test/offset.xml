@@ -6,7 +6,7 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="0.3"/>
 		</translate>
-		<offset offsetDistance="-1"/>
+		<offset offsetDistance="-1" offsetSelector="all"/>
 		<comp>
 			<param name="inside" value="X"/>
 			<param name="border" value="NIL"/>

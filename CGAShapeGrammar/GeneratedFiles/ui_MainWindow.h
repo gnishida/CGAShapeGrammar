@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Sun Sep 13 13:14:15 2015
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Mon Sep 14 11:38:50 2015
+**      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -42,7 +42,7 @@ public:
     {
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QString::fromUtf8("MainWindowClass"));
-        MainWindowClass->resize(600, 400);
+        MainWindowClass->resize(795, 575);
         actionExit = new QAction(MainWindowClass);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
         actionViewWireframe = new QAction(MainWindowClass);
@@ -58,7 +58,7 @@ public:
         MainWindowClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 21));
+        menuBar->setGeometry(QRect(0, 0, 795, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuView = new QMenu(menuBar);

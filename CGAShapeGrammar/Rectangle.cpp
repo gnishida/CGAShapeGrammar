@@ -2,6 +2,7 @@
 #include "GLUtils.h"
 #include "Pyramid.h"
 #include "HipRoof.h"
+#include "GableRoof.h"
 #include "Prism.h"
 #include "Polygon.h"
 #include "Cuboid.h"
@@ -62,14 +63,46 @@ Shape* Rectangle::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-Shape* Rectangle::offset(const std::string& name, float offsetDistance) {
+Shape* Rectangle::offset(const std::string& name, float offsetDistance, int offsetSelector) {
+	if (offsetSelector == SELECTOR_ALL) {
+		std::vector<glm::vec2> points(4);
+		points[0] = glm::vec2(0, 0);
+		points[1] = glm::vec2(_scope.x, 0);
+		points[2] = glm::vec2(_scope.x, _scope.y);
+		points[3] = glm::vec2(0, _scope.y);
+
+		return new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture);
+	} else if (offsetSelector == SELECTOR_INSIDE) {
+		float offset_width = _scope.x + offsetDistance * 2.0f;
+		float offset_height = _scope.y + offsetDistance * 2.0f;
+		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(-offsetDistance, -offsetDistance, 0));
+		if (_textureEnabled) {
+			float offset_u1 = _texCoords[0].x;
+			float offset_v1 = _texCoords[0].y;
+			float offset_u2 = _texCoords[2].x;
+			float offset_v2 = _texCoords[2].y;
+			if (offsetDistance < 0) {
+				float offset_u1 = (_texCoords[2].x - _texCoords[0].x) * (-offsetDistance) / _scope.x + _texCoords[0].x;
+				float offset_v1 = (_texCoords[2].y - _texCoords[0].y) * (-offsetDistance) / _scope.y + _texCoords[0].y;
+				float offset_u2 = (_texCoords[2].x - _texCoords[0].x) * (_scope.x + offsetDistance) / _scope.x + _texCoords[0].x;
+				float offset_v2 = (_texCoords[2].y - _texCoords[0].y) * (_scope.y + offsetDistance) / _scope.y + _texCoords[0].y;
+			}
+			return new Rectangle(name, _pivot, mat, offset_width, offset_height, _color, _texture, offset_u1, offset_v1, offset_u2, offset_v2);
+		} else {
+			return new Rectangle(name, _pivot, mat, offset_width, offset_height, _color);
+		}
+	} else {
+		throw "border of offset is not supported by rectangle.";
+	}
+}
+
+Shape* Rectangle::roofGable(const std::string& name, float angle) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_scope.x, 0);
 	points[2] = glm::vec2(_scope.x, _scope.y);
 	points[3] = glm::vec2(0, _scope.y);
-
-	return new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture);
+	return new GableRoof(name, _pivot, _modelMat, points, angle, _color);
 }
 
 Shape* Rectangle::roofHip(const std::string& name, float angle) {
