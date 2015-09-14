@@ -36,7 +36,6 @@
 	<attr name="Portico_Length" value="5.5"/>
 	<attr name="Posticum_Length" value="5.4"/>
 	<attr name="wallThickness" value="1.4688"/>
-	<attr name="prostyle" value="true"/>
 	<attr name="Posticum_Door" value="true"/>
 	<attr name="Door_Height" value="7.2"/>
 	<attr name="Door_Width" value="3.5"/>
@@ -88,7 +87,7 @@
 
 	<!-- START -->
 	<rule name="Lot">
-		<!--<copy name="Podium"/>-->
+		<copy name="Podium"/>
 		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
@@ -96,7 +95,7 @@
 		</translate>
 		<color s="Temple_Color"/>
 		<!--<copy name="Temple1"/>-->
-		<!--<copy name="Temple2"/>-->
+		<copy name="Temple2"/>
 		<translate mode="rel" coordSystem="object">
 			<param name="x" value="0"/>
 			<param name="y" value="0"/>
@@ -106,14 +105,111 @@
 		<copy name="Roof"/>
 	</rule>
 	<rule name="Temple1">
-		<offset offsetDistance="- Diameter /2"/>
+		<offset offsetDistance="-Diameter/2" offsetSelector="inside"/>
 		<extrude height="peristyliumHeight"/>
 		<copy name="Peristylium"/>
 	</rule>
 	<rule name="Temple2">
-		<offset offsetDistance="-Cella_Setback"/>
+		<offset offsetDistance="-Cella_Setback" offsetSelector="inside"/>
 		<copy name="Cella"/>
 	</rule>
+	
+	<!-- PODIUM -->
+	<rule name="Podium">
+		<color s="Podium_Color"/>
+		<copy name="Steps2"/>
+	</rule>
+	<rule name="Steps2">
+		<copy name="Steps1"/>
+		<offset offsetDistance="2*podiumTreadDepth" offsetSelector="inside"/>
+		<extrude height="podiumRiserHeight"/>
+	</rule>
+	<rule name="Steps1">
+		<copy name="Steps0"/>
+		<translate mode="rel" coordSystem="object">
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="podiumRiserHeight"/>
+		</translate>
+		<offset offsetDistance="podiumTreadDepth" offsetSelector="inside"/>
+		<extrude height="podiumRiserHeight"/>
+	</rule>
+	<rule name="Steps0">
+		<translate mode="rel" coordSystem="object">
+			<param name="x" value="0"/>
+			<param name="y" value="0"/>
+			<param name="z" value="podiumRiserHeight*2"/>
+		</translate>
+		<extrude height="podiumRiserHeight"/>
+	</rule>
+	
+	<!-- CELLA -->
+	<rule name="Cella">
+		<copy name="InnerPeristylium"/>
+		<extrude height="Column_Height"/>
+		<split splitAxis="y">
+			<param name="size">
+				<element type="absolute" value="Portico_Length" name="PorchWalls"/>
+				<element type="floating" value="1" name="Sanctuary"/>
+				<element type="absolute" value="Posticum_Length" name="PorchWalls"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="InnerPeristylium">
+		<offset offsetDistance="-wallThickness*0.5" offsetSelector="inside"/>
+		<extrude height="peristyliumHeight"/>
+		<split splitAxis="z">
+			<param name="size">
+				<element type="absolute" value="Column_Height" name="InnerPeristyliumSub1"/>
+				<element type="absolute" value="architraveHeight + Frieze_Height" name="InnerPeristyliumSub2"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="InnerPeristyliumSub1">
+		<split splitAxis="y">
+			<param name="size">
+				<element type="absolute" value="Portico_Length-Spacing-wallThickness*0.5" name="PorchColonnades"/>
+				<element type="floating" value="1" name="NIL"/>
+				<element type="absolute" value="Posticum_Length-Spacing-wallThickness*0.5" name="PorchColonnades"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="InnerPeristyliumSubSub1">
+		<comp>
+			<param name="side" value="Entablature"/>
+		</comp>
+	</rule>
+	<rule name="PorchWalls">
+		<split splitAxis="y">
+			<param name="size">
+				<element type="floating" value="1" name="NIL"/>
+				<element type="absolute" value="prostyleLength" name="PorchWallsSub"/>
+			</param>
+		</split>
+	</rule>
+	<rule name="PorchWallsSub">
+		<comp>
+			<param name="left" value="Wall"/>
+			<param name="right" value="Wall"/>
+		</comp>
+	</rule>
+	<rule name="Sanctuary">
+		<comp>
+			<param name="front" value="EntranceWall"/>
+			<param name="back" value="EntranceWall"/>
+			<param name="side" value="SanctuarySub"/>
+		</comp>
+	</rule>
+	<!--
+	<rule name="SanctuarySub">
+		<size>
+			<param name="xSize" type="relative" value="1.1"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="relative" value="1"/>
+		</size>
+	</rule>
+	-->
+
 	
 	<!-- Roof -->
 	<rule name="Roof">

@@ -54,7 +54,7 @@ void Cuboid::comp(const std::map<std::string, std::string>& name_map, std::vecto
 	// back face
 	if (name_map.find("back") != name_map.end() && name_map.at("back") != "NIL") {
 		glm::mat4 mat = glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0));
-		shapes.push_back(new Rectangle(name_map.at("right"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.x, _scope.z, _color));
+		shapes.push_back(new Rectangle(name_map.at("back"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.x, _scope.z, _color));
 	}
 
 	// side faces
@@ -83,26 +83,30 @@ void Cuboid::size(float xSize, float ySize, float zSize) {
 }
 
 /**
- * To be fixed:
- * Z方向のsplitしか対応していない。
  */
 void Cuboid::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
 	if (splitAxis == DIRECTION_X) {
 		glm::mat4 mat = this->_modelMat;
 		for (int i = 0; i < sizes.size(); ++i) {
-			objects.push_back(new Cuboid(names[i], _pivot, mat, sizes[i], _scope.y, _scope.z, _color));
+			if (names[i] != "NIL") {
+				objects.push_back(new Cuboid(names[i], _pivot, mat, sizes[i], _scope.y, _scope.z, _color));
+			}
 			mat = glm::translate(mat, glm::vec3(sizes[i], 0, 0));
 		}
 	} else if (splitAxis == DIRECTION_Y) {
 		glm::mat4 mat = this->_modelMat;
 		for (int i = 0; i < sizes.size(); ++i) {
-			objects.push_back(new Cuboid(names[i], _pivot, mat, _scope.x, sizes[i], _scope.z, _color));
+			if (names[i] != "NIL") {
+				objects.push_back(new Cuboid(names[i], _pivot, mat, _scope.x, sizes[i], _scope.z, _color));
+			}
 			mat = glm::translate(mat, glm::vec3(0, sizes[i], 0));
 		}
 	} else {
 		glm::mat4 mat = this->_modelMat;
 		for (int i = 0; i < sizes.size(); ++i) {
-			objects.push_back(new Cuboid(names[i], _pivot, mat, _scope.x, _scope.y, sizes[i], _color));
+			if (names[i] != "NIL") {
+				objects.push_back(new Cuboid(names[i], _pivot, mat, _scope.x, _scope.y, sizes[i], _color));
+			}
 			mat = glm::translate(mat, glm::vec3(0, 0, sizes[i]));
 		}
 	}

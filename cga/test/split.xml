@@ -7,11 +7,11 @@
 			<param name="z" value="0.3"/>
 		</translate>
 		<!--
-		<operator name="split">
-			<param name="splitAxis" value="y"/>
+		<split splitAxis="z">
 			<param name="size">
-				<element type="absolute" value="1.0" name="Parcel."/>
-				<element type="floating" value="1.5" name="Parcel." repeat="true"/>
+				<element type="absolute" value="10" name="Parcel."/>
+				<element type="floating" value="1" name="Parcel."/>
+				<element type="absolute" value="10" name="Parcel."/>
 			</param>
 		</operator>
 		-->

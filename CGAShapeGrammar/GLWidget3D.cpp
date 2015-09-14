@@ -118,8 +118,13 @@ void GLWidget3D::loadCGA(char* filename) {
 
 	std::list<cga::Shape*> stack;
 
-	{ // for tutorial
+	/*{ // for tutorial
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 35, 15, glm::vec3(1, 1, 1));
+		stack.push_back(lot);
+	}*/
+
+	{ // for parthenon
+		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 20, 35, glm::vec3(1, 1, 1));
 		stack.push_back(lot);
 	}
 
