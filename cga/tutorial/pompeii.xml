@@ -87,10 +87,9 @@
 		<copy name="FacadeFloors"/>
 	</rule>
 	<rule name="FacadeFloors">
-		<split splitAxis="z">
+		<split splitAxis="y">
 			<param type="absolute" value="groundfloorHeight" name="FacadeFloorsSub"/>
 			<param type="floating" value="2.5" name="UpperFloor" repeat="true"/>
 		</split>
 	</rule>
-
 </rules>

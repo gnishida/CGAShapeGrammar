@@ -112,7 +112,7 @@ void Prism::generate(RenderManager* renderManager, bool showScopeCoordinateSyste
 	int num = 0;
 
 	// top
-	{
+	if (_height >= 0) {
 		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(0, 0, _height));
 		glutils::drawConcavePolygon(_points, _color, mat, vertices);
 	}
