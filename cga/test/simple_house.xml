@@ -55,7 +55,7 @@
 			<param name="z" type="absolute" value="-0.05"/>
 		</translate>
 		<setupProjection>
-			<param name="coordinateType" value="relative"/>
+			<param name="axesSelector" value="scope.xy"/>
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>

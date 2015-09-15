@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<rules version="2014.0" author="Esri R+D Center Zurich">
+	<!-- Control Attributes -->
+	<attr name="EaveHeight" value="6.7"/>
+	<attr name="DoorHeight" value="3.0"/>
+	<attr name="DoorWidth" value="1.4"/>
+	<attr name="ShopHeight" value="3.7"/>
+	<attr name="ShopWidth" value="3.5"/>
+	
+	<!-- Attributes -->
+	<attr name="HeightOffset" value="0.3"/>
+	<attr name="groundfloorHeight" value="4.2"/>
+	<attr name="doorDepth" value="0.1"/>
+	<attr name="marginWidth" value="0.45"/>
+	<attr name="doorFrameWidth" value="0.18"/>
+	<attr name="doorFrameHeight" value="0.18"/>
+	<attr name="doorstoneHeight" value="0.8"/>
+	<attr name="canopyBeamWidth" value="0.1"/>
+	<attr name="riserHeight" value="0.15"/>
+	<attr name="treadDepth" value="0.2"/>
+	<attr name="winLargeWidth" value="1.25"/>
+	<attr name="winLargeHeight" value="1.0"/>
+	<attr name="winSmallWidth" value="0.65"/>
+	<attr name="winSmallHeight" value="0.85"/>
+	<attr name="winSmallTileWidth" value="1.75"/>
+	<attr name="winVerticalPosition" value="0.6"/>
+	<attr name="winFrameWidth" value="0.8"/>
+	<attr name="winGrillDistance" value="0.175"/>
+	<attr name="wallDepth" value="0.45"/>
+	<attr name="wallpaintHeight" value="1.5"/>
+	<attr name="wallDepth" value="0.45"/>
+	<attr name="greyWallColor" value="#F5F5F5"/>
+	<attr name="shopCounterWidth" value="1.0"/>
+	<attr name="shopCounterHeight" value="1.3"/>
+	<attr name="gazeboProtrusion" value="0.65"/>
+	<attr name="gazeboBeamWidth" value="0.1"/>
+	<attr name="gazeboTriangleWidth" value="0.1"/>
+	<attr name="gazeboTriangleSpace" value="0.5"/>
+	<attr name="gallerySpacing" value="1.2"/>
+	<attr name="galleryBanisterHeight" value="0.85"/>
+	<attr name="galleryDepth" value="1.35"/>
+	<attr name="atriumOffset" value="2.75"/>
+	<attr name="gardenwayWidth" value="2"/>
+	
+	<!-- Assets -->
+	<attr name="wallTex" value="../assets/textures/wall.c.03.jpg"/>
+	<attr name="wallTexWidth" value="4"/>
+	<attr name="wallTexHeight" value="2"/>
+	<attr name="getSingleDoorObj" value="../assets/primitives/???.obj"/>
+	<attr name="getSingleDoorTex" value="../assets/textures/???.jpg"/>
+	<attr name="window_tex" value="../assets/textures/window.1b.tif"/>
+	
+	<!-- RULES -->
+	<rule name="Lot">
+		<copy name="Ground2"/>
+		<translate mode="rel" coordSystem="world">
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="HeightOffset"/>
+		</translate>
+		<split splitAxis="y">
+			<param type="absolute" value="0.3" name="NIL"/>
+			<param type="floating" value="1" name="Parcel"/>
+		</split>
+	</rule>
+	<rule name="Parcel">
+		<copy name="Footprint"/>
+	</rule>
+	<rule name="Footprint">
+		<extrude height="EaveHeight"/>
+		<comp>
+			<param name="front" value="Facade"/>
+			<param name="back" value="Facade"/>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+		</comp>
+	</rule>
+	<rule name="Facade">
+		<setupProjection>
+			<param name="coordinateType" value="relative"/>
+			<param name="texWidth" type="absolute" value="scope.sx"/>
+			<param name="texHeight" type="absolute" value="scope.sy"/>
+		</setupProjection>
+		<texture>
+			<param name="texture" value="wallTex"/>
+		</texture>
+		<copy name="FacadeFloors"/>
+	</rule>
+	<rule name="FacadeFloors">
+		<split splitAxis="z">
+			<param type="absolute" value="groundfloorHeight" name="FacadeFloorsSub"/>
+			<param type="floating" value="2.5" name="UpperFloor" repeat="true"/>
+		</split>
+	</rule>
+
+</rules>
