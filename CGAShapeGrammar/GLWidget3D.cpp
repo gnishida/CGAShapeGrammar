@@ -62,7 +62,7 @@ void GLWidget3D::initializeGL() {
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 
 	std::vector<Vertex> vertices;
-	glutils::drawGrid(30, 30, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
+	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
 	renderManager.addObject("grid", "", vertices);
 }
 
@@ -154,7 +154,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 	
 	std::vector<Vertex> vertices;
-	glutils::drawGrid(30, 30, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
+	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
 	renderManager.addObject("grid", "", vertices);
 
 	updateGL();
