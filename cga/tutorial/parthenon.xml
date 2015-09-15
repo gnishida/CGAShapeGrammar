@@ -83,7 +83,7 @@
 	<attr name="antefixAsset" value="../assets/primitives/antefix.obj"/>
 	<attr name="roofBrickBottomAsset" value="../assets/primitives/roofbrick_bottom.obj"/>
 	<attr name="roofBrickRound" value="../assets/primitives/roofbrick_round.obj"/>
-	<attr name="simaAsset" value="../assets/primitives/simaAsset.obj"/>
+	<attr name="simaAsset" value="../assets/primitives/roof_sima.obj"/>
 
 	<!-- START -->
 	<rule name="Lot">
