@@ -50,6 +50,8 @@
 	<attr name="getSingleDoorTex" value="../assets/textures/???.jpg"/>
 	<attr name="window_tex" value="../assets/textures/window.1b.tif"/>
 	
+	<attr name="simpleledgeObj" value="../assets/primitives/ledge.01.simple.notex.obj"/>
+	
 	<!-- RULES -->
 	<rule name="Lot">
 		<copy name="Ground2"/>
@@ -87,10 +89,59 @@
 		<copy name="FacadeFloors"/>
 	</rule>
 	<rule name="FacadeFloors">
-		<split splitAxis="z">
+		<split splitAxis="y">
 			<param type="absolute" value="groundfloorHeight" name="FacadeFloorsSub"/>
 			<param type="floating" value="2.5" name="UpperFloor" repeat="true"/>
 		</split>
 	</rule>
+	<rule name="FacadeFloorsSub">
+		<copy name="GroundFloor"/>
+		<copy name="Cornerstones"/>
+		<copy name="GroundfloorLedge"/>
+	</rule>
+	
+	<!-- roof -->
+	<rule name="Ledge">
+		<size>
+			<param name="xSize" type="relative" value="1.008"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="absolute" value="0.1"/>
+		</size>
+		<center axesSelector="x"/>
+		<insert geometryPath="simpleledgeObj"/>
+	</rule>
+	<rule name="GroundfloorLedge">
+		<split splitAxis="y">
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="0.1" name="Ledge"/>
+		</split>
+	</rule>
 
+	<!-- upper floor -->
+	<rule name="UpperFloor">
+		<split splitAxis="x">
+			<param type="floating" value="1" name="Tile"/>
+			<param type="floating" value="1" name="Tile"/>
+			<param type="floating" value="1" name="PaintedWall"/>
+		</split>
+	</rule>
+
+	<!-- ground floor -->
+	<rule name="GroundFloor">
+		<split splitAxis="x">
+			<param type="floating" value="0.5" name="PaintedWall"/>
+			<param type="absolute" value="ShopWidth+marginWidth" name="Tile"/>
+			<param type="floating" value="0.5" name="Tile"/>
+		</split>
+	</rule>
+
+	<!-- Tile -->
+	<rule name="Tile">
+		<split splitAxis="x">
+			<param type="floating" value="1" name="PaintedWall"/>
+			<param type="absolute" value="winSmallWidth" name="TileSub"/>
+			<param type="floating" value="1" name="PaintedWall"/>
+		</split>
+	</rule>
+		
 </rules>
