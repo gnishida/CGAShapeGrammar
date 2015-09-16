@@ -119,9 +119,43 @@ void Cuboid::generate(RenderManager* renderManager, bool showScopeCoordinateSyst
 
 	int num = 0;
 
-	glm::mat4 mat = glm::translate(_pivot * _modelMat, glm::vec3(_scope.x * 0.5f, _scope.y * 0.5f, _scope.z * 0.5f));
 	std::vector<Vertex> vertices;
-	glutils::drawBox(_scope.x, _scope.y, _scope.z, _color, mat, vertices);
+
+	// top
+	{
+		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, _scope.z));
+		glutils::drawQuad(_scope.x, _scope.y, _color, mat, vertices);
+	}
+
+	// base
+	if (_scope.z >= 0) {
+		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, 0));
+		glutils::drawQuad(_scope.x, _scope.y, _color, mat, vertices);
+	}
+
+	// front
+	{
+		glm::mat4 mat = _pivot * glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		glutils::drawQuad(_scope.x, _scope.z, _color, mat, vertices);
+	}
+
+	// back
+	{
+		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		glutils::drawQuad(_scope.x, _scope.z, _color, mat, vertices);
+	}
+
+	// right
+	{
+		glm::mat4 mat = _pivot * glm::rotate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, _scope.y * 0.5, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(0, 0, 1)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		glutils::drawQuad(_scope.y, _scope.z, _color, mat, vertices);
+	}
+
+	// left
+	{
+		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y * 0.5, 0, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		glutils::drawQuad(_scope.y, _scope.z, _color, mat, vertices);
+	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
 
