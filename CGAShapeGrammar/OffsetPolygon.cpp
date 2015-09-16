@@ -25,8 +25,8 @@ OffsetPolygon::OffsetPolygon(const std::string& name, const glm::mat4& pivot, co
 	_center /= points.size();
 }
 
-Shape* OffsetPolygon::clone(const std::string& name) {
-	Shape* copy = new OffsetPolygon(*this);
+boost::shared_ptr<Shape> OffsetPolygon::clone(const std::string& name) {
+	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new OffsetPolygon(*this));
 	copy->_name = name;
 	return copy;
 }

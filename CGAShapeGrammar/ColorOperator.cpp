@@ -21,7 +21,7 @@ ColorOperator::ColorOperator(const std::string& s) {
 	this->s = s;
 }
 
-Shape* ColorOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> ColorOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	if (s.empty()) {
 		shape->_color.r = ruleSet.evalFloat(r, shape);
 		shape->_color.g = ruleSet.evalFloat(g, shape);

@@ -10,7 +10,7 @@ OffsetOperator::OffsetOperator(const std::string& offsetDistance, int offsetSele
 	this->offsetSelector = offsetSelector;
 }
 
-Shape* OffsetOperator::apply(Shape* shape, const RuleSet& ruleSet,  std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> OffsetOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet,  std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_offsetDistancet = ruleSet.evalFloat(offsetDistance, shape);
 
 	return shape->offset(shape->_name, actual_offsetDistancet, offsetSelector);

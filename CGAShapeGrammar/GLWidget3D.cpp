@@ -116,7 +116,7 @@ void GLWidget3D::drawScene(int drawMode) {
 void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
-	std::list<cga::Shape*> stack;
+	std::list<boost::shared_ptr<cga::Shape> > stack;
 
 	/*{ // for tutorial
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 35, 15, glm::vec3(1, 1, 1));
@@ -125,7 +125,7 @@ void GLWidget3D::loadCGA(char* filename) {
 
 	{ // for parthenon
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 20, 35, glm::vec3(1, 1, 1));
-		stack.push_back(lot);
+		stack.push_back(boost::shared_ptr<cga::Shape>(lot));
 	}
 
 	/*{ // This is for test.

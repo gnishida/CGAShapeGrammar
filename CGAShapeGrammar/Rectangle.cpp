@@ -41,29 +41,21 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_textureEnabled = true;
 }
 
-Shape* Rectangle::clone(const std::string& name) {
-	Shape* copy = new Rectangle(*this);
+boost::shared_ptr<Shape> Rectangle::clone(const std::string& name) {
+	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Rectangle(*this));
 	copy->_name = name;
 	return copy;
 }
 
-Shape* Rectangle::extrude(const std::string& name, float height) {
-	return new Cuboid(name, _pivot, _modelMat, _scope.x, _scope.y, height, _color);
-	/*
-	std::vector<glm::vec2> points(4);
-	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_width, 0);
-	points[2] = glm::vec2(_width, this->_height);
-	points[3] = glm::vec2(0, _height);
-	return new Prism(name, _pivot, _modelMat, points, height, _color);
-	*/
+boost::shared_ptr<Shape> Rectangle::extrude(const std::string& name, float height) {
+	return boost::shared_ptr<Shape>(new Cuboid(name, _pivot, _modelMat, _scope.x, _scope.y, height, _color));
 }
 
-Shape* Rectangle::inscribeCircle(const std::string& name) {
-	return NULL;
+boost::shared_ptr<Shape> Rectangle::inscribeCircle(const std::string& name) {
+	return boost::shared_ptr<Shape>();
 }
 
-Shape* Rectangle::offset(const std::string& name, float offsetDistance, int offsetSelector) {
+boost::shared_ptr<Shape> Rectangle::offset(const std::string& name, float offsetDistance, int offsetSelector) {
 	if (offsetSelector == SELECTOR_ALL) {
 		std::vector<glm::vec2> points(4);
 		points[0] = glm::vec2(0, 0);
@@ -71,7 +63,7 @@ Shape* Rectangle::offset(const std::string& name, float offsetDistance, int offs
 		points[2] = glm::vec2(_scope.x, _scope.y);
 		points[3] = glm::vec2(0, _scope.y);
 
-		return new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture);
+		return boost::shared_ptr<Shape>(new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture));
 	} else if (offsetSelector == SELECTOR_INSIDE) {
 		float offset_width = _scope.x + offsetDistance * 2.0f;
 		float offset_height = _scope.y + offsetDistance * 2.0f;
@@ -87,31 +79,31 @@ Shape* Rectangle::offset(const std::string& name, float offsetDistance, int offs
 				float offset_u2 = (_texCoords[2].x - _texCoords[0].x) * (_scope.x + offsetDistance) / _scope.x + _texCoords[0].x;
 				float offset_v2 = (_texCoords[2].y - _texCoords[0].y) * (_scope.y + offsetDistance) / _scope.y + _texCoords[0].y;
 			}
-			return new Rectangle(name, _pivot, mat, offset_width, offset_height, _color, _texture, offset_u1, offset_v1, offset_u2, offset_v2);
+			return boost::shared_ptr<Shape>(new Rectangle(name, _pivot, mat, offset_width, offset_height, _color, _texture, offset_u1, offset_v1, offset_u2, offset_v2));
 		} else {
-			return new Rectangle(name, _pivot, mat, offset_width, offset_height, _color);
+			return boost::shared_ptr<Shape>(new Rectangle(name, _pivot, mat, offset_width, offset_height, _color));
 		}
 	} else {
 		throw "border of offset is not supported by rectangle.";
 	}
 }
 
-Shape* Rectangle::roofGable(const std::string& name, float angle) {
+boost::shared_ptr<Shape> Rectangle::roofGable(const std::string& name, float angle) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_scope.x, 0);
 	points[2] = glm::vec2(_scope.x, _scope.y);
 	points[3] = glm::vec2(0, _scope.y);
-	return new GableRoof(name, _pivot, _modelMat, points, angle, _color);
+	return boost::shared_ptr<Shape>(new GableRoof(name, _pivot, _modelMat, points, angle, _color));
 }
 
-Shape* Rectangle::roofHip(const std::string& name, float angle) {
+boost::shared_ptr<Shape> Rectangle::roofHip(const std::string& name, float angle) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_scope.x, 0);
 	points[2] = glm::vec2(_scope.x, _scope.y);
 	points[3] = glm::vec2(0, _scope.y);
-	return new HipRoof(name, _pivot, _modelMat, points, angle, _color);
+	return boost::shared_ptr<Shape>(new HipRoof(name, _pivot, _modelMat, points, angle, _color));
 }
 
 void Rectangle::setupProjection(int axesSelector, float texWidth, float texHeight) {
@@ -122,7 +114,7 @@ void Rectangle::setupProjection(int axesSelector, float texWidth, float texHeigh
 	_texCoords[3] = glm::vec2(0, _scope.y / texHeight);
 }
 
-Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
+boost::shared_ptr<Shape> Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	std::vector<glm::vec2> points(6);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_scope.x, 0);
@@ -131,7 +123,7 @@ Shape* Rectangle::shapeL(const std::string& name, float frontWidth, float leftWi
 	points[4] = glm::vec2(leftWidth, _scope.y);
 	points[5] = glm::vec2(0, _scope.y);
 
-	return new Polygon(name, _pivot, _modelMat, points, _color, _texture);
+	return boost::shared_ptr<Shape>(new Polygon(name, _pivot, _modelMat, points, _color, _texture));
 }
 
 void Rectangle::size(float xSize, float ySize, float zSize) {
@@ -142,7 +134,7 @@ void Rectangle::size(float xSize, float ySize, float zSize) {
 	_scope.z = zSize;
 }
 
-void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
+void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<boost::shared_ptr<Shape> >& objects) {
 	float offset = 0.0f;
 	
 	for (int i = 0; i < sizes.size(); ++i) {
@@ -150,11 +142,11 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 			if (names[i] != "NIL") {
 				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
 				if (_texCoords.size() > 0) {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _color, _texture,
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _color, _texture,
 						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * offset / _scope.x, _texCoords[0].y,
-						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _scope.x, _texCoords[2].y));
+						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _scope.x, _texCoords[2].y)));
 				} else {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _color));
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _pivot, _modelMat * mat, sizes[i], _scope.y, _color)));
 				}
 			}
 			offset += sizes[i];
@@ -162,11 +154,11 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 			if (names[i] != "NIL") {
 				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
 				if (_texCoords.size() > 0) {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _color, _texture,
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _color, _texture,
 						_texCoords[0].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * offset / _scope.y,
-						_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _scope.y));
+						_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _scope.y)));
 				} else {
-					objects.push_back(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _color));
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _pivot, _modelMat * mat, _scope.x, sizes[i], _color)));
 				}
 			}
 			offset += sizes[i];
@@ -176,13 +168,13 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 	}
 }
 
-Shape* Rectangle::taper(const std::string& name, float height, float top_ratio) {
+boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height, float top_ratio) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
 	points[1] = glm::vec2(_scope.x, 0);
 	points[2] = glm::vec2(_scope.x, _scope.y);
 	points[3] = glm::vec2(0, _scope.y);
-	return new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture);
+	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
 void Rectangle::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {

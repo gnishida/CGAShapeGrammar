@@ -11,8 +11,8 @@ SplitOperator::SplitOperator(int splitAxis, const std::vector<Value>& sizes, con
 	this->output_names = output_names;
 }
 
-Shape* SplitOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
-	std::vector<Shape*> floors;
+boost::shared_ptr<Shape> SplitOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+	std::vector<boost::shared_ptr<Shape> > floors;
 
 	std::vector<float> decoded_sizes;
 	std::vector<std::string> decoded_output_names;
@@ -27,8 +27,9 @@ Shape* SplitOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shap
 	shape->split(splitAxis, decoded_sizes, decoded_output_names, floors);
 	stack.insert(stack.end(), floors.begin(), floors.end());
 
-	delete shape;
-	return NULL;
+	//delete shape;
+	//return NULL;
+	return boost::shared_ptr<Shape>();
 }
 
 }

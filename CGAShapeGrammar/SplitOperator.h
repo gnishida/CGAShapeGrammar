@@ -12,7 +12,7 @@ private:
 
 public:
 	SplitOperator(int splitAxis, const std::vector<Value>& sizes, const std::vector<std::string>& output_names);
-	Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack);
+	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack);
 };
 
 }

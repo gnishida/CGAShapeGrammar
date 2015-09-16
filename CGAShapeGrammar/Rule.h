@@ -5,10 +5,10 @@
 #include <map>
 #include <list>
 #include <boost/shared_ptr.hpp>
+#include "Shape.h"
 
 namespace cga {
 
-class Shape;
 class RuleSet;
 
 class Value  {
@@ -24,10 +24,8 @@ public:
 	Value() : type(TYPE_ABSOLUTE), value(""), repeat(false) {}
 	Value(int type, const std::string& value, bool repeat = false) : type(type), value(value), repeat(repeat) {}
 	
-	float getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape) const;
+	float getEstimateValue(float size, const RuleSet& ruleSet, const boost::shared_ptr<Shape>& shape) const;
 };
-
-class RuleSet;
 
 class Operator {
 public:
@@ -36,7 +34,7 @@ public:
 public:
 	Operator() {}
 
-	virtual Shape* apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) = 0;
+	virtual boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) = 0;
 };
 
 class Rule {
@@ -46,8 +44,8 @@ public:
 public:
 	Rule() {}
 
-	void apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) const;
-	static void decodeSplitSizes(float size, const std::vector<Value>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, Shape* shape, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
+	void apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) const;
+	static void decodeSplitSizes(float size, const std::vector<Value>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, const boost::shared_ptr<Shape>& shape, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names);
 };
 
 class RuleSet {
@@ -64,8 +62,8 @@ public:
 	void addAttr(const std::string& name, const std::string& value);
 	void addRule(const std::string& name);
 	void addOperator(const std::string& name, const boost::shared_ptr<Operator>& op);
-	float evalFloat(const std::string& attr_name, Shape* shape) const;
-	std::string evalString(const std::string& attr_name, Shape* shape) const;
+	float evalFloat(const std::string& attr_name, const boost::shared_ptr<Shape>& shape) const;
+	std::string evalString(const std::string& attr_name, const boost::shared_ptr<Shape>& shape) const;
 };
 
 }

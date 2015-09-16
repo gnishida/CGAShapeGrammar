@@ -9,7 +9,7 @@ RoofGableOperator::RoofGableOperator(const std::string& angle) {
 	this->angle = angle;
 }
 
-Shape* RoofGableOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> RoofGableOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_angle = ruleSet.evalFloat(angle, shape);
 	return shape->roofGable(shape->_name, actual_angle);
 }

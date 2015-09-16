@@ -26,8 +26,8 @@ GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, co
 	this->_textureEnabled = true;
 }
 
-Shape* GeneralObject::clone(const std::string& name) {
-	Shape* copy = new GeneralObject(*this);
+boost::shared_ptr<Shape> GeneralObject::clone(const std::string& name) {
+	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new GeneralObject(*this));
 	copy->_name = name;
 	return copy;
 }

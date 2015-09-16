@@ -11,7 +11,7 @@ SizeOperator::SizeOperator(const Value& xSize, const Value& ySize, const Value& 
 	this->zSize = zSize;
 }
 
-Shape* SizeOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> SizeOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_xSize;
 	float actual_ySize;
 	float actual_zSize;

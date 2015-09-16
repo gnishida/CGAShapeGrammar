@@ -11,7 +11,7 @@ RotateOperator::RotateOperator(float xAngle, float yAngle, float zAngle) {
 	this->zAngle = zAngle;
 }
 
-Shape* RotateOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> RotateOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	shape->rotate(shape->_name, xAngle, yAngle, zAngle);
 	return shape;
 }

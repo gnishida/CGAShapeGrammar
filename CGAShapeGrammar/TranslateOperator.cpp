@@ -13,7 +13,7 @@ TranslateOperator::TranslateOperator(int mode, int coordSystem, const Value& x, 
 	this->z = z;
 }
 
-Shape* TranslateOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> TranslateOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_x;
 	float actual_y;
 	float actual_z;

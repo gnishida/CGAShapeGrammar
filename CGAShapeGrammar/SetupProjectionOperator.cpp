@@ -11,7 +11,7 @@ SetupProjectionOperator::SetupProjectionOperator(int axesSelector, const Value& 
 	this->texHeight = texHeight;
 }
 
-Shape* SetupProjectionOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> SetupProjectionOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_texWidth;
 	float actual_texHeight;
 

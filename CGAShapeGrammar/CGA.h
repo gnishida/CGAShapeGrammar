@@ -6,6 +6,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include "Vertex.h"
 #include "Rule.h"
+#include "Shape.h"
 
 namespace cga {
 
@@ -32,18 +33,6 @@ public:
 	float sz() { return maxPt.z - minPt.z; }
 };
 
-class Asset {
-public:
-	std::vector<glm::vec3> points;
-	std::vector<glm::vec3> normals;
-	std::vector<glm::vec2> texCoords;
-	//BoundingBox bbox;
-
-public:
-	Asset();
-	Asset(const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const std::vector<glm::vec2>& texCoords);
-};
-
 class CGA {
 public:
 	glm::mat4 modelMat;
@@ -51,7 +40,7 @@ public:
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<Shape*> stack, bool showScopeCoordinateSystem = false);
+	void generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack, bool showScopeCoordinateSystem = false);
 };
 
 }

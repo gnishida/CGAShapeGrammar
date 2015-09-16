@@ -23,23 +23,23 @@ void Shape::center(int axesSelector) {
 	_prev_scope = _scope;
 }
 
-Shape* Shape::clone(const std::string& name) {
+boost::shared_ptr<Shape> Shape::clone(const std::string& name) {
 	throw "clone() is not supported.";
 }
 
-void Shape::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
+void Shape::comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes) {
 	throw "comp() is not supported.";
 }
 
-Shape* Shape::extrude(const std::string& name, float height) {
+boost::shared_ptr<Shape> Shape::extrude(const std::string& name, float height) {
 	throw "extrude() is not supported.";
 }
 
-Shape* Shape::inscribeCircle(const std::string& name) {
+boost::shared_ptr<Shape> Shape::inscribeCircle(const std::string& name) {
 	throw "inscribeCircle() is not supported.";
 }
 
-Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
+boost::shared_ptr<Shape> Shape::insert(const std::string& name, const std::string& geometryPath) {
 	Asset asset = getAsset(geometryPath);
 	/*
 	std::vector<glm::vec3> points;
@@ -108,9 +108,9 @@ Shape* Shape::insert(const std::string& name, const std::string& geometryPath) {
 	}
 
 	if (asset.texCoords.size() > 0) {
-		return new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color, asset.texCoords, _texture);
+		return boost::shared_ptr<Shape>(new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color, asset.texCoords, _texture));
 	} else {
-		return new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color);
+		return boost::shared_ptr<Shape>(new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color));
 	}
 }
 
@@ -118,15 +118,15 @@ void Shape::nil() {
 	_removed = true;
 }
 
-Shape* Shape::offset(const std::string& name, float offsetDistance, int offsetSelector) {
+boost::shared_ptr<Shape> Shape::offset(const std::string& name, float offsetDistance, int offsetSelector) {
 	throw "offset() is not supported.";
 }
 
-Shape* Shape::roofGable(const std::string& name, float angle) {
+boost::shared_ptr<Shape> Shape::roofGable(const std::string& name, float angle) {
 	throw "roofGable() is not supported.";
 }
 
-Shape* Shape::roofHip(const std::string& name, float angle) {
+boost::shared_ptr<Shape> Shape::roofHip(const std::string& name, float angle) {
 	throw "roofHip() is not supported.";
 }
 
@@ -140,7 +140,7 @@ void Shape::setupProjection(int axesSelector, float texWidth, float texHeight) {
 	throw "setupProjection() is not supported.";
 }
 
-Shape* Shape::shapeL(const std::string& name, float frontWidth, float leftWidth) {
+boost::shared_ptr<Shape> Shape::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	throw "shapeL() is not supported.";
 }
 
@@ -148,11 +148,11 @@ void Shape::size(float xSize, float ySize, float zSize) {
 	throw "size() is not supported.";
 }
 
-void Shape::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
+void Shape::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<boost::shared_ptr<Shape> >& objects) {
 	throw "split() is not supported.";
 }
 
-Shape* Shape::taper(const std::string& name, float height, float top_ratio) {
+boost::shared_ptr<Shape> Shape::taper(const std::string& name, float height, float top_ratio) {
 	throw "taper() is not supported.";
 }
 

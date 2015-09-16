@@ -7,7 +7,7 @@
 
 namespace cga {
 
-float Value::getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape) const {
+float Value::getEstimateValue(float size, const RuleSet& ruleSet, const boost::shared_ptr<Shape>& shape) const {
 	if (type == Value::TYPE_ABSOLUTE) {
 		return ruleSet.evalFloat(value, shape);
 	} else if (type == Value::TYPE_RELATIVE) {
@@ -25,7 +25,7 @@ float Value::getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape) 
  * @param ruleSet	全ルール
  * @param stack		stack
  */
-void Rule::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) const {
+void Rule::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) const {
 	for (int i = 0; i < operators.size(); ++i) {
 		shape = operators[i]->apply(shape, ruleSet, stack);
 		if (shape == NULL) break;
@@ -34,8 +34,9 @@ void Rule::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack)
 	if (shape != NULL) {
 		if (operators.size() == 0 || operators.back()->name == "copy") {
 			// copyで終わる場合、このshapeはもう必要ないので削除
-			delete shape;
-			shape = NULL;
+			//delete shape;
+			//shape = NULL;
+			shape = boost::shared_ptr<Shape>();
 		} else {
 			// copyで終わらない場合、このshapeは描画する必要があるので、残す。
 			// 同じ名前でstackに格納すると無限再帰してしまうため、末尾に!を付加した名前にして格納する。
@@ -48,7 +49,7 @@ void Rule::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack)
 }
 
 /**
- * 指定されたsizeをsplitする後の、各断片のサイズを計算する。
+ * 指定されたsizeをsplitした後の、各断片のサイズを計算する。
  *
  * @param size							もとのsize
  * @param sizes							指定された、各断片のサイズ
@@ -57,7 +58,7 @@ void Rule::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack)
  * @param decoded_sizes	[OUT]			計算された、各断片のサイズ
  * @param decoded_output_names [OUT]	計算された、各断片の名前
  */
-void Rule::decodeSplitSizes(float size, const std::vector<Value>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, Shape* shape, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
+void Rule::decodeSplitSizes(float size, const std::vector<Value>& sizes, const std::vector<std::string>& output_names, const RuleSet& ruleSet, const boost::shared_ptr<Shape>& shape, std::vector<float>& decoded_sizes, std::vector<std::string>& decoded_output_names) {
 	float regular_sum = 0.0f;
 	float floating_sum = 0.0f;
 	int repeat_count = 0;
@@ -146,7 +147,7 @@ void RuleSet::addOperator(const std::string& name, const boost::shared_ptr<Opera
  * @param shape			shape
  * @return				変換された数値
  */
-float RuleSet::evalFloat(const std::string& attr_name, Shape* shape) const {
+float RuleSet::evalFloat(const std::string& attr_name, const boost::shared_ptr<Shape>& shape) const {
 	// To be fixed
 	// 置換だと、変数BCが、変数ABCを置換してしまう。
 	// 対策は？
@@ -175,7 +176,7 @@ float RuleSet::evalFloat(const std::string& attr_name, Shape* shape) const {
  * @param shape			shape
  * @return				変換された文字列
  */
-std::string RuleSet::evalString(const std::string& attr_name, Shape* shape) const {
+std::string RuleSet::evalString(const std::string& attr_name, const boost::shared_ptr<Shape>& shape) const {
 	if (attrs.find(attr_name) == attrs.end()) {
 		return attr_name;
 	} else {

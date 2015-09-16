@@ -9,7 +9,7 @@ InsertOperator::InsertOperator(const std::string& geometryPath) {
 	this->geometryPath = geometryPath;
 }
 
-Shape* InsertOperator::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) {
+boost::shared_ptr<Shape> InsertOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
 	return shape->insert(shape->_name, ruleSet.evalString(geometryPath, shape));
 }
 

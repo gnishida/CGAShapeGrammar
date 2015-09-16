@@ -22,13 +22,13 @@ Pyramid::Pyramid(const std::string& name, const glm::mat4& pivot, const glm::mat
 	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, height);
 }
 
-Shape* Pyramid::clone(const std::string& name) {
-	Shape* copy = new Pyramid(*this);
+boost::shared_ptr<Shape> Pyramid::clone(const std::string& name) {
+	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Pyramid(*this));
 	copy->_name = name;
 	return copy;
 }
 
-void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
+void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes) {
 	std::vector<glm::vec2> top_points(_points.size());
 	for (int i = 0; i < _points.size(); ++i) {
 		top_points[i] = (_points[i] - _center) * _top_ratio + _center;
@@ -50,7 +50,7 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 		}
 
 		mat = glm::rotate(_modelMat, angle, glm::vec3(1, 0, 0));
-		shapes.push_back(new Polygon(name_map.at("front"), _pivot, mat, points, _color, _texture));
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("front"), _pivot, mat, points, _color, _texture)));
 	}
 
 	// side faces (To be fixed);
@@ -89,7 +89,7 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 			}
 
 			glm::mat4 mat2 = glm::rotate(mat, angle, glm::vec3(1, 0, 0));
-			shapes.push_back(new Polygon(name_map.at("side"), _pivot, _modelMat * mat2, points, _color, _texture));
+			shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("side"), _pivot, _modelMat * mat2, points, _color, _texture)));
 		}
 	}
 
@@ -102,14 +102,14 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 		}
 		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(offset, _height));
 
-		shapes.push_back(new Polygon(name_map.at("top"), _pivot, mat, points, _color, _texture));
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("top"), _pivot, mat, points, _color, _texture)));
 	}
 
 	// bottom face
 	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL") {
 		//std::vector<glm::vec2> basePoints = _points;
 		//std::reverse(basePoints.begin(), basePoints.end());
-		shapes.push_back(new Polygon(name_map.at("bottom"), _pivot, _modelMat, _points, _color, _texture));
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("bottom"), _pivot, _modelMat, _points, _color, _texture)));
 	}
 }
 

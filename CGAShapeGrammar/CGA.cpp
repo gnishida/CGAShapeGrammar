@@ -46,22 +46,12 @@ BoundingBox::BoundingBox(const std::vector<glm::vec3>& points) {
 	}
 }
 
-Asset::Asset() {
-}
-
-Asset::Asset(const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const std::vector<glm::vec2>& texCoords) {
-	this->points = points;
-	this->normals = normals;
-	this->texCoords = texCoords;
-	//bbox = BoundingBox(points);
-}
-
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<Shape*> stack, bool showScopeCoordinateSystem) {
+void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack, bool showScopeCoordinateSystem) {
 	while (!stack.empty()) {
-		Shape* shape = stack.front();
+		boost::shared_ptr<Shape> shape = stack.front();
 		stack.pop_front();
 
 		if (ruleSet.contain(shape->_name)) {
@@ -71,7 +61,6 @@ void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::li
 				std::cout << "Warning: " << "no rule is found for " << shape->_name << "." << std::endl;
 			}
 			shape->generate(renderManager, showScopeCoordinateSystem);
-			delete shape;
 		}
 	}
 }

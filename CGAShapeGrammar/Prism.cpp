@@ -18,16 +18,16 @@ Prism::Prism(const std::string& name, const glm::mat4& pivot, const glm::mat4& m
 	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, height);
 }
 
-Shape* Prism::clone(const std::string& name) {
-	Shape* copy = new Prism(*this);
+boost::shared_ptr<Shape> Prism::clone(const std::string& name) {
+	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Prism(*this));
 	copy->_name = name;
 	return copy;
 }
 
-void Prism::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
+void Prism::comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes) {
 	// front face
 	if (name_map.find("front") != name_map.end() && name_map.at("front") != "NIL") {
-		shapes.push_back(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), glm::length(_points[1] - _points[0]), _height, _color)));
 	}
 
 	// side faces
@@ -49,20 +49,20 @@ void Prism::comp(const std::map<std::string, std::string>& name_map, std::vector
 			sidePoints[2] = glm::vec2(invMat * glm::vec4(_points[(i + 1) % _points.size()], _height, 1));
 			sidePoints[3] = glm::vec2(invMat * glm::vec4(_points[i], _height, 1));
 
-			shapes.push_back(new Rectangle(name_map.at("side"), _pivot, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, _modelMat * mat2, glm::length(_points[(i + 1) % _points.size()] - _points[i]), _height, _color)));
 		}
 	}
 
 	// top face
 	if (name_map.find("top") != name_map.end() && name_map.at("top") != "NIL") {
-		shapes.push_back(new Polygon(name_map.at("top"), _pivot, glm::translate(_modelMat, glm::vec3(0, 0, _height)), _points, _color, _texture));
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("top"), _pivot, glm::translate(_modelMat, glm::vec3(0, 0, _height)), _points, _color, _texture)));
 	}
 
 	// bottom face
 	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL") {
 		//std::vector<glm::vec2> basePoints = _points;
 		//std::reverse(basePoints.begin(), basePoints.end());
-		shapes.push_back(new Polygon(name_map.at("bottom"), _pivot, _modelMat, _points, _color, _texture));
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("bottom"), _pivot, _modelMat, _points, _color, _texture)));
 	}
 }
 
@@ -90,7 +90,7 @@ void Prism::size(float xSize, float ySize, float zSize) {
  * To be fixed:
  * Z方向のsplitしか対応していない。
  */
-void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<Shape*>& objects) {
+void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vector<std::string>& names, std::vector<boost::shared_ptr<Shape> >& objects) {
 	glm::mat4 modelMat = this->_modelMat;
 
 	for (int i = 0; i < sizes.size(); ++i) {
@@ -98,7 +98,7 @@ void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vec
 		obj->_name = names[i];
 		obj->_modelMat = modelMat;
 		obj->_height = sizes[i];
-		objects.push_back(obj);
+		objects.push_back(boost::shared_ptr<Shape>(obj));
 
 		modelMat = glm::translate(modelMat, glm::vec3(0, 0, obj->_height));
 	}

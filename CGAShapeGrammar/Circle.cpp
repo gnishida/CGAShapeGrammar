@@ -11,8 +11,8 @@ Circle::Circle(const std::string& name, const glm::mat4& modelMat, const glm::ve
 	this->_color = color;
 }
 
-Shape* Circle::clone(const std::string& name) {
-	Shape* copy = new Circle(*this);
+boost::shared_ptr<Shape> Circle::clone(const std::string& name) {
+	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Circle(*this));
 	copy->_name = name;
 	return copy;
 }
