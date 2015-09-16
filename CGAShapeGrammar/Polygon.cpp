@@ -5,6 +5,7 @@
 #include "OffsetPolygon.h"
 #include "Prism.h"
 #include "GeneralObject.h"
+#include "CGA.h"
 #include "GLUtils.h"
 
 namespace cga {

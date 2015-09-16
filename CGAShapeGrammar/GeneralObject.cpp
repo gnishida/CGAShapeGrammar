@@ -1,4 +1,5 @@
 #include "GeneralObject.h"
+#include "CGA.h"
 
 namespace cga {
 

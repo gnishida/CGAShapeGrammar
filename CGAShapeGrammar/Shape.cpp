@@ -4,6 +4,7 @@
 #include "GLUtils.h"
 #include <iostream>
 #include <sstream>
+#include "CGA.h"
 
 namespace cga {
 

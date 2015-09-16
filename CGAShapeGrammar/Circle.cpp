@@ -1,4 +1,5 @@
 #include "Circle.h"
+#include "CGA.h"
 
 namespace cga {
 

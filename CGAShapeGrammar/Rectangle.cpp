@@ -7,6 +7,7 @@
 #include "Polygon.h"
 #include "Cuboid.h"
 #include "OffsetPolygon.h"
+#include "CGA.h"
 
 namespace cga {
 

@@ -1,10 +1,10 @@
 ﻿#include "GableRoof.h"
-#include <boost/shared_ptr.hpp>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polygon_2.h>
 #include <CGAL/create_straight_skeleton_2.h>
 #include "GLUtils.h"
 #include "Polygon.h"
+#include "CGA.h"
 #include "GeneralObject.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K ;

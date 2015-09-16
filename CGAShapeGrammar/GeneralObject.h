@@ -1,7 +1,12 @@
 #pragma once
 
-#include "CGA.h"
+#include <boost/shared_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <vector>
 #include "Shape.h"
+
+class RenderManager;
 
 namespace cga {
 

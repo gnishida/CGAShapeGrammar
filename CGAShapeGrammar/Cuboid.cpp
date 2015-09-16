@@ -1,6 +1,7 @@
 ﻿#include "Cuboid.h"
 #include "Rectangle.h"
 #include "Polygon.h"
+#include "CGA.h"
 #include "GLUtils.h"
 
 namespace cga {
