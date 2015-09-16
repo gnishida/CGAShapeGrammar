@@ -101,7 +101,7 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 	}
 }
 
-Operator* parseCenterOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseCenterOperator(const QDomNode& node) {
 	int axesSelector;
 
 	if (!node.toElement().hasAttribute("axesSelector")) {
@@ -124,10 +124,10 @@ Operator* parseCenterOperator(const QDomNode& node) {
 		axesSelector = AXES_SELECTOR_YZ;
 	}
 
-	return new CenterOperator(axesSelector);
+	return boost::shared_ptr<Operator>(new CenterOperator(axesSelector));
 }
 
-Operator* parseColorOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseColorOperator(const QDomNode& node) {
 	std::string r;
 	std::string g;
 	std::string b;
@@ -147,13 +147,13 @@ Operator* parseColorOperator(const QDomNode& node) {
 	}
 
 	if (s.empty()) {
-		return new ColorOperator(r, g, b);
+		return boost::shared_ptr<Operator>(new ColorOperator(r, g, b));
 	} else {
-		return new ColorOperator(s);
+		return boost::shared_ptr<Operator>(new ColorOperator(s));
 	}
 }
 
-Operator* parseCompOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseCompOperator(const QDomNode& node) {
 	std::string front_name;
 	std::string side_name;
 	std::string top_name;
@@ -195,40 +195,40 @@ Operator* parseCompOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new CompOperator(name_map);
+	return boost::shared_ptr<Operator>(new CompOperator(name_map));
 }
 
-Operator* parseCopyOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseCopyOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("name")) {
 		throw "copy node has to have name attribute.";
 	}
 
 	std::string copy_name = node.toElement().attribute("name").toUtf8().constData();
 
-	return new CopyOperator(copy_name);
+	return boost::shared_ptr<Operator>(new CopyOperator(copy_name));
 }
 
-Operator* parseExtrudeOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseExtrudeOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("height")) {
 		throw "extrude node has to have height attribute.";
 	}
 
 	std::string height = node.toElement().attribute("height").toUtf8().constData();
 
-	return new ExtrudeOperator(height);
+	return boost::shared_ptr<Operator>(new ExtrudeOperator(height));
 }
 
-Operator* parseInsertOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseInsertOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("geometryPath")) {
 		throw "insert node has to have geometryPath attribute.";
 	}
 
 	std::string geometryPath = node.toElement().attribute("geometryPath").toUtf8().constData();
 
-	return new InsertOperator(geometryPath);
+	return boost::shared_ptr<Operator>(new InsertOperator(geometryPath));
 }
 
-Operator* parseOffsetOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseOffsetOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("offsetDistance")) {
 		throw "offset node has to have offsetDistance attribute.";
 	}
@@ -246,30 +246,30 @@ Operator* parseOffsetOperator(const QDomNode& node) {
 		}
 	}
 
-	return new OffsetOperator(offsetDistance, offsetSelector);
+	return boost::shared_ptr<Operator>(new OffsetOperator(offsetDistance, offsetSelector));
 }
 
-Operator* parseRoofGableOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseRoofGableOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("angle")) {
 		throw "roofGable node has to have angle attribute.";
 	}
 
 	std::string angle = node.toElement().attribute("angle").toUtf8().constData();
 
-	return new RoofGableOperator(angle);
+	return boost::shared_ptr<Operator>(new RoofGableOperator(angle));
 }
 
-Operator* parseRoofHipOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseRoofHipOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("angle")) {
 		throw "roofHip node has to have angle attribute.";
 	}
 
 	std::string angle = node.toElement().attribute("angle").toUtf8().constData();
 
-	return new RoofHipOperator(angle);
+	return boost::shared_ptr<Operator>(new RoofHipOperator(angle));
 }
 
-Operator* parseRotateOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseRotateOperator(const QDomNode& node) {
 	float xAngle = 0.0f;
 	float yAngle = 0.0f;
 	float zAngle = 0.0f;
@@ -291,10 +291,10 @@ Operator* parseRotateOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new RotateOperator(xAngle, yAngle, zAngle);
+	return boost::shared_ptr<Operator>(new RotateOperator(xAngle, yAngle, zAngle));
 }
 
-Operator* parseSetupProjectionOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseSetupProjectionOperator(const QDomNode& node) {
 	int axesSelector;
 	Value texWidth;
 	Value texHeight;
@@ -337,10 +337,10 @@ Operator* parseSetupProjectionOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new SetupProjectionOperator(axesSelector, texWidth, texHeight);
+	return boost::shared_ptr<Operator>(new SetupProjectionOperator(axesSelector, texWidth, texHeight));
 }
 
-Operator* parseShapeLOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseShapeLOperator(const QDomNode& node) {
 	float frontWidth;
 	float leftWidth;
 
@@ -359,10 +359,10 @@ Operator* parseShapeLOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new ShapeLOperator(frontWidth, leftWidth);
+	return boost::shared_ptr<Operator>(new ShapeLOperator(frontWidth, leftWidth));
 }
 
-Operator* parseSizeOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseSizeOperator(const QDomNode& node) {
 	Value xSize;
 	Value ySize;
 	Value zSize;
@@ -410,10 +410,10 @@ Operator* parseSizeOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new SizeOperator(xSize, ySize, zSize);
+	return boost::shared_ptr<Operator>(new SizeOperator(xSize, ySize, zSize));
 }
 
-Operator* parseSplitOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseSplitOperator(const QDomNode& node) {
 	int splitAxis;
 	std::vector<Value> sizes;
 	std::vector<std::string> names;
@@ -463,10 +463,10 @@ Operator* parseSplitOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new SplitOperator(splitAxis, sizes, names);
+	return boost::shared_ptr<Operator>(new SplitOperator(splitAxis, sizes, names));
 }
 
-Operator* parseTaperOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseTaperOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("height")) {
 		throw "taper node has to have height attribute.";
 	}
@@ -481,10 +481,10 @@ Operator* parseTaperOperator(const QDomNode& node) {
 		top_ratio = "0.0";
 	}
 
-	return new TaperOperator(height, top_ratio);
+	return boost::shared_ptr<Operator>(new TaperOperator(height, top_ratio));
 }
 
-Operator* parseTextureOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseTextureOperator(const QDomNode& node) {
 	std::string texture;
 
 	QDomNode child = node.firstChild();
@@ -500,10 +500,10 @@ Operator* parseTextureOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new TextureOperator(texture);
+	return boost::shared_ptr<Operator>(new TextureOperator(texture));
 }
 
-Operator* parseTranslateOperator(const QDomNode& node) {
+boost::shared_ptr<Operator> parseTranslateOperator(const QDomNode& node) {
 	int mode;
 	int coordSystem;
 	Value x;
@@ -578,7 +578,7 @@ Operator* parseTranslateOperator(const QDomNode& node) {
 		child = child.nextSibling();
 	}
 
-	return new TranslateOperator(mode, coordSystem, x, y, z);
+	return boost::shared_ptr<Operator>(new TranslateOperator(mode, coordSystem, x, y, z));
 }
 
 }

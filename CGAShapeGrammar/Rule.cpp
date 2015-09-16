@@ -17,6 +17,14 @@ float Value::getEstimateValue(float size, const RuleSet& ruleSet, Shape* shape) 
 	}
 }
 
+/**
+ * このルールを指定されたshapeに適用する。
+ * いくつかのオペレーション (compやsplitなど)は、適用後のshapeをstackに格納する。
+ *
+ * @param shape		shape
+ * @param ruleSet	全ルール
+ * @param stack		stack
+ */
 void Rule::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack) const {
 	for (int i = 0; i < operators.size(); ++i) {
 		shape = operators[i]->apply(shape, ruleSet, stack);
@@ -25,9 +33,12 @@ void Rule::apply(Shape* shape, const RuleSet& ruleSet, std::list<Shape*>& stack)
 	
 	if (shape != NULL) {
 		if (operators.size() == 0 || operators.back()->name == "copy") {
+			// copyで終わる場合、このshapeはもう必要ないので削除
 			delete shape;
 			shape = NULL;
 		} else {
+			// copyで終わらない場合、このshapeは描画する必要があるので、残す。
+			// 同じ名前でstackに格納すると無限再帰してしまうため、末尾に!を付加した名前にして格納する。
 			std::stringstream ss;
 			ss << shape->_name << "!";
 			shape->_name = ss.str();
@@ -99,18 +110,42 @@ bool RuleSet::contain(const std::string& name) const {
 	else return true;
 }
 
+/**
+ * 変数とその値を追加する。
+ *
+ * @param name		変数名
+ * @param value		値
+ */
 void RuleSet::addAttr(const std::string& name, const std::string& value) {
 	attrs[name] = value;
 }
 
+/**
+ * ルールを追加する。
+ *
+ * @param name		ルール名 (左辺に来るnonterminalの名前)
+ */
 void RuleSet::addRule(const std::string& name) {
 	rules[name].operators.clear();
 }
 
-void RuleSet::addOperator(const std::string& name, Operator* op) {
+/**
+ * ルールにオペレーションを追加する。
+ *
+ * @param name		ルール名
+ * @param op		オペレーション
+ */
+void RuleSet::addOperator(const std::string& name, const boost::shared_ptr<Operator>& op) {
 	rules[name].operators.push_back(op);
 }
 
+/**
+ * 指定された変数を、数値に変換する。
+ *
+ * @param attr_name		変数名
+ * @param shape			shape
+ * @return				変換された数値
+ */
 float RuleSet::evalFloat(const std::string& attr_name, Shape* shape) const {
 	// To be fixed
 	// 置換だと、変数BCが、変数ABCを置換してしまう。
@@ -133,6 +168,13 @@ float RuleSet::evalFloat(const std::string& attr_name, Shape* shape) const {
 	return calculate(decoded_str);
 }
 
+/**
+ * 指定された変数を、文字列に変換する。
+ *
+ * @param attr_name		変数名
+ * @param shape			shape
+ * @return				変換された文字列
+ */
 std::string RuleSet::evalString(const std::string& attr_name, Shape* shape) const {
 	if (attrs.find(attr_name) == attrs.end()) {
 		return attr_name;

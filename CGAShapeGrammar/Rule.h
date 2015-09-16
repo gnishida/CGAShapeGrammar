@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <boost/shared_ptr.hpp>
 
 namespace cga {
 
@@ -40,7 +41,7 @@ public:
 
 class Rule {
 public:
-	std::vector<Operator*> operators;
+	std::vector<boost::shared_ptr<Operator> > operators;
 
 public:
 	Rule() {}
@@ -62,7 +63,7 @@ public:
 	Rule& getRule(const std::string& name) { return rules[name]; }
 	void addAttr(const std::string& name, const std::string& value);
 	void addRule(const std::string& name);
-	void addOperator(const std::string& name, Operator* op);
+	void addOperator(const std::string& name, const boost::shared_ptr<Operator>& op);
 	float evalFloat(const std::string& attr_name, Shape* shape) const;
 	std::string evalString(const std::string& attr_name, Shape* shape) const;
 };
