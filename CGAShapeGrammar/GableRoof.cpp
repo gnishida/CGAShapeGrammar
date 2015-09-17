@@ -25,7 +25,7 @@ GableRoof::GableRoof(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_color = color;
 }
 
-boost::shared_ptr<Shape> GableRoof::clone(const std::string& name) {
+boost::shared_ptr<Shape> GableRoof::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new GableRoof(*this));
 	copy->_name = name;
 	return copy;
@@ -149,7 +149,7 @@ void GableRoof::comp(const std::map<std::string, std::string>& name_map, std::ve
 	}
 }
 
-void GableRoof::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void GableRoof::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;

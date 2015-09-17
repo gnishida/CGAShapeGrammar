@@ -17,7 +17,7 @@ Cuboid::Cuboid(const std::string& name, const glm::mat4& pivot, const glm::mat4&
 	this->_color = color;
 }
 
-boost::shared_ptr<Shape> Cuboid::clone(const std::string& name) {
+boost::shared_ptr<Shape> Cuboid::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Cuboid(*this));
 	copy->_name = name;
 	return copy;
@@ -115,7 +115,7 @@ void Cuboid::split(int splitAxis, const std::vector<float>& sizes, const std::ve
 	}
 }
 
-void Cuboid::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void Cuboid::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	int num = 0;

@@ -19,9 +19,9 @@ private:
 public:
 	OffsetPolygon() {}
 	OffsetPolygon(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float offsetDistance, const glm::vec3& color, const std::string& texture);
-	boost::shared_ptr<Shape> clone(const std::string& name);
+	boost::shared_ptr<Shape> clone(const std::string& name) const;
 	void comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes);
-	void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);
+	void generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const;
 };
 
 }

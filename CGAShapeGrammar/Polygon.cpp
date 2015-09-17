@@ -7,6 +7,7 @@
 #include "GeneralObject.h"
 #include "CGA.h"
 #include "GLUtils.h"
+#include "BoundingBox.h"
 
 namespace cga {
 
@@ -29,7 +30,7 @@ Polygon::Polygon(const std::string& name, const glm::mat4& pivot, const glm::mat
 	_center /= points.size();
 }
 
-boost::shared_ptr<Shape> Polygon::clone(const std::string& name) {
+boost::shared_ptr<Shape> Polygon::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Polygon(*this));
 	copy->_name = name;
 	return copy;
@@ -110,7 +111,7 @@ boost::shared_ptr<Shape> Polygon::taper(const std::string& name, float height, f
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, _points, _center, height, top_ratio, _color, _texture));
 }
 
-void Polygon::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void Polygon::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

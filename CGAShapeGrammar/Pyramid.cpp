@@ -3,6 +3,7 @@
 #include "CGA.h"
 #include "GLUtils.h"
 #include "Polygon.h"
+#include "BoundingBox.h"
 
 namespace cga {
 
@@ -22,7 +23,7 @@ Pyramid::Pyramid(const std::string& name, const glm::mat4& pivot, const glm::mat
 	this->_scope = glm::vec3(bbox.maxPt.x, bbox.maxPt.y, height);
 }
 
-boost::shared_ptr<Shape> Pyramid::clone(const std::string& name) {
+boost::shared_ptr<Shape> Pyramid::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Pyramid(*this));
 	copy->_name = name;
 	return copy;
@@ -113,7 +114,7 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 	}
 }
 
-void Pyramid::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void Pyramid::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	if (_top_ratio == 0.0f) {

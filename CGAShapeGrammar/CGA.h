@@ -20,19 +20,6 @@ enum { AXES_SELECTOR_XYZ = 0, AXES_SELECTOR_X, AXES_SELECTOR_Y, AXES_SELECTOR_Z,
 
 const float M_PI = 3.1415926f;
 
-class BoundingBox {
-public:
-	glm::vec3 minPt;
-	glm::vec3 maxPt;
-
-public:
-	BoundingBox(const std::vector<glm::vec2>& points);
-	BoundingBox(const std::vector<glm::vec3>& points);
-	float sx() { return maxPt.x - minPt.x; }
-	float sy() { return maxPt.y - minPt.y; }
-	float sz() { return maxPt.z - minPt.z; }
-};
-
 class CGA {
 public:
 	glm::mat4 modelMat;

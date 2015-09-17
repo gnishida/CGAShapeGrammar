@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include "CGA.h"
+#include "BoundingBox.h"
 
 namespace cga {
 
@@ -24,7 +25,7 @@ void Shape::center(int axesSelector) {
 	_prev_scope = _scope;
 }
 
-boost::shared_ptr<Shape> Shape::clone(const std::string& name) {
+boost::shared_ptr<Shape> Shape::clone(const std::string& name) const {
 	throw "clone() is not supported.";
 }
 
@@ -182,11 +183,11 @@ void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	}
 }
 
-void Shape::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void Shape::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	throw "generate() is not supported.";
 }
 
-void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) {
+void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) const {
 	std::vector<Vertex> vertices;
 	glutils::drawAxes(0.1, 3, modelMat, vertices);
 	renderManager->addObject("axis", "", vertices);

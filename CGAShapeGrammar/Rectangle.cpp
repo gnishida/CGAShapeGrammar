@@ -42,7 +42,7 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_textureEnabled = true;
 }
 
-boost::shared_ptr<Shape> Rectangle::clone(const std::string& name) {
+boost::shared_ptr<Shape> Rectangle::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new Rectangle(*this));
 	copy->_name = name;
 	return copy;
@@ -178,7 +178,7 @@ boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height,
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
-void Rectangle::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void Rectangle::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

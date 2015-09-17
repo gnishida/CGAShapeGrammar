@@ -1,5 +1,6 @@
 #include "GeneralObject.h"
 #include "CGA.h"
+#include "BoundingBox.h"
 
 namespace cga {
 
@@ -27,7 +28,7 @@ GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, co
 	this->_textureEnabled = true;
 }
 
-boost::shared_ptr<Shape> GeneralObject::clone(const std::string& name) {
+boost::shared_ptr<Shape> GeneralObject::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new GeneralObject(*this));
 	copy->_name = name;
 	return copy;
@@ -48,7 +49,7 @@ void GeneralObject::size(float xSize, float ySize, float zSize) {
 	}
 }
 
-void GeneralObject::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void GeneralObject::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices(_points.size());

@@ -3,6 +3,7 @@
 #include "GeneralObject.h"
 #include "CGA.h"
 #include "GLUtils.h"
+#include "BoundingBox.h"
 
 namespace cga {
 
@@ -26,7 +27,7 @@ OffsetPolygon::OffsetPolygon(const std::string& name, const glm::mat4& pivot, co
 	_center /= points.size();
 }
 
-boost::shared_ptr<Shape> OffsetPolygon::clone(const std::string& name) {
+boost::shared_ptr<Shape> OffsetPolygon::clone(const std::string& name) const {
 	boost::shared_ptr<Shape> copy = boost::shared_ptr<Shape>(new OffsetPolygon(*this));
 	copy->_name = name;
 	return copy;
@@ -73,7 +74,7 @@ void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std
 	}
 }
 
-void OffsetPolygon::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+void OffsetPolygon::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<glm::vec2> offset_points;

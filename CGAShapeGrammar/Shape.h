@@ -29,7 +29,7 @@ public:
 
 public:
 	void center(int axesSelector);
-	virtual boost::shared_ptr<Shape> clone(const std::string& name);
+	virtual boost::shared_ptr<Shape> clone(const std::string& name) const;
 	virtual void comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes);
 	virtual boost::shared_ptr<Shape> extrude(const std::string& name, float height);
 	virtual boost::shared_ptr<Shape> inscribeCircle(const std::string& name);
@@ -46,10 +46,10 @@ public:
 	virtual boost::shared_ptr<Shape> taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void texture(const std::string& tex);
 	void translate(int mode, int coordSystem, float x, float y, float z);
-	virtual void generate(RenderManager* renderManager, bool showScopeCoordinateSystem);
+	virtual void generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const;
 
 protected:
-	void drawAxes(RenderManager* renderManager, const glm::mat4& modelMat);
+	void drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) const;
 	static Asset getAsset(const std::string& filename);
 };
 
