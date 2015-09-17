@@ -114,21 +114,23 @@ void GLWidget3D::drawScene(int drawMode) {
 void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
-	std::list<boost::shared_ptr<cga::Shape> > stack;
+	std::vector<Vertex> vertices;
+	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
+	renderManager.addObject("grid", "", vertices);
 
 	/*{ // for tutorial
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 35, 15, glm::vec3(1, 1, 1));
-		stack.push_back(lot);
+		system.stack.push_back(lot);
 	}*/
 
 	{ // for parthenon
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 20, 35, glm::vec3(1, 1, 1));
-		stack.push_back(boost::shared_ptr<cga::Shape>(lot));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(lot));
 	}
 
 	/*{ // This is for test.
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 5, 5, glm::vec3(1, 1, 1));
-		stack.push_back(lot);
+		system.stack.push_back(lot);
 	}*/
 
 	/*{
@@ -140,22 +142,18 @@ void GLWidget3D::loadCGA(char* filename) {
 		points.push_back(glm::vec2(5, 5));
 		points.push_back(glm::vec2(0, 5));
 		cga::Polygon* lot = new cga::Polygon("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), points, glm::vec3(1, 1, 1), "");
-		stack.push_back(lot);
+		system.stack.push_back(lot);
 	}*/
 
 	try {
 		cga::RuleSet ruleSet;
 		cga::parseRule(filename, ruleSet);
-		system.generate(ruleSet, stack);
+		system.generate(ruleSet);
 		system.render(&renderManager, true);
 	} catch (const char* ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 	
-	std::vector<Vertex> vertices;
-	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
-	renderManager.addObject("grid", "", vertices);
-
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
 	updateGL();

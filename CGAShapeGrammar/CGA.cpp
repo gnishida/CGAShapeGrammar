@@ -9,7 +9,7 @@ namespace cga {
 CGA::CGA() {
 }
 
-void CGA::generate(const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+void CGA::generate(const RuleSet& ruleSet) {
 	shapes.clear();
 
 	while (!stack.empty()) {
