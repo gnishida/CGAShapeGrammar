@@ -114,7 +114,7 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 	}
 }
 
-void Pyramid::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void Pyramid::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	if (_top_ratio == 0.0f) {

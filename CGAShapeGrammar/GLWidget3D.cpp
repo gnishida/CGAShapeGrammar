@@ -146,7 +146,8 @@ void GLWidget3D::loadCGA(char* filename) {
 	try {
 		cga::RuleSet ruleSet;
 		cga::parseRule(filename, ruleSet);
-		system.generate(&renderManager, ruleSet, stack, true);
+		system.generate(ruleSet, stack);
+		system.render(&renderManager, true);
 	} catch (const char* ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}

@@ -9,7 +9,9 @@ namespace cga {
 CGA::CGA() {
 }
 
-void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack, bool showScopeCoordinateSystem) {
+void CGA::generate(const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+	shapes.clear();
+
 	while (!stack.empty()) {
 		boost::shared_ptr<Shape> shape = stack.front();
 		stack.pop_front();
@@ -20,8 +22,14 @@ void CGA::generate(RenderManager* renderManager, const RuleSet& ruleSet, std::li
 			if (shape->_name.back() != '!' && shape->_name.back() != '.') {
 				std::cout << "Warning: " << "no rule is found for " << shape->_name << "." << std::endl;
 			}
-			shape->generate(renderManager, showScopeCoordinateSystem);
+			shapes.push_back(shape);
 		}
+	}
+}
+
+void CGA::render(RenderManager* renderManager, bool showScopeCoordinateSystem) {
+	for (int i = 0; i < shapes.size(); ++i) {
+		shapes[i]->render(renderManager, showScopeCoordinateSystem);
 	}
 }
 

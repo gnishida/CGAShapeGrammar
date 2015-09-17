@@ -183,8 +183,8 @@ void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	}
 }
 
-void Shape::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
-	throw "generate() is not supported.";
+void Shape::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+	throw "render() is not supported.";
 }
 
 void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) const {

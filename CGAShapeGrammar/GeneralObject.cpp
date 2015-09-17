@@ -49,7 +49,7 @@ void GeneralObject::size(float xSize, float ySize, float zSize) {
 	}
 }
 
-void GeneralObject::generate(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void GeneralObject::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices(_points.size());

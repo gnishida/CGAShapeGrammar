@@ -23,11 +23,13 @@ const float M_PI = 3.1415926f;
 class CGA {
 public:
 	glm::mat4 modelMat;
+	std::vector<boost::shared_ptr<Shape> > shapes;
 
 public:
 	CGA();
 
-	void generate(RenderManager* renderManager, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack, bool showScopeCoordinateSystem = false);
+	void generate(const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack);
+	void render(RenderManager* renderManager, bool showScopeCoordinateSystem = false);
 };
 
 }
