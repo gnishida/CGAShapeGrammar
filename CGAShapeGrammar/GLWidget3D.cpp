@@ -79,8 +79,6 @@ void GLWidget3D::resizeGL(int width, int height) {
  * This function is called whenever the widget needs to be painted.
  */
 void GLWidget3D::paintGL() {
-	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -156,6 +154,8 @@ void GLWidget3D::loadCGA(char* filename) {
 	std::vector<Vertex> vertices;
 	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
 	renderManager.addObject("grid", "", vertices);
+
+	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
 	updateGL();
 }
