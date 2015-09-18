@@ -19,7 +19,7 @@ noperspective out vec3 dist;
 
 void main(void)
 {
-	float MEW = 100.0;
+	float MEW = 1000.0;
 	vec2 WIN_SCALE = vec2(600, 600);
 
 	// taken from 'Single-Pass Wireframe Rendering'
