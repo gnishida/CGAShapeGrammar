@@ -139,12 +139,12 @@ void Prism::render(RenderManager* renderManager, bool showScopeCoordinateSystem)
 			glm::vec3 normal = glm::normalize(glm::cross(glm::vec3(p3) - glm::vec3(p1), glm::vec3(p2) - glm::vec3(p1)));
 			
 			vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
-			vertices.push_back(Vertex(glm::vec3(p3), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p3), normal, _color, 1));
 			vertices.push_back(Vertex(glm::vec3(p4), normal, _color));
 
 			vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
 			vertices.push_back(Vertex(glm::vec3(p4), normal, _color));
-			vertices.push_back(Vertex(glm::vec3(p2), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p2), normal, _color, 1));
 
 			p1 = p3;
 			p2 = p4;

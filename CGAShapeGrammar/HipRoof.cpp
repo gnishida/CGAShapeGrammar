@@ -45,11 +45,11 @@ void HipRoof::render(RenderManager* renderManager, bool showScopeCoordinateSyste
 		auto edge0 = face->halfedge();
 		auto edge = edge0;
 
+		std::vector<glm::vec3> points;
+
 		// 最初のエッジを保存する
 		glm::vec2 p0, p1;
 		bool first = true;
-
-		glm::vec3 prev_p;
 
 		do {
 			auto head = edge->vertex();
@@ -61,14 +61,14 @@ void HipRoof::render(RenderManager* renderManager, bool showScopeCoordinateSyste
 				}
 			} else { // 一番外側のボーダー
 			}
-			//cv::line(m, cv::Point(tail->point().x(), tail->point().y()), cv::Point(head->point().x(), head->point().y()), color, 1);
 
 			if (first) {
 				p0 = glm::vec2(tail->point().x(), tail->point().y());
 				p1 = glm::vec2(head->point().x(), head->point().y());
 				first = false;
 
-				prev_p = glm::vec3(p1, 0);
+				points.push_back(glm::vec3(_pivot * _modelMat * glm::vec4(p0, 0, 1)));
+				points.push_back(glm::vec3(_pivot * _modelMat * glm::vec4(p1, 0, 1)));
 			} else {
 				glm::vec2 p2 = glm::vec2(head->point().x(), head->point().y());
 
@@ -76,21 +76,26 @@ void HipRoof::render(RenderManager* renderManager, bool showScopeCoordinateSyste
 					// p2の高さを計算
 					float z = glutils::distance(p0, p1, p2) * tanf(_angle * M_PI / 180.0f);
 
-					// 三角形を作成
-					glm::vec3 v0 = glm::vec3(_pivot * _modelMat * glm::vec4(p0, 0, 1));
-					glm::vec3 v1 = glm::vec3(_pivot * _modelMat * glm::vec4(prev_p, 1));
-					glm::vec3 v2 = glm::vec3(_pivot * _modelMat * glm::vec4(p2, z, 1));
-
-					glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
-
-					vertices.push_back(Vertex(v0, normal, _color));
-					vertices.push_back(Vertex(v1, normal, _color));
-					vertices.push_back(Vertex(v2, normal, _color));
-	
-					prev_p = glm::vec3(p2, z);
+					points.push_back(glm::vec3(_pivot * _modelMat * glm::vec4(head->point().x(), head->point().y(), z, 1)));
 				}
 			}
 		} while ((edge = edge->next()) != edge0);
+
+		glm::vec3 normal = glm::normalize(glm::cross(points[1] - points[0], points[2] - points[0]));
+
+		for (int i = 1; i < points.size() - 1; ++i) {
+			vertices.push_back(Vertex(points[0], normal, _color));
+			if (i < points.size() - 2) {
+				vertices.push_back(Vertex(points[i], normal, _color, 1));
+			} else {
+				vertices.push_back(Vertex(points[i], normal, _color));
+			}
+			if (i > 1) {
+				vertices.push_back(Vertex(points[i+1], normal, _color, 1));
+			} else {
+				vertices.push_back(Vertex(points[i+1], normal, _color, 1));
+			}
+		}
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);

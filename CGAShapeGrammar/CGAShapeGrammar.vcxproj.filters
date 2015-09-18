@@ -315,13 +315,13 @@
     <ClInclude Include="RoofGableOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Asset.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
     <ClInclude Include="BoundingBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

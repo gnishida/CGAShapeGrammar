@@ -33,7 +33,7 @@ boost::shared_ptr<Shape> OffsetPolygon::clone(const std::string& name) const {
 	return copy;
 }
 
-void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std::vector<Shape*>& shapes) {
+void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes) {
 	std::vector<glm::vec2> offset_points;
 	glutils::offsetPolygon(_points, _offsetDistance, offset_points);
 
@@ -46,7 +46,7 @@ void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std
 		}
 
 		glm::mat4 mat = glm::translate(_modelMat, glm::vec3(t, 0));
-		shapes.push_back(new Polygon(name_map.at("inside"), _pivot, mat, pts, _color, _texture));
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name_map.at("inside"), _pivot, mat, pts, _color, _texture)));
 	}
 
 	// border face
@@ -70,7 +70,7 @@ void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std
 			normals.push_back(glm::vec3(0, 0, 1));
 		}
 		
-		shapes.push_back(new GeneralObject(name_map.at("border"), _pivot, _modelMat, pts, normals, _color));
+		shapes.push_back(boost::shared_ptr<Shape>(new GeneralObject(name_map.at("border"), _pivot, _modelMat, pts, normals, _color)));
 	}
 }
 

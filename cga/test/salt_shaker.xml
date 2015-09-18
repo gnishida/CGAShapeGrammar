@@ -10,9 +10,7 @@
 		</comp>
 	</rule>
 	<rule name="Top">
-		<offset>
-			<param name="offsetDistance" value="-0.5"/>
-		</offset>
+		<offset offsetDistance="-0.5"/>
 		<comp>
 			<param name="inside" value="X"/>
 			<param name="border" value="Y."/>

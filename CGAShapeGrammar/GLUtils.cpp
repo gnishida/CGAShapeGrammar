@@ -186,8 +186,8 @@ void drawCircle(float r1, float r2, const glm::vec3& color, const glm::mat4& mat
 		p3 = mat * p3;
 		
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), color));
-		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), color));
-		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), color));
+		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), color, 1));
+		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), color, 1));
 	}
 }
 
@@ -205,12 +205,12 @@ void drawQuad(float w, float h, const glm::vec3& color, const glm::mat4& mat, st
 	n = mat * n;
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), color, glm::vec2(0, 0)));
-	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), color, glm::vec2(1, 0)));
+	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), color, glm::vec2(1, 0), 1));
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), color, glm::vec2(1, 1)));
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), color, glm::vec2(0, 0)));
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), color, glm::vec2(1, 1)));
-	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), color, glm::vec2(0, 1)));
+	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), color, glm::vec2(0, 1), 1));
 }
 
 void drawQuad(float w, float h, const glm::vec2& t1, const glm::vec2& t2, const glm::vec2& t3, const glm::vec2& t4, const glm::mat4& mat, std::vector<Vertex>& vertices) {
@@ -227,12 +227,12 @@ void drawQuad(float w, float h, const glm::vec2& t1, const glm::vec2& t2, const 
 	n = mat * n;
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), glm::vec3(1, 1, 1), t1));
-	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), glm::vec3(1, 1, 1), t2));
+	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), glm::vec3(1, 1, 1), t2, 1));
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), glm::vec3(1, 1, 1), t3));
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), glm::vec3(1, 1, 1), t1));
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), glm::vec3(1, 1, 1), t3));
-	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), glm::vec3(1, 1, 1), t4));
+	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), glm::vec3(1, 1, 1), t4, 1));
 }
 
 void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
@@ -254,8 +254,16 @@ void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, c
 		}
 
 		vertices.push_back(Vertex(glm::vec3(p1), normal, color));
-		vertices.push_back(Vertex(glm::vec3(p2), normal, color));
-		vertices.push_back(Vertex(glm::vec3(p3), normal, color));
+		if (i < points.size() - 3) {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color));
+		}
+		if (i > 0) {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color));
+		}
 
 		p2 = p3;
 	}
@@ -280,8 +288,16 @@ void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, c
 		}
 
 		vertices.push_back(Vertex(glm::vec3(p1), normal, color));
-		vertices.push_back(Vertex(glm::vec3(p2), normal, color));
-		vertices.push_back(Vertex(glm::vec3(p3), normal, color));
+		if (i < points.size() - 3) {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color));
+		}
+		if (i > 0) {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color));
+		}
 
 		p2 = p3;
 	}
@@ -309,8 +325,16 @@ void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, c
 		}
 
 		vertices.push_back(Vertex(glm::vec3(p1), normal, color, t1));
-		vertices.push_back(Vertex(glm::vec3(p2), normal, color, t2));
-		vertices.push_back(Vertex(glm::vec3(p3), normal, color, t3));
+		if (i < points.size() - 3) {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color, t2, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color, t2));
+		}
+		if (i > 0) {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color, t3, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color, t3));
+		}
 
 		p2 = p3;
 		t2 = t3;
@@ -414,52 +438,52 @@ void drawBox(float length_x, float length_y, float length_z, glm::vec3& color, c
 	n6 = mat * n6;
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n5), color));
-	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n5), color));
+	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n5), color, 1));
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n5), color));
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n5), color));
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n5), color));
-	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n5), color));
+	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n5), color, 1));
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n3), color));
-	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n3), color));
+	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n3), color, 1));
 	vertices.push_back(Vertex(glm::vec3(p6), glm::vec3(n3), color));
 
 	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n3), color));
 	vertices.push_back(Vertex(glm::vec3(p6), glm::vec3(n3), color));
-	vertices.push_back(Vertex(glm::vec3(p5), glm::vec3(n3), color));
+	vertices.push_back(Vertex(glm::vec3(p5), glm::vec3(n3), color, 1));
 
 	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
-	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
+	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color, 1));
 	vertices.push_back(Vertex(glm::vec3(p7), glm::vec3(n2), color));
 
 	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
 	vertices.push_back(Vertex(glm::vec3(p7), glm::vec3(n2), color));
-	vertices.push_back(Vertex(glm::vec3(p6), glm::vec3(n2), color));
+	vertices.push_back(Vertex(glm::vec3(p6), glm::vec3(n2), color, 1));
 
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n4), color));
-	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n4), color));
+	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n4), color, 1));
 	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n4), color));
 
 	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n4), color));
 	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n4), color));
-	vertices.push_back(Vertex(glm::vec3(p7), glm::vec3(n4), color));
+	vertices.push_back(Vertex(glm::vec3(p7), glm::vec3(n4), color, 1));
 
 	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color));
-	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
+	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color, 1));
 	vertices.push_back(Vertex(glm::vec3(p5), glm::vec3(n1), color));
 
 	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color));
 	vertices.push_back(Vertex(glm::vec3(p5), glm::vec3(n1), color));
-	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n1), color));
+	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n1), color, 1));
 
 	vertices.push_back(Vertex(glm::vec3(p5), glm::vec3(n6), color));
-	vertices.push_back(Vertex(glm::vec3(p6), glm::vec3(n6), color));
+	vertices.push_back(Vertex(glm::vec3(p6), glm::vec3(n6), color, 1));
 	vertices.push_back(Vertex(glm::vec3(p7), glm::vec3(n6), color));
 
 	vertices.push_back(Vertex(glm::vec3(p5), glm::vec3(n6), color));
 	vertices.push_back(Vertex(glm::vec3(p7), glm::vec3(n6), color));
-	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n6), color));
+	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n6), color, 1));
 }
 
 void drawSphere(float radius, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
@@ -496,12 +520,12 @@ void drawSphere(float radius, const glm::vec3& color, const glm::mat4& mat, std:
 			n4 = mat * n4;
 
 			vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
-			vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
+			vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color, 1));
 			vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n3), color));
 
 			vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
 			vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n3), color));
-			vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n4), color));
+			vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n4), color, 1));
 		}
 	}
 }
@@ -548,12 +572,12 @@ void drawEllipsoid(float r1, float r2, float r3, const glm::vec3& color, const g
 			n4 = mat * n4;
 
 			vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
-			vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
+			vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color, 1));
 			vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n3), color));
 
 			vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
 			vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n3), color));
-			vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n4), color));
+			vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n4), color, 1));
 		}
 	}
 }
@@ -583,12 +607,12 @@ void drawCylinderX(float radius1, float radius2, float h, const glm::vec3& color
 		n2 = mat * n2;
 
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
-		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
+		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color, 1));
 		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
 
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
 		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
-		vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color));
+		vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color, 1));
 	}
 }
 
@@ -617,12 +641,12 @@ void drawCylinderY(float radius1, float radius2, float h, const glm::vec3& color
 		n2 = mat * n2;
 
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
-		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
+		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color, 1));
 		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
 
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
 		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
-		vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color));
+		vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color, 1));
 	}
 }
 
@@ -651,12 +675,12 @@ void drawCylinderZ(float radius1, float radius2, float h, const glm::vec3& color
 		n2 = mat * n2;
 
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
-		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color));
+		vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n2), color, 1));
 		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
 
 		vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n1), color));
 		vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n2), color));
-		vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color));
+		vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n1), color, 1));
 	}
 }
 
@@ -762,12 +786,12 @@ void drawTube(std::vector<glm::vec3>& points, float radius, const glm::vec3& col
 
 		for (int k = 0; k < slices; ++k) {
 			vertices.push_back(Vertex(glm::vec3(circle_points[k]), glm::vec3(circle_normals[k]), color));
-			vertices.push_back(Vertex(glm::vec3(circle_points[(k+1)%slices]), glm::vec3(circle_normals[(k+1)%slices]), color));
+			vertices.push_back(Vertex(glm::vec3(circle_points[(k+1)%slices]), glm::vec3(circle_normals[(k+1)%slices]), color, 1));
 			vertices.push_back(Vertex(glm::vec3(circle_points2[(k+1)%slices]), glm::vec3(circle_normals2[(k+1)%slices]), color));
 
 			vertices.push_back(Vertex(glm::vec3(circle_points[k]), glm::vec3(circle_normals[k]), color));
 			vertices.push_back(Vertex(glm::vec3(circle_points2[(k+1)%slices]), glm::vec3(circle_normals2[(k+1)%slices]), color));
-			vertices.push_back(Vertex(glm::vec3(circle_points2[k]), glm::vec3(circle_normals2[k]), color));
+			vertices.push_back(Vertex(glm::vec3(circle_points2[k]), glm::vec3(circle_normals2[k]), color, 1));
 		}
 
 
@@ -789,12 +813,12 @@ void drawCurvilinearMesh(int numX, int numY, std::vector<glm::vec3>& points, con
 			glm::vec3 normal = glm::cross(p2 - p1, p3 - p1);
 
 			vertices.push_back(Vertex(p1, normal, color));
-			vertices.push_back(Vertex(p2, normal, color));
+			vertices.push_back(Vertex(p2, normal, color, 1));
 			vertices.push_back(Vertex(p3, normal, color));
 
 			vertices.push_back(Vertex(p1, normal, color));
 			vertices.push_back(Vertex(p3, normal, color));
-			vertices.push_back(Vertex(p4, normal, color));
+			vertices.push_back(Vertex(p4, normal, color, 1));
 		}
 	}
 }

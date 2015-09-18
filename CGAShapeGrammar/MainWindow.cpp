@@ -3,7 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags) {
 	ui.setupUi(this);
-	ui.actionViewWireframe->setChecked(false);
+	ui.actionViewWireframe->setChecked(true);
 	ui.actionViewScopeCoordinateSystem->setChecked(false);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));

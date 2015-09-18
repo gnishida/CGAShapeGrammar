@@ -53,7 +53,7 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  */
 void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 8192);
-	showWireframe = false;
+	showWireframe = true;
 	showScopeCoordinateSystem = false;
 
 	// set the clear color for the screen
@@ -62,6 +62,13 @@ void GLWidget3D::initializeGL() {
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 
 	std::vector<Vertex> vertices;
+
+	std::vector<glm::vec2> pts;
+	pts.push_back(glm::vec2(0, 0));
+	pts.push_back(glm::vec2(10, 0));
+	pts.push_back(glm::vec2(10, 5));
+	pts.push_back(glm::vec2(0, 5));
+	glutils::drawPolygon(pts, glm::vec3(1, 0, 0), glm::mat4(), vertices);
 	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
 	renderManager.addObject("grid", "", vertices);
 }

@@ -10,24 +10,28 @@ struct Vertex {
 	glm::vec3 normal;
 	glm::vec3 color;
 	glm::vec2 texCoord;
+	float drawEdge;	// 0 -- exclude / 1 -- draw edge
 
 	Vertex() {}
 
-	Vertex(const glm::vec3& pos, const glm::vec3& n) {
+	Vertex(const glm::vec3& pos, const glm::vec3& n, float drawEdge = 0.0f) {
 		position = pos;
 		normal = n;
+		this->drawEdge = drawEdge;
 	}
 
-	Vertex(const glm::vec3& pos, const glm::vec3& n, const glm::vec3& c) {
+	Vertex(const glm::vec3& pos, const glm::vec3& n, const glm::vec3& c, float drawEdge = 0.0f) {
 		position = pos;
 		normal = n;
 		color = c;
+		this->drawEdge = drawEdge;
 	}
 
-	Vertex(const glm::vec3& pos, const glm::vec3& n, const glm::vec3& c, const glm::vec2& tex) {
+	Vertex(const glm::vec3& pos, const glm::vec3& n, const glm::vec3& c, const glm::vec2& tex, float drawEdge = 0.0f) {
 		position = pos;
 		normal = n;
 		color = c;
 		texCoord = tex;
+		this->drawEdge = drawEdge;
 	}
 };

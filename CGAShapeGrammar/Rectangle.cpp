@@ -199,22 +199,22 @@ void Rectangle::render(RenderManager* renderManager, bool showScopeCoordinateSys
 
 	if (_textureEnabled) {
 		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), _color, _texCoords[0]);
-		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color, _texCoords[1]);
+		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color, _texCoords[1], 1);
 		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), _color, _texCoords[2]);
 
 		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), _color, _texCoords[0]);
 		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), _color, _texCoords[2]);
-		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), _color, _texCoords[3]);
+		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), _color, _texCoords[3], 1);
 
 		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 	} else {
 		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), _color);
-		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color);
+		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color, 1);
 		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), _color);
 
 		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), _color);
 		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), _color);
-		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), _color);
+		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), _color, 1);
 
 		renderManager->addObject(_name.c_str(), "", vertices);
 	}
