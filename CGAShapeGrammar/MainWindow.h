@@ -11,6 +11,8 @@ class MainWindow : public QMainWindow {
 private:
 	Ui::MainWindowClass ui;
 	GLWidget3D* glWidget;
+	bool fileLoaded;
+	QString filename;
 
 public:
 	MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
@@ -20,6 +22,7 @@ public slots:
 	void onOpenCGARules();
 	void onViewWireframe();
 	void onViewScopeCoordinateSystem();
+	void onViewRefresh();
 };
 
 #endif // MAINWINDOW_H

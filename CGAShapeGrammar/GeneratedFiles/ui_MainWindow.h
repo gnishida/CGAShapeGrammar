@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Sep 18 20:07:56 2015
+** Created: Sat Sep 19 16:47:26 2015
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -31,6 +31,7 @@ public:
     QAction *actionViewWireframe;
     QAction *actionOpenCGARules;
     QAction *actionViewScopeCoordinateSystem;
+    QAction *actionViewRefresh;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -53,6 +54,8 @@ public:
         actionViewScopeCoordinateSystem = new QAction(MainWindowClass);
         actionViewScopeCoordinateSystem->setObjectName(QString::fromUtf8("actionViewScopeCoordinateSystem"));
         actionViewScopeCoordinateSystem->setCheckable(true);
+        actionViewRefresh = new QAction(MainWindowClass);
+        actionViewRefresh->setObjectName(QString::fromUtf8("actionViewRefresh"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -78,6 +81,8 @@ public:
         menuFile->addAction(actionExit);
         menuView->addAction(actionViewWireframe);
         menuView->addAction(actionViewScopeCoordinateSystem);
+        menuView->addSeparator();
+        menuView->addAction(actionViewRefresh);
 
         retranslateUi(MainWindowClass);
 
@@ -94,6 +99,8 @@ public:
         actionOpenCGARules->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0, QApplication::UnicodeUTF8));
         actionViewScopeCoordinateSystem->setText(QApplication::translate("MainWindowClass", "Scope Coordinate System", 0, QApplication::UnicodeUTF8));
         actionViewScopeCoordinateSystem->setShortcut(QApplication::translate("MainWindowClass", "C", 0, QApplication::UnicodeUTF8));
+        actionViewRefresh->setText(QApplication::translate("MainWindowClass", "Refresh", 0, QApplication::UnicodeUTF8));
+        actionViewRefresh->setShortcut(QApplication::translate("MainWindowClass", "F5", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

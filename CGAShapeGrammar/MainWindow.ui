@@ -37,6 +37,8 @@
     </property>
     <addaction name="actionViewWireframe"/>
     <addaction name="actionViewScopeCoordinateSystem"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewRefresh"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -83,6 +85,14 @@
    </property>
    <property name="shortcut">
     <string>C</string>
+   </property>
+  </action>
+  <action name="actionViewRefresh">
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
  </widget>
