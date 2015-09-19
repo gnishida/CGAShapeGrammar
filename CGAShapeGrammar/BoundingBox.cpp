@@ -36,4 +36,24 @@ BoundingBox::BoundingBox(const std::vector<glm::vec3>& points) {
 	}
 }
 
+BoundingBox::BoundingBox(const std::vector<std::vector<glm::vec3> >& points) {
+	minPt.x = (std::numeric_limits<float>::max)();
+	minPt.y = (std::numeric_limits<float>::max)();
+	minPt.z = (std::numeric_limits<float>::max)();
+	maxPt.x = -(std::numeric_limits<float>::max)();
+	maxPt.y = -(std::numeric_limits<float>::max)();
+	maxPt.z = -(std::numeric_limits<float>::max)();
+
+	for (int i = 0; i < points.size(); ++i) {
+		for (int k = 0; k < points[i].size(); ++k) {
+			minPt.x = min(minPt.x, points[i][k].x);
+			minPt.y = min(minPt.y, points[i][k].y);
+			minPt.z = min(minPt.z, points[i][k].z);
+			maxPt.x = max(maxPt.x, points[i][k].x);
+			maxPt.y = max(maxPt.y, points[i][k].y);
+			maxPt.z = max(maxPt.z, points[i][k].z);
+		}
+	}
+}
+
 }

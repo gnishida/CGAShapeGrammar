@@ -1,10 +1,22 @@
 #include "GeneralObject.h"
 #include "CGA.h"
 #include "BoundingBox.h"
+#include "GLUtils.h"
 
 namespace cga {
 
 GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const glm::vec3& color) {
+	this->_name = name;
+	this->_removed = false;
+	this->_pivot = pivot;
+	this->_modelMat = modelMat;
+	this->_points.push_back(points);
+	this->_normals.push_back(normals);
+	this->_color = color;
+	this->_textureEnabled = false;
+}
+
+GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<std::vector<glm::vec3> >& points, const std::vector<std::vector<glm::vec3> >& normals, const glm::vec3& color) {
 	this->_name = name;
 	this->_removed = false;
 	this->_pivot = pivot;
@@ -16,6 +28,19 @@ GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, co
 }
 
 GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec3>& points, const std::vector<glm::vec3>& normals, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const std::string& texture) {
+	this->_name = name;
+	this->_removed = false;
+	this->_pivot = pivot;
+	this->_modelMat = modelMat;
+	this->_points.push_back(points);
+	this->_normals.push_back(normals);
+	this->_color = color;
+	this->_texCoords.push_back(texCoords);
+	this->_texture = texture;
+	this->_textureEnabled = true;
+}
+
+GeneralObject::GeneralObject(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<std::vector<glm::vec3> >& points, const std::vector<std::vector<glm::vec3> >& normals, const glm::vec3& color, const std::vector<std::vector<glm::vec2> >& texCoords, const std::string& texture) {
 	this->_name = name;
 	this->_removed = false;
 	this->_pivot = pivot;
@@ -43,22 +68,23 @@ void GeneralObject::size(float xSize, float ySize, float zSize) {
 	float scale_z = xSize / bbox.sz();
 
 	for (int i =  0; i < _points.size(); ++i) {
-		_points[i].x *= scale_x;
-		_points[i].y *= scale_y;
-		_points[i].z *= scale_z;
+		for (int k = 0; k < _points[i].size(); ++k) {
+			_points[i][k].x *= scale_x;
+			_points[i][k].y *= scale_y;
+			_points[i][k].z *= scale_z;
+		}
 	}
 }
 
 void GeneralObject::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
-	std::vector<Vertex> vertices(_points.size());
+	std::vector<Vertex> vertices;
 	for (int i = 0; i < _points.size(); ++i) {
-		vertices[i].position = glm::vec3(_pivot * _modelMat * glm::vec4(_points[i], 1));
-		vertices[i].normal = glm::vec3(_pivot * _modelMat * glm::vec4(_normals[i], 0));
-		vertices[i].color = _color;
 		if (_textureEnabled) {
-			vertices[i].texCoord = _texCoords[i];
+			glutils::drawPolygon(_points[i], _color, _texCoords[i], _pivot * _modelMat, vertices);
+		} else {
+			glutils::drawPolygon(_points[i], _color, _pivot * _modelMat, vertices);
 		}
 	}
 

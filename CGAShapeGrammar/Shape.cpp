@@ -95,17 +95,22 @@ boost::shared_ptr<Shape> Shape::insert(const std::string& name, const std::strin
 
 	// scale the points
 	for (int i = 0; i < asset.points.size(); ++i) {
-		asset.points[i].x = (asset.points[i].x - bbox.minPt.x) * scaleX;
-		asset.points[i].y = (asset.points[i].y - bbox.minPt.y) * scaleY;
-		asset.points[i].z = (asset.points[i].z - bbox.minPt.z) * scaleZ;
+		for (int k = 0; k < asset.points[i].size(); ++k) {
+			asset.points[i][k].x = (asset.points[i][k].x - bbox.minPt.x) * scaleX;
+			asset.points[i][k].y = (asset.points[i][k].y - bbox.minPt.y) * scaleY;
+			asset.points[i][k].z = (asset.points[i][k].z - bbox.minPt.z) * scaleZ;
+		}
 	}
 
 	// if texCoords are not defined in obj file, generate them automatically.
 	if (_texCoords.size() > 0 && asset.texCoords.size() == 0) {
 		asset.texCoords.resize(asset.points.size());
 		for (int i = 0; i < asset.points.size(); ++i) {
-			asset.texCoords[i].x = asset.points[i].x / _scope.x * (_texCoords[1].x - _texCoords[0].x) + _texCoords[0].x;
-			asset.texCoords[i].y = asset.points[i].y / _scope.y * (_texCoords[2].y - _texCoords[0].y) + _texCoords[0].y;
+			asset.texCoords[i].resize(asset.points[i].size());
+			for (int k = 0; k < asset.points[i].size(); ++k) {
+				asset.texCoords[i][k].x = asset.points[i][k].x / _scope.x * (_texCoords[1].x - _texCoords[0].x) + _texCoords[0].x;
+				asset.texCoords[i][k].y = asset.points[i][k].y / _scope.y * (_texCoords[2].y - _texCoords[0].y) + _texCoords[0].y;
+			}
 		}
 	}
 
@@ -195,9 +200,9 @@ void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) co
 
 Asset Shape::getAsset(const std::string& filename) {
 	if (assets.find(filename) == assets.end()) {
-		std::vector<glm::vec3> points;
-		std::vector<glm::vec3> normals;
-		std::vector<glm::vec2> texCoords;
+		std::vector<std::vector<glm::vec3> > points;
+		std::vector<std::vector<glm::vec3> > normals;
+		std::vector<std::vector<glm::vec2> > texCoords;
 		if (!OBJLoader::load(filename.c_str(), points, normals, texCoords)) {
 			std::stringstream ss;
 			ss << "OBJ file cannot be read: " << filename.c_str() << "." << std::endl;

@@ -235,6 +235,44 @@ void drawQuad(float w, float h, const glm::vec2& t1, const glm::vec2& t2, const 
 	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), glm::vec3(1, 1, 1), t4, 1));
 }
 
+void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+	glm::vec4 p1(points.back(), 1);
+	p1 = mat * p1;
+	glm::vec2 t1 = texCoords.back();
+	glm::vec4 p2(points[0], 1);
+	p2 = mat * p2;
+	glm::vec2 t2 = texCoords[0];
+
+	glm::vec3 normal;
+	bool normal_computed = false;
+
+	for (int i = 0; i < points.size() - 2; ++i) {
+		glm::vec4 p3(points[i + 1], 1);
+		p3 = mat * p3;
+		glm::vec2 t3 = texCoords[i + 1];
+
+		if (!normal_computed) {
+			normal = glm::normalize(glm::cross(glm::vec3(p2 - p1), glm::vec3(p3 - p1)));
+			normal_computed = true;
+		}
+
+		vertices.push_back(Vertex(glm::vec3(p1), normal, color, t1));
+		if (i < points.size() - 3) {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color, t2, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, color, t2));
+		}
+		if (i > 0) {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color, t3, 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p3), normal, color, t3));
+		}
+
+		p2 = p3;
+		t2 = t3;
+	}
+}
+
 void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(points.back(), 1);
 	p1 = mat * p1;

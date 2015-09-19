@@ -10,6 +10,6 @@ protected:
 
 public:
 	static void load(const char* filename, std::vector<Vertex>& vertices);
-	static bool load(const char* filename, std::vector<glm::vec3>& points, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& texCoords);
+	static bool load(const char* filename, std::vector<std::vector<glm::vec3> >& points, std::vector<std::vector<glm::vec3> >& normals, std::vector<std::vector<glm::vec2> >& texCoords);
 };
 

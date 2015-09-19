@@ -21,6 +21,7 @@ bool rayTriangleIntersection(const glm::vec3& a, const glm::vec3& v, const glm::
 void drawCircle(float r1, float r2, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawQuad(float w, float h, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawQuad(float w, float h, const glm::vec2& t1, const glm::vec2& t2, const glm::vec2& t3, const glm::vec2& t4, const glm::mat4& mat, std::vector<Vertex>& vertices);
+void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices);
 void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices);

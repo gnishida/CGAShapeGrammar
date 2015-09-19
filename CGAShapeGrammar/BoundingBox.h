@@ -16,6 +16,7 @@ public:
 public:
 	BoundingBox(const std::vector<glm::vec2>& points);
 	BoundingBox(const std::vector<glm::vec3>& points);
+	BoundingBox(const std::vector<std::vector<glm::vec3> >& points);
 	float sx() { return maxPt.x - minPt.x; }
 	float sy() { return maxPt.y - minPt.y; }
 	float sz() { return maxPt.z - minPt.z; }
