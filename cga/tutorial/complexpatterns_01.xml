@@ -3,7 +3,7 @@
 	<!-- Attributes -->
 	<attr name="buildingH" value="27"/>
 	<attr name="floorH" value="3.5"/>
-	<attr name="groundflH" value="4.5"/>
+	<attr name="groundfloorH" value="4.5"/>
 	<attr name="nSymmetries" value="2"/>
 	<attr name="borderwallW" value="0.3"/>
 	<attr name="ledgeH" value="0.3"/>
@@ -82,7 +82,7 @@
 	<!-- Facade and Floors -->
 	<rule name="Facade">
 		<split splitAxis="y">
-			<param type="floating" value="groundflH" name="Floor"/>
+			<param type="floating" value="groundfloorH" name="Floor"/>
 			<param type="floating" value="floorH" name="Floor" repeat="true"/>
 		</split>
 	</rule>

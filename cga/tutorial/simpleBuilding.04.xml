@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <rules version="2010.3" author="andi">
 	<!-- Attributes -->
-	<attr name="groundf_height" value="4"/>
+	<attr name="groundfloor_height" value="4"/>
 	<attr name="floor_height" value="3.5"/>
 	<attr name="tile_width" value="3"/>
 	<attr name="bldg_height" value="11"/>
@@ -42,7 +42,7 @@
 			<param name="texture" value="wall_tex"/>
 		</texture>
 		<split splitAxis="y">
-			<param type="absolute" value="groundf_height" name="Groundfloor"/>
+			<param type="absolute" value="groundfloor_height" name="Groundfloor"/>
 			<param type="floating" value="floor_height" name="Floor" repeat="true"/>
 		</split>
 	</rule>
@@ -58,7 +58,7 @@
 			<param name="texture" value="wall_tex"/>
 		</texture>
 		<split splitAxis="y">
-			<param type="absolute" value="groundf_height" name="Floor"/>
+			<param type="absolute" value="groundfloor_height" name="Floor"/>
 			<param type="floating" value="floor_height" name="Floor" repeat="true"/>
 		</split>
 	</rule>
