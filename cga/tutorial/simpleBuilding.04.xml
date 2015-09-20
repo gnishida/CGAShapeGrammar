@@ -33,14 +33,11 @@
 	
 	<!-- the front facade is subdivided into one front groundfloor and upper floors -->
 	<rule name="FrontFacade">
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="1.5"/>
 			<param name="texHeight" type="absolute" value="1"/>
 		</setupProjection>
-		<texture>
-			<param name="texture" value="wall_tex"/>
-		</texture>
+		<texture texturePath="wall_tex"/>
 		<split splitAxis="y">
 			<param type="absolute" value="groundfloor_height" name="Groundfloor"/>
 			<param type="floating" value="floor_height" name="Floor" repeat="true"/>
@@ -49,14 +46,11 @@
 	
 	<!-- a side facade is subdivided into one bottom floor and upper floors. -->
 	<rule name="SideFacade">
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="1.5"/>
 			<param name="texHeight" type="absolute" value="1"/>
 		</setupProjection>
-		<texture>
-			<param name="texture" value="wall_tex"/>
-		</texture>
+		<texture texturePath="wall_tex"/>
 		<split splitAxis="y">
 			<param type="absolute" value="groundfloor_height" name="Floor"/>
 			<param type="floating" value="floor_height" name="Floor" repeat="true"/>
@@ -65,14 +59,11 @@
 	
 	<!-- a roof texture is applied to the roof face -->
 	<rule name="Roof">
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
-		<texture>
-			<param name="texture" value="roof_tex"/>
-		</texture>
+		<texture texturePath="roof_tex"/>
 	</rule>
 	
 	<!-- each floor is horizontally split into two narrow corner areas on 
@@ -147,9 +138,7 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="-0.25"/>
 		</translate>
-		<texture>
-			<param name="texture" value="window_tex"/>
-		</texture>
+		<texture texturePath="window_tex"/>
 		<insert geometryPath="window_asset"/>
 	</rule>
 	
@@ -167,14 +156,11 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="-0.4"/>
 		</translate>
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
-		<texture>
-			<param name="texture" value="frontdoor_tex"/>
-		</texture>
+		<texture texturePath="frontdoor_tex"/>
 	</rule>
 	
 	<!-- for the wall asset, setting the texture scale params u and v 

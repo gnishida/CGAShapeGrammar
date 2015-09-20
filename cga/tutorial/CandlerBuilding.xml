@@ -43,8 +43,7 @@
 
 	<!-- Facade -->
 	<rule name="Facade">
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="5"/>
 			<param name="texHeight" type="absolute" value="5"/>
 		</setupProjection>
@@ -128,9 +127,7 @@
 			<param name="zSize" type="absolute" value="0.15"/>
 		</size>
 		<insert geometryPath="../assets/primitives/win.single.05.sashwindow.obj"/>
-		<texture>
-			<param name="texture" value="../assets/textures/windowTiles_200x256.jpg"/>
-		</texture>
+		<texture texturePath="../assets/textures/windowTiles_200x256.jpg"/>
 	</rule>
 	<rule name="WindowOpening">
 		<extrude height="-0.3"/>
@@ -153,18 +150,13 @@
 			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<insert geometryPath="../assets/primitives/cube.obj"/>
-		<texture>
-			<param name="texture" value="../assets/textures/still.jpg"/>
-		</texture>
-
+		<texture texturePath="../assets/textures/still.jpg"/>
 	</rule>
 
 	<!-- Wall -->
 	<rule name="Wall">
 		<color s="ColorizeWall"/>
-		<texture>
-			<param name="texture" value="WallTexture"/>
-		</texture>
+		<texture texturePath="WallTexture"/>
 	</rule>
 	<rule name="WallOpening">
 		<copy name="Wall"/>
@@ -183,9 +175,7 @@
 			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<insert geometryPath="../assets/primitives/ledgeSmall.obj"/>
-		<texture>
-			<param name="texture" value="../assets/textures/ledge.jpg"/>
-		</texture>
+		<texture texturePath="../assets/textures/ledge.jpg"/>
 	</rule>
 
 	<!-- Cornice -->
@@ -196,22 +186,16 @@
 			<param name="zSize" type="absolute" value="CorniceOverhang"/>
 		</size>
 		<insert geometryPath="../assets/primitives/ledgeLarge.obj"/>
-		<texture>
-			<param name="texture" value="../assets/textures/ledge.jpg"/>
-		</texture>
+		<texture texturePath="../assets/textures/ledge.jpg"/>
 	</rule>
 	
 	<!-- Roof -->
 	<rule name="Roof">
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="20"/>
 			<param name="texHeight" type="absolute" value="15"/>
 		</setupProjection>
-		<texture>
-			<param name="texture" value="../assets/textures/roof.jpg"/>
-		</texture>
+		<texture texturePath="../assets/textures/roof.jpg"/>
 	</rule>
-
 </rules>
 

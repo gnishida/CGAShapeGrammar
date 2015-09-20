@@ -118,8 +118,7 @@
 		</split>
 	</rule>
 	<rule name="Tile">
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
@@ -199,9 +198,7 @@
 		<color s="red"/>
 	</rule>
 	<rule name="Glass">
-		<texture>
-			<param name="texture" value="window_tex"/>
-		</texture>
+		<texture texturePath="window_tex"/>
 		<color s="white"/>
 	</rule>
 	<rule name="MilkGlass">
@@ -213,15 +210,12 @@
 		<insert geometryPath="cube"/>
 		<color s="brightblue"/>
 		<!--
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
 		-->
-		<texture>
-			<param name="texture" value="milkGlass_tex"/>
-		</texture>
+		<texture texturePath="milkGlass_tex"/>
 	</rule>
 	
 	<!-- Detail Elements -->

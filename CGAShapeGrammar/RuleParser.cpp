@@ -295,7 +295,20 @@ boost::shared_ptr<Operator> parseRotateOperator(const QDomNode& node) {
 }
 
 boost::shared_ptr<Operator> parseSetupProjectionOperator(const QDomNode& node) {
+	if (!node.toElement().hasAttribute("axesSelector")) {
+		throw "setupProjection node has to have axesSelector attribute.";
+	}
+
 	int axesSelector;
+	std::string sAxesSelector = node.toElement().attribute("axesSelector").toUtf8().constData();
+	if (sAxesSelector == "scope.xy") {
+		axesSelector = AXES_SCOPE_XY;
+	} else if (sAxesSelector == "scope.xz") {
+		axesSelector = AXES_SCOPE_XZ;
+	} else {
+		axesSelector = AXES_SCOPE_XY;
+	}
+
 	Value texWidth;
 	Value texHeight;
 
@@ -304,14 +317,7 @@ boost::shared_ptr<Operator> parseSetupProjectionOperator(const QDomNode& node) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
 
-			if (name == "axesSelector") {
-				if (child.toElement().attribute("value") == "scope.xy") {
-					axesSelector = AXES_SCOPE_XY;
-				} else if (child.toElement().attribute("value") == "scope.xz") {
-					axesSelector = AXES_SCOPE_XZ;
-				} else {
-				}
-			} else if (name == "texWidth") {
+			if (name == "texWidth") {
 				std::string type =  child.toElement().attribute("type").toUtf8().constData();
 				std::string value =  child.toElement().attribute("value").toUtf8().constData();
 				if (type == "absolute") {
@@ -485,20 +491,11 @@ boost::shared_ptr<Operator> parseTaperOperator(const QDomNode& node) {
 }
 
 boost::shared_ptr<Operator> parseTextureOperator(const QDomNode& node) {
-	std::string texture;
-
-	QDomNode child = node.firstChild();
-	while (!child.isNull()) {
-		if (child.toElement().tagName() == "param") {
-			QString name = child.toElement().attribute("name");
-
-			if (name == "texture") {
-				texture = child.toElement().attribute("value").toUtf8().constData();
-			}
-		}
-
-		child = child.nextSibling();
+	if (!node.toElement().hasAttribute("texturePath")) {
+		throw "texture node has to have texturePathtexturePath attribute.";
 	}
+
+	std::string texture = node.toElement().attribute("texturePath").toUtf8().constData();
 
 	return boost::shared_ptr<Operator>(new TextureOperator(texture));
 }
