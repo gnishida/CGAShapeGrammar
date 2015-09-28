@@ -6,7 +6,7 @@
 #include "Prism.h"
 #include "Polygon.h"
 #include "Cuboid.h"
-#include "OffsetPolygon.h"
+#include "OffsetRectangle.h"
 #include "CGA.h"
 
 namespace cga {
@@ -58,13 +58,7 @@ boost::shared_ptr<Shape> Rectangle::inscribeCircle(const std::string& name) {
 
 boost::shared_ptr<Shape> Rectangle::offset(const std::string& name, float offsetDistance, int offsetSelector) {
 	if (offsetSelector == SELECTOR_ALL) {
-		std::vector<glm::vec2> points(4);
-		points[0] = glm::vec2(0, 0);
-		points[1] = glm::vec2(_scope.x, 0);
-		points[2] = glm::vec2(_scope.x, _scope.y);
-		points[3] = glm::vec2(0, _scope.y);
-
-		return boost::shared_ptr<Shape>(new OffsetPolygon(name, _pivot, _modelMat, points, offsetDistance, _color, _texture));
+		return boost::shared_ptr<Shape>(new OffsetRectangle(name, _pivot, _modelMat, _scope.x, _scope.y, offsetDistance, _color, _texture));
 	} else if (offsetSelector == SELECTOR_INSIDE) {
 		float offset_width = _scope.x + offsetDistance * 2.0f;
 		float offset_height = _scope.y + offsetDistance * 2.0f;

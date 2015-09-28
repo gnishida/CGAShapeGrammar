@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<rules>
+	<rule name="Lot">
+		<offset offsetDistance="-0.1" offsetSelector="all"/>
+		<comp>
+			<param name="inside" value="Inside"/>
+			<param name="border" value="Border"/>
+		</comp>
+	</rule>
+	<!--<rule name="Border">
+		<extrude height="5"/>
+	</rule>-->
+	<rule name="Inside">
+		<copy name="Inside2"/>
+		<split splitAxis="y">
+			<param type="floating" value="0.5" name="HSubWindow" repeat="true"/>
+		</split>
+	</rule>
+	<rule name="HSubWindow">
+		<size>
+			<param name="xSize" type="relative" value="1"/>
+			<param name="ySize" type="absolute" value="0.05"/>
+			<param name="zSize" type="relative" value="1"/>
+		</size>
+		<extrude height="0.1"/>
+	</rule>
+	<rule name="Inside2">
+		<split splitAxis="x">
+			<param type="floating" value="0.5" name="VSubWindow" repeat="true"/>
+		</split>
+	</rule>
+	<rule name="VSubWindow">
+		<size>
+			<param name="xSize" type="absolute" value="0.05"/>
+			<param name="ySize" type="relative" value="1"/>
+			<param name="zSize" type="relative" value="1"/>
+		</size>
+		<extrude height="0.05"/>
+	</rule>
+</rules>

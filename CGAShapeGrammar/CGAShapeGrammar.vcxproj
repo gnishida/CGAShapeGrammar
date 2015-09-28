@@ -168,6 +168,7 @@
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="OffsetOperator.cpp" />
     <ClCompile Include="OffsetPolygon.cpp" />
+    <ClCompile Include="OffsetRectangle.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Pyramid.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="OffsetOperator.h" />
     <ClInclude Include="OffsetPolygon.h" />
+    <ClInclude Include="OffsetRectangle.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="Pyramid.h" />
