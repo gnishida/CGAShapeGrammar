@@ -21,7 +21,7 @@
 	<attr name="sillH" value="0.957"/>
 	
 	<!-- Volume -->
-	<rule name="Lot">
+	<rule name="Start">
 		<extrude height="BuildingHeight"/>
 		<comp>
 			<param name="front" value="FrontFacade"/>

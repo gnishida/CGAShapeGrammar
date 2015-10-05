@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rules>
-	<rule name="Lot">
+	<rule name="Start">
 		<extrude height="5"/>
 		<size>
 			<param name="xSize" type="absolute" value="3"/>

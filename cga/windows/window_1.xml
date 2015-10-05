@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rules>
-	<rule name="Lot">
+	<rule name="Start">
 		<offset offsetDistance="-0.1" offsetSelector="all"/>
 		<comp>
 			<param name="inside" value="Inside"/>

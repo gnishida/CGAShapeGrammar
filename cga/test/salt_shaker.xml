@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rules>
-	<rule name="Lot">
+	<rule name="Start">
 		<taper height="3" top_ratio="0.7"/>
 		<comp>
 			<param name="front" value="Side."/>

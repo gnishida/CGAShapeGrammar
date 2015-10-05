@@ -32,13 +32,11 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 	while (!child_node.isNull()) {
 		if (child_node.toElement().tagName() == "attr") {
 			if (!child_node.toElement().hasAttribute("name")) {
-				std::cout << "<attr> tag must contain name attribute." << std::endl;
 				throw "<attr> tag must contain name attribute.";
 			}
 			std::string name = child_node.toElement().attribute("name").toUtf8().constData();
 
 			if (!child_node.toElement().hasAttribute("value")) {
-				std::cout << "<attr> tag must contain value attribute." << std::endl;
 				throw "<attr> tag must contain value attribute.";
 			}
 			std::string value = child_node.toElement().attribute("value").toUtf8().constData();
@@ -46,7 +44,6 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 			ruleSet.addAttr(name, value);
 		} else if (child_node.toElement().tagName() == "rule") {
 			if (!child_node.toElement().hasAttribute("name")) {
-				std::cout << "<rule> tag must contain name attribute." << std::endl;
 				throw "<rule> tag must contain name attribute.";
 			}
 			std::string name = child_node.toElement().attribute("name").toUtf8().constData();

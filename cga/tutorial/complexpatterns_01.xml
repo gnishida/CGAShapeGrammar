@@ -29,7 +29,7 @@
 	<attr name="cube" value="../assets/primitives/cube.obj"/>
 	
 	<!-- Volume -->
-	<rule name="Lot">
+	<rule name="Start">
 		<extrude height="buildingH"/>
 		<split splitAxis="z">
 			<param type="floating" value="1" name="MainPart"/>

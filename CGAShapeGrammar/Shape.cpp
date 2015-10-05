@@ -204,10 +204,7 @@ Asset Shape::getAsset(const std::string& filename) {
 		std::vector<std::vector<glm::vec3> > normals;
 		std::vector<std::vector<glm::vec2> > texCoords;
 		if (!OBJLoader::load(filename.c_str(), points, normals, texCoords)) {
-			std::stringstream ss;
-			ss << "OBJ file cannot be read: " << filename.c_str() << "." << std::endl;
-			std::cout << ss.str() << std::endl;
-			throw ss.str();
+			throw std::string("OBJ file cannot be read: ") + filename.c_str() + ".";
 		}
 
 		assets[filename] = Asset(points, normals, texCoords);

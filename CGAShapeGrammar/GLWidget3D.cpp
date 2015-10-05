@@ -124,7 +124,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}*/
 
 	{ // for parthenon
-		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 2, 2, glm::vec3(1, 1, 1));
+		cga::Rectangle* lot = new cga::Rectangle("Start", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 2, 2, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(lot));
 	}
 
@@ -150,7 +150,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::parseRule(filename, ruleSet);
 		system.generate(ruleSet);
 		system.render(&renderManager, true);
-	} catch (const char* ex) {
+	} catch (const std::string& ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 	

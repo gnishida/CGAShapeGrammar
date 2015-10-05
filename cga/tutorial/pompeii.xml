@@ -64,7 +64,7 @@
 	<attr name="groundTex" value="../assets/textures/trottoir.02.color.jpg"/>
 	
 	<!-- RULES -->
-	<rule name="Lot">
+	<rule name="Start">
 		<copy name="Ground2"/>
 		<translate mode="rel" coordSystem="world">
 			<param name="x" type="absolute" value="0"/>

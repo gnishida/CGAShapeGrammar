@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rules>
-	<rule name="Lot">
+	<rule name="Start">
 		<extrude height="6"/>
 		<copy name="House"/>
 	</rule>
@@ -54,13 +54,10 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="-0.05"/>
 		</translate>
-		<setupProjection>
-			<param name="axesSelector" value="scope.xy"/>
+		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="scope.sx"/>
 			<param name="texHeight" type="absolute" value="scope.sy"/>
 		</setupProjection>
-		<texture>
-			<param name="texture" value="../assets/textures/window.1.tif"/>
-		</texture>
+		<texture texturePath="../assets/textures/window.1.tif"/>
 	</rule>
 </rules>

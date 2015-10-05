@@ -86,7 +86,7 @@
 	<attr name="simaAsset" value="../assets/primitives/roof_sima.obj"/>
 
 	<!-- START -->
-	<rule name="Lot">
+	<rule name="Start">
 		<copy name="Podium"/>
 		<translate mode="rel" coordSystem="object">
 			<param name="x" type="absolute" value="0"/>

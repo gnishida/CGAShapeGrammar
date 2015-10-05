@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rules>
-	<rule name="Lot">
+	<rule name="Start">
 		<extrude height="5"/>
 		<split splitAxis="y">
 			<param type="absolute" value="2.0" name="Floor."/>

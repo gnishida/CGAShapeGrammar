@@ -17,7 +17,7 @@
 	<attr name="window_tex" value="../assets/textures/window.1b.tif"/>
 	
 	<!-- Initial Shape starting rule -->
-	<rule name="Lot">
+	<rule name="Start">
 		<extrude height="bldg_height"/>
 		<copy name="Building"/>
 	</rule>
