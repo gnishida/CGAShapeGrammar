@@ -52,9 +52,8 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  * This function is called once before the first call to paintGL() or resizeGL().
  */
 void GLWidget3D::initializeGL() {
-	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 8192);
+	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", false);
 	showWireframe = true;
-	useShadow = false;
 	showScopeCoordinateSystem = false;
 
 	// set the clear color for the screen
@@ -93,8 +92,6 @@ void GLWidget3D::paintGL() {
 	// pass the light direction to the shader
 	//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 	glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
-
-	glUniform1i(glGetUniformLocation(renderManager.program, "useShadow"), useShadow ? 1 : 0);
 	
 	drawScene(0);	
 }
@@ -104,9 +101,9 @@ void GLWidget3D::paintGL() {
  */
 void GLWidget3D::drawScene(int drawMode) {
 	if (drawMode == 0) {
-		glUniform1i(glGetUniformLocation(renderManager.program, "shadowState"), 1);
+		glUniform1i(glGetUniformLocation(renderManager.program, "depthComputation"), 0);
 	} else {
-		glUniform1i(glGetUniformLocation(renderManager.program, "shadowState"), 2);
+		glUniform1i(glGetUniformLocation(renderManager.program, "depthComputation"), 1);
 	}
 	
 	if (showScopeCoordinateSystem) {
@@ -166,9 +163,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 	
-	if (useShadow) {
-		renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
-	}
+	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
 	updateGL();
 }

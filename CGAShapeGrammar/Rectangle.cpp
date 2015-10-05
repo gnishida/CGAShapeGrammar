@@ -173,7 +173,7 @@ boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height,
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
-void Rectangle::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void Rectangle::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -193,23 +193,23 @@ void Rectangle::render(RenderManager* renderManager, bool showScopeCoordinateSys
 	normal = _pivot * _modelMat * normal;
 
 	if (_textureEnabled) {
-		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), _color, _texCoords[0]);
-		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color, _texCoords[1], 1);
-		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), _color, _texCoords[2]);
+		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[0]);
+		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[1], 1);
+		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[2]);
 
-		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), _color, _texCoords[0]);
-		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), _color, _texCoords[2]);
-		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), _color, _texCoords[3], 1);
+		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[0]);
+		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[2]);
+		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[3], 1);
 
 		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 	} else {
-		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), _color);
-		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), _color, 1);
-		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), _color);
+		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity));
+		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), glm::vec4(_color, opacity), 1);
+		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity));
 
-		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), _color);
-		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), _color);
-		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), _color, 1);
+		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity));
+		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity));
+		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), glm::vec4(_color, opacity), 1);
 
 		renderManager->addObject(_name.c_str(), "", vertices);
 	}

@@ -166,7 +166,7 @@ bool rayTriangleIntersection(const glm::vec3& a, const glm::vec3& v, const glm::
 	else return false;
 }
 
-void drawCircle(float r1, float r2, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawCircle(float r1, float r2, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	int slices = 12;
 
 	glm::vec4 p1(0, 0, 0, 1);
@@ -191,7 +191,7 @@ void drawCircle(float r1, float r2, const glm::vec3& color, const glm::mat4& mat
 	}
 }
 
-void drawQuad(float w, float h, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawQuad(float w, float h, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(-w * 0.5, -h * 0.5, 0, 1);
 	glm::vec4 p2(w * 0.5, -h * 0.5, 0, 1);
 	glm::vec4 p3(w * 0.5, h * 0.5, 0, 1);
@@ -226,16 +226,16 @@ void drawQuad(float w, float h, const glm::vec2& t1, const glm::vec2& t2, const 
 	p4 = mat * p4;
 	n = mat * n;
 
-	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), glm::vec3(1, 1, 1), t1));
-	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), glm::vec3(1, 1, 1), t2, 1));
-	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), glm::vec3(1, 1, 1), t3));
+	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), glm::vec4(1, 1, 1, 1), t1));
+	vertices.push_back(Vertex(glm::vec3(p2), glm::vec3(n), glm::vec4(1, 1, 1, 1), t2, 1));
+	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), glm::vec4(1, 1, 1, 1), t3));
 
-	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), glm::vec3(1, 1, 1), t1));
-	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), glm::vec3(1, 1, 1), t3));
-	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), glm::vec3(1, 1, 1), t4, 1));
+	vertices.push_back(Vertex(glm::vec3(p1), glm::vec3(n), glm::vec4(1, 1, 1, 1), t1));
+	vertices.push_back(Vertex(glm::vec3(p3), glm::vec3(n), glm::vec4(1, 1, 1, 1), t3));
+	vertices.push_back(Vertex(glm::vec3(p4), glm::vec3(n), glm::vec4(1, 1, 1, 1), t4, 1));
 }
 
-void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec4& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(points.back(), 1);
 	p1 = mat * p1;
 	glm::vec2 t1 = texCoords.back();
@@ -273,7 +273,7 @@ void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, c
 	}
 }
 
-void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(points.back(), 1);
 	p1 = mat * p1;
 	glm::vec4 p2(points[0], 1);
@@ -307,7 +307,7 @@ void drawPolygon(const std::vector<glm::vec3>& points, const glm::vec3& color, c
 	}
 }
 
-void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(points.back(), 0, 1);
 	p1 = mat * p1;
 	glm::vec4 p2(points[0], 0, 1);
@@ -341,7 +341,7 @@ void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, c
 	}
 }
 
-void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec4& color, const std::vector<glm::vec2>& texCoords, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(points.back(), 0, 1);
 	p1 = mat * p1;
 	glm::vec2 t1 = texCoords.back();
@@ -379,7 +379,7 @@ void drawPolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, c
 	}
 }
 
-void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	float max_x = 0.0f;
 	float max_y = 0.0f;
 
@@ -412,7 +412,7 @@ void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec3& c
 	}
 }
 
-void drawGrid(float width, float height, float cell_size, const glm::vec3& lineColor, const glm::vec3& backgroundColor, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawGrid(float width, float height, float cell_size, const glm::vec4& lineColor, const glm::vec4& backgroundColor, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	drawQuad(width, height, backgroundColor, mat, vertices);
 
 	float line_width = cell_size * 0.03;
@@ -444,7 +444,7 @@ void drawGrid(float width, float height, float cell_size, const glm::vec3& lineC
 	}
 }
 
-void drawBox(float length_x, float length_y, float length_z, glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawBox(float length_x, float length_y, float length_z, glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	glm::vec4 p1(-length_x * 0.5, -length_y * 0.5, -length_z * 0.5, 1);
 	glm::vec4 p2(length_x * 0.5, -length_y * 0.5, -length_z * 0.5, 1);
 	glm::vec4 p3(length_x * 0.5, length_y * 0.5, -length_z * 0.5, 1);
@@ -524,7 +524,7 @@ void drawBox(float length_x, float length_y, float length_z, glm::vec3& color, c
 	vertices.push_back(Vertex(glm::vec3(p8), glm::vec3(n6), color, 1));
 }
 
-void drawSphere(float radius, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawSphere(float radius, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	int slices = 12;
 	int stacks = 6;
 
@@ -568,7 +568,7 @@ void drawSphere(float radius, const glm::vec3& color, const glm::mat4& mat, std:
 	}
 }
 
-void drawEllipsoid(float r1, float r2, float r3, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawEllipsoid(float r1, float r2, float r3, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	int slices = 32;
 	int stacks = 16;
 
@@ -623,7 +623,7 @@ void drawEllipsoid(float r1, float r2, float r3, const glm::vec3& color, const g
 /**
  * X軸方向に高さ h、底面の半径 r1、上面の半径 r2の円錐を描画する。
  */
-void drawCylinderX(float radius1, float radius2, float h, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
+void drawCylinderX(float radius1, float radius2, float h, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
 	float phi = atan2(radius1 - radius2, h);
 
 	for (int i = 0; i < slices; ++i) {
@@ -657,7 +657,7 @@ void drawCylinderX(float radius1, float radius2, float h, const glm::vec3& color
 /**
  * Y軸方向に高さ h、底面の半径 r1、上面の半径 r2の円錐を描画する。
  */
-void drawCylinderY(float radius1, float radius2, float h, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
+void drawCylinderY(float radius1, float radius2, float h, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
 	float phi = atan2(radius1 - radius2, h);
 
 	for (int i = 0; i < slices; ++i) {
@@ -691,7 +691,7 @@ void drawCylinderY(float radius1, float radius2, float h, const glm::vec3& color
 /**
  * Z軸方向に高さ h、底面の半径 r1、上面の半径 r2の円錐を描画する。
  */
-void drawCylinderZ(float radius1, float radius2, float h, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
+void drawCylinderZ(float radius1, float radius2, float h, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
 	float phi = atan2(radius1 - radius2, h);
 
 	for (int i = 0; i < slices; ++i) {
@@ -725,7 +725,7 @@ void drawCylinderZ(float radius1, float radius2, float h, const glm::vec3& color
 /**
  * Z軸方向に、指定された長さ、色、半径の矢印を描画する。
  */
-void drawArrow(float radius, float length, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawArrow(float radius, float length, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	drawCylinderZ(radius, radius, length - radius * 4, color, mat, vertices);
 	glm::mat4 m = glm::translate(mat, glm::vec3(0, 0, length - radius * 4));
 	drawCylinderZ(radius * 2, 0, radius * 4, color, m, vertices);
@@ -734,17 +734,17 @@ void drawArrow(float radius, float length, const glm::vec3& color, const glm::ma
 void drawAxes(float radius, float length, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	// X軸を描画（赤色）
 	glm::mat4 m1 = glm::rotate(mat, deg2rad(90), glm::vec3(0, 1, 0));
-	drawArrow(radius, length, glm::vec3(1, 0, 0), m1, vertices);
+	drawArrow(radius, length, glm::vec4(1, 0, 0, 1), m1, vertices);
 
 	// Y軸を描画（緑色）
 	glm::mat4 m2 = glm::rotate(mat, deg2rad(-90), glm::vec3(1, 0, 0));
-	drawArrow(radius, length, glm::vec3(0, 1, 0), m2, vertices);
+	drawArrow(radius, length, glm::vec4(0, 1, 0, 1), m2, vertices);
 
 	// Z軸を描画 (青色）
-	drawArrow(radius, length, glm::vec3(0, 0, 1), mat, vertices);
+	drawArrow(radius, length, glm::vec4(0, 0, 1, 1), mat, vertices);
 }
 
-void drawTube(std::vector<glm::vec3>& points, float radius, const glm::vec3& color, std::vector<Vertex>& vertices, int slices) {
+void drawTube(std::vector<glm::vec3>& points, float radius, const glm::vec4& color, std::vector<Vertex>& vertices, int slices) {
 	if (points.size() <= 1) return;
 
 	glm::mat4 modelMat1, modelMat2;
@@ -840,7 +840,7 @@ void drawTube(std::vector<glm::vec3>& points, float radius, const glm::vec3& col
 	}
 }
 
-void drawCurvilinearMesh(int numX, int numY, std::vector<glm::vec3>& points, const glm::vec3& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
+void drawCurvilinearMesh(int numX, int numY, std::vector<glm::vec3>& points, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
 	for (int i = 0; i < numY - 1; ++i) {
 		for (int j = 0; j < numX - 1; ++j) {
 			glm::vec3 p1 = glm::vec3(mat * glm::vec4(points[i * numX + j], 1));

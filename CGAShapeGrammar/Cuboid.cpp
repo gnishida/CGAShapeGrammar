@@ -136,7 +136,7 @@ void Cuboid::split(int splitAxis, const std::vector<float>& sizes, const std::ve
 	}
 }
 
-void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void Cuboid::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	int num = 0;
@@ -146,13 +146,13 @@ void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem
 	// top
 	{
 		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, _scope.z));
-		glutils::drawQuad(_scope.x, _scope.y, _color, mat, vertices);
+		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	// base
 	if (_scope.z >= 0) {
 		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, 0));
-		glutils::drawQuad(_scope.x, _scope.y, _color, mat, vertices);
+		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	// front
@@ -162,7 +162,7 @@ void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem
 			rot_angle = -rot_angle;
 		}
 		glm::mat4 mat = _pivot * glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), rot_angle, glm::vec3(1, 0, 0));
-		glutils::drawQuad(_scope.x, _scope.z, _color, mat, vertices);
+		glutils::drawQuad(_scope.x, _scope.z, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	// back
@@ -172,7 +172,7 @@ void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem
 			rot_angle = -rot_angle;
 		}
 		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0)), rot_angle, glm::vec3(1, 0, 0));
-		glutils::drawQuad(_scope.x, _scope.z, _color, mat, vertices);
+		glutils::drawQuad(_scope.x, _scope.z, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	// right
@@ -182,7 +182,7 @@ void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem
 			rot_angle = -rot_angle;
 		}
 		glm::mat4 mat = _pivot * glm::rotate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, _scope.y * 0.5, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(0, 0, 1)), rot_angle, glm::vec3(1, 0, 0));
-		glutils::drawQuad(_scope.y, _scope.z, _color, mat, vertices);
+		glutils::drawQuad(_scope.y, _scope.z, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	// left
@@ -192,7 +192,7 @@ void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem
 			rot_angle = -rot_angle;
 		}
 		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y * 0.5, 0, _scope.z * 0.5)), rot_angle, glm::vec3(1, 0, 0));
-		glutils::drawQuad(_scope.y, _scope.z, _color, mat, vertices);
+		glutils::drawQuad(_scope.y, _scope.z, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);

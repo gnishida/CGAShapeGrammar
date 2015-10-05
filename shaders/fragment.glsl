@@ -1,7 +1,7 @@
 #version 330
 
 // varying variables
-in vec3 fColor;
+in vec4 fColor;
 in vec3 fTexCoord;
 in vec3 fNormal;
 in vec3 fPosition;
@@ -11,12 +11,13 @@ noperspective in vec3 dist;
 out vec4 outputF;
 
 // uniform variables
-uniform int textureEnabled;		// 0 -- color / 1 -- texture
+uniform int textureEnabled;		// 1 -- texture / 0 -- color only
 uniform sampler2D tex0;
 uniform int wireframeEnalbed;	// 0 -- no wireframe / 1 -- add wireframe
-uniform int useShadow;			// 1 -- use shadow / 0 -- no shadow
 
-uniform int shadowState;	// 1 -- normal / 2 -- shadow
+uniform int depthComputation;  // 1 -- depth computation / 0 - otherwise
+uniform int lineRendering;     // 1 -- line rendering / 0 - otherwise
+uniform int useShadow;		// 1 -- use shadow / 0 - no shadow 
 uniform mat4 light_mvpMatrix;
 uniform vec3 lightDir;
 uniform sampler2D shadowMap;
@@ -39,33 +40,44 @@ float shadowCoef(){
 void main()
 {
 	// for color mode
-	outputF = vec4(fColor, 1.0);
+	float opacity = fColor.w;
+	outputF = vec4(fColor.xyz, 1);
+
+	// depth computation
+	if (depthComputation == 1) return;
 
 	// determine frag distance to closest edge
 	float nearD = min(min(dist[0],dist[1]),dist[2]);
-	float edgeIntensity = exp2(-1.0*nearD*nearD);
-
-	// shadow
-	if (shadowState == 2) {
-		return;
+	float edgeIntensity;
+	if (nearD < 1.0) {
+		edgeIntensity = 1.0;
+	} else {
+		edgeIntensity = exp2(-1.0*(nearD-1)*(nearD-1));
 	}
 
-	if (textureEnabled == 1) { // for texture mode
-		outputF = outputF * texture(tex0, fTexCoord.rg);
-	}
-
-	// lighting
-	vec4 ambient = vec4(0.5, 0.5, 0.5, 1.0);
-	vec4 diffuse = vec4(0.8, 0.8, 0.8, 1.0) * max(0.0, dot(-lightDir, fNormal));
-
-	float shadow_coef = 1.0;
-	if (useShadow == 1) {
-		shadow_coef = shadowCoef();
-	}
-	outputF = (ambient + (shadow_coef * 0.95 + 0.05) * diffuse) * outputF;
-
-	if (wireframeEnalbed == 1) {
+	if (lineRendering == 1) {
 		outputF = edgeIntensity * vec4(0.05, 0.05, 0.05, 1.0) + (1.0 - edgeIntensity) * outputF;
+		return;
+	} else {
+		if (textureEnabled == 1) { // for texture mode
+			outputF = outputF * texture(tex0, fTexCoord.rg);
+		}
+
+		// lighting
+		vec4 ambient = vec4(0.6, 0.6, 0.6, 1.0);
+		vec4 diffuse = vec4(0.8, 0.8, 0.8, 1.0) * max(0.0, dot(-lightDir, fNormal));
+
+		float shadow_coef = 1.0;
+		if (useShadow == 1) {
+			shadow_coef= shadowCoef();
+		}
+		outputF = (ambient + (shadow_coef * 0.95 + 0.05) * diffuse) * outputF;
+
+		if (wireframeEnalbed == 1) {
+			outputF = edgeIntensity * vec4(0.05, 0.05, 0.05, 1.0) + (1.0 - edgeIntensity) * outputF;
+		}
+
+		outputF.w = opacity;
 	}
 }
 

@@ -73,12 +73,12 @@ void OffsetRectangle::comp(const std::map<std::string, std::string>& name_map, s
 	}
 }
 
-void OffsetRectangle::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void OffsetRectangle::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
 	glm::mat4 mat = glm::translate(_pivot * _modelMat, glm::vec3(_scope.x * 0.5f, _scope.y * 0.5f, 0.0f));
-	glutils::drawQuad(_scope.x - _offsetDistance * 2.0f, _scope.y  - _offsetDistance * 2.0f, _color, mat, vertices);
+	glutils::drawQuad(_scope.x - _offsetDistance * 2.0f, _scope.y  - _offsetDistance * 2.0f, glm::vec4(_color, opacity), mat, vertices);
 
 	std::vector<glm::vec3> pts(4);
 	std::vector<glm::vec3> pts2(4);
@@ -102,13 +102,13 @@ void OffsetRectangle::render(RenderManager* renderManager, bool showScopeCoordin
 	for (int i = 0; i < pts.size(); ++i) {
 		int next = (i + 1) % pts.size();
 
-		vertices.push_back(Vertex(pts2[i], normal, _color));
-		vertices.push_back(Vertex(pts[i], normal, _color, 1));
-		vertices.push_back(Vertex(pts[next], normal, _color));
+		vertices.push_back(Vertex(pts2[i], normal, glm::vec4(_color, opacity)));
+		vertices.push_back(Vertex(pts[i], normal, glm::vec4(_color, opacity), 1));
+		vertices.push_back(Vertex(pts[next], normal, glm::vec4(_color, opacity)));
 
-		vertices.push_back(Vertex(pts2[i], normal, _color));
-		vertices.push_back(Vertex(pts[next], normal, _color));
-		vertices.push_back(Vertex(pts2[next], normal, _color, 1));
+		vertices.push_back(Vertex(pts2[i], normal, glm::vec4(_color, opacity)));
+		vertices.push_back(Vertex(pts[next], normal, glm::vec4(_color, opacity)));
+		vertices.push_back(Vertex(pts2[next], normal, glm::vec4(_color, opacity), 1));
 	}
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);

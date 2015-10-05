@@ -105,7 +105,7 @@ void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vec
 	}
 }
 
-void Prism::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void Prism::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;//((_points.size() - 2) * 6 + _points.size() * 6);
@@ -115,12 +115,12 @@ void Prism::render(RenderManager* renderManager, bool showScopeCoordinateSystem)
 	// top
 	if (_scope.z >= 0) {
 		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(0, 0, _scope.z));
-		glutils::drawConcavePolygon(_points, _color, mat, vertices);
+		glutils::drawConcavePolygon(_points, glm::vec4(_color, opacity), mat, vertices);
 	}
 
 	// bottom
 	{
-		glutils::drawConcavePolygon(_points, _color, _pivot * _modelMat, vertices);
+		glutils::drawConcavePolygon(_points, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
 	}
 
 	// side
@@ -138,13 +138,13 @@ void Prism::render(RenderManager* renderManager, bool showScopeCoordinateSystem)
 
 			glm::vec3 normal = glm::normalize(glm::cross(glm::vec3(p3) - glm::vec3(p1), glm::vec3(p2) - glm::vec3(p1)));
 			
-			vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
-			vertices.push_back(Vertex(glm::vec3(p3), normal, _color, 1));
-			vertices.push_back(Vertex(glm::vec3(p4), normal, _color));
+			vertices.push_back(Vertex(glm::vec3(p1), normal, glm::vec4(_color, opacity)));
+			vertices.push_back(Vertex(glm::vec3(p3), normal, glm::vec4(_color, opacity), 1));
+			vertices.push_back(Vertex(glm::vec3(p4), normal, glm::vec4(_color, opacity)));
 
-			vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
-			vertices.push_back(Vertex(glm::vec3(p4), normal, _color));
-			vertices.push_back(Vertex(glm::vec3(p2), normal, _color, 1));
+			vertices.push_back(Vertex(glm::vec3(p1), normal, glm::vec4(_color, opacity)));
+			vertices.push_back(Vertex(glm::vec3(p4), normal, glm::vec4(_color, opacity)));
+			vertices.push_back(Vertex(glm::vec3(p2), normal, glm::vec4(_color, opacity), 1));
 
 			p1 = p3;
 			p2 = p4;

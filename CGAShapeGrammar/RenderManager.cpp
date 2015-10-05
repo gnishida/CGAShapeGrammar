@@ -50,7 +50,7 @@ void GeometryObject::createVAO() {
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));
 	glEnableVertexAttribArray(4);
@@ -66,7 +66,9 @@ void GeometryObject::createVAO() {
 RenderManager::RenderManager() {
 }
 
-void RenderManager::init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, int shadowMapSize) {
+void RenderManager::init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, bool useShadow, int shadowMapSize) {
+	this->useShadow = useShadow;
+
 	// init glew
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
@@ -168,6 +170,12 @@ void RenderManager::render(const QString& object_name, bool wireframe) {
 			glUniform1i(glGetUniformLocation(program, "wireframeEnalbed"), 0);
 		}
 
+		if (useShadow) {
+			glUniform1i(glGetUniformLocation(program, "useShadow"), 1);
+		} else {
+			glUniform1i(glGetUniformLocation(program, "useShadow"), 0);
+		}
+
 		// 描画
 		glBindVertexArray(it->vao);
 		glDrawArrays(GL_TRIANGLES, 0, it->vertices.size());
@@ -177,7 +185,9 @@ void RenderManager::render(const QString& object_name, bool wireframe) {
 }
 
 void RenderManager::updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix) {
-	shadow.update(glWidget3D, light_dir, light_mvpMatrix);
+	if (useShadow) {
+		shadow.update(glWidget3D, light_dir, light_mvpMatrix);
+	}
 }
 
 GLuint RenderManager::loadTexture(const QString& filename) {

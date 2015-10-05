@@ -23,7 +23,7 @@ public:
 	GeneralObject(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<std::vector<glm::vec3> >& points, const std::vector<std::vector<glm::vec3> >& normals, const glm::vec3& color, const std::vector<std::vector<glm::vec2> >& texCoords, const std::string& texture);
 	boost::shared_ptr<Shape> clone(const std::string& name) const;
 	void size(float xSize, float ySize, float zSize);
-	void render(RenderManager* renderManager, bool showScopeCoordinateSystem) const;
+	void render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const;
 };
 
 }

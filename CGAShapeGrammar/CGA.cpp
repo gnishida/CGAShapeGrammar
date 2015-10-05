@@ -29,7 +29,7 @@ void CGA::generate(const RuleSet& ruleSet) {
 
 void CGA::render(RenderManager* renderManager, bool showScopeCoordinateSystem) {
 	for (int i = 0; i < shapes.size(); ++i) {
-		shapes[i]->render(renderManager, showScopeCoordinateSystem);
+		shapes[i]->render(renderManager, 1.0f, showScopeCoordinateSystem);
 	}
 }
 

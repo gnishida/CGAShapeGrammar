@@ -16,7 +16,7 @@ public:
 	SemiCircle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color);
 	boost::shared_ptr<Shape> clone(const std::string& name) const;
 	boost::shared_ptr<Shape> offset(const std::string& name, float offsetDistance, int offsetSelector);
-	void render(RenderManager* renderManager, bool showScopeCoordinateSystem) const;
+	void render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const;
 };
 
 }

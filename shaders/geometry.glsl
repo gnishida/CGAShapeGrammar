@@ -7,19 +7,19 @@ layout(triangle_strip, max_vertices = 3) out;
 
 in vec3 vPosition[3];
 in vec3 vNormal[3];
-in vec3 vColor[3];
+in vec4 vColor[3];
 in vec3 vTexCoord[3];
 in float vDrawEdge[3];
 out vec3 fNormal;
 out vec3 fPosition;
-out vec3 fColor;
+out vec4 fColor;
 out vec3 fTexCoord;
 //uniform vec2 WIN_SCALE;
 noperspective out vec3 dist;
 
 void main(void)
 {
-	float MEW = 1000.0;
+	float MEW = 500.0;
 	vec2 WIN_SCALE = vec2(600, 600);
 
 	// taken from 'Single-Pass Wireframe Rendering'

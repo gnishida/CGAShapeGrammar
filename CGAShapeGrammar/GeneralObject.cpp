@@ -76,15 +76,15 @@ void GeneralObject::size(float xSize, float ySize, float zSize) {
 	}
 }
 
-void GeneralObject::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void GeneralObject::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
 	for (int i = 0; i < _points.size(); ++i) {
 		if (_textureEnabled) {
-			glutils::drawPolygon(_points[i], _color, _texCoords[i], _pivot * _modelMat, vertices);
+			glutils::drawPolygon(_points[i], glm::vec4(_color, opacity), _texCoords[i], _pivot * _modelMat, vertices);
 		} else {
-			glutils::drawPolygon(_points[i], _color, _pivot * _modelMat, vertices);
+			glutils::drawPolygon(_points[i], glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
 		}
 	}
 

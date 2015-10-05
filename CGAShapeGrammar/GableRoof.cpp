@@ -149,7 +149,7 @@ void GableRoof::comp(const std::map<std::string, std::string>& name_map, std::ve
 	}
 }
 
-void GableRoof::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void GableRoof::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -234,9 +234,9 @@ void GableRoof::render(RenderManager* renderManager, bool showScopeCoordinateSys
 
 					glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 
-					vertices.push_back(Vertex(v0, normal, _color));
-					vertices.push_back(Vertex(v1, normal, _color));
-					vertices.push_back(Vertex(v2, normal, _color));
+					vertices.push_back(Vertex(v0, normal, glm::vec4(_color, opacity)));
+					vertices.push_back(Vertex(v1, normal, glm::vec4(_color, opacity)));
+					vertices.push_back(Vertex(v2, normal, glm::vec4(_color, opacity)));
 	
 					prev_p = glm::vec3(p2, z);
 				}

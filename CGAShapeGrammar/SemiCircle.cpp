@@ -34,7 +34,7 @@ boost::shared_ptr<Shape> SemiCircle::offset(const std::string& name, float offse
 	}
 }
 
-void SemiCircle::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void SemiCircle::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -53,9 +53,17 @@ void SemiCircle::render(RenderManager* renderManager, bool showScopeCoordinateSy
 		glm::vec4 p2(_scope.x * 0.5 * cosf(theta2) + _scope.x * 0.5, _scope.y * sinf(theta2), 0.0f, 1.0f);
 		p2 = _pivot * _modelMat * p2;
 
-		vertices.push_back(Vertex(p0, normal, _color));
-		vertices.push_back(Vertex(glm::vec3(p1), normal, _color));
-		vertices.push_back(Vertex(glm::vec3(p2), normal, _color));
+		vertices.push_back(Vertex(p0, normal, glm::vec4(_color, opacity)));
+		if (i < numSlices) {
+			vertices.push_back(Vertex(glm::vec3(p1), normal, glm::vec4(_color, opacity), 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p1), normal, glm::vec4(_color, opacity)));
+		}
+		if (i > 0) {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, glm::vec4(_color, opacity), 1));
+		} else {
+			vertices.push_back(Vertex(glm::vec3(p2), normal, glm::vec4(_color, opacity)));
+		}
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);

@@ -74,14 +74,14 @@ void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std
 	}
 }
 
-void OffsetPolygon::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void OffsetPolygon::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	std::vector<glm::vec2> offset_points;
 	glutils::offsetPolygon(_points, _offsetDistance, offset_points);
 
 	std::vector<Vertex> vertices;
-	glutils::drawConcavePolygon(offset_points, _color, _pivot * _modelMat, vertices);
+	glutils::drawConcavePolygon(offset_points, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
 
 	for (int i = 0; i < _points.size(); ++i) {
 		std::vector<glm::vec2> pts(4);
@@ -89,7 +89,7 @@ void OffsetPolygon::render(RenderManager* renderManager, bool showScopeCoordinat
 		pts[1] = _points[i];
 		pts[2] = _points[(i+1) % _points.size()];
 		pts[3] = offset_points[(i+1) % offset_points.size()];
-		glutils::drawPolygon(pts, _color, _pivot * _modelMat, vertices);
+		glutils::drawPolygon(pts, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
 	}
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);

@@ -114,7 +114,7 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 	}
 }
 
-void Pyramid::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void Pyramid::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	if (_removed) return;
 
 	if (_top_ratio == 0.0f) {
@@ -132,9 +132,9 @@ void Pyramid::render(RenderManager* renderManager, bool showScopeCoordinateSyste
 
 			glm::vec3 normal = glm::cross(glm::vec3(p1 - p0), glm::vec3(p2 - p0));
 
-			vertices[i * 3] = Vertex(glm::vec3(p0), normal, _color, glm::vec2(0, 0));
-			vertices[i * 3 + 1] = Vertex(glm::vec3(p1), normal, _color, glm::vec2(0, 0));
-			vertices[i * 3 + 2] = Vertex(glm::vec3(p2), normal, _color, glm::vec2(0, 0));
+			vertices[i * 3] = Vertex(glm::vec3(p0), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
+			vertices[i * 3 + 1] = Vertex(glm::vec3(p1), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
+			vertices[i * 3 + 2] = Vertex(glm::vec3(p2), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
 
 			p1 = p2;
 		}
@@ -160,19 +160,19 @@ void Pyramid::render(RenderManager* renderManager, bool showScopeCoordinateSyste
 
 			glm::vec3 normal = glm::cross(glm::vec3(p2 - p0), glm::vec3(p3 - p0));
 
-			vertices[i * 6 + 0] = Vertex(glm::vec3(p0), normal, _color, glm::vec2(0, 0));
-			vertices[i * 6 + 1] = Vertex(glm::vec3(p2), normal, _color, glm::vec2(0, 0));
-			vertices[i * 6 + 2] = Vertex(glm::vec3(p3), normal, _color, glm::vec2(0, 0));
+			vertices[i * 6 + 0] = Vertex(glm::vec3(p0), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
+			vertices[i * 6 + 1] = Vertex(glm::vec3(p2), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
+			vertices[i * 6 + 2] = Vertex(glm::vec3(p3), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
 
-			vertices[i * 6 + 3] = Vertex(glm::vec3(p0), normal, _color, glm::vec2(0, 0));
-			vertices[i * 6 + 4] = Vertex(glm::vec3(p3), normal, _color, glm::vec2(0, 0));
-			vertices[i * 6 + 5] = Vertex(glm::vec3(p1), normal, _color, glm::vec2(0, 0));
+			vertices[i * 6 + 3] = Vertex(glm::vec3(p0), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
+			vertices[i * 6 + 4] = Vertex(glm::vec3(p3), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
+			vertices[i * 6 + 5] = Vertex(glm::vec3(p1), normal, glm::vec4(_color, opacity), glm::vec2(0, 0));
 
 			p0 = p2;
 			p1 = p3;
 		}
 
-		glutils::drawPolygon(pts3, _color, _pivot * _modelMat, vertices);
+		glutils::drawPolygon(pts3, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
 
 		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
 	}

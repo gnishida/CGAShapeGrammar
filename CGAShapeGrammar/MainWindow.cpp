@@ -39,7 +39,7 @@ void MainWindow::onViewWireframe() {
 }
 
 void MainWindow::onViewShadow() {
-	glWidget->useShadow = ui.actionViewShadow->isChecked();
+	glWidget->renderManager.useShadow = ui.actionViewShadow->isChecked();
 	glWidget->updateGL();
 }
 

@@ -26,12 +26,14 @@ public:
 	GLuint program;
 	QMap<QString, QMap<GLuint, GeometryObject> > objects;
 	QMap<QString, GLuint> textures;
+
+	bool useShadow;
 	ShadowMapping shadow;
 
 public:
 	RenderManager();
 
-	void init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, int shadowMapSize);
+	void init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, bool useShadow, int shadowMapSize = 4096);
 	void addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices);
 	void removeObjects();
 	void removeObject(const QString& object_name);

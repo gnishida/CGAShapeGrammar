@@ -29,7 +29,7 @@ boost::shared_ptr<Shape> HipRoof::clone(const std::string& name) const {
 	return copy;
 }
 
-void HipRoof::render(RenderManager* renderManager, bool showScopeCoordinateSystem) const {
+void HipRoof::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -84,16 +84,16 @@ void HipRoof::render(RenderManager* renderManager, bool showScopeCoordinateSyste
 		glm::vec3 normal = glm::normalize(glm::cross(points[1] - points[0], points[2] - points[0]));
 
 		for (int i = 1; i < points.size() - 1; ++i) {
-			vertices.push_back(Vertex(points[0], normal, _color));
+			vertices.push_back(Vertex(points[0], normal, glm::vec4(_color, opacity)));
 			if (i < points.size() - 2) {
-				vertices.push_back(Vertex(points[i], normal, _color, 1));
+				vertices.push_back(Vertex(points[i], normal, glm::vec4(_color, opacity), 1));
 			} else {
-				vertices.push_back(Vertex(points[i], normal, _color));
+				vertices.push_back(Vertex(points[i], normal, glm::vec4(_color, opacity)));
 			}
 			if (i > 1) {
-				vertices.push_back(Vertex(points[i+1], normal, _color, 1));
+				vertices.push_back(Vertex(points[i+1], normal, glm::vec4(_color, opacity), 1));
 			} else {
-				vertices.push_back(Vertex(points[i+1], normal, _color, 1));
+				vertices.push_back(Vertex(points[i+1], normal, glm::vec4(_color, opacity), 1));
 			}
 		}
 	}
