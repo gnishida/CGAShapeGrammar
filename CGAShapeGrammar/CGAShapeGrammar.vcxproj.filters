@@ -194,6 +194,9 @@
     <ClCompile Include="OffsetSemiCircle.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="SketchyRenderingBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -347,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="SemiCircle.h">
       <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="SketchyRenderingBuffer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

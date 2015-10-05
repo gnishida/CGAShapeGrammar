@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGARules, SIGNAL(triggered()), this, SLOT(onOpenCGARules()));
 	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewWireframe()));
+	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewLineRendering()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
-	connect(ui.actionViewScopeCoordinateSystem, SIGNAL(triggered()), this, SLOT(onViewScopeCoordinateSystem()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 
 	glWidget = new GLWidget3D();
@@ -38,13 +38,13 @@ void MainWindow::onViewWireframe() {
 	glWidget->updateGL();
 }
 
-void MainWindow::onViewShadow() {
-	glWidget->renderManager.useShadow = ui.actionViewShadow->isChecked();
+void MainWindow::onViewLineRendering() {
+	glWidget->renderingMode = GLWidget3D::RENDERING_MODE_LINE;
 	glWidget->updateGL();
 }
 
-void MainWindow::onViewScopeCoordinateSystem() {
-	glWidget->showScopeCoordinateSystem = ui.actionViewScopeCoordinateSystem->isChecked();
+void MainWindow::onViewShadow() {
+	glWidget->renderManager.useShadow = ui.actionViewShadow->isChecked();
 	glWidget->updateGL();
 }
 

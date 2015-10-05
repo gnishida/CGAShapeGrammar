@@ -173,7 +173,7 @@ boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height,
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
-void Rectangle::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void Rectangle::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -212,13 +212,7 @@ void Rectangle::render(RenderManager* renderManager, float opacity, bool showSco
 		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), glm::vec4(_color, opacity), 1);
 
 		renderManager->addObject(_name.c_str(), "", vertices);
-	}
-	
-	if (showScopeCoordinateSystem) {
-		vertices.resize(0);
-		glutils::drawAxes(0.1, 3, _pivot * _modelMat, vertices);
-		renderManager->addObject("axis", "", vertices);
-	}
+	}	
 }
 
 }

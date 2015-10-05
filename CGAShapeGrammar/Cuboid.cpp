@@ -136,7 +136,7 @@ void Cuboid::split(int splitAxis, const std::vector<float>& sizes, const std::ve
 	}
 }
 
-void Cuboid::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void Cuboid::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	int num = 0;
@@ -196,10 +196,6 @@ void Cuboid::render(RenderManager* renderManager, float opacity, bool showScopeC
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

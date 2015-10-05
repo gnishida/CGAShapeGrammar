@@ -73,7 +73,7 @@ void OffsetRectangle::comp(const std::map<std::string, std::string>& name_map, s
 	}
 }
 
-void OffsetRectangle::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void OffsetRectangle::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -112,10 +112,6 @@ void OffsetRectangle::render(RenderManager* renderManager, float opacity, bool s
 	}
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

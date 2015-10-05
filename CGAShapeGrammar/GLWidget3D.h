@@ -9,6 +9,7 @@
 #include "ShadowMapping.h"
 #include "RenderManager.h"
 #include "CGA.h"
+#include "SketchyRenderingBuffer.h"
 
 class MainWindow;
 
@@ -28,14 +29,23 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *e);
 
 public:
+	static enum { RENDERING_MODE_REGULAR = 0, RENDERING_MODE_LINE };
+
+public:
 	Camera camera;
 	glm::vec3 light_dir;
 	glm::mat4 light_mvpMatrix;
 
 	RenderManager renderManager;
-	bool showWireframe;
-	bool showScopeCoordinateSystem;
 
 	cga::CGA system;
+
+	SketchyRenderingBuffer rb;
+	int renderingMode;
+	bool showWireframe;
+	float depthSensitivity;
+	float normalSensitivity;
+	bool useThreshold;
+	float threshold;
 };
 

@@ -187,6 +187,7 @@
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="ShapeLOperator.cpp" />
     <ClCompile Include="SizeOperator.cpp" />
+    <ClCompile Include="SketchyRenderingBuffer.cpp" />
     <ClCompile Include="TaperOperator.cpp" />
     <ClCompile Include="TextureOperator.cpp" />
     <ClCompile Include="SetupProjectionOperator.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="Shape.h" />
     <ClInclude Include="ShapeLOperator.h" />
     <ClInclude Include="SizeOperator.h" />
+    <ClInclude Include="SketchyRenderingBuffer.h" />
     <ClInclude Include="TaperOperator.h" />
     <ClInclude Include="TextureOperator.h" />
     <ClInclude Include="SetupProjectionOperator.h" />

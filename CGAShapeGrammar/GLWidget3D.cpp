@@ -53,8 +53,14 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  */
 void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", false);
+	rb.init(renderManager.program, 4, 5, width(), height());
+
+	renderingMode = RENDERING_MODE_REGULAR;
 	showWireframe = true;
-	showScopeCoordinateSystem = false;
+	depthSensitivity = 6000.0f;
+	normalSensitivity = 1.0f;
+	useThreshold = true;
+	threshold = 0.25f;
 
 	// set the clear color for the screen
 	qglClearColor(QColor(113, 112, 117));
@@ -93,7 +99,14 @@ void GLWidget3D::paintGL() {
 	//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 	glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-	drawScene(0);	
+	if (renderingMode == RENDERING_MODE_REGULAR) {
+		drawScene(0);	
+	} else {
+		rb.pass1();
+		drawScene(0);
+		rb.pass2();
+		drawScene(0);
+	}
 }
 
 /**
@@ -105,12 +118,18 @@ void GLWidget3D::drawScene(int drawMode) {
 	} else {
 		glUniform1i(glGetUniformLocation(renderManager.program, "depthComputation"), 1);
 	}
-	
-	if (showScopeCoordinateSystem) {
-		renderManager.renderAll(showWireframe);
+
+	if (renderingMode == RENDERING_MODE_REGULAR) {
+		glUniform1i(glGetUniformLocation(renderManager.program, "lineRendering"), 0);
 	} else {
-		renderManager.renderAllExcept("axis", showWireframe);
+		glUniform1i(glGetUniformLocation(renderManager.program, "lineRendering"), 1);
+		glUniform1f(glGetUniformLocation(renderManager.program, "depthSensitivity"), depthSensitivity);
+		glUniform1f(glGetUniformLocation(renderManager.program, "normalSensitivity"), normalSensitivity);
+		glUniform1i(glGetUniformLocation(renderManager.program, "useThreshold"), useThreshold ? 1 : 0);
+		glUniform1f(glGetUniformLocation(renderManager.program, "threshold"), threshold);
 	}
+
+	renderManager.renderAll(showWireframe);
 }
 
 void GLWidget3D::loadCGA(char* filename) {
@@ -156,7 +175,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::RuleSet ruleSet;
 		cga::parseRule(filename, ruleSet);
 		system.generate(ruleSet);
-		system.render(&renderManager, true);
+		system.render(&renderManager);
 	} catch (const std::string& ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	} catch (const char* ex) {

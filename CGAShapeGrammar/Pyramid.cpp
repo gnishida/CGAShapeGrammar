@@ -114,7 +114,7 @@ void Pyramid::comp(const std::map<std::string, std::string>& name_map, std::vect
 	}
 }
 
-void Pyramid::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void Pyramid::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	if (_top_ratio == 0.0f) {
@@ -175,10 +175,6 @@ void Pyramid::render(RenderManager* renderManager, float opacity, bool showScope
 		glutils::drawPolygon(pts3, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
 
 		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
-	}
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
 	}
 }
 

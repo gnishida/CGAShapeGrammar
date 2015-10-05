@@ -149,7 +149,7 @@ void GableRoof::comp(const std::map<std::string, std::string>& name_map, std::ve
 	}
 }
 
-void GableRoof::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void GableRoof::render(RenderManager* renderManager, float opacity) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -245,10 +245,6 @@ void GableRoof::render(RenderManager* renderManager, float opacity, bool showSco
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

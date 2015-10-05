@@ -192,7 +192,7 @@ void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	}
 }
 
-void Shape::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void Shape::render(RenderManager* renderManager, float opacity) const {
 	throw "render() is not supported.";
 }
 

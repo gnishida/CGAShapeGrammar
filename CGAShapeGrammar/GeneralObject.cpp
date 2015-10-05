@@ -76,7 +76,7 @@ void GeneralObject::size(float xSize, float ySize, float zSize) {
 	}
 }
 
-void GeneralObject::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void GeneralObject::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -89,10 +89,6 @@ void GeneralObject::render(RenderManager* renderManager, float opacity, bool sho
 	}
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

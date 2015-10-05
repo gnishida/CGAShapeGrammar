@@ -105,7 +105,7 @@ void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vec
 	}
 }
 
-void Prism::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void Prism::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;//((_points.size() - 2) * 6 + _points.size() * 6);
@@ -152,10 +152,6 @@ void Prism::render(RenderManager* renderManager, float opacity, bool showScopeCo
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

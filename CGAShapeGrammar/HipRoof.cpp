@@ -29,7 +29,7 @@ boost::shared_ptr<Shape> HipRoof::clone(const std::string& name) const {
 	return copy;
 }
 
-void HipRoof::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void HipRoof::render(RenderManager* renderManager, float opacity) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -99,10 +99,6 @@ void HipRoof::render(RenderManager* renderManager, float opacity, bool showScope
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

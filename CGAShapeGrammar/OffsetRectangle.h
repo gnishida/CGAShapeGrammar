@@ -21,7 +21,7 @@ public:
 	OffsetRectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, float offsetDistance, const glm::vec3& color, const std::string& texture);
 	boost::shared_ptr<Shape> clone(const std::string& name) const;
 	void comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes);
-	void render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const;
+	void render(RenderManager* renderManager, float opacity) const;
 };
 
 }

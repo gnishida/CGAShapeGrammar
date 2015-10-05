@@ -74,7 +74,7 @@ void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std
 	}
 }
 
-void OffsetPolygon::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void OffsetPolygon::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<glm::vec2> offset_points;
@@ -93,10 +93,6 @@ void OffsetPolygon::render(RenderManager* renderManager, float opacity, bool sho
 	}
 
 	renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
-
-	if (showScopeCoordinateSystem) {
-		drawAxes(renderManager, _pivot * _modelMat);
-	}
 }
 
 }

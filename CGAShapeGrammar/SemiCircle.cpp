@@ -34,7 +34,7 @@ boost::shared_ptr<Shape> SemiCircle::offset(const std::string& name, float offse
 	}
 }
 
-void SemiCircle::render(RenderManager* renderManager, float opacity, bool showScopeCoordinateSystem) const {
+void SemiCircle::render(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
@@ -67,12 +67,6 @@ void SemiCircle::render(RenderManager* renderManager, float opacity, bool showSc
 	}
 
 	renderManager->addObject(_name.c_str(), "", vertices);
-	
-	if (showScopeCoordinateSystem) {
-		vertices.resize(0);
-		glutils::drawAxes(0.1, 3, _pivot * _modelMat, vertices);
-		renderManager->addObject("axis", "", vertices);
-	}
 }
 
 }
