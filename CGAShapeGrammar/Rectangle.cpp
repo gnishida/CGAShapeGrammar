@@ -6,6 +6,7 @@
 #include "Prism.h"
 #include "Polygon.h"
 #include "Cuboid.h"
+#include "SemiCircle.h"
 #include "OffsetRectangle.h"
 #include "CGA.h"
 
@@ -16,10 +17,8 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_removed = false;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
-	this->_scope.x = width;
-	this->_scope.y = height;
-	this->_color = color;
 	this->_scope = glm::vec3(width, height, 0);
+	this->_color = color;
 	this->_textureEnabled = false;
 }
 
@@ -28,11 +27,9 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 	this->_removed = false;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
-	this->_scope.x = width;
-	this->_scope.y = height;
+	this->_scope = glm::vec3(width, height, 0);
 	this->_color = color;
 	this->_texture = texture;
-	this->_scope = glm::vec3(width, height, 0);
 
 	_texCoords.resize(4);
 	_texCoords[0] = glm::vec2(u1, v1);
@@ -50,6 +47,10 @@ boost::shared_ptr<Shape> Rectangle::clone(const std::string& name) const {
 
 boost::shared_ptr<Shape> Rectangle::extrude(const std::string& name, float height) {
 	return boost::shared_ptr<Shape>(new Cuboid(name, _pivot, _modelMat, _scope.x, _scope.y, height, _color));
+}
+
+boost::shared_ptr<Shape> Rectangle::innerSemiCircle(const std::string& name) {
+	return boost::shared_ptr<Shape>(new SemiCircle(name, _pivot, _modelMat, _scope.x, _scope.y, _color));
 }
 
 boost::shared_ptr<Shape> Rectangle::inscribeCircle(const std::string& name) {

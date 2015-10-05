@@ -9,7 +9,7 @@ Camera::Camera() {
 	xrot = 40.0f;
 	yrot = 0.0;
 	zrot = 0.0f;
-	pos = glm::vec3(0, 0, 20);
+	pos = glm::vec3(0, 0, 5);
 	fovy = 60.0f;
 }
 
@@ -35,7 +35,7 @@ void Camera::rotate(int mouse_x, int mouse_y) {
  * Call this function whenever the mouse moves while zooming.
  */
 void Camera::zoom(int mouse_x, int mouse_y) {
-	pos.z += mouse_pos.y - mouse_y;
+	pos.z += (mouse_pos.y - mouse_y) * 0.5f;
 	updateMVPMatrix();
 
 	mouse_pos = glm::vec2(mouse_x, mouse_y);

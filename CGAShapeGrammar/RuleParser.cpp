@@ -4,6 +4,7 @@
 #include "CompOperator.h"
 #include "CopyOperator.h"
 #include "ExtrudeOperator.h"
+#include "InnerSemiCircleOperator.h"
 #include "InsertOperator.h"
 #include "OffsetOperator.h"
 #include "RoofGableOperator.h"
@@ -64,6 +65,8 @@ void parseRule(char* filename, RuleSet& ruleSet) {
 					ruleSet.addOperator(name, parseCopyOperator(operator_node));
 				} else if (operator_name == "extrude") {
 					ruleSet.addOperator(name, parseExtrudeOperator(operator_node));
+				} else if (operator_name == "innerSemiCircle") {
+					ruleSet.addOperator(name, parseInnerSemiCircleOperator(operator_node));
 				} else if (operator_name == "insert") {
 					ruleSet.addOperator(name, parseInsertOperator(operator_node));
 				} else if (operator_name == "offset") {
@@ -213,6 +216,10 @@ boost::shared_ptr<Operator> parseExtrudeOperator(const QDomNode& node) {
 	std::string height = node.toElement().attribute("height").toUtf8().constData();
 
 	return boost::shared_ptr<Operator>(new ExtrudeOperator(height));
+}
+
+boost::shared_ptr<Operator> parseInnerSemiCircleOperator(const QDomNode& node) {
+	return boost::shared_ptr<Operator>(new InnerSemiCircleOperator());
 }
 
 boost::shared_ptr<Operator> parseInsertOperator(const QDomNode& node) {

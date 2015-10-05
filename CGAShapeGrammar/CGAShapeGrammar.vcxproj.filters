@@ -185,6 +185,15 @@
     <ClCompile Include="OffsetRectangle.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="InnerSemiCircleOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="SemiCircle.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="OffsetSemiCircle.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -328,6 +337,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OffsetRectangle.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="InnerSemiCircleOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="OffsetSemiCircle.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="SemiCircle.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>

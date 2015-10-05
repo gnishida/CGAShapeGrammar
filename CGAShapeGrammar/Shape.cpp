@@ -37,6 +37,10 @@ boost::shared_ptr<Shape> Shape::extrude(const std::string& name, float height) {
 	throw "extrude() is not supported.";
 }
 
+boost::shared_ptr<Shape> Shape::innerSemiCircle(const std::string& name) {
+	throw "innerSemiCircle() is not supported.";
+}
+
 boost::shared_ptr<Shape> Shape::inscribeCircle(const std::string& name) {
 	throw "inscribeCircle() is not supported.";
 }

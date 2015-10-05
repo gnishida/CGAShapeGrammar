@@ -161,6 +161,7 @@
     <ClCompile Include="GLUtils.cpp" />
     <ClCompile Include="GLWidget3D.cpp" />
     <ClCompile Include="HipRoof.cpp" />
+    <ClCompile Include="InnerSemiCircleOperator.cpp" />
     <ClCompile Include="InsertOperator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="OffsetOperator.cpp" />
     <ClCompile Include="OffsetPolygon.cpp" />
     <ClCompile Include="OffsetRectangle.cpp" />
+    <ClCompile Include="OffsetSemiCircle.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Pyramid.cpp" />
@@ -179,6 +181,7 @@
     <ClCompile Include="RotateOperator.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleParser.cpp" />
+    <ClCompile Include="SemiCircle.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShadowMapping.cpp" />
     <ClCompile Include="Shape.cpp" />
@@ -248,12 +251,14 @@
     <ClInclude Include="GeneratedFiles\ui_MainWindow.h" />
     <ClInclude Include="GLUtils.h" />
     <ClInclude Include="HipRoof.h" />
+    <ClInclude Include="InnerSemiCircleOperator.h" />
     <ClInclude Include="InsertOperator.h" />
     <ClInclude Include="NumberEval.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="OffsetOperator.h" />
     <ClInclude Include="OffsetPolygon.h" />
     <ClInclude Include="OffsetRectangle.h" />
+    <ClInclude Include="OffsetSemiCircle.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="Pyramid.h" />
@@ -264,6 +269,7 @@
     <ClInclude Include="RotateOperator.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleParser.h" />
+    <ClInclude Include="SemiCircle.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShadowMapping.h" />
     <ClInclude Include="Shape.h" />

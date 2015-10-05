@@ -32,6 +32,7 @@ public:
 	virtual boost::shared_ptr<Shape> clone(const std::string& name) const;
 	virtual void comp(const std::map<std::string, std::string>& name_map, std::vector<boost::shared_ptr<Shape> >& shapes);
 	virtual boost::shared_ptr<Shape> extrude(const std::string& name, float height);
+	virtual boost::shared_ptr<Shape> innerSemiCircle(const std::string& name);
 	virtual boost::shared_ptr<Shape> inscribeCircle(const std::string& name);
 	boost::shared_ptr<Shape> insert(const std::string& name, const std::string& geometryPath);
 	void nil();
