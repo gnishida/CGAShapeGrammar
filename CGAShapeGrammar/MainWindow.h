@@ -21,6 +21,7 @@ public:
 public slots:
 	void onOpenCGARules();
 	void onViewWireframe();
+	void onViewShadow();
 	void onViewScopeCoordinateSystem();
 	void onViewRefresh();
 };

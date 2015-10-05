@@ -34,6 +34,7 @@ public:
 
 	RenderManager renderManager;
 	bool showWireframe;
+	bool useShadow;
 	bool showScopeCoordinateSystem;
 
 	cga::CGA system;

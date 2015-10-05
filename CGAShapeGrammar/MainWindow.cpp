@@ -4,11 +4,13 @@
 MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags) {
 	ui.setupUi(this);
 	ui.actionViewWireframe->setChecked(true);
+	ui.actionViewShadow->setChecked(false);
 	ui.actionViewScopeCoordinateSystem->setChecked(false);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGARules, SIGNAL(triggered()), this, SLOT(onOpenCGARules()));
 	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewWireframe()));
+	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
 	connect(ui.actionViewScopeCoordinateSystem, SIGNAL(triggered()), this, SLOT(onViewScopeCoordinateSystem()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 
@@ -32,6 +34,11 @@ void MainWindow::onOpenCGARules() {
 
 void MainWindow::onViewWireframe() {
 	glWidget->showWireframe = ui.actionViewWireframe->isChecked();
+	glWidget->updateGL();
+}
+
+void MainWindow::onViewShadow() {
+	glWidget->useShadow = ui.actionViewShadow->isChecked();
 	glWidget->updateGL();
 }
 

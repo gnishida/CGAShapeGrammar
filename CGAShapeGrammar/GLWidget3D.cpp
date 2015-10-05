@@ -54,6 +54,7 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
 void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", 8192);
 	showWireframe = true;
+	useShadow = false;
 	showScopeCoordinateSystem = false;
 
 	// set the clear color for the screen
@@ -61,9 +62,11 @@ void GLWidget3D::initializeGL() {
 
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 
+	/*
 	std::vector<Vertex> vertices;
 	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
 	renderManager.addObject("grid", "", vertices);
+	*/
 }
 
 /**
@@ -90,6 +93,8 @@ void GLWidget3D::paintGL() {
 	// pass the light direction to the shader
 	//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 	glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+
+	glUniform1i(glGetUniformLocation(renderManager.program, "useShadow"), useShadow ? 1 : 0);
 	
 	drawScene(0);	
 }
@@ -114,9 +119,11 @@ void GLWidget3D::drawScene(int drawMode) {
 void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
+	/*
 	std::vector<Vertex> vertices;
 	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
 	renderManager.addObject("grid", "", vertices);
+	*/
 
 	/*{ // for tutorial
 		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 35, 15, glm::vec3(1, 1, 1));
@@ -124,7 +131,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}*/
 
 	{ // for parthenon
-		cga::Rectangle* lot = new cga::Rectangle("Start", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 2, 2, glm::vec3(1, 1, 1));
+		cga::Rectangle* lot = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-1, -0.5, 0)), glm::mat4(), 2, 1, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(lot));
 	}
 
@@ -154,7 +161,9 @@ void GLWidget3D::loadCGA(char* filename) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 	
-	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
+	if (useShadow) {
+		renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
+	}
 
 	updateGL();
 }

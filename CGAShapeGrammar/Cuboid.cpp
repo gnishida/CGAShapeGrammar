@@ -31,46 +31,67 @@ void Cuboid::comp(const std::map<std::string, std::string>& name_map, std::vecto
 	}
 
 	// bottom face
-	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL") {
+	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL" && _scope.z >= 0) {
 		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _pivot, _modelMat, _scope.x, _scope.y, _color)));
 	}
 
 	// front face
 	if (name_map.find("front") != name_map.end() && name_map.at("front") != "NIL") {
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.x, _scope.z, _color)));
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
 	}
 
 	// right face
 	if (name_map.find("right") != name_map.end() && name_map.at("right") != "NIL") {
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
 		glm::mat4 mat = glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI * 0.5f, glm::vec3(0, 0, 1));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("right"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.y, _scope.z, _color)));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("right"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
 	}
 
 	// left face
 	if (name_map.find("left") != name_map.end() && name_map.at("left") != "NIL") {
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
 		glm::mat4 mat = glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y, 0, 0));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("left"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.y, _scope.z, _color)));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("left"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
 	}
 
 	// back face
 	if (name_map.find("back") != name_map.end() && name_map.at("back") != "NIL") {
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
 		glm::mat4 mat = glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("back"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.x, _scope.z, _color)));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("back"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
 	}
 
 	// side faces
 	if (name_map.find("side") != name_map.end() && name_map.at("side") != "NIL") {
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
+
 		// right face
 		glm::mat4 mat = glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI * 0.5f, glm::vec3(0, 0, 1));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.y, _scope.z, _color)));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
 
 		// left face
 		mat = glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y, 0, 0));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.y, _scope.z, _color)));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
 
 		// back face
 		mat = glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, M_PI * 0.5f, glm::vec3(1, 0, 0)), _scope.x, _scope.z, _color)));
+		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
 	}
 }
 
@@ -136,25 +157,41 @@ void Cuboid::render(RenderManager* renderManager, bool showScopeCoordinateSystem
 
 	// front
 	{
-		glm::mat4 mat = _pivot * glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
+		glm::mat4 mat = _pivot * glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), rot_angle, glm::vec3(1, 0, 0));
 		glutils::drawQuad(_scope.x, _scope.z, _color, mat, vertices);
 	}
 
 	// back
 	{
-		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
+		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, 0, _scope.z * 0.5)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0)), rot_angle, glm::vec3(1, 0, 0));
 		glutils::drawQuad(_scope.x, _scope.z, _color, mat, vertices);
 	}
 
 	// right
 	{
-		glm::mat4 mat = _pivot * glm::rotate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, _scope.y * 0.5, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(0, 0, 1)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
+		glm::mat4 mat = _pivot * glm::rotate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, _scope.y * 0.5, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(0, 0, 1)), rot_angle, glm::vec3(1, 0, 0));
 		glutils::drawQuad(_scope.y, _scope.z, _color, mat, vertices);
 	}
 
 	// left
 	{
-		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y * 0.5, 0, _scope.z * 0.5)), M_PI * 0.5f, glm::vec3(1, 0, 0));
+		float rot_angle = M_PI * 0.5f;
+		if (_scope.z < 0) {
+			rot_angle = -rot_angle;
+		}
+		glm::mat4 mat = _pivot * glm::rotate(glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y * 0.5, 0, _scope.z * 0.5)), rot_angle, glm::vec3(1, 0, 0));
 		glutils::drawQuad(_scope.y, _scope.z, _color, mat, vertices);
 	}
 
