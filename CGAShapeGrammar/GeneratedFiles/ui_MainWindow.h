@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Mon Oct 5 12:49:48 2015
+** Created: Mon Oct 5 16:24:50 2015
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -96,7 +96,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindowClass)
     {
-        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "MainWindow", 0, QApplication::UnicodeUTF8));
+        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "CGA Shape Grammar", 0, QApplication::UnicodeUTF8));
         actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0, QApplication::UnicodeUTF8));
         actionViewWireframe->setText(QApplication::translate("MainWindowClass", "Wireframe", 0, QApplication::UnicodeUTF8));
         actionViewWireframe->setShortcut(QApplication::translate("MainWindowClass", "W", 0, QApplication::UnicodeUTF8));

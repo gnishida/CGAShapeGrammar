@@ -3,10 +3,10 @@
 	<attr name="window_sill_height" value="0.1"/>
 	<attr name="window_sill_depth" value="0.15"/>
 	<attr name="window_cornice_height" value="0.1"/>
-	<attr name="window_cornice_depth" value="0.15"/>
+	<attr name="window_cornice_depth" value="0.05"/>
 	
 	<attr name="window_margin" value="0.05"/>
-	<attr name="window_central_width" value="1.0"/>
+	<attr name="window_central_ratio" value="0.5"/>
 	<attr name="window_single_width" value="0.5"/>
 	<attr name="window_single_height" value="0.4"/>
 	<attr name="window_border" value="0.02"/>
@@ -32,7 +32,7 @@
 		<split splitAxis="x">
 			<param type="absolute" value="window_margin" name="NIL"/>
 			<param type="floating" value="1" name="WindowSide"/>
-			<param type="absolute" value="window_central_width" name="WindowCentral"/>
+			<param type="relative" value="window_central_ratio" name="WindowCentral"/>
 			<param type="floating" value="1" name="WindowSide"/>
 			<param type="absolute" value="window_margin" name="NIL"/>
 		</split>
@@ -41,7 +41,7 @@
 	<rule name="WindowCentral">
 		<split splitAxis="x">
 			<param type="absolute" value="window_border" name="WindowBorder"/>
-			<param type="floating" value="1" name="WindowSingleMain"/>
+			<param type="floating" value="1" name="WindowSingleMainColumn"/>
 			<param type="absolute" value="window_border" name="WindowBorder"/>
 		</split>
 	</rule>

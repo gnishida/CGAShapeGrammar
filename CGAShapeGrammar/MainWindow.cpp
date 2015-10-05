@@ -30,6 +30,7 @@ void MainWindow::onOpenCGARules() {
 	fileLoaded = true;
 	filename = new_filename;
 	glWidget->loadCGA(filename.toUtf8().data());
+	this->setWindowTitle("CGA Shape Grammar - " + new_filename);
 }
 
 void MainWindow::onViewWireframe() {

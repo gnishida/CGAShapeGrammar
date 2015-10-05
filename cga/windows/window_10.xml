@@ -3,7 +3,7 @@
 	<attr name="window_sill_height" value="0.1"/>
 	<attr name="window_sill_depth" value="0.15"/>
 	<attr name="window_cornice_height" value="0.1"/>
-	<attr name="window_cornice_depth" value="0.15"/>
+	<attr name="window_cornice_depth" value="0.05"/>
 	
 	<attr name="window_margin" value="0.05"/>
 	<attr name="window_single_width" value="0.3"/>
@@ -25,11 +25,12 @@
 	
 	<rule name="WindowMain">
 		<split splitAxis="x">
-			<param type="floating" value="window_single_width*2" name="WindowColumn" repeat="true"/>
+			<param type="relative" value="0.5" name="WindowMainHalf"/>
+			<param type="relative" value="0.5" name="WindowMainHalf"/>
 		</split>
 	</rule>
-
-	<rule name="WindowColumn">
+	
+	<rule name="WindowMainHalf">
 		<split splitAxis="y">
 			<param type="floating" value="window_single_height" name="WindowColumnMain" repeat="true"/>
 			<param type="absolute" value="window_circle_radius" name="WindowUpper"/>

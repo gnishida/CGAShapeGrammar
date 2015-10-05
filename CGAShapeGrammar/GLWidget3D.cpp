@@ -130,9 +130,12 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.stack.push_back(lot);
 	}*/
 
+	float object_width = 2.0f;
+	float object_height = 1.0f;
+
 	{ // for parthenon
-		cga::Rectangle* lot = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-1.5, -1.0, 0)), glm::mat4(), 3, 2, glm::vec3(1, 1, 1));
-		system.stack.push_back(boost::shared_ptr<cga::Shape>(lot));
+		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
 
 	/*{ // This is for test.

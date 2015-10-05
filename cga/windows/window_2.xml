@@ -3,7 +3,7 @@
 	<attr name="window_sill_height" value="0.1"/>
 	<attr name="window_sill_depth" value="0.15"/>
 	<attr name="window_cornice_height" value="0.1"/>
-	<attr name="window_cornice_depth" value="0.15"/>
+	<attr name="window_cornice_depth" value="0.05"/>
 	
 	<attr name="window_margin" value="0.05"/>
 	<attr name="window_single_width" value="0.5"/>

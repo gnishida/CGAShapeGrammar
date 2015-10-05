@@ -70,7 +70,7 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value>& sizes, const s
 			if (sizes[i].type == Value::TYPE_ABSOLUTE) {
 				regular_sum += ruleSet.evalFloat(sizes[i].value, shape);
 			} else if (sizes[i].type == Value::TYPE_RELATIVE) {
-				regular_sum += size * ruleSet.evalFloat(sizes[i].value, shape) * size;
+				regular_sum += size * ruleSet.evalFloat(sizes[i].value, shape);
 			} else if (sizes[i].type == Value::TYPE_FLOATING) {
 				floating_sum += ruleSet.evalFloat(sizes[i].value, shape);
 			}
@@ -86,6 +86,7 @@ void Rule::decodeSplitSizes(float size, const std::vector<Value>& sizes, const s
 		if (sizes[i].repeat) {
 			float s = sizes[i].getEstimateValue(size - regular_sum - floating_sum * floating_scale, ruleSet, shape);
 			int num = (size - regular_sum - floating_sum * floating_scale) / s + 0.5;
+			if (num <= 0) num = 1;
 			s = (size - regular_sum - floating_sum * floating_scale) / num;
 			for (int k = 0; k < num; ++k) {
 				decoded_sizes.push_back(s);
