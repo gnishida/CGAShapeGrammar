@@ -73,7 +73,7 @@ void OffsetRectangle::comp(const std::map<std::string, std::string>& name_map, s
 	}
 }
 
-void OffsetRectangle::render(RenderManager* renderManager, float opacity) const {
+void OffsetRectangle::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

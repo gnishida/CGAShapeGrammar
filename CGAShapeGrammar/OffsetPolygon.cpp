@@ -74,7 +74,7 @@ void OffsetPolygon::comp(const std::map<std::string, std::string>& name_map, std
 	}
 }
 
-void OffsetPolygon::render(RenderManager* renderManager, float opacity) const {
+void OffsetPolygon::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<glm::vec2> offset_points;

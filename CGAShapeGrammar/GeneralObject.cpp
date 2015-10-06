@@ -76,7 +76,7 @@ void GeneralObject::size(float xSize, float ySize, float zSize) {
 	}
 }
 
-void GeneralObject::render(RenderManager* renderManager, float opacity) const {
+void GeneralObject::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

@@ -27,9 +27,9 @@ void CGA::generate(const RuleSet& ruleSet) {
 	}
 }
 
-void CGA::render(RenderManager* renderManager) {
+void CGA::generateGeometry(RenderManager* renderManager) {
 	for (int i = 0; i < shapes.size(); ++i) {
-		shapes[i]->render(renderManager, 1.0f);
+		shapes[i]->generateGeometry(renderManager, 1.0f);
 	}
 }
 

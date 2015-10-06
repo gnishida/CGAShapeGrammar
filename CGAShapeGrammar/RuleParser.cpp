@@ -22,7 +22,7 @@
 
 namespace cga {
 
-void parseRule(char* filename, RuleSet& ruleSet) {
+void parseRule(const char* filename, RuleSet& ruleSet) {
 	QFile file(filename);
 
 	QDomDocument doc;

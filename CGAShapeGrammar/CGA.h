@@ -30,7 +30,7 @@ public:
 	CGA();
 
 	void generate(const RuleSet& ruleSet);
-	void render(RenderManager* renderManager);
+	void generateGeometry(RenderManager* renderManager);
 };
 
 }

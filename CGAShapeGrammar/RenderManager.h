@@ -37,6 +37,7 @@ public:
 	void addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices);
 	void removeObjects();
 	void removeObject(const QString& object_name);
+	void centerObjects();
 	void renderAll(bool wireframe = false);
 	void renderAllExcept(const QString& object_name, bool wireframe = false);
 	void render(const QString& object_name, bool wireframe = false);

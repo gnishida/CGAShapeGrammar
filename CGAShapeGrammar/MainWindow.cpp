@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewLineRendering()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
+	connect(ui.actionGenerateImages, SIGNAL(triggered()), this, SLOT(onGenerateImages()));
+	connect(ui.actionHoge, SIGNAL(triggered()), this, SLOT(onHoge()));
 
 	glWidget = new GLWidget3D();
 	setCentralWidget(glWidget);
@@ -52,4 +54,12 @@ void MainWindow::onViewRefresh() {
 	if (fileLoaded) {
 		glWidget->loadCGA(filename.toUtf8().data());
 	}
+}
+
+void MainWindow::onGenerateImages() {
+	glWidget->generateImages();
+}
+
+void MainWindow::onHoge() {
+	glWidget->hoge();
 }

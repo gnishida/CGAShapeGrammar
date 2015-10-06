@@ -29,7 +29,7 @@ boost::shared_ptr<Shape> HipRoof::clone(const std::string& name) const {
 	return copy;
 }
 
-void HipRoof::render(RenderManager* renderManager, float opacity) const {
+void HipRoof::generateGeometry(RenderManager* renderManager, float opacity) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;

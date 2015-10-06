@@ -105,7 +105,7 @@ void Prism::split(int splitAxis, const std::vector<float>& sizes, const std::vec
 	}
 }
 
-void Prism::render(RenderManager* renderManager, float opacity) const {
+void Prism::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;//((_points.size() - 2) * 6 + _points.size() * 6);

@@ -149,7 +149,7 @@ void GableRoof::comp(const std::map<std::string, std::string>& name_map, std::ve
 	}
 }
 
-void GableRoof::render(RenderManager* renderManager, float opacity) const {
+void GableRoof::generateGeometry(RenderManager* renderManager, float opacity) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;

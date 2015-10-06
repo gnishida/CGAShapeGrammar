@@ -24,6 +24,8 @@ public slots:
 	void onViewLineRendering();
 	void onViewShadow();
 	void onViewRefresh();
+	void onGenerateImages();
+	void onHoge();
 };
 
 #endif // MAINWINDOW_H

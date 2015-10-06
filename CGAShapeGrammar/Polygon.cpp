@@ -111,7 +111,7 @@ boost::shared_ptr<Shape> Polygon::taper(const std::string& name, float height, f
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, _points, _center, height, top_ratio, _color, _texture));
 }
 
-void Polygon::render(RenderManager* renderManager, float opacity) const {
+void Polygon::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

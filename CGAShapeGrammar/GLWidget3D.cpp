@@ -8,6 +8,7 @@
 #include "Rectangle.h"
 #include "Polygon.h"
 #include "GLUtils.h"
+#include <QDir>
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット
@@ -81,6 +82,8 @@ void GLWidget3D::resizeGL(int width, int height) {
 	height = height ? height : 1;
 	glViewport(0, 0, width, height);
 	camera.updatePMatrix(width, height);
+
+	rb.update(width, height);
 }
 
 /**
@@ -175,7 +178,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::RuleSet ruleSet;
 		cga::parseRule(filename, ruleSet);
 		system.generate(ruleSet);
-		system.render(&renderManager);
+		system.generateGeometry(&renderManager);
 	} catch (const std::string& ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	} catch (const char* ex) {
@@ -184,5 +187,84 @@ void GLWidget3D::loadCGA(char* filename) {
 	
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
+	updateGL();
+}
+
+void GLWidget3D::generateImages() {
+	QDir dir("..\\cga\\windows\\");
+
+	if (!QDir("results").exists()) QDir().mkdir("results");
+
+	renderingMode = RENDERING_MODE_LINE;
+
+	camera.xrot = 90.0f;
+	camera.yrot = 0.0f;
+	camera.zrot = 0.0f;
+	camera.pos = glm::vec3(0, 0, 1.5f);
+
+	int origWidth = width();
+	int origHeight = height();
+	resize(256, 256);
+	resizeGL(256, 256);
+
+	QStringList filters;
+	filters << "*.xml";
+	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files|QDir::NoDotAndDotDot);
+	for (int i = 0; i < fileInfoList.size(); ++i) {
+		int count = 0;
+
+		for (float object_width = 1.0f; object_width <= 3.2f; object_width += 0.2f) {
+			for (float object_height = 1.0f; object_height <= 2.0f; object_height += 0.2f) {
+				renderManager.removeObjects();
+
+				cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+				system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+
+				try {
+					cga::RuleSet ruleSet;
+					cga::parseRule(fileInfoList[i].absoluteFilePath().toUtf8().constData(), ruleSet);
+					system.generate(ruleSet);
+					system.generateGeometry(&renderManager);
+					renderManager.centerObjects();
+				} catch (const std::string& ex) {
+					std::cout << "ERROR:" << std::endl << ex << std::endl;
+				} catch (const char* ex) {
+					std::cout << "ERROR:" << std::endl << ex << std::endl;
+				}
+
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				glEnable(GL_DEPTH_TEST);
+				glDisable(GL_TEXTURE_2D);
+
+				// Model view projection行列をシェーダに渡す
+				glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
+
+				// pass the light direction to the shader
+				//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+				glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+	
+				rb.pass1();
+				drawScene(0);
+				rb.pass2();
+				drawScene(0);
+
+				if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+
+				QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.jpg").arg(count, 3, 10, QChar('0'));
+				grabFrameBuffer().save(filename);
+
+				count++;
+			}
+		}
+	}
+
+	resize(origWidth, origHeight);
+	resizeGL(origWidth, origHeight);
+}
+
+void GLWidget3D::hoge() {
+	this->resize(256, 256);
+	resizeGL(256, 256);
 	updateGL();
 }

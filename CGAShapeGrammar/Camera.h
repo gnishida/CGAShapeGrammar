@@ -12,11 +12,9 @@ public:
 	void zoom(int mouse_x, int mouse_y);
 	void move(int mouse_x, int mouse_y);
 	void updatePMatrix(int width,int height);
-
-private:
 	void updateMVPMatrix();
 
-private:
+public:
 	float fovy;
 	glm::vec3 pos;
 	float xrot;

@@ -41,8 +41,16 @@
     <addaction name="separator"/>
     <addaction name="actionViewRefresh"/>
    </widget>
+   <widget class="QMenu" name="menuTool">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="actionGenerateImages"/>
+    <addaction name="actionHoge"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menuTool"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -107,6 +115,16 @@
   <action name="actionViewLineRendering">
    <property name="text">
     <string>Line Rendering</string>
+   </property>
+  </action>
+  <action name="actionGenerateImages">
+   <property name="text">
+    <string>Generate Images</string>
+   </property>
+  </action>
+  <action name="actionHoge">
+   <property name="text">
+    <string>Hoge</string>
    </property>
   </action>
  </widget>

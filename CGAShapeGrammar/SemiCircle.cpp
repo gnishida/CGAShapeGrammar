@@ -34,7 +34,7 @@ boost::shared_ptr<Shape> SemiCircle::offset(const std::string& name, float offse
 	}
 }
 
-void SemiCircle::render(RenderManager* renderManager, float opacity) const {
+void SemiCircle::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

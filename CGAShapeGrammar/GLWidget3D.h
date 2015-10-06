@@ -19,6 +19,8 @@ public:
 
 	void drawScene(int drawMode);
 	void loadCGA(char* filename);
+	void generateImages();
+	void hoge();
 
 protected:
 	void initializeGL();

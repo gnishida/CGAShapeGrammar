@@ -136,7 +136,7 @@ void Cuboid::split(int splitAxis, const std::vector<float>& sizes, const std::ve
 	}
 }
 
-void Cuboid::render(RenderManager* renderManager, float opacity) const {
+void Cuboid::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	int num = 0;

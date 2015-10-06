@@ -134,6 +134,39 @@ void RenderManager::removeObject(const QString& object_name) {
 	objects[object_name].clear();
 }
 
+void RenderManager::centerObjects() {
+	glm::vec3 minPt((std::numeric_limits<float>::max)(), (std::numeric_limits<float>::max)(), (std::numeric_limits<float>::max)());
+	glm::vec3 maxPt = -minPt;
+
+	// もとのサイズを計算
+	for (auto it = objects.begin(); it != objects.end(); ++it) {
+		for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2) {
+			for (int k = 0; k < it2->vertices.size(); ++k) {
+				minPt.x = min(minPt.x, it2->vertices[k].position.x);
+				minPt.y = min(minPt.y, it2->vertices[k].position.y);
+				minPt.z = min(minPt.z, it2->vertices[k].position.z);
+				maxPt.x = max(maxPt.x, it2->vertices[k].position.x);
+				maxPt.y = max(maxPt.y, it2->vertices[k].position.y);
+				maxPt.z = max(maxPt.z, it2->vertices[k].position.z);
+			}
+		}
+	}
+
+	glm::vec3 center = (maxPt + minPt) * 0.5f;
+
+	float size = max(maxPt.x - minPt.x, max(maxPt.y - minPt.y, maxPt.z - minPt.z));
+	float scale = 1.0f / size;
+
+	// 単位立方体に入るよう、縮尺・移動
+	for (auto it = objects.begin(); it != objects.end(); ++it) {
+		for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2) {
+			for (int k = 0; k < it2->vertices.size(); ++k) {
+				it2->vertices[k].position = (it2->vertices[k].position - center) * scale;
+			}
+		}
+	}
+}
+
 void RenderManager::renderAll(bool wireframe) {
 	for (auto it = objects.begin(); it != objects.end(); ++it) {
 		render(it.key(), wireframe);

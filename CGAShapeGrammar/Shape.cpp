@@ -192,15 +192,15 @@ void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	}
 }
 
-void Shape::render(RenderManager* renderManager, float opacity) const {
+void Shape::generateGeometry(RenderManager* renderManager, float opacity) const {
 	throw "render() is not supported.";
 }
 
-void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) const {
+/*void Shape::drawAxes(RenderManager* renderManager, const glm::mat4& modelMat) const {
 	std::vector<Vertex> vertices;
 	glutils::drawAxes(0.1, 3, modelMat, vertices);
 	renderManager->addObject("axis", "", vertices);
-}
+}*/
 
 Asset Shape::getAsset(const std::string& filename) {
 	if (assets.find(filename) == assets.end()) {

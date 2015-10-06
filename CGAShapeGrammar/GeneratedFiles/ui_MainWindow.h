@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Mon Oct 5 18:04:41 2015
+** Created: Mon Oct 5 21:05:43 2015
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -34,10 +34,13 @@ public:
     QAction *actionViewRefresh;
     QAction *actionViewShadow;
     QAction *actionViewLineRendering;
+    QAction *actionGenerateImages;
+    QAction *actionHoge;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuView;
+    QMenu *menuTool;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -63,6 +66,10 @@ public:
         actionViewShadow->setCheckable(true);
         actionViewLineRendering = new QAction(MainWindowClass);
         actionViewLineRendering->setObjectName(QString::fromUtf8("actionViewLineRendering"));
+        actionGenerateImages = new QAction(MainWindowClass);
+        actionGenerateImages->setObjectName(QString::fromUtf8("actionGenerateImages"));
+        actionHoge = new QAction(MainWindowClass);
+        actionHoge->setObjectName(QString::fromUtf8("actionHoge"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -73,6 +80,8 @@ public:
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuView = new QMenu(menuBar);
         menuView->setObjectName(QString::fromUtf8("menuView"));
+        menuTool = new QMenu(menuBar);
+        menuTool->setObjectName(QString::fromUtf8("menuTool"));
         MainWindowClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindowClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -83,6 +92,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuView->menuAction());
+        menuBar->addAction(menuTool->menuAction());
         menuFile->addAction(actionOpenCGARules);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
@@ -91,6 +101,8 @@ public:
         menuView->addAction(actionViewShadow);
         menuView->addSeparator();
         menuView->addAction(actionViewRefresh);
+        menuTool->addAction(actionGenerateImages);
+        menuTool->addAction(actionHoge);
 
         retranslateUi(MainWindowClass);
 
@@ -111,8 +123,11 @@ public:
         actionViewRefresh->setShortcut(QApplication::translate("MainWindowClass", "F5", 0, QApplication::UnicodeUTF8));
         actionViewShadow->setText(QApplication::translate("MainWindowClass", "Shadow", 0, QApplication::UnicodeUTF8));
         actionViewLineRendering->setText(QApplication::translate("MainWindowClass", "Line Rendering", 0, QApplication::UnicodeUTF8));
+        actionGenerateImages->setText(QApplication::translate("MainWindowClass", "Generate Images", 0, QApplication::UnicodeUTF8));
+        actionHoge->setText(QApplication::translate("MainWindowClass", "Hoge", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
+        menuTool->setTitle(QApplication::translate("MainWindowClass", "Test", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

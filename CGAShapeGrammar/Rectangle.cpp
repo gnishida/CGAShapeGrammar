@@ -173,7 +173,7 @@ boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height,
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
-void Rectangle::render(RenderManager* renderManager, float opacity) const {
+void Rectangle::generateGeometry(RenderManager* renderManager, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;

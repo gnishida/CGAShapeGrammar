@@ -8,7 +8,7 @@
 
 namespace cga {
 
-void parseRule(char* filename, RuleSet& ruleSet);
+void parseRule(const char* filename, RuleSet& ruleSet);
 boost::shared_ptr<Operator> parseCenterOperator(const QDomNode& node);
 boost::shared_ptr<Operator> parseColorOperator(const QDomNode& node);
 boost::shared_ptr<Operator> parseCompOperator(const QDomNode& node);
