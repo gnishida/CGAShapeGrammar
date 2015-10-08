@@ -5,6 +5,7 @@
 #include <QMap>
 #include "Vertex.h"
 #include "ShadowMapping.h"
+#include "SketchyRenderingBuffer.h"
 
 class GeometryObject {
 public:
@@ -23,12 +24,23 @@ public:
 
 class RenderManager {
 public:
+	static enum { RENDERING_MODE_REGULAR = 0, RENDERING_MODE_WIREFRAME, RENDERING_MODE_LINE, RENDERING_MODE_SKETCHY };
+
+public:
 	GLuint program;
 	QMap<QString, QMap<GLuint, GeometryObject> > objects;
 	QMap<QString, GLuint> textures;
 
 	bool useShadow;
 	ShadowMapping shadow;
+
+	SketchyRenderingBuffer rb;
+
+	int renderingMode;
+	float depthSensitivity;
+	float normalSensitivity;
+	bool useThreshold;
+	float threshold;
 
 public:
 	RenderManager();
@@ -38,10 +50,11 @@ public:
 	void removeObjects();
 	void removeObject(const QString& object_name);
 	void centerObjects();
-	void renderAll(bool wireframe = false);
-	void renderAllExcept(const QString& object_name, bool wireframe = false);
-	void render(const QString& object_name, bool wireframe = false);
+	void renderAll();
+	void renderAllExcept(const QString& object_name);
+	void render(const QString& object_name);
 	void updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix);
+	void resize(int width, int height);
 
 
 private:

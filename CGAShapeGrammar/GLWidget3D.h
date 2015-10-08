@@ -9,7 +9,6 @@
 #include "ShadowMapping.h"
 #include "RenderManager.h"
 #include "CGA.h"
-#include "SketchyRenderingBuffer.h"
 
 class MainWindow;
 
@@ -41,13 +40,5 @@ public:
 	RenderManager renderManager;
 
 	cga::CGA system;
-
-	SketchyRenderingBuffer rb;
-	int renderingMode;
-	bool showWireframe;
-	float depthSensitivity;
-	float normalSensitivity;
-	bool useThreshold;
-	float threshold;
 };
 

@@ -3,15 +3,24 @@
 
 MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags) {
 	ui.setupUi(this);
+
+	QActionGroup* renderingModeGroup = new QActionGroup(this);
+	renderingModeGroup->addAction(ui.actionViewRegularRendering);
+	renderingModeGroup->addAction(ui.actionViewWireframe);
+	renderingModeGroup->addAction(ui.actionViewLineRendering);
+	renderingModeGroup->addAction(ui.actionViewSketchyRendering);
+
 	ui.actionViewWireframe->setChecked(true);
 	ui.actionViewShadow->setChecked(false);
-	ui.actionViewScopeCoordinateSystem->setChecked(false);
+	ui.actionViewRegularRendering->setChecked(true);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGARules, SIGNAL(triggered()), this, SLOT(onOpenCGARules()));
-	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewWireframe()));
-	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewLineRendering()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
+	connect(ui.actionViewRegularRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 	connect(ui.actionGenerateImages, SIGNAL(triggered()), this, SLOT(onGenerateImages()));
 	connect(ui.actionHoge, SIGNAL(triggered()), this, SLOT(onHoge()));
@@ -35,18 +44,21 @@ void MainWindow::onOpenCGARules() {
 	this->setWindowTitle("CGA Shape Grammar - " + new_filename);
 }
 
-void MainWindow::onViewWireframe() {
-	glWidget->showWireframe = ui.actionViewWireframe->isChecked();
-	glWidget->updateGL();
-}
-
-void MainWindow::onViewLineRendering() {
-	glWidget->renderingMode = GLWidget3D::RENDERING_MODE_LINE;
-	glWidget->updateGL();
-}
-
 void MainWindow::onViewShadow() {
 	glWidget->renderManager.useShadow = ui.actionViewShadow->isChecked();
+	glWidget->updateGL();
+}
+
+void MainWindow::onViewRendering() {
+	if (ui.actionViewRegularRendering->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_REGULAR;
+	} else if (ui.actionViewWireframe->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_WIREFRAME;
+	} else if (ui.actionViewLineRendering->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
+	} else {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_SKETCHY;
+	}
 	glWidget->updateGL();
 }
 

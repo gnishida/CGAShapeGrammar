@@ -35,9 +35,12 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionViewShadow"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewRegularRendering"/>
     <addaction name="actionViewWireframe"/>
     <addaction name="actionViewLineRendering"/>
-    <addaction name="actionViewShadow"/>
+    <addaction name="actionViewSketchyRendering"/>
     <addaction name="separator"/>
     <addaction name="actionViewRefresh"/>
    </widget>
@@ -113,6 +116,9 @@
    </property>
   </action>
   <action name="actionViewLineRendering">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Line Rendering</string>
    </property>
@@ -125,6 +131,22 @@
   <action name="actionHoge">
    <property name="text">
     <string>Hoge</string>
+   </property>
+  </action>
+  <action name="actionViewRegularRendering">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Regular Rendering</string>
+   </property>
+  </action>
+  <action name="actionViewSketchyRendering">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Sketchy Rendering</string>
    </property>
   </action>
  </widget>

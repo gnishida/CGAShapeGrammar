@@ -20,9 +20,8 @@ public:
 
 public slots:
 	void onOpenCGARules();
-	void onViewWireframe();
-	void onViewLineRendering();
 	void onViewShadow();
+	void onViewRendering();
 	void onViewRefresh();
 	void onGenerateImages();
 	void onHoge();

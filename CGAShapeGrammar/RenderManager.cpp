@@ -68,6 +68,11 @@ RenderManager::RenderManager() {
 
 void RenderManager::init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, bool useShadow, int shadowMapSize) {
 	this->useShadow = useShadow;
+	renderingMode = RENDERING_MODE_REGULAR;
+	depthSensitivity = 6000.0f;
+	normalSensitivity = 1.0f;
+	useThreshold = true;
+	threshold = 0.25f;
 
 	// init glew
 	GLenum err = glewInit();
@@ -90,6 +95,7 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	glGenTextures(1, &texId);
 
 	shadow.init(program, shadowMapSize, shadowMapSize);
+	rb.init(program, 4, 5, 100, 100);
 }
 
 void RenderManager::addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices) {
@@ -167,21 +173,37 @@ void RenderManager::centerObjects() {
 	}
 }
 
-void RenderManager::renderAll(bool wireframe) {
-	for (auto it = objects.begin(); it != objects.end(); ++it) {
-		render(it.key(), wireframe);
+void RenderManager::renderAll() {
+	if (renderingMode == RENDERING_MODE_REGULAR || renderingMode == RENDERING_MODE_WIREFRAME) {
+		glClearColor(0.443, 0.439, 0.458, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_TEXTURE_2D);
+
+		for (auto it = objects.begin(); it != objects.end(); ++it) {
+			render(it.key());
+		}
+	} else if (renderingMode == RENDERING_MODE_LINE || RENDERING_MODE_SKETCHY) {
+		rb.pass1();
+		for (auto it = objects.begin(); it != objects.end(); ++it) {
+			render(it.key());
+		}
+		rb.pass2();
+		for (auto it = objects.begin(); it != objects.end(); ++it) {
+			render(it.key());
+		}
 	}
 }
 
-void RenderManager::renderAllExcept(const QString& object_name, bool wireframe) {
+void RenderManager::renderAllExcept(const QString& object_name) {
 	for (auto it = objects.begin(); it != objects.end(); ++it) {
 		if (it.key() == object_name) continue;
 
-		render(it.key(), wireframe);
+		render(it.key());
 	}
 }
 
-void RenderManager::render(const QString& object_name, bool wireframe) {
+void RenderManager::render(const QString& object_name) {
 	for (auto it = objects[object_name].begin(); it != objects[object_name].end(); ++it) {
 		GLuint texId = it.key();
 		
@@ -197,17 +219,28 @@ void RenderManager::render(const QString& object_name, bool wireframe) {
 			glUniform1i(glGetUniformLocation(program, "textureEnabled"), 0);
 		}
 
-		if (wireframe) {
-			glUniform1i(glGetUniformLocation(program, "wireframeEnalbed"), 1);
-		} else {
-			glUniform1i(glGetUniformLocation(program, "wireframeEnalbed"), 0);
-		}
-
 		if (useShadow) {
 			glUniform1i(glGetUniformLocation(program, "useShadow"), 1);
 		} else {
 			glUniform1i(glGetUniformLocation(program, "useShadow"), 0);
 		}
+
+		if (renderingMode == RENDERING_MODE_REGULAR) {
+			glUniform1i(glGetUniformLocation(program, "renderingMode"), 1);
+		} else if (renderingMode == RENDERING_MODE_WIREFRAME) {
+			glUniform1i(glGetUniformLocation(program, "renderingMode"), 2);
+		} else {
+			if (renderingMode == RENDERING_MODE_LINE) {
+				glUniform1i(glGetUniformLocation(program, "renderingMode"), 3);
+			} else {
+				glUniform1i(glGetUniformLocation(program, "renderingMode"), 4);
+			}
+			glUniform1f(glGetUniformLocation(program, "depthSensitivity"), depthSensitivity);
+			glUniform1f(glGetUniformLocation(program, "normalSensitivity"), normalSensitivity);
+			glUniform1i(glGetUniformLocation(program, "useThreshold"), useThreshold ? 1 : 0);
+			glUniform1f(glGetUniformLocation(program, "threshold"), threshold);
+		}
+
 
 		// 描画
 		glBindVertexArray(it->vao);
@@ -221,6 +254,10 @@ void RenderManager::updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& lig
 	if (useShadow) {
 		shadow.update(glWidget3D, light_dir, light_mvpMatrix);
 	}
+}
+
+void RenderManager::resize(int width, int height) {
+	rb.update(width, height);
 }
 
 GLuint RenderManager::loadTexture(const QString& filename) {

@@ -54,14 +54,6 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  */
 void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", false);
-	rb.init(renderManager.program, 4, 5, width(), height());
-
-	renderingMode = RENDERING_MODE_REGULAR;
-	showWireframe = true;
-	depthSensitivity = 6000.0f;
-	normalSensitivity = 1.0f;
-	useThreshold = true;
-	threshold = 0.25f;
 
 	// set the clear color for the screen
 	qglClearColor(QColor(113, 112, 117));
@@ -83,7 +75,8 @@ void GLWidget3D::resizeGL(int width, int height) {
 	glViewport(0, 0, width, height);
 	camera.updatePMatrix(width, height);
 
-	rb.update(width, height);
+	//rb.update(width, height);
+	renderManager.resize(width, height);
 }
 
 /**
@@ -102,14 +95,7 @@ void GLWidget3D::paintGL() {
 	//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 	glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-	if (renderingMode == RENDERING_MODE_REGULAR) {
-		drawScene(0);	
-	} else {
-		rb.pass1();
-		drawScene(0);
-		rb.pass2();
-		drawScene(0);
-	}
+	drawScene(0);
 }
 
 /**
@@ -122,17 +108,7 @@ void GLWidget3D::drawScene(int drawMode) {
 		glUniform1i(glGetUniformLocation(renderManager.program, "depthComputation"), 1);
 	}
 
-	if (renderingMode == RENDERING_MODE_REGULAR) {
-		glUniform1i(glGetUniformLocation(renderManager.program, "lineRendering"), 0);
-	} else {
-		glUniform1i(glGetUniformLocation(renderManager.program, "lineRendering"), 1);
-		glUniform1f(glGetUniformLocation(renderManager.program, "depthSensitivity"), depthSensitivity);
-		glUniform1f(glGetUniformLocation(renderManager.program, "normalSensitivity"), normalSensitivity);
-		glUniform1i(glGetUniformLocation(renderManager.program, "useThreshold"), useThreshold ? 1 : 0);
-		glUniform1f(glGetUniformLocation(renderManager.program, "threshold"), threshold);
-	}
-
-	renderManager.renderAll(showWireframe);
+	renderManager.renderAll();
 }
 
 void GLWidget3D::loadCGA(char* filename) {
@@ -195,7 +171,7 @@ void GLWidget3D::generateImages() {
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
-	renderingMode = RENDERING_MODE_LINE;
+	renderManager.renderingMode = RENDERING_MODE_LINE;
 
 	camera.xrot = 90.0f;
 	camera.yrot = 0.0f;
@@ -244,9 +220,6 @@ void GLWidget3D::generateImages() {
 				//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 				glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-				rb.pass1();
-				drawScene(0);
-				rb.pass2();
 				drawScene(0);
 
 				if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());

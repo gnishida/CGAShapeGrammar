@@ -104,14 +104,12 @@ void SketchyRenderingBuffer::pass1() {
 }
 
 void SketchyRenderingBuffer::pass2() {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	glUniform1i(glGetUniformLocation(programId, "pass"), 2);
 	glUniform1i(glGetUniformLocation(programId, "screenWidth"), width);
 	glUniform1i(glGetUniformLocation(programId, "screenHeight"), height);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//glClearColor(0.443, 0.439, 0.458, 0.0);
 	glClearColor(1, 1, 1, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClear(GL_DEPTH_BUFFER_BIT);
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
