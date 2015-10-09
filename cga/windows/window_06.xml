@@ -92,6 +92,6 @@
 		</split>
 	</rule>
 	<rule name="WindowShutterCell">
-		<extrude height="-window_shutter_depth * 0.2"/>
+		<extrude height="-window_shutter_depth * 0.5"/>
 	</rule>
 </rules>

@@ -106,34 +106,27 @@ void wireframeRendering() {
 	outputF.w = opacity;
 }
 
-void lineRendering(float wiggle_factor) {
+void lineRendering() {
 	float normal_diff = 0;
 	float depth_diff = 0;
 	int range = 1;
 
-	float beta = 80;
-	float gamma = 0.0;
-	vec2 p = vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight);
-	vec2 p2;
-	p2.x = wiggle_factor * sin(beta * p.y + gamma);
-	p2.y = wiggle_factor * sin(beta * p.x + gamma);
-
 	// difference in normal between this pixel and the neighbor pixels
-	vec3 n = texture(normalMap, vec2((gl_FragCoord.x + p2.x) / screenWidth, (gl_FragCoord.y + p2.y) / screenHeight)).xyz;
-	float d = texture(depthMap, vec2((gl_FragCoord.x + p2.x) / screenWidth, (gl_FragCoord.y + p2.y) / screenHeight)).x;
+	vec3 n = texture(normalMap, vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight)).xyz;
+	float d = texture(depthMap, vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight)).x;
 
 	for (int xx = -range; xx <= range; ++xx) {
 		for (int yy = -range; yy <= range; ++yy) {
 			if (xx == 0 && yy == 0) continue;
 
-			vec3 nn = texture(normalMap, vec2((gl_FragCoord.x+p2.x+xx) / screenWidth, (gl_FragCoord.y+p2.y+yy) / screenHeight)).xyz;
+			vec3 nn = texture(normalMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).xyz;
 			if (nn.x == 0 && nn.y == 0 && nn.z == 0) {
 				normal_diff = normalSensitivity;
 			} else {
 				normal_diff = max(normal_diff, length(nn - n) * normalSensitivity);
 			}
 
-			float dd = texture(depthMap, vec2((gl_FragCoord.x+p2.x+xx) / screenWidth, (gl_FragCoord.y+p2.y+yy) / screenHeight)).x;
+			float dd = texture(depthMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).x;
 			depth_diff = max(depth_diff, abs(dd - d) * depthSensitivity);
 		}
 	}
@@ -150,6 +143,58 @@ void lineRendering(float wiggle_factor) {
 	outputF = vec4(1 - diff, 1 - diff, 1 - diff, 1);
 }
 
+// return random value in [-1, 1]
+float random(vec3 position, float scale, int cycle_size) {
+	return float(int((position.x + position.y + position.z) * scale) % (cycle_size * 2 + 1) - cycle_size) / float(cycle_size);
+}
+
+void sketchyRendering() {
+	float diff = 0;
+	int range = 1;
+
+	int num_iterations = 3;
+	float scale_x[3] = float[](1.53, 3.17, 2.37);
+	float scale_y[3] = float[](1.71, 2.57, 2.97);
+	float scale_z[3] = float[](1.43, 2.17, 2.77);
+	int cycle_size[3] = int[](273, 193, 311);
+	
+	float jitter_size = 1.3;
+
+	for (int iter = 0; iter < num_iterations; ++iter) {
+		float sx = gl_FragCoord.x + random(gl_FragCoord.xyz + fPosition * 30, scale_x[iter], cycle_size[iter]) * jitter_size;
+		float sy = gl_FragCoord.y + random(gl_FragCoord.xyz + fPosition * 30, scale_y[iter], cycle_size[iter]) * jitter_size;
+		float sz = gl_FragCoord.z + random(gl_FragCoord.xyz + fPosition * 30, scale_z[iter], cycle_size[iter]) * jitter_size;
+
+		// difference in normal between this pixel and the neighbor pixels
+		vec3 n = texture(normalMap, vec2(sx / screenWidth, sy / screenHeight)).xyz;
+		float d = texture(depthMap, vec2(sx / screenWidth, sy / screenHeight)).x;
+
+		for (int xx = -range; xx <= range; ++xx) {
+			for (int yy = -range; yy <= range; ++yy) {
+				if (xx == 0 && yy == 0) continue;
+
+				vec3 nn = texture(normalMap, vec2((sx+xx) / screenWidth, (sy+yy) / screenHeight)).xyz;
+				if (nn.x == 0 && nn.y == 0 && nn.z == 0) {
+					diff = normalSensitivity;
+				} else {
+					diff = max(diff, length(nn - n) * normalSensitivity);
+				}
+
+				float dd = texture(depthMap, vec2((sx+xx) / screenWidth, (sy+yy) / screenHeight)).x;
+				diff = max(diff, abs(dd - d) * depthSensitivity);
+			}
+		}
+	}
+
+	diff = min(1, diff);
+	if (diff < threshold) {
+		diff = 0;
+	} else {
+		diff = 1;
+	}
+	outputF = vec4(1 - diff, 1 - diff, 1 - diff, 1);
+}
+
 void main() {
 	if (pass == 1) {
 		outputF = vec4((fNormal + 1) * 0.5, 1);
@@ -159,9 +204,9 @@ void main() {
 		} else if (renderingMode == 2) {
 			wireframeRendering();
 		} else if (renderingMode == 3) {
-			lineRendering(0);
+			lineRendering();
 		} else if (renderingMode == 4) {
-			lineRendering(1);
+			sketchyRendering();
 		}
 	}
 }
