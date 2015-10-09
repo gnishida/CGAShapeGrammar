@@ -152,13 +152,13 @@ void sketchyRendering() {
 	float diff = 0;
 	int range = 1;
 
-	int num_iterations = 3;
+	int num_iterations = 2;
 	float scale_x[3] = float[](1.53, 3.17, 2.37);
 	float scale_y[3] = float[](1.71, 2.57, 2.97);
 	float scale_z[3] = float[](1.43, 2.17, 2.77);
 	int cycle_size[3] = int[](273, 193, 311);
 	
-	float jitter_size = 1.3;
+	float jitter_size = 2.3;
 
 	for (int iter = 0; iter < num_iterations; ++iter) {
 		float sx = gl_FragCoord.x + random(gl_FragCoord.xyz + fPosition * 30, scale_x[iter], cycle_size[iter]) * jitter_size;

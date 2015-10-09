@@ -171,12 +171,13 @@ void GLWidget3D::generateImages() {
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
-	renderManager.renderingMode = RENDERING_MODE_LINE;
+	renderManager.renderingMode = RenderManager::RENDERING_MODE_SKETCHY;
 
 	camera.xrot = 90.0f;
 	camera.yrot = 0.0f;
 	camera.zrot = 0.0f;
-	camera.pos = glm::vec3(0, 0, 1.5f);
+	camera.pos = glm::vec3(0, 0, 2.5f);
+	camera.updateMVPMatrix();
 
 	int origWidth = width();
 	int origHeight = height();
@@ -193,6 +194,7 @@ void GLWidget3D::generateImages() {
 			for (float object_height = 1.0f; object_height <= 2.0f; object_height += 0.2f) {
 				renderManager.removeObjects();
 
+				// generate a window
 				cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
 				system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 
@@ -208,6 +210,12 @@ void GLWidget3D::generateImages() {
 					std::cout << "ERROR:" << std::endl << ex << std::endl;
 				}
 
+				// put a background plane
+				std::vector<Vertex> vertices;
+				glutils::drawQuad(100, 100, glm::vec4(1, 1, 1, 1), glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, -10)), vertices);
+				renderManager.addObject("background", "", vertices);
+
+				// render a window
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glEnable(GL_DEPTH_TEST);
 				glDisable(GL_TEXTURE_2D);
@@ -224,8 +232,16 @@ void GLWidget3D::generateImages() {
 
 				if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
 
-				QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.jpg").arg(count, 3, 10, QChar('0'));
-				grabFrameBuffer().save(filename);
+				QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 3, 10, QChar('0'));
+				QImage image = grabFrameBuffer();
+
+				/*
+				QRect rect((width() - height()) * 0.5, 0, height(), height());
+				image = image.copy(rect);
+				image = image.scaled(256, 256, Qt::KeepAspectRatio);
+				*/
+				
+				image.save(filename);
 
 				count++;
 			}
