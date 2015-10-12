@@ -169,6 +169,7 @@ void GLWidget3D::loadCGA(char* filename) {
 
 void GLWidget3D::generateImages() {
 	QDir dir("..\\cga\\windows\\");
+	//QDir dir("..\\cga\\windows_low_LOD\\");
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
@@ -194,7 +195,7 @@ void GLWidget3D::generateImages() {
 
 		for (float object_width = 1.0f; object_width <= 3.2f; object_width += 0.2f) {
 			for (float object_height = 1.0f; object_height <= 2.0f; object_height += 0.2f) {
-				for (int k = 0; k < 20; ++k) {
+				for (int k = 0; k < 20; ++k) { // 20 images (parameter values are randomly selected) for each width and height
 					renderManager.removeObjects();
 
 					// generate a window
@@ -204,7 +205,7 @@ void GLWidget3D::generateImages() {
 					try {
 						cga::Grammar grammar;
 						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
-						//system.randomParamValues(grammar);
+						system.randomParamValues(grammar);
 						system.derive(grammar, true);
 						system.generateGeometry(&renderManager);
 						renderManager.centerObjects();
