@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rule.h"
+#include "Grammar.h"
 #include <map>
 
 namespace cga {
@@ -11,7 +11,7 @@ private:
 
 public:
 	CompOperator(const std::map<std::string, std::string>& name_map);
-	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack);
+	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack);
 };
 
 }

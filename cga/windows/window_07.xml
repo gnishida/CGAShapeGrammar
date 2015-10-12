@@ -5,13 +5,13 @@
 	<attr name="window_cornice_height" value="0.1"/>
 	<attr name="window_cornice_depth" value="0.05"/>
 	
-	<attr name="window_single_width" value="0.5"/>
+	<attr name="window_single_width" value="0.5" range="0.4,0.7"/>
 	<attr name="window_single_height" value="0.4"/>
 	<attr name="window_border" value="0.02"/>
 	<attr name="window_depth" value="0.08"/>
 	
 	<attr name="window_shutter_ratio" value="0.25"/>
-	<attr name="window_shutter_cell_height" value="0.08"/>
+	<attr name="window_shutter_cell_height" value="0.1" range="0.08,0.2"/>
 	<attr name="window_shutter_border" value="0.05"/>
 	<attr name="window_shutter_depth" value="0.05"/>
 	

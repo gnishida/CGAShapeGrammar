@@ -9,8 +9,8 @@ ExtrudeOperator::ExtrudeOperator(const std::string& height) {
 	this->height = height;
 }
 
-boost::shared_ptr<Shape> ExtrudeOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
-	float actual_height = ruleSet.evalFloat(height, shape);
+boost::shared_ptr<Shape> ExtrudeOperator::apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack) {
+	float actual_height = grammar.evalFloat(height, shape);
 
 	return shape->extrude(shape->_name, actual_height);
 }

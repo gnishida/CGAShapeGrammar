@@ -11,27 +11,27 @@ SizeOperator::SizeOperator(const Value& xSize, const Value& ySize, const Value& 
 	this->zSize = zSize;
 }
 
-boost::shared_ptr<Shape> SizeOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+boost::shared_ptr<Shape> SizeOperator::apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_xSize;
 	float actual_ySize;
 	float actual_zSize;
 
 	if (xSize.type == Value::TYPE_RELATIVE) {
-		actual_xSize = shape->_scope.x * ruleSet.evalFloat(xSize.value, shape);
+		actual_xSize = shape->_scope.x * grammar.evalFloat(xSize.value, shape);
 	} else {
-		actual_xSize = ruleSet.evalFloat(xSize.value, shape);
+		actual_xSize = grammar.evalFloat(xSize.value, shape);
 	}
 
 	if (ySize.type == Value::TYPE_RELATIVE) {
-		actual_ySize = shape->_scope.y * ruleSet.evalFloat(ySize.value, shape);
+		actual_ySize = shape->_scope.y * grammar.evalFloat(ySize.value, shape);
 	} else {
-		actual_ySize = ruleSet.evalFloat(ySize.value, shape);
+		actual_ySize = grammar.evalFloat(ySize.value, shape);
 	}
 
 	if (zSize.type == Value::TYPE_RELATIVE) {
-		actual_zSize = shape->_scope.z * ruleSet.evalFloat(zSize.value, shape);
+		actual_zSize = shape->_scope.z * grammar.evalFloat(zSize.value, shape);
 	} else {
-		actual_zSize = ruleSet.evalFloat(zSize.value, shape);
+		actual_zSize = grammar.evalFloat(zSize.value, shape);
 	}
 
 	shape->size(actual_xSize, actual_ySize, actual_zSize);

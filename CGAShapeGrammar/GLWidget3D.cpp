@@ -3,7 +3,7 @@
 #include "OBJLoader.h"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
-#include "RuleParser.h"
+#include "GrammarParser.h"
 #include <map>
 #include "Rectangle.h"
 #include "Polygon.h"
@@ -151,9 +151,10 @@ void GLWidget3D::loadCGA(char* filename) {
 	}*/
 
 	try {
-		cga::RuleSet ruleSet;
-		cga::parseRule(filename, ruleSet);
-		system.generate(ruleSet);
+		cga::Grammar grammar;
+		cga::parseGrammar(filename, grammar);
+		system.randomParamValues(grammar);
+		system.derive(grammar);
 		system.generateGeometry(&renderManager);
 	} catch (const std::string& ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
@@ -171,6 +172,7 @@ void GLWidget3D::generateImages() {
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
+	srand(0);
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_SKETCHY;
 
 	camera.xrot = 90.0f;
@@ -192,58 +194,56 @@ void GLWidget3D::generateImages() {
 
 		for (float object_width = 1.0f; object_width <= 3.2f; object_width += 0.2f) {
 			for (float object_height = 1.0f; object_height <= 2.0f; object_height += 0.2f) {
-				renderManager.removeObjects();
+				for (int k = 0; k < 20; ++k) {
+					renderManager.removeObjects();
 
-				// generate a window
-				cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
-				system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+					// generate a window
+					cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+					system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 
-				try {
-					cga::RuleSet ruleSet;
-					cga::parseRule(fileInfoList[i].absoluteFilePath().toUtf8().constData(), ruleSet);
-					system.generate(ruleSet);
-					system.generateGeometry(&renderManager);
-					renderManager.centerObjects();
-				} catch (const std::string& ex) {
-					std::cout << "ERROR:" << std::endl << ex << std::endl;
-				} catch (const char* ex) {
-					std::cout << "ERROR:" << std::endl << ex << std::endl;
-				}
+					try {
+						cga::Grammar grammar;
+						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+						//system.randomParamValues(grammar);
+						system.derive(grammar, true);
+						system.generateGeometry(&renderManager);
+						renderManager.centerObjects();
+					} catch (const std::string& ex) {
+						std::cout << "ERROR:" << std::endl << ex << std::endl;
+					} catch (const char* ex) {
+						std::cout << "ERROR:" << std::endl << ex << std::endl;
+					}
 
-				// put a background plane
-				std::vector<Vertex> vertices;
-				glutils::drawQuad(100, 100, glm::vec4(1, 1, 1, 1), glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, -10)), vertices);
-				renderManager.addObject("background", "", vertices);
+					// put a background plane
+					std::vector<Vertex> vertices;
+					glutils::drawQuad(100, 100, glm::vec4(1, 1, 1, 1), glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, -10)), vertices);
+					renderManager.addObject("background", "", vertices);
 
-				// render a window
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-				glEnable(GL_DEPTH_TEST);
-				glDisable(GL_TEXTURE_2D);
+					// render a window
+					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+					glEnable(GL_DEPTH_TEST);
+					glDisable(GL_TEXTURE_2D);
 
-				// Model view projection行列をシェーダに渡す
-				glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
-				glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
+					// Model view projection行列をシェーダに渡す
+					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
+					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
 
-				// pass the light direction to the shader
-				//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
-				glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+					// pass the light direction to the shader
+					//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+					glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-				drawScene(0);
+					drawScene(0);
 
-				if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+					if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
 
-				QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 3, 10, QChar('0'));
-				QImage image = grabFrameBuffer();
+					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
+					QImage image = grabFrameBuffer();
+					//image.invertPixels();
+			
+					image.save(filename);
 
-				/*
-				QRect rect((width() - height()) * 0.5, 0, height(), height());
-				image = image.copy(rect);
-				image = image.scaled(256, 256, Qt::KeepAspectRatio);
-				*/
-				
-				image.save(filename);
-
-				count++;
+					count++;
+				}
 			}
 		}
 	}

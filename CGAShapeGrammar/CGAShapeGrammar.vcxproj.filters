@@ -65,12 +65,6 @@
     <ClCompile Include="GLWidget3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rule.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
-    <ClCompile Include="RuleParser.cpp">
-      <Filter>Source Files\rule</Filter>
-    </ClCompile>
     <ClCompile Include="CGA.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
@@ -197,6 +191,12 @@
     <ClCompile Include="SketchyRenderingBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grammar.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="GrammarParser.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -218,12 +218,6 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RuleParser.h">
-      <Filter>Source Files\rule</Filter>
-    </ClInclude>
-    <ClInclude Include="Rule.h">
-      <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>Source Files\shape</Filter>
@@ -353,6 +347,12 @@
     </ClInclude>
     <ClInclude Include="SketchyRenderingBuffer.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grammar.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="GrammarParser.h">
+      <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

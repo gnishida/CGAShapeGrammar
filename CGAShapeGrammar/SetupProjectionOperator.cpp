@@ -11,19 +11,19 @@ SetupProjectionOperator::SetupProjectionOperator(int axesSelector, const Value& 
 	this->texHeight = texHeight;
 }
 
-boost::shared_ptr<Shape> SetupProjectionOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+boost::shared_ptr<Shape> SetupProjectionOperator::apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_texWidth;
 	float actual_texHeight;
 
 	if (texWidth.type == Value::TYPE_RELATIVE) {
-		actual_texWidth = shape->_scope.x * ruleSet.evalFloat(texWidth.value, shape);
+		actual_texWidth = shape->_scope.x * grammar.evalFloat(texWidth.value, shape);
 	} else {
-		actual_texWidth = ruleSet.evalFloat(texWidth.value, shape);
+		actual_texWidth = grammar.evalFloat(texWidth.value, shape);
 	}
 	if (texHeight.type == Value::TYPE_RELATIVE) {
-		actual_texHeight = shape->_scope.x * ruleSet.evalFloat(texHeight.value, shape);
+		actual_texHeight = shape->_scope.x * grammar.evalFloat(texHeight.value, shape);
 	} else {
-		actual_texHeight = ruleSet.evalFloat(texHeight.value, shape);
+		actual_texHeight = grammar.evalFloat(texHeight.value, shape);
 	}
 
 

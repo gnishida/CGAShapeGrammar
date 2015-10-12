@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include "Vertex.h"
-#include "Rule.h"
+#include "Grammar.h"
 #include "Shape.h"
 
 namespace cga {
@@ -29,7 +29,8 @@ public:
 public:
 	CGA();
 
-	void generate(const RuleSet& ruleSet);
+	void randomParamValues(Grammar& grammar);
+	void derive(const Grammar& grammar, bool suppressWarning = false);
 	void generateGeometry(RenderManager* renderManager);
 };
 

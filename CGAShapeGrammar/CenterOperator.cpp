@@ -9,7 +9,7 @@ CenterOperator::CenterOperator(int axesSelector) {
 	this->axesSelector = axesSelector;
 }
 
-boost::shared_ptr<Shape> CenterOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+boost::shared_ptr<Shape> CenterOperator::apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack) {
 	shape->center(axesSelector);
 
 	return shape;

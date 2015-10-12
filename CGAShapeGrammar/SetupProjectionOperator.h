@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rule.h"
+#include "Grammar.h"
 
 namespace cga {
 
@@ -12,7 +12,7 @@ private:
 
 public:
 	SetupProjectionOperator(int axesSelector, const Value& texWidth, const Value& texHeight);
-	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack);
+	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack);
 };
 
 }

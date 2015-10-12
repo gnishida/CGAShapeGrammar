@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rule.h"
+#include "Grammar.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace cga {
@@ -15,7 +15,7 @@ private:
 
 public:
 	TranslateOperator(int mode, int coordSystem, const Value& x, const Value& y, const Value& z);
-	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack);
+	boost::shared_ptr<Shape> apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack);
 };
 
 }

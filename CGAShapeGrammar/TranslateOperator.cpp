@@ -13,27 +13,27 @@ TranslateOperator::TranslateOperator(int mode, int coordSystem, const Value& x, 
 	this->z = z;
 }
 
-boost::shared_ptr<Shape> TranslateOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+boost::shared_ptr<Shape> TranslateOperator::apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack) {
 	float actual_x;
 	float actual_y;
 	float actual_z;
 
 	if (x.type == Value::TYPE_RELATIVE) {
-		actual_x = shape->_scope.x * ruleSet.evalFloat(x.value, shape);
+		actual_x = shape->_scope.x * grammar.evalFloat(x.value, shape);
 	} else {
-		actual_x = ruleSet.evalFloat(x.value, shape);
+		actual_x = grammar.evalFloat(x.value, shape);
 	}
 
 	if (y.type == Value::TYPE_RELATIVE) {
-		actual_y = shape->_scope.y * ruleSet.evalFloat(y.value, shape);
+		actual_y = shape->_scope.y * grammar.evalFloat(y.value, shape);
 	} else {
-		actual_y = ruleSet.evalFloat(y.value, shape);
+		actual_y = grammar.evalFloat(y.value, shape);
 	}
 
 	if (z.type == Value::TYPE_RELATIVE) {
-		actual_z = shape->_scope.z * ruleSet.evalFloat(z.value, shape);
+		actual_z = shape->_scope.z * grammar.evalFloat(z.value, shape);
 	} else {
-		actual_z = ruleSet.evalFloat(z.value, shape);
+		actual_z = grammar.evalFloat(z.value, shape);
 	}
 
 	shape->translate(mode, coordSystem, actual_x, actual_y, actual_z);

@@ -21,13 +21,13 @@ ColorOperator::ColorOperator(const std::string& s) {
 	this->s = s;
 }
 
-boost::shared_ptr<Shape> ColorOperator::apply(boost::shared_ptr<Shape>& shape, const RuleSet& ruleSet, std::list<boost::shared_ptr<Shape> >& stack) {
+boost::shared_ptr<Shape> ColorOperator::apply(boost::shared_ptr<Shape>& shape, const Grammar& grammar, std::list<boost::shared_ptr<Shape> >& stack) {
 	if (s.empty()) {
-		shape->_color.r = ruleSet.evalFloat(r, shape);
-		shape->_color.g = ruleSet.evalFloat(g, shape);
-		shape->_color.b = ruleSet.evalFloat(b, shape);
+		shape->_color.r = grammar.evalFloat(r, shape);
+		shape->_color.g = grammar.evalFloat(g, shape);
+		shape->_color.b = grammar.evalFloat(b, shape);
 	} else {
-		decodeRGB(ruleSet.evalString(s, shape), shape->_color.r, shape->_color.g, shape->_color.b);
+		decodeRGB(grammar.evalString(s, shape), shape->_color.r, shape->_color.g, shape->_color.b);
 	}
 
 	return shape;
