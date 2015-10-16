@@ -9,6 +9,8 @@
 #include "Polygon.h"
 #include "GLUtils.h"
 #include <QDir>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット
@@ -167,9 +169,10 @@ void GLWidget3D::loadCGA(char* filename) {
 	updateGL();
 }
 
-void GLWidget3D::generateImages() {
+void GLWidget3D::generateImages(bool invertImage, bool blur) {
+	//QDir dir("..\\cga\\windows\\");
 	QDir dir("..\\cga\\windows\\");
-	//QDir dir("..\\cga\\windows_low_LOD\\");
+	QDir dir2("..\\cga\\windows_low_LOD\\");
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
@@ -193,9 +196,9 @@ void GLWidget3D::generateImages() {
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
 
-		for (float object_width = 1.0f; object_width <= 3.2f; object_width += 0.2f) {
-			for (float object_height = 1.0f; object_height <= 2.0f; object_height += 0.2f) {
-				for (int k = 0; k < 20; ++k) { // 20 images (parameter values are randomly selected) for each width and height
+		for (float object_width = 1.0f; object_width <= 2.6f; object_width += 0.05f) {
+			for (float object_height = 1.0f; object_height <= 1.8f; object_height += 0.05f) {
+				for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height
 					renderManager.removeObjects();
 
 					// generate a window
@@ -225,6 +228,8 @@ void GLWidget3D::generateImages() {
 					glEnable(GL_DEPTH_TEST);
 					glDisable(GL_TEXTURE_2D);
 
+					glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+
 					// Model view projection行列をシェーダに渡す
 					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
 					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
@@ -239,7 +244,15 @@ void GLWidget3D::generateImages() {
 
 					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
 					QImage image = grabFrameBuffer();
-					//image.invertPixels();
+
+					if (invertImage) {
+						image.invertPixels();
+					}
+
+					if (blur) {
+						cv::Mat mat(image.height(), image.width(), CV_8UC4, image.bits(), image.bytesPerLine());
+						cv::GaussianBlur(mat, mat, cv::Size(7, 7), 0, 0);
+					}
 			
 					image.save(filename);
 

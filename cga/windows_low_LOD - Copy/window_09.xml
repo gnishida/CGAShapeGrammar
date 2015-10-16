@@ -2,20 +2,20 @@
 <rules>
 	<attr name="window_sill_height" value="0.1"/>
 	<attr name="window_sill_depth" value="0.15"/>
-	<attr name="window_cornice_height" value="0.004"/>
+	<attr name="window_cornice_height" value="0.1"/>
 	<attr name="window_cornice_depth" value="0.05"/>
 	
 	<attr name="window_margin" value="0.05"/>
-	<attr name="window_single_width" value="0.3" range="0.3,0.4"/>
+	<attr name="window_single_width" value="0.3" range="0.3,0.6"/>
 	<attr name="window_single_height" value="0.3"/>
-	<attr name="window_border" value="0.004"/>
+	<attr name="window_border" value="0.02"/>
 	<attr name="window_depth" value="0.08"/>
-	<attr name="window_circle_radius" value="0.3" range="0.25,0.4"/>
+	<attr name="window_circle_radius" value="0.3" range="0.2,0.5"/>
 	
 	<rule name="Start">
 		<split splitAxis="y">
-			<param type="absolute" value="window_sill_height" name="NIL"/>
 			<param type="floating" value="1" name="WindowMain"/>
+			<param type="absolute" value="window_circle_radius" name="WindowUpper"/>
 		</split>
 	</rule>
 	
@@ -25,21 +25,9 @@
 	
 	<rule name="WindowMain">
 		<split splitAxis="x">
-			<param type="relative" value="0.5" name="WindowMainHalf"/>
-			<param type="relative" value="0.5" name="WindowMainHalf"/>
-		</split>
-	</rule>
-	
-	<rule name="WindowMainHalf">
-		<split splitAxis="y">
-			<param type="floating" value="window_single_height" name="WindowColumnMain" repeat="true"/>
-			<param type="absolute" value="window_circle_radius" name="WindowUpper"/>
-		</split>
-	</rule>
-
-	<rule name="WindowColumnMain">
-		<split splitAxis="x">
+			<param type="absolute" value="window_margin" name="NIL"/>
 			<param type="floating" value="window_single_width" name="WindowSingleColumn" repeat="true"/>
+			<param type="absolute" value="window_margin" name="NIL"/>
 		</split>
 	</rule>
 

@@ -6,17 +6,14 @@
 	<attr name="window_cornice_depth" value="0.05"/>
 	
 	<attr name="window_margin" value="0.05"/>
-	<attr name="window_central_ratio" value="0.45" range="0.44,0.48"/>
-	<attr name="window_single_width" value="0.5" range="0.45,0.55"/>
-	<attr name="window_single_height" value="0.5"/>
-	<attr name="window_border" value="0.004"/>
+	<attr name="window_single_width" value="0.5" range="0.4,0.7"/>
+	<attr name="window_single_height" value="0.4"/>
+	<attr name="window_border" value="0.02"/>
 	<attr name="window_depth" value="0.08"/>
 	
 	<rule name="Start">
 		<split splitAxis="y">
-			<param type="absolute" value="window_sill_height" name="NIL"/>
 			<param type="floating" value="1" name="WindowMain"/>
-			<param type="absolute" value="window_cornice_height" name="NIL"/>
 		</split>
 	</rule>
 	
@@ -31,30 +28,22 @@
 	<rule name="WindowMain">
 		<split splitAxis="x">
 			<param type="absolute" value="window_margin" name="NIL"/>
-			<param type="floating" value="1" name="WindowSide"/>
-			<param type="relative" value="window_central_ratio" name="WindowCentral"/>
-			<param type="floating" value="1" name="WindowSide"/>
+			<param type="floating" value="window_single_width * 2" name="WindowDoubleColumn" repeat="true"/>
 			<param type="absolute" value="window_margin" name="NIL"/>
 		</split>
 	</rule>
-
-	<rule name="WindowCentral">
-		<split splitAxis="x">
-			<param type="absolute" value="window_border" name="WindowBorder"/>
-			<param type="floating" value="1" name="WindowSingleMainColumn"/>
-			<param type="absolute" value="window_border" name="WindowBorder"/>
+	
+	<rule name="WindowDoubleColumn">
+		<split splitAxis="y">
+			<param type="relative" value="0.5" name="WindowSingle"/>
+			<param type="relative" value="0.5" name="WindowDoubleRow"/>
 		</split>
 	</rule>
 	
-	<rule name="WindowSide">
+	<rule name="WindowDoubleRow">
 		<split splitAxis="x">
-			<param type="floating" value="window_single_width" name="WindowSingleColumn" repeat="true"/>
-		</split>
-	</rule>
-
-	<rule name="WindowSingleColumn">
-		<split splitAxis="y">
-			<param type="floating" value="window_single_height" name="WindowSingle" repeat="true"/>
+			<param type="relative" value="0.5" name="WindowSingle"/>
+			<param type="relative" value="0.5" name="WindowSingle"/>
 		</split>
 	</rule>
 	
@@ -77,5 +66,4 @@
 	<rule name="WindowSingleMain">
 		<extrude height="-window_depth"/>
 	</rule>
-	-->
 </rules>

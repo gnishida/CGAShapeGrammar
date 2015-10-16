@@ -32,6 +32,7 @@ uniform float depthSensitivity;
 uniform float normalSensitivity;
 uniform int useThreshold;	// 1 -- use threshold / 0 -- otherwise
 uniform float threshold;
+uniform int seed;
 
 float shadowCoef(){
 	vec4 shadow_coord2 = light_mvpMatrix * vec4(fPosition, 1.0);
@@ -145,7 +146,7 @@ void lineRendering() {
 
 // return random value in [-1, 1]
 float random(vec3 position, float scale, int cycle_size) {
-	return float(int((position.x + position.y + position.z) * scale) % (cycle_size * 2 + 1) - cycle_size) / float(cycle_size);
+	return float(int((position.x + position.y + position.z + seed) * scale) % (cycle_size * 2 + 1) - cycle_size) / float(cycle_size);
 }
 
 void sketchyRendering() {
