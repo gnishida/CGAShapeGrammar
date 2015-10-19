@@ -6,13 +6,15 @@
 	<attr name="window_cornice_depth" value="0.05"/>
 	
 	<attr name="window_margin" value="0.05"/>
-	<attr name="window_single_width" value="0.5" range="0.4,0.7"/>
-	<attr name="window_border" value="0.02"/>
+	<attr name="window_single_width" value="0.5" range="0.45,0.55"/>
+	<attr name="window_border" value="0.004"/>
 	<attr name="window_depth" value="0.08"/>
 	
 	<rule name="Start">
 		<split splitAxis="y">
+			<param type="absolute" value="window_sill_height" name="NIL"/>
 			<param type="floating" value="1" name="WindowMain"/>
+			<param type="absolute" value="window_cornice_height" name="NIL"/>
 		</split>
 	</rule>
 	

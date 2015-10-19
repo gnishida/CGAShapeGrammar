@@ -5,13 +5,14 @@
 	<attr name="window_cornice_height" value="0.1"/>
 	<attr name="window_cornice_depth" value="0.05"/>
 	
-	<attr name="window_single_width" value="0.5" range="0.4,0.7"/>
-	<attr name="window_border" value="0.02"/>
+	<attr name="window_single_width" value="0.5" range="0.45,0.55"/>
+	<attr name="window_single_height" value="0.4"/>
+	<attr name="window_border" value="0.004"/>
 	<attr name="window_depth" value="0.08"/>
 	
 	<attr name="window_shutter_ratio" value="0.25"/>
-	<attr name="window_shutter_cell_height" value="0.4"/>
-	<attr name="window_shutter_border" value="0.05"/>
+	<attr name="window_shutter_cell_height" value="0.1"/>
+	<attr name="window_shutter_border" value="0.001"/>
 	<attr name="window_shutter_depth" value="0.05"/>
 	
 	<rule name="Start">
@@ -24,7 +25,9 @@
 	
 	<rule name="WindowBody">
 		<split splitAxis="y">
+			<param type="absolute" value="window_sill_height" name="NIL"/>
 			<param type="floating" value="1" name="WindowMain"/>
+			<param type="absolute" value="window_cornice_height" name="NIL"/>
 		</split>
 	</rule>
 	
@@ -38,12 +41,34 @@
 	
 	<rule name="WindowMain">
 		<split splitAxis="x">
-			<param type="floating" value="window_single_width" name="WindowSingle" repeat="true"/>
+			<param type="floating" value="window_single_width * 2" name="WindowDoubleColumn" repeat="true"/>
+		</split>
+	</rule>
+	
+	<rule name="WindowDoubleColumn">
+		<split splitAxis="y">
+			<param type="relative" value="0.5" name="WindowSingle"/>
+			<param type="relative" value="0.5" name="WindowDoubleRow"/>
+		</split>
+	</rule>
+	
+	<rule name="WindowDoubleRow">
+		<split splitAxis="x">
+			<param type="relative" value="0.5" name="WindowSingle"/>
+			<param type="relative" value="0.5" name="WindowSingle"/>
 		</split>
 	</rule>
 	
 	<rule name="WindowSingle">
 		<split splitAxis="x">
+			<param type="absolute" value="window_border" name="WindowBorder"/>
+			<param type="floating" value="1" name="WindowSingleMainColumn"/>
+			<param type="absolute" value="window_border" name="WindowBorder"/>
+		</split>
+	</rule>
+	
+	<rule name="WindowSingleMainColumn">
+		<split splitAxis="y">
 			<param type="absolute" value="window_border" name="WindowBorder"/>
 			<param type="floating" value="1" name="WindowSingleMain"/>
 			<param type="absolute" value="window_border" name="WindowBorder"/>
@@ -57,7 +82,9 @@
 	<!-- Window shutter -->
 	<rule name="WindowShutter">
 		<split splitAxis="y">
+			<param type="absolute" value="window_sill_height" name="NIL"/>
 			<param type="floating" value="1" name="WindowShutterMain"/>
+			<param type="absolute" value="window_cornice_height" name="NIL"/>
 		</split>
 	</rule>
 	<rule name="WindowShutterMain">
@@ -76,9 +103,7 @@
 		</comp>
 	</rule>
 	<rule name="WindowShutterMainFaceInside">
-		<split splitAxis="y">
-			<param type="floating" value="window_shutter_cell_height" name="WindowShutterRow" repeat="true"/>
-		</split>
+		<copy name="WindowShutterRow"/>
 	</rule>
 	<rule name="WindowShutterRow">
 		<split splitAxis="y">
