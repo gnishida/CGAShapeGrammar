@@ -69,8 +69,8 @@ void MainWindow::onViewRefresh() {
 }
 
 void MainWindow::onGenerateImages() {
-	//glWidget->generateImages("..\\cga\\windows\\", false, false);
-	glWidget->generateImages("..\\cga\\windows_low_LOD\\", false, false);
+	//glWidget->generateImages(256, 256, false, false);
+	glWidget->generateImages(128, 128, false, false);
 }
 
 void MainWindow::onHoge() {

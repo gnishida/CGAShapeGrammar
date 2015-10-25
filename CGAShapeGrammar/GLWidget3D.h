@@ -18,7 +18,7 @@ public:
 
 	void drawScene(int drawMode);
 	void loadCGA(char* filename);
-	void generateImages(const std::string& dir_name, bool invertImage, bool blur);
+	void generateImages(int image_width, int image_height, bool invertImage, bool blur);
 	void hoge();
 
 protected:

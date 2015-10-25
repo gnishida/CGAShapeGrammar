@@ -81,17 +81,28 @@ void Cuboid::comp(const std::map<std::string, std::string>& name_map, std::vecto
 			rot_angle = -rot_angle;
 		}
 
+		// front face
+		if (name_map.find("front") == name_map.end()) {
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
+		}
+
 		// right face
-		glm::mat4 mat = glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI * 0.5f, glm::vec3(0, 0, 1));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
+		if (name_map.find("right") == name_map.end()) {
+			glm::mat4 mat = glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI * 0.5f, glm::vec3(0, 0, 1));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
+		}
 
 		// left face
-		mat = glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y, 0, 0));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
+		if (name_map.find("left") == name_map.end()) {
+			glm::mat4 mat = glm::translate(glm::rotate(_modelMat, -M_PI * 0.5f, glm::vec3(0, 0, 1)), glm::vec3(-_scope.y, 0, 0));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.y, fabs(_scope.z), _color)));
+		}
 
 		// back face
-		mat = glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0));
-		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
+		if (name_map.find("back") == name_map.end()) {
+			glm::mat4 mat = glm::translate(glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, 0, 0)), M_PI, glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.y, 0));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(mat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
+		}
 	}
 }
 

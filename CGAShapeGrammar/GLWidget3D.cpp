@@ -11,6 +11,8 @@
 #include <QDir>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include <QTextStream>
+#include <iostream>
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット
@@ -127,8 +129,8 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.stack.push_back(lot);
 	}*/
 
-	float object_width = 2.0f;
-	float object_height = 1.0f;
+	float object_width = 10.0f;
+	float object_height = 8.0f;
 
 	{ // for parthenon
 		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
@@ -158,6 +160,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.randomParamValues(grammar);
 		system.derive(grammar);
 		system.generateGeometry(&renderManager);
+		renderManager.centerObjects();
 	} catch (const std::string& ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	} catch (const char* ex) {
@@ -169,10 +172,9 @@ void GLWidget3D::loadCGA(char* filename) {
 	updateGL();
 }
 
-void GLWidget3D::generateImages(bool invertImage, bool blur) {
-	//QDir dir("..\\cga\\windows\\");
+void GLWidget3D::generateImages(int image_width, int image_height, bool invertImage, bool blur) {
 	QDir dir("..\\cga\\windows\\");
-	QDir dir2("..\\cga\\windows_low_LOD\\");
+	//QDir dir("..\\cga\\windows_low_LOD\\");
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
@@ -187,18 +189,31 @@ void GLWidget3D::generateImages(bool invertImage, bool blur) {
 
 	int origWidth = width();
 	int origHeight = height();
-	resize(256, 256);
-	resizeGL(256, 256);
+	resize(image_width, image_height);
+	resizeGL(image_width, image_height);
 
 	QStringList filters;
 	filters << "*.xml";
 	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files|QDir::NoDotAndDotDot);
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
+	
+		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+
+		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		if (!file.open(QIODevice::WriteOnly)) {
+			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
+			return;
+		}
+
+		QTextStream out(&file);
 
 		for (float object_width = 1.0f; object_width <= 2.6f; object_width += 0.05f) {
 			for (float object_height = 1.0f; object_height <= 1.8f; object_height += 0.05f) {
 				for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height
+					std::vector<float> param_values;
+
+
 					renderManager.removeObjects();
 
 					// generate a window
@@ -208,7 +223,7 @@ void GLWidget3D::generateImages(bool invertImage, bool blur) {
 					try {
 						cga::Grammar grammar;
 						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
-						system.randomParamValues(grammar);
+						param_values = system.randomParamValues(grammar);
 						system.derive(grammar, true);
 						system.generateGeometry(&renderManager);
 						renderManager.centerObjects();
@@ -217,6 +232,18 @@ void GLWidget3D::generateImages(bool invertImage, bool blur) {
 					} catch (const char* ex) {
 						std::cout << "ERROR:" << std::endl << ex << std::endl;
 					}
+
+					// put width/height at the begining of the param values array
+					param_values.insert(param_values.begin(), object_width / object_height);
+
+					// write all the param values to the file
+					for (int pi = 0; pi < param_values.size(); ++pi) {
+						if (pi > 0) {
+							out << ",";
+						}
+						out << param_values[pi];
+					}
+					out << "\n";
 
 					// put a background plane
 					std::vector<Vertex> vertices;
@@ -238,9 +265,7 @@ void GLWidget3D::generateImages(bool invertImage, bool blur) {
 					//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 					glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-					drawScene(0);
-
-					if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+					drawScene(0);		
 
 					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
 					QImage image = grabFrameBuffer();
@@ -260,6 +285,8 @@ void GLWidget3D::generateImages(bool invertImage, bool blur) {
 				}
 			}
 		}
+
+		file.close();
 	}
 
 	resize(origWidth, origHeight);

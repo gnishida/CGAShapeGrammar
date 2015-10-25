@@ -14,19 +14,24 @@ CGA::CGA() {
 }
 
 /**
- * Randomly select parameter values if the range is set to the parameter
+ * Randomly select parameter values if the range is specified for the parameter
  */
-void CGA::randomParamValues(Grammar& grammar) {
+std::vector<float> CGA::randomParamValues(Grammar& grammar) {
+	std::vector<float> param_values;
 	/*std::default_random_engine generator;
 	std::uniform_real_distribution<float> distribution(0.0, 1.0);*/
 
 	for (auto it = grammar.attrs.begin(); it != grammar.attrs.end(); ++it) {
 		if (it->second.hasRange) {
-			float v = ((float)rand() / RAND_MAX) * (it->second.range_end - it->second.range_start) + it->second.range_start;
+			float r = (float)rand() / RAND_MAX;
+			float v = r * (it->second.range_end - it->second.range_start) + it->second.range_start;
 			//float v = (it->second.range_end - it->second.range_start) * distribution(generator) + it->second.range_start;
 			it->second.value = boost::lexical_cast<std::string>(v);
+			param_values.push_back(v);
 		}
 	}
+
+	return param_values;
 }
 
 /**
@@ -51,7 +56,7 @@ void CGA::derive(const Grammar& grammar, bool suppressWarning) {
 }
 
 /**
- * Generate a geometry and add it to render manager.
+ * Generate a geometry and add it to the render manager.
  */
 void CGA::generateGeometry(RenderManager* renderManager) {
 	for (int i = 0; i < shapes.size(); ++i) {

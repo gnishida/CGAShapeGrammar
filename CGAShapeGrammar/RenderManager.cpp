@@ -69,7 +69,7 @@ RenderManager::RenderManager() {
 void RenderManager::init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, bool useShadow, int shadowMapSize) {
 	this->useShadow = useShadow;
 	renderingMode = RENDERING_MODE_REGULAR;
-	depthSensitivity = 2000.0f; // 6000.0f;
+	depthSensitivity = 200.0f; // 6000.0f;
 	normalSensitivity = 1.0f;
 	useThreshold = true;
 	threshold = 0.25f;
