@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<rules>
+	<attr name="building_height" value="6"/>
+	<attr name="building_lowerpart_height" value="3"/>
+	<attr name="building_upperbase_offset_y" value="0.1" range="0,0.1"/>
+	<attr name="building_upperbase_x" value="0.35" range="0.3,0.4"/>
+	<attr name="building_upperbase_y" value="0.5" range="0.35,0.7"/>
+	
+	<rule name="Start">
+		<extrude height="building_lowerpart_height"/>
+		<comp>
+			<param name="front" value="Facade."/>
+			<param name="side" value="Facade."/>
+			<param name="top" value="UpperStart"/>
+			<param name="bottom" value="Base."/>
+		</comp>
+	</rule>
+	<rule name="UpperStart">
+		<split splitAxis="y">
+			<param type="relative" value="building_upperbase_offset_y" name="LowerRoof1"/>
+			<param type="relative" value="1-building_upperbase_offset_y" name="UpperStart2"/>
+		</split>
+	</rule>
+	<rule name="UpperStart2">
+		<split splitAxis="y">
+			<param type="relative" value="1-building_upperbase_y" name="UpperStart3"/>
+			<param type="relative" value="building_upperbase_y" name="UpperBase" />
+		</split>
+	</rule>
+	<rule name="UpperStart3">
+		<split splitAxis="x">
+			<param type="relative" value="building_upperbase_x" name="UpperBase"/>
+			<param type="relative" value="1-building_upperbase_x*2" name="LowerRoof2"/>
+			<param type="relative" value="building_upperbase_x" name="UpperBase"/>
+		</split>
+	</rule>
+	<rule name="UpperBase">
+		<extrude height="building_height-building_lowerpart_height"/>
+	</rule>
+</rules>

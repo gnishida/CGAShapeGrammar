@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<rules>
+	<attr name="building_height" value="6"/>
+	<attr name="building_lowerpart_height" value="3"/>
+	<attr name="building_lowerroof_ratio" value="0.25" range="0.25,0.3"/>
+	<attr name="building_upperbase_offset" value="0.1" range="0,0.1"/>
+	
+	<rule name="Start">
+		<extrude height="building_lowerpart_height"/>
+		<comp>
+			<param name="front" value="Facade."/>
+			<param name="side" value="Facade."/>
+			<param name="top" value="UpperStart"/>
+			<param name="bottom" value="Base."/>
+		</comp>
+	</rule>
+	<rule name="UpperStart">
+		<split splitAxis="x">
+			<param type="relative" value="building_lowerroof_ratio" name="LowerRoof1"/>
+			<param type="relative" value="1-building_lowerroof_ratio*2" name="UpperBase" />
+			<param type="relative" value="building_lowerroof_ratio" name="LowerRoof2"/>
+		</split>
+	</rule>
+	<rule name="UpperBase">
+		<split splitAxis="y">
+			<param type="relative" value="building_upperbase_offset" name="LowerRoof3"/>
+			<param type="relative" value="1-building_upperbase_offset" name="UpperBaseActual" />
+		</split>
+	</rule>
+	<rule name="UpperBaseActual">
+		<extrude height="building_height-building_lowerpart_height"/>
+	</rule>
+</rules>
