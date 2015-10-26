@@ -83,7 +83,7 @@ void Cuboid::comp(const std::map<std::string, std::string>& name_map, std::vecto
 
 		// front face
 		if (name_map.find("front") == name_map.end()) {
-			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("front"), _pivot, glm::rotate(_modelMat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("side"), _pivot, glm::rotate(_modelMat, rot_angle, glm::vec3(1, 0, 0)), _scope.x, fabs(_scope.z), _color)));
 		}
 
 		// right face

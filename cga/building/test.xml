@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<rules>
+	<attr name="building_height" value="6" range="3,9"/>
+	
+	<rule name="Start">
+		<copy name="Start2"/>
+		<offset offsetDistance="-1" offsetSelector="inside"/>
+		<extrude height="building_height"/>
+	</rule>
+	<rule name="Start2">
+		<split splitAxis="x">
+			<param type="relative" value="0.2" name="Start3"/>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="relative" value="0.2" name="Start3"/>
+		</split>
+	</rule>
+	<rule name="Start3">
+		<split splitAxis="y">
+			<param type="relative" value="0.2" name="CornerBase"/>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="relative" value="0.2" name="CornerBase"/>
+		</split>
+	</rule>
+	<rule name="CornerBase">
+		<extrude height="building_height"/>
+	</rule>
+</rules>
