@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="6" range="3,9"/>
+	<attr name="building_height" value="6"/>
 	
 	<rule name="Start">
 		<copy name="Start2"/>
