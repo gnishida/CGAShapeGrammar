@@ -33,6 +33,10 @@ void Shape::comp(const std::map<std::string, std::string>& name_map, std::vector
 	throw "comp() is not supported.";
 }
 
+boost::shared_ptr<Shape> Shape::cornerCut(const std::string& name, int type, float length) {
+	throw "cornerCut() is not supported.";
+}
+
 boost::shared_ptr<Shape> Shape::extrude(const std::string& name, float height) {
 	throw "extrude() is not supported.";
 }

@@ -3,6 +3,7 @@
 #include "ColorOperator.h"
 #include "CompOperator.h"
 #include "CopyOperator.h"
+#include "CornerCutOperator.h"
 #include "ExtrudeOperator.h"
 #include "InnerSemiCircleOperator.h"
 #include "InsertOperator.h"
@@ -75,6 +76,8 @@ void parseGrammar(const char* filename, Grammar& grammar) {
 					grammar.addOperator(name, parseCompOperator(operator_node));
 				} else if (operator_name == "copy") {
 					grammar.addOperator(name, parseCopyOperator(operator_node));
+				} else if (operator_name == "cornerCut") {
+					grammar.addOperator(name, parseCornerCutOperator(operator_node));
 				} else if (operator_name == "extrude") {
 					grammar.addOperator(name, parseExtrudeOperator(operator_node));
 				} else if (operator_name == "innerSemiCircle") {
@@ -218,6 +221,27 @@ boost::shared_ptr<Operator> parseCopyOperator(const QDomNode& node) {
 	std::string copy_name = node.toElement().attribute("name").toUtf8().constData();
 
 	return boost::shared_ptr<Operator>(new CopyOperator(copy_name));
+}
+
+boost::shared_ptr<Operator> parseCornerCutOperator(const QDomNode& node) {
+	if (!node.toElement().hasAttribute("type")) {
+		throw "curnerCut node has to have type attribute.";
+	}
+	int type;
+	if (node.toElement().attribute("type") == "straight") {
+		type = CORNER_CUT_STRAIGHT;
+	} else if (node.toElement().attribute("type") == "curve") {
+		type = CORNER_CUT_CURVE;
+	} else {
+		type = CORNER_CUT_NEGATIVE_CURVE;
+	}
+
+	if (!node.toElement().hasAttribute("length")) {
+		throw "curnerCut node has to have length attribute.";
+	}
+	std::string length = node.toElement().attribute("length").toUtf8().constData();
+
+	return boost::shared_ptr<Operator>(new CornerCutOperator(type, length));
 }
 
 boost::shared_ptr<Operator> parseExtrudeOperator(const QDomNode& node) {

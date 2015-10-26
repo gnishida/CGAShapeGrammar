@@ -197,6 +197,9 @@
     <ClCompile Include="GrammarParser.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
+    <ClCompile Include="CornerCutOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -352,6 +355,9 @@
       <Filter>Source Files\rule</Filter>
     </ClInclude>
     <ClInclude Include="GrammarParser.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerCutOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
   </ItemGroup>

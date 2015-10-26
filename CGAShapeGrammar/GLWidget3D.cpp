@@ -129,8 +129,8 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.stack.push_back(lot);
 	}*/
 
-	float object_width = 10.0f;
-	float object_height = 8.0f;
+	float object_width = 18.0f;
+	float object_height = 10.0f;
 
 	{ // for parthenon
 		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));

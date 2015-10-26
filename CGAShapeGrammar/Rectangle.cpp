@@ -45,6 +45,30 @@ boost::shared_ptr<Shape> Rectangle::clone(const std::string& name) const {
 	return copy;
 }
 
+boost::shared_ptr<Shape> Rectangle::cornerCut(const std::string& name, int type, float length) {
+	std::vector<glm::vec2> points;
+	points.push_back(glm::vec2(0, 0));
+	points.push_back(glm::vec2(_scope.x - length, 0));
+
+	int slice = 8;
+	if (type == CORNER_CUT_CURVE) {
+		for (int i = 1; i < slice; ++i) {
+			float theta = -M_PI * 0.5f + M_PI * 0.5f * i / slice;
+			points.push_back(glm::vec2(_scope.x - length + cosf(theta) * length, length + sinf(theta) * length));
+		}
+	} else if (type == CORNER_CUT_NEGATIVE_CURVE) {
+		for (int i = 1; i < slice; ++i) {
+			float theta = M_PI - M_PI * 0.5f * i / slice;
+			points.push_back(glm::vec2(_scope.x + cosf(theta) * length, sinf(theta) * length));
+		}
+	}
+
+	points.push_back(glm::vec2(_scope.x, length));
+	points.push_back(glm::vec2(_scope.x, _scope.y));
+	points.push_back(glm::vec2(0, _scope.y));
+	return boost::shared_ptr<Shape>(new Polygon(name, _pivot, _modelMat, points, _color, _texture));
+}
+
 boost::shared_ptr<Shape> Rectangle::extrude(const std::string& name, float height) {
 	return boost::shared_ptr<Shape>(new Cuboid(name, _pivot, _modelMat, _scope.x, _scope.y, height, _color));
 }
