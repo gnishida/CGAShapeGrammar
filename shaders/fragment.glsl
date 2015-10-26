@@ -114,6 +114,7 @@ void lineRendering() {
 
 	// difference in normal between this pixel and the neighbor pixels
 	vec3 n = texture(normalMap, vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight)).xyz;
+	float n2 = texture(normalMap, vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight)).w;
 	float d = texture(depthMap, vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight)).x;
 
 	for (int xx = -range; xx <= range; ++xx) {
@@ -121,14 +122,16 @@ void lineRendering() {
 			if (xx == 0 && yy == 0) continue;
 
 			vec3 nn = texture(normalMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).xyz;
+			float nn2 = texture(normalMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).w;
 			if (nn.x == 0 && nn.y == 0 && nn.z == 0) {
 				normal_diff = normalSensitivity;
 			} else {
-				normal_diff = max(normal_diff, length(nn - n) * normalSensitivity);
+				normal_diff = max(normal_diff, length(nn - n) * normalSensitivity);				
+				depth_diff = max(depth_diff, abs(nn2 - n2) * depthSensitivity);
 			}
 
-			float dd = texture(depthMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).x;
-			depth_diff = max(depth_diff, abs(dd - d) * depthSensitivity);
+			/*float dd = texture(depthMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).x;
+			depth_diff = max(depth_diff, abs(dd - d) * depthSensitivity);*/
 		}
 	}
 
@@ -168,6 +171,7 @@ void sketchyRendering() {
 
 		// difference in normal between this pixel and the neighbor pixels
 		vec3 n = texture(normalMap, vec2(sx / screenWidth, sy / screenHeight)).xyz;
+		float n2 = texture(normalMap, vec2(gl_FragCoord.x / screenWidth, gl_FragCoord.y / screenHeight)).w;
 		float d = texture(depthMap, vec2(sx / screenWidth, sy / screenHeight)).x;
 
 		for (int xx = -range; xx <= range; ++xx) {
@@ -175,14 +179,18 @@ void sketchyRendering() {
 				if (xx == 0 && yy == 0) continue;
 
 				vec3 nn = texture(normalMap, vec2((sx+xx) / screenWidth, (sy+yy) / screenHeight)).xyz;
+				float nn2 = texture(normalMap, vec2((gl_FragCoord.x+xx) / screenWidth, (gl_FragCoord.y+yy) / screenHeight)).w;
 				if (nn.x == 0 && nn.y == 0 && nn.z == 0) {
 					diff = normalSensitivity;
 				} else {
 					diff = max(diff, length(nn - n) * normalSensitivity);
+					diff = max(diff, abs(nn2 - n2) * depthSensitivity);
 				}
 
+				/*
 				float dd = texture(depthMap, vec2((sx+xx) / screenWidth, (sy+yy) / screenHeight)).x;
 				diff = max(diff, abs(dd - d) * depthSensitivity);
+				*/
 			}
 		}
 	}
@@ -198,7 +206,7 @@ void sketchyRendering() {
 
 void main() {
 	if (pass == 1) {
-		outputF = vec4((fNormal + 1) * 0.5, 1);
+		outputF = vec4((fNormal + 1) * 0.5, abs(dot(fPosition, fNormal)));
 	} else {
 		if (renderingMode == 1) {
 			regularRendering();

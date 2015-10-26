@@ -50,7 +50,7 @@ boost::shared_ptr<Shape> Rectangle::cornerCut(const std::string& name, int type,
 	points.push_back(glm::vec2(0, 0));
 	points.push_back(glm::vec2(_scope.x - length, 0));
 
-	int slice = 8;
+	int slice = 32;
 	if (type == CORNER_CUT_CURVE) {
 		for (int i = 1; i < slice; ++i) {
 			float theta = -M_PI * 0.5f + M_PI * 0.5f * i / slice;
