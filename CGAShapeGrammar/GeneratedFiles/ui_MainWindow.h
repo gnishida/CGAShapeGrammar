@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Sun Oct 25 20:36:30 2015
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Mon Oct 26 18:10:54 2015
+**      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -38,6 +38,8 @@ public:
     QAction *actionHoge;
     QAction *actionViewRegularRendering;
     QAction *actionViewSketchyRendering;
+    QAction *actionLSD;
+    QAction *actionGenerateBuildingImages;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -79,6 +81,10 @@ public:
         actionViewSketchyRendering = new QAction(MainWindowClass);
         actionViewSketchyRendering->setObjectName(QString::fromUtf8("actionViewSketchyRendering"));
         actionViewSketchyRendering->setCheckable(true);
+        actionLSD = new QAction(MainWindowClass);
+        actionLSD->setObjectName(QString::fromUtf8("actionLSD"));
+        actionGenerateBuildingImages = new QAction(MainWindowClass);
+        actionGenerateBuildingImages->setObjectName(QString::fromUtf8("actionGenerateBuildingImages"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -114,6 +120,8 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionViewRefresh);
         menuTool->addAction(actionGenerateImages);
+        menuTool->addAction(actionGenerateBuildingImages);
+        menuTool->addSeparator();
         menuTool->addAction(actionHoge);
 
         retranslateUi(MainWindowClass);
@@ -139,6 +147,8 @@ public:
         actionHoge->setText(QApplication::translate("MainWindowClass", "Hoge", 0, QApplication::UnicodeUTF8));
         actionViewRegularRendering->setText(QApplication::translate("MainWindowClass", "Regular Rendering", 0, QApplication::UnicodeUTF8));
         actionViewSketchyRendering->setText(QApplication::translate("MainWindowClass", "Sketchy Rendering", 0, QApplication::UnicodeUTF8));
+        actionLSD->setText(QApplication::translate("MainWindowClass", "LSD", 0, QApplication::UnicodeUTF8));
+        actionGenerateBuildingImages->setText(QApplication::translate("MainWindowClass", "Generate Building Images", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
         menuTool->setTitle(QApplication::translate("MainWindowClass", "Test", 0, QApplication::UnicodeUTF8));

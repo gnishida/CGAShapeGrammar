@@ -49,6 +49,8 @@
      <string>Test</string>
     </property>
     <addaction name="actionGenerateImages"/>
+    <addaction name="actionGenerateBuildingImages"/>
+    <addaction name="separator"/>
     <addaction name="actionHoge"/>
    </widget>
    <addaction name="menuFile"/>
@@ -147,6 +149,16 @@
    </property>
    <property name="text">
     <string>Sketchy Rendering</string>
+   </property>
+  </action>
+  <action name="actionLSD">
+   <property name="text">
+    <string>LSD</string>
+   </property>
+  </action>
+  <action name="actionGenerateBuildingImages">
+   <property name="text">
+    <string>Generate Building Images</string>
    </property>
   </action>
  </widget>

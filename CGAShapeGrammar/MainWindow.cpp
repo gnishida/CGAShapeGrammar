@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 	connect(ui.actionGenerateImages, SIGNAL(triggered()), this, SLOT(onGenerateImages()));
+	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
 	connect(ui.actionHoge, SIGNAL(triggered()), this, SLOT(onHoge()));
 
 	glWidget = new GLWidget3D();
@@ -70,9 +71,14 @@ void MainWindow::onViewRefresh() {
 
 void MainWindow::onGenerateImages() {
 	//glWidget->generateImages(256, 256, false, false);
-	glWidget->generateImages(128, 128, false, false);
+	glWidget->generateImages(512, 512, false, false);
+}
+
+void MainWindow::onGenerateBuildingImages() {
+	glWidget->generateBuildingImages(512, 512, false, false);
 }
 
 void MainWindow::onHoge() {
 	glWidget->hoge();
 }
+

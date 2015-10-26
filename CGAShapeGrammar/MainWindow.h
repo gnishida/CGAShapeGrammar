@@ -24,6 +24,7 @@ public slots:
 	void onViewRendering();
 	void onViewRefresh();
 	void onGenerateImages();
+	void onGenerateBuildingImages();
 	void onHoge();
 };
 

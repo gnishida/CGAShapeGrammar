@@ -360,6 +360,9 @@
     <ClInclude Include="CornerCutOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
+    <ClInclude Include="EDLinesLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\fragment.glsl">

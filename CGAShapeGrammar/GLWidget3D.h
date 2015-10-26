@@ -9,6 +9,8 @@
 #include "ShadowMapping.h"
 #include "RenderManager.h"
 #include "CGA.h"
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 class MainWindow;
 
@@ -19,7 +21,10 @@ public:
 	void drawScene(int drawMode);
 	void loadCGA(char* filename);
 	void generateImages(int image_width, int image_height, bool invertImage, bool blur);
+	void generateBuildingImages(int image_width, int image_height, bool invertImage, bool blur);
 	void hoge();
+	void EDLine(cv::Mat& result, float scale);
+	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
 
 protected:
 	void initializeGL();
@@ -40,5 +45,6 @@ public:
 	RenderManager renderManager;
 
 	cga::CGA system;
+	std::vector<std::vector<glm::vec2> > style_polylines;
 };
 
