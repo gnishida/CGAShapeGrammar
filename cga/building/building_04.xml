@@ -19,6 +19,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="GroundFloorTop"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="Start2">
@@ -32,6 +33,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="GarageRoof"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="GroundFloorTop">
@@ -50,6 +52,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="SecondFloorRoof"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="SecondFloorRoof">

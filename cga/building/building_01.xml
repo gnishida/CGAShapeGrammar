@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="6"/>
-	<attr name="ground_floor_height" value="3"/>
-	<attr name="building_corner_length" value="4"/>
-	<attr name="building_column_length" value="3"/>
-	<attr name="building_between_column_length" value="8" range="8,8"/>
-	<attr name="building_offset" value="-1"/>
-	<attr name="building_entrance_left_margin" value="1"/>
-	<attr name="building_entrance_width" value="3"/>
+	<attr name="building_height" value="5"/>
+	<attr name="ground_floor_height" value="2.5"/>
+	<attr name="building_corner_length" value="2.5"/>
+	<attr name="building_column_length" value="1.5"/>
+	<attr name="building_between_column_length" value="4" range="4,4"/>
+	<attr name="building_offset" value="-0.5"/>
+	<attr name="building_entrance_left_margin" value="0.5"/>
+	<attr name="building_entrance_width" value="1.5"/>
 	
 	<rule name="Start">
 		<copy name="Start2"/>
@@ -16,6 +16,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="Start2">
@@ -51,6 +52,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="GableRoof"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="CornerBase">
@@ -58,6 +60,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="CornerRoof"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="EntranceBase">
@@ -65,6 +68,7 @@
 		<comp>
 			<param name="side" value="Facade."/>
 			<param name="top" value="GableRoof"/>
+			<param name="bottom" value="Base"/>
 		</comp>
 	</rule>
 	<rule name="Roof">
