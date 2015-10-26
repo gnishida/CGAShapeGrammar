@@ -1,33 +1,29 @@
 <?xml version="1.0"?>
 <rules>
 	<attr name="building_height" value="6"/>
-	<attr name="building_lowerpart_height" value="3"/>
-	<attr name="building_lowerroof_ratio" value="0.25" range="0.25,0.3"/>
-	<attr name="building_upperbase_offset" value="0.1" range="0,0.1"/>
+	<attr name="building_offset" value="-1"/>
+	<attr name="building_corner_length" value="4"/>
 	
 	<rule name="Start">
-		<extrude height="building_lowerpart_height"/>
-		<comp>
-			<param name="front" value="Facade."/>
-			<param name="side" value="Facade."/>
-			<param name="top" value="UpperStart"/>
-			<param name="bottom" value="Base."/>
-		</comp>
+		<copy name="Start2"/>
+		<offset offsetDistance="building_offset" offsetSelector="inside"/>
+		<extrude height="building_height"/>
 	</rule>
-	<rule name="UpperStart">
+	<rule name="Start2">
 		<split splitAxis="x">
-			<param type="relative" value="building_lowerroof_ratio" name="LowerRoof1"/>
-			<param type="relative" value="1-building_lowerroof_ratio*2" name="UpperBase" />
-			<param type="relative" value="building_lowerroof_ratio" name="LowerRoof2"/>
+			<param type="absolute" value="building_corner_length" name="Start3"/>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="building_corner_length" name="Start3"/>
 		</split>
 	</rule>
-	<rule name="UpperBase">
+	<rule name="Start3">
 		<split splitAxis="y">
-			<param type="relative" value="building_upperbase_offset" name="LowerRoof3"/>
-			<param type="relative" value="1-building_upperbase_offset" name="UpperBaseActual" />
+			<param type="absolute" value="building_corner_length" name="CornerBase"/>
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="building_corner_length" name="CornerBase"/>
 		</split>
 	</rule>
-	<rule name="UpperBaseActual">
-		<extrude height="building_height-building_lowerpart_height"/>
+	<rule name="CornerBase">
+		<extrude height="building_height"/>
 	</rule>
 </rules>

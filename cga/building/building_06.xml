@@ -1,33 +1,47 @@
 <?xml version="1.0"?>
 <rules>
 	<attr name="building_height" value="6"/>
-	<attr name="building_lowerpart_height" value="3"/>
-	<attr name="building_upperbase_offset_y" value="0.1" range="0,0.1"/>
-	<attr name="building_upperbase_x" value="0.35" range="0.33,0.4"/>
+	<attr name="ground_floor_height" value="3"/>
+	<attr name="ground_curved_width" value="4"/>
+	<attr name="ground_column_width" value="0.8"/>
 	
 	<rule name="Start">
-		<extrude height="building_lowerpart_height"/>
-		<comp>
-			<param name="front" value="Facade."/>
-			<param name="side" value="Facade."/>
-			<param name="top" value="UpperStart"/>
-			<param name="bottom" value="Base."/>
-		</comp>
+		<copy name="Start2"/>
+		<translate mode="rel" coordSystem="object">
+			<param name="x" type="absolute" value="0"/>
+			<param name="y" type="absolute" value="0"/>
+			<param name="z" type="absolute" value="ground_floor_height"/>
+		</translate>
+		<extrude height="building_height-ground_floor_height"/>
 	</rule>
-	<rule name="UpperStart">
-		<split splitAxis="y">
-			<param type="relative" value="building_upperbase_offset_y" name="LowerRoof1"/>
-			<param type="relative" value="1-building_upperbase_offset_y" name="UpperStart2"/>
-		</split>
-	</rule>
-	<rule name="UpperStart2">
+	<rule name="Start2">
 		<split splitAxis="x">
-			<param type="relative" value="building_upperbase_x" name="UpperBase"/>
-			<param type="relative" value="1-building_upperbase_x*2" name="LowerRoof2"/>
-			<param type="relative" value="building_upperbase_x" name="UpperBase"/>
+			<param type="floating" value="1" name="GroundBase"/>
+			<param type="absolute" value="ground_curved_width" name="Start3"/>
 		</split>
 	</rule>
-	<rule name="UpperBase">
-		<extrude height="building_height-building_lowerpart_height"/>
+	<rule name="Start3">
+		<split splitAxis="y">
+			<param type="absolute" value="ground_curved_width" name="Start4"/>
+			<param type="floating" value="1" name="GroundBase"/>
+		</split>
+	</rule>
+	<rule name="Start4">
+		<split splitAxis="x">
+			<param type="floating" value="1" name="NIL"/>
+			<param type="absolute" value="ground_column_width" name="Start5"/>
+		</split>
+	</rule>
+	<rule name="Start5">
+		<split splitAxis="y">
+			<param type="absolute" value="ground_column_width" name="Column"/>
+			<param type="floating" value="1" name="NIL"/>
+		</split>
+	</rule>
+	<rule name="Column">
+		<extrude height="ground_floor_height"/>
+	</rule>
+	<rule name="GroundBase">
+		<extrude height="ground_floor_height"/>
 	</rule>
 </rules>
