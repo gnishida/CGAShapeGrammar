@@ -436,6 +436,9 @@ void GLWidget3D::hoge() {
 	updateGL();
 }
 
+/**
+ * http://www.ceng.anadolu.edu.tr/CV/EDLines/
+ */
 void GLWidget3D::EDLine(cv::Mat& result, float scale) {
 	QImage img = this->grabFrameBuffer();
 
