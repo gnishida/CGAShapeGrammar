@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="6"/>
-	<attr name="ground_floor_height" value="3"/>
-	<attr name="ground_curved_width" value="4"/>
-	<attr name="ground_column_width" value="0.8"/>
+	<attr name="building_height" value="6" range="5,8"/>
+	<attr name="ground_floor_height" value="3" range="2.7,3.5"/>
+	<attr name="ground_curved_width" value="4" range="3,6"/>
+	<attr name="ground_column_width" value="0.8" range="0.5,1"/>
 	
 	<rule name="Start">
 		<copy name="Start2"/>

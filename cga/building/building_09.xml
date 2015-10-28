@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="3.5" range="3.5,3.5"/>
-	<attr name="main_depth_ratio" value="0.5"/>
-	<attr name="garage_width" value="8"/>
-	<attr name="column_width" value="0.8"/>
-	<attr name="roof_hang" value="0.5"/>
+	<attr name="building_height" value="3.5" range="3,5"/>
+	<attr name="main_depth_ratio" value="0.5" range="0.4,0.65"/>
+	<attr name="garage_width" value="8" range="5,10"/>
+	<attr name="column_width" value="0.8" range="0.5,1"/>
+	<attr name="roof_hang" value="0.5" range="0.3,1"/>
 	
 	<rule name="Start">
 		<copy name="Start2"/>

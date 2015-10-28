@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="6"/>
-	<attr name="building_corner_width" value="2"/>
-	<attr name="building_column_width" value="2"/>
-	<attr name="building_between_column_length" value="2" range="2,2"/>
-	<attr name="building_offset" value="-1"/>
+	<attr name="building_height" value="6" range="5,8"/>
+	<attr name="building_corner_width" value="2" range="1.8,3"/>
+	<attr name="building_column_width" value="2" range="1.8,3"/>
+	<attr name="building_between_column_length" value="2" range="1.8,3"/>
+	<attr name="building_offset" value="-1" range="-0.5,-1.5"/>
 	
 	<rule name="Start">
 		<copy name="Start2"/>

@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="9" range="9,9"/>
-	<attr name="ground_floor_height" value="4"/>
-	<attr name="second_floor_depth_ratio" value="0.7"/>
-	<attr name="roof_hang" value="0.5"/>
-	<attr name="entrance_width" value="3"/>
+	<attr name="building_height" value="9" range="7,9"/>
+	<attr name="ground_floor_height" value="4" range="3,4.5"/>
+	<attr name="second_floor_depth_ratio" value="0.7" range="0.5,0.8"/>
+	<attr name="roof_hang" value="0.5" range="0.4,1"/>
+	<attr name="entrance_width" value="3" range="2.5,5"/>
+	<attr name="entrance_side_margin" value="2" range="1,3"/>
+	<attr name="entrance_top_margin" value="0.5" range="0.3,1"/>
 	<attr name="stair_height" value="1" value="0.5,1"/>
 	
 	<rule name="Start">
@@ -41,14 +43,14 @@
 		<split splitAxis="x">
 			<param type="floating" value="1" name="Wall."/>
 			<param type="absolute" value="entrance_width+1" name="EntraceTile"/>
-			<param type="absolute" value="2" name="Wall."/>
+			<param type="absolute" value="entrance_side_margin" name="Wall."/>
 		</split>
 	</rule>
 	<rule name="EntraceTile">
 		<split splitAxis="y">
 			<param type="absolute" value="stair_height" name="StairBase"/>
 			<param type="floating" value="1" name="Entrace"/>
-			<param type="absolute" value="0.5" name="Wall."/>
+			<param type="absolute" value="entrance_top_margin" name="Wall."/>
 		</split>
 	</rule>
 	<rule name="Entrace">

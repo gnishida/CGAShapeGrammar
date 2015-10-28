@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <rules>
 	<attr name="building_height" value="6" range="6,12"/>
-	<attr name="ground_floor_height" value="3"/>
-	<attr name="ground_floor_ledge_height" value="0.8"/>
-	<attr name="building_offset" value="-3"/>
-	<attr name="column_width" value="0.8"/>
-	<attr name="between_column_length" value="4"/>
+	<attr name="ground_floor_height" value="3" range="2.8,3.5"/>
+	<attr name="ground_floor_ledge_height" value="0.8" range="0.5,1"/>
+	<attr name="building_offset" value="-3" range="-2,-4"/>
+	<attr name="column_width" value="0.8" range="0.5,1.0"/>
+	<attr name="between_column_length" value="4" range="3,5"/>
 	
 	<rule name="Start">
 		<copy name="Start2"/>

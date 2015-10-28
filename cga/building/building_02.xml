@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <rules>
-	<attr name="building_height" value="6"/>
+	<attr name="building_height" value="6" range="4,7"/>
+	<attr name="roof_slope" value="30" range="20,35"/>
 	
 	<rule name="Start">
 		<extrude height="building_height"/>
@@ -10,6 +11,6 @@
 		</comp>
 	</rule>
 	<rule name="Roof">
-		<roofHip angle="30"/>
+		<roofHip angle="roof_slope"/>
 	</rule>
 </rules>

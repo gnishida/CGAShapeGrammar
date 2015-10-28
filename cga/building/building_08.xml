@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <rules>
 	<attr name="building_height" value="8" range="6,12"/>
-	<attr name="ground_floor_height" value="3"/>
-	<attr name="building_cut_length" value="3.5" range="3,4"/>
+	<attr name="ground_floor_height" value="3" range="2.5,3.5"/>
+	<attr name="building_cut_length" value="3.5" range="3,3.7"/>
 	<attr name="column_width" value="0.8" range="0.5,1"/>
 	
 	<rule name="Start">

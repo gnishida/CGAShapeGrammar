@@ -24,7 +24,7 @@ GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers
 	light_mvpMatrix = light_pMatrix * light_mvMatrix;
 
 	// initialize stylized polylines
-	style_polylines.resize(5);
+	style_polylines.resize(10);
 	style_polylines[0].push_back(glm::vec2(-0.025, -0.025));
 	style_polylines[0].push_back(glm::vec2(0.3, 0.035));
 	style_polylines[0].push_back(glm::vec2(0.6, 0.05));
@@ -62,6 +62,46 @@ GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers
 	style_polylines[4].push_back(glm::vec2(0.8, 0.03));
 	style_polylines[4].push_back(glm::vec2(0.88, 0.02));
 	style_polylines[4].push_back(glm::vec2(0.97, 0.01));
+
+	style_polylines[5].push_back(glm::vec2(0.05, -0.04));
+	style_polylines[5].push_back(glm::vec2(0.29, -0.03));
+	style_polylines[5].push_back(glm::vec2(0.47, -0.01));
+	style_polylines[5].push_back(glm::vec2(0.59, 0.02));
+	style_polylines[5].push_back(glm::vec2(0.75, 0.03));
+	style_polylines[5].push_back(glm::vec2(1.03, 0.04));
+
+	style_polylines[6].push_back(glm::vec2(-0.02, 0.04));
+	style_polylines[6].push_back(glm::vec2(0.16, -0.01));
+	style_polylines[6].push_back(glm::vec2(0.42, -0.06));
+	style_polylines[6].push_back(glm::vec2(0.65, -0.07));
+	style_polylines[6].push_back(glm::vec2(0.83, -0.04));
+	style_polylines[6].push_back(glm::vec2(0.98, -0.02));
+
+	style_polylines[7].push_back(glm::vec2(0.0, 0.0));
+	style_polylines[7].push_back(glm::vec2(0.24, 0.02));
+	style_polylines[7].push_back(glm::vec2(0.59, 0.03));
+	style_polylines[7].push_back(glm::vec2(0.79, 0.01));
+	style_polylines[7].push_back(glm::vec2(0.91, -0.01));
+	style_polylines[7].push_back(glm::vec2(1.02, -0.04));
+
+	style_polylines[8].push_back(glm::vec2(-0.01, -0.02));
+	style_polylines[8].push_back(glm::vec2(0.15, 0.0));
+	style_polylines[8].push_back(glm::vec2(0.28, 0.02));
+	style_polylines[8].push_back(glm::vec2(0.44, 0.01));
+	style_polylines[8].push_back(glm::vec2(0.59, 0.0));
+	style_polylines[8].push_back(glm::vec2(0.74, -0.03));
+	style_polylines[8].push_back(glm::vec2(0.81, -0.04));
+	style_polylines[8].push_back(glm::vec2(0.89, -0.04));
+	style_polylines[8].push_back(glm::vec2(0.98, -0.03));
+
+	style_polylines[9].push_back(glm::vec2(0.02, -0.02));
+	style_polylines[9].push_back(glm::vec2(0.41, -0.03));
+	style_polylines[9].push_back(glm::vec2(0.56, -0.04));
+	style_polylines[9].push_back(glm::vec2(0.68, -0.03));
+	style_polylines[9].push_back(glm::vec2(0.78, -0.02));
+	style_polylines[9].push_back(glm::vec2(0.85, -0.01));
+	style_polylines[9].push_back(glm::vec2(0.94, 0.0));
+	style_polylines[9].push_back(glm::vec2(0.96, 0.02));
 }
 
 /**
@@ -168,8 +208,8 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.stack.push_back(lot);
 	}*/
 
-	float object_width = 18.0f;
-	float object_height = 10.0f;
+	float object_width = 16.0f;
+	float object_height = 8.0f;
 
 	{ // for parthenon
 		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
@@ -353,72 +393,76 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 
 		QTextStream out(&file);
 
-		for (float object_width = 14.0f; object_width <= 22.0f; object_width += 1.0f) {
-			for (float object_height = 8.0f; object_height <= 16.0f; object_height += 1.0f) {
-				for (int k = 0; k < 16; ++k) { // 1 images (parameter values are randomly selected) for each width and height
-					// change camera view direction
-					camera.xrot = 35.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
-					camera.yrot = -45.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
-					camera.zrot = 0.0f;
-					camera.pos = glm::vec3(0, 0, 2.3f);
-					camera.updateMVPMatrix();
+		for (float object_width = 16.0f; object_width <= 20.0f; object_width += 1.0f) {
+			for (float object_height = 8.0f; object_height <= 12.0f; object_height += 1.0f) {
+				for (float pitch_angle = 15.0f; pitch_angle <= 40.0f; pitch_angle += 5.0f) {
+					for (float yaw_angle = -60.0f; yaw_angle <= -20.0f; yaw_angle += 5.0f) {
+						// change camera view direction
+						camera.xrot = pitch_angle;//35.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
+						camera.yrot = yaw_angle;//-45.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
+						camera.zrot = 0.0f;
+						camera.pos = glm::vec3(0, 0, 2.3f);
+						camera.updateMVPMatrix();
+
+						for (int k = 0; k < 1; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
+							std::vector<float> param_values;
 					
-					std::vector<float> param_values;
-					
-					renderManager.removeObjects();
+							renderManager.removeObjects();
 
-					// generate a window
-					cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
-					system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+							// generate a window
+							cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+							system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 
-					try {
-						cga::Grammar grammar;
-						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
-						param_values = system.randomParamValues(grammar);
-						system.derive(grammar, true);
-						system.generateGeometry(&renderManager);
-						renderManager.centerObjects();
-					} catch (const std::string& ex) {
-						std::cout << "ERROR:" << std::endl << ex << std::endl;
-					} catch (const char* ex) {
-						std::cout << "ERROR:" << std::endl << ex << std::endl;
-					}
+							try {
+								cga::Grammar grammar;
+								cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+								param_values = system.randomParamValues(grammar);
+								system.derive(grammar, true);
+								system.generateGeometry(&renderManager);
+								renderManager.centerObjects();
+							} catch (const std::string& ex) {
+								std::cout << "ERROR:" << std::endl << ex << std::endl;
+							} catch (const char* ex) {
+								std::cout << "ERROR:" << std::endl << ex << std::endl;
+							}
 
-					// put width/height at the begining of the param values array
-					param_values.insert(param_values.begin(), object_width / object_height);
+							// put width/height at the begining of the param values array
+							param_values.insert(param_values.begin(), object_width / object_height);
 
-					// write all the param values to the file
-					for (int pi = 0; pi < param_values.size(); ++pi) {
-						if (pi > 0) {
-							out << ",";
-						}
-						out << param_values[pi];
-					}
-					out << "\n";
+							// write all the param values to the file
+							for (int pi = 0; pi < param_values.size(); ++pi) {
+								if (pi > 0) {
+									out << ",";
+								}
+								out << param_values[pi];
+							}
+							out << "\n";
 
-					// render a window
-					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-					glEnable(GL_DEPTH_TEST);
-					glDisable(GL_TEXTURE_2D);
+							// render a window
+							glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+							glEnable(GL_DEPTH_TEST);
+							glDisable(GL_TEXTURE_2D);
 
-					glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+							glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
 
-					// Model view projection行列をシェーダに渡す
-					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
-					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
+							// Model view projection行列をシェーダに渡す
+							glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
+							glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
 
-					// pass the light direction to the shader
-					//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
-					glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+							// pass the light direction to the shader
+							//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+							glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-					drawScene(0);
+							drawScene(0);
 
-					cv::Mat result;
-					EDLine(result, 0.5f);
-					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
-					cv::imwrite(filename.toUtf8().constData(), result);
+							cv::Mat result;
+							EDLine(result, 0.5f);
+							QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
+							cv::imwrite(filename.toUtf8().constData(), result);
 
-					count++;
+							count++;
+						}
+					}
 				}
 			}
 		}
@@ -431,9 +475,13 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 }
 
 void GLWidget3D::hoge() {
-	this->resize(256, 256);
-	resizeGL(256, 256);
+	this->resize(512, 512);
+	resizeGL(512, 512);
 	updateGL();
+
+					cv::Mat result;
+					EDLine(result, 0.5f);
+					cv::imwrite("result.png", result);
 }
 
 /**
@@ -453,17 +501,73 @@ void GLWidget3D::EDLine(cv::Mat& result, float scale) {
 
 	int noLines;
 	LS *lines = DetectLinesByED(image, mat.cols, mat.rows, &noLines);
+	free(image);
+
+	// I use simple workaround for now.
+	std::vector<std::pair<glm::vec2, glm::vec2> > edges(noLines);
+	for (int i = 0; i < noLines; ++i) {
+		edges[i] = std::make_pair(glm::vec2(lines[i].sx, lines[i].sy), glm::vec2(lines[i].ex, lines[i].ey));;
+	}
+	free(lines);
+	bool erased;
+	while (true) {
+		erased = false;
+		for (int i = 0; i < edges.size() && !erased; ++i) {
+			for (int j = i + 1; j < edges.size() && !erased; ++j) {
+				if (glm::length(edges[i].first - edges[j].first) < 10 && glm::length(edges[i].second - edges[j].second) < 10) {
+					edges.erase(edges.begin() + j);
+					erased = true;
+				} else if (glm::length(edges[i].first - edges[j].second) < 10 && glm::length(edges[i].second - edges[j].first) < 10) {
+					edges.erase(edges.begin() + j);
+					erased = true;
+				} else {
+					if (fabs(glm::dot(glm::normalize(edges[i].first - edges[i].second), glm::normalize(edges[j].first - edges[j].second))) > 0.99) {
+						glm::vec2 norm1(-(edges[i].first - edges[i].second).y, (edges[i].first - edges[i].second).x);
+						glm::vec2 norm2(-(edges[j].first - edges[j].second).y, (edges[j].first - edges[j].second).x);
+						norm1 = glm::normalize(norm1);
+						norm2 = glm::normalize(norm2);
+						if (fabs(glm::dot(norm1, edges[i].first) - glm::dot(norm2, edges[j].first)) < 3) {	// two lines are parallel and close!!
+							if (fabs(edges[i].first.x - edges[i].second.x) > fabs(edges[i].first.y - edges[i].second.y)) {	// like horizontal line
+								float x1s = std::min(edges[i].first.x, edges[i].second.x);
+								float x1e = std::max(edges[i].first.x, edges[i].second.x);
+								float x2s = std::min(edges[j].first.x, edges[j].second.x);
+								float x2e = std::max(edges[j].first.x, edges[j].second.x);
+								if (x2s >= x1s && x2s <= x1e && x2e >= x1s && x2e <= x1e) {
+									edges.erase(edges.begin() + j);
+									erased = true;
+								} else if (x1s >= x2s && x1s <= x2e && x1e >= x2s && x1e <= x2e) {
+									edges.erase(edges.begin() + i);
+									erased = true;
+								}
+							} else {	// like vertical line
+								float y1s = std::min(edges[i].first.y, edges[i].second.y);
+								float y1e = std::max(edges[i].first.y, edges[i].second.y);
+								float y2s = std::min(edges[j].first.y, edges[j].second.y);
+								float y2e = std::max(edges[j].first.y, edges[j].second.y);
+								if (y2s >= y1s && y2s <= y1e && y2e >= y1s && y2e <= y1e) {
+									edges.erase(edges.begin() + j);
+									erased = true;
+								} else if (y1s >= y2s && y1s <= y2e && y1e >= y2s && y1e <= y2e) {
+									edges.erase(edges.begin() + i);
+									erased = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (!erased) break;
+	}
 
 	result = cv::Mat(mat.rows * scale, mat.cols * scale, CV_8UC3, cv::Scalar(255, 255, 255));
 
-	for (int i = 0; i < noLines; ++i) {
+	for (int i = 0; i < edges.size(); ++i) {
 		int polyline_index = rand() % style_polylines.size();
 
-		draw2DPolyline(result, glm::vec2(lines[i].sx * scale, lines[i].sy * scale), glm::vec2(lines[i].ex * scale, lines[i].ey * scale), polyline_index);
+		draw2DPolyline(result, edges[i].first * scale, edges[i].second * scale, polyline_index);
 	}
-
-	free(image);
-	free(lines);
 }
 
 void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index) {
