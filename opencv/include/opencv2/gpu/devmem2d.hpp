@@ -22,7 +22,7 @@
 //
 //   * Redistribution's in binary form must reproduce the above copyright notice,
 //     this list of conditions and the following disclaimer in the documentation
-//     and/or other GpuMaterials provided with the distribution.
+//     and/or other materials provided with the distribution.
 //
 //   * The name of the copyright holders may not be used to endorse or promote products
 //     derived from this software without specific prior written permission.
@@ -40,4 +40,4 @@
 //
 //M*/
 
-#include "opencv2/core/devmem2d.hpp"
+#include "opencv2/core/cuda_devptrs.hpp"

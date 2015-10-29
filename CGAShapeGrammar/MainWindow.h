@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
 #include "GLWidget3D.h"
 
@@ -15,17 +15,17 @@ private:
 	QString filename;
 
 public:
-	MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
+	MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
 public slots:
-	void onOpenCGARules();
+	void onOpenCGA();
 	void onViewShadow();
 	void onViewRendering();
 	void onViewRefresh();
-	void onGenerateImages();
+	void onGenerateWindowImages();
 	void onGenerateBuildingImages();
-	void onHoge();
+	void onTest();
 };
 
 #endif // MAINWINDOW_H

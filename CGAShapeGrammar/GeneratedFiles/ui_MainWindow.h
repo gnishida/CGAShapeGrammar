@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Mon Oct 26 18:10:54 2015
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,35 +10,33 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QToolBar>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QToolBar>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_MainWindowClass
 {
 public:
+    QAction *actionOpenCGA;
     QAction *actionExit;
-    QAction *actionViewWireframe;
-    QAction *actionOpenCGARules;
-    QAction *actionViewScopeCoordinateSystem;
-    QAction *actionViewRefresh;
     QAction *actionViewShadow;
-    QAction *actionViewLineRendering;
-    QAction *actionGenerateImages;
-    QAction *actionHoge;
     QAction *actionViewRegularRendering;
+    QAction *actionViewWireframe;
+    QAction *actionViewLineRendering;
     QAction *actionViewSketchyRendering;
-    QAction *actionLSD;
+    QAction *actionViewRefresh;
+    QAction *actionGenerateWindowImages;
     QAction *actionGenerateBuildingImages;
+    QAction *actionTest;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -51,64 +48,59 @@ public:
     void setupUi(QMainWindow *MainWindowClass)
     {
         if (MainWindowClass->objectName().isEmpty())
-            MainWindowClass->setObjectName(QString::fromUtf8("MainWindowClass"));
-        MainWindowClass->resize(795, 575);
+            MainWindowClass->setObjectName(QStringLiteral("MainWindowClass"));
+        MainWindowClass->resize(800, 600);
+        actionOpenCGA = new QAction(MainWindowClass);
+        actionOpenCGA->setObjectName(QStringLiteral("actionOpenCGA"));
         actionExit = new QAction(MainWindowClass);
-        actionExit->setObjectName(QString::fromUtf8("actionExit"));
-        actionViewWireframe = new QAction(MainWindowClass);
-        actionViewWireframe->setObjectName(QString::fromUtf8("actionViewWireframe"));
-        actionViewWireframe->setCheckable(true);
-        actionOpenCGARules = new QAction(MainWindowClass);
-        actionOpenCGARules->setObjectName(QString::fromUtf8("actionOpenCGARules"));
-        actionViewScopeCoordinateSystem = new QAction(MainWindowClass);
-        actionViewScopeCoordinateSystem->setObjectName(QString::fromUtf8("actionViewScopeCoordinateSystem"));
-        actionViewScopeCoordinateSystem->setCheckable(true);
-        actionViewRefresh = new QAction(MainWindowClass);
-        actionViewRefresh->setObjectName(QString::fromUtf8("actionViewRefresh"));
+        actionExit->setObjectName(QStringLiteral("actionExit"));
         actionViewShadow = new QAction(MainWindowClass);
-        actionViewShadow->setObjectName(QString::fromUtf8("actionViewShadow"));
+        actionViewShadow->setObjectName(QStringLiteral("actionViewShadow"));
         actionViewShadow->setCheckable(true);
-        actionViewLineRendering = new QAction(MainWindowClass);
-        actionViewLineRendering->setObjectName(QString::fromUtf8("actionViewLineRendering"));
-        actionViewLineRendering->setCheckable(true);
-        actionGenerateImages = new QAction(MainWindowClass);
-        actionGenerateImages->setObjectName(QString::fromUtf8("actionGenerateImages"));
-        actionHoge = new QAction(MainWindowClass);
-        actionHoge->setObjectName(QString::fromUtf8("actionHoge"));
         actionViewRegularRendering = new QAction(MainWindowClass);
-        actionViewRegularRendering->setObjectName(QString::fromUtf8("actionViewRegularRendering"));
+        actionViewRegularRendering->setObjectName(QStringLiteral("actionViewRegularRendering"));
         actionViewRegularRendering->setCheckable(true);
+        actionViewWireframe = new QAction(MainWindowClass);
+        actionViewWireframe->setObjectName(QStringLiteral("actionViewWireframe"));
+        actionViewWireframe->setCheckable(true);
+        actionViewLineRendering = new QAction(MainWindowClass);
+        actionViewLineRendering->setObjectName(QStringLiteral("actionViewLineRendering"));
+        actionViewLineRendering->setCheckable(true);
         actionViewSketchyRendering = new QAction(MainWindowClass);
-        actionViewSketchyRendering->setObjectName(QString::fromUtf8("actionViewSketchyRendering"));
+        actionViewSketchyRendering->setObjectName(QStringLiteral("actionViewSketchyRendering"));
         actionViewSketchyRendering->setCheckable(true);
-        actionLSD = new QAction(MainWindowClass);
-        actionLSD->setObjectName(QString::fromUtf8("actionLSD"));
+        actionViewRefresh = new QAction(MainWindowClass);
+        actionViewRefresh->setObjectName(QStringLiteral("actionViewRefresh"));
+        actionGenerateWindowImages = new QAction(MainWindowClass);
+        actionGenerateWindowImages->setObjectName(QStringLiteral("actionGenerateWindowImages"));
         actionGenerateBuildingImages = new QAction(MainWindowClass);
-        actionGenerateBuildingImages->setObjectName(QString::fromUtf8("actionGenerateBuildingImages"));
+        actionGenerateBuildingImages->setObjectName(QStringLiteral("actionGenerateBuildingImages"));
+        actionTest = new QAction(MainWindowClass);
+        actionTest->setObjectName(QStringLiteral("actionTest"));
         centralWidget = new QWidget(MainWindowClass);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowClass);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 795, 21));
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 800, 21));
         menuFile = new QMenu(menuBar);
-        menuFile->setObjectName(QString::fromUtf8("menuFile"));
+        menuFile->setObjectName(QStringLiteral("menuFile"));
         menuView = new QMenu(menuBar);
-        menuView->setObjectName(QString::fromUtf8("menuView"));
+        menuView->setObjectName(QStringLiteral("menuView"));
         menuTool = new QMenu(menuBar);
-        menuTool->setObjectName(QString::fromUtf8("menuTool"));
+        menuTool->setObjectName(QStringLiteral("menuTool"));
         MainWindowClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindowClass);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
+        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         MainWindowClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindowClass);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindowClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuView->menuAction());
         menuBar->addAction(menuTool->menuAction());
-        menuFile->addAction(actionOpenCGARules);
+        menuFile->addAction(actionOpenCGA);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuView->addAction(actionViewShadow);
@@ -119,10 +111,10 @@ public:
         menuView->addAction(actionViewSketchyRendering);
         menuView->addSeparator();
         menuView->addAction(actionViewRefresh);
-        menuTool->addAction(actionGenerateImages);
+        menuTool->addAction(actionGenerateWindowImages);
         menuTool->addAction(actionGenerateBuildingImages);
         menuTool->addSeparator();
-        menuTool->addAction(actionHoge);
+        menuTool->addAction(actionTest);
 
         retranslateUi(MainWindowClass);
 
@@ -131,27 +123,23 @@ public:
 
     void retranslateUi(QMainWindow *MainWindowClass)
     {
-        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "CGA Shape Grammar", 0, QApplication::UnicodeUTF8));
-        actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0, QApplication::UnicodeUTF8));
-        actionViewWireframe->setText(QApplication::translate("MainWindowClass", "Wireframe", 0, QApplication::UnicodeUTF8));
-        actionViewWireframe->setShortcut(QApplication::translate("MainWindowClass", "W", 0, QApplication::UnicodeUTF8));
-        actionOpenCGARules->setText(QApplication::translate("MainWindowClass", "Open CGA Rules", 0, QApplication::UnicodeUTF8));
-        actionOpenCGARules->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0, QApplication::UnicodeUTF8));
-        actionViewScopeCoordinateSystem->setText(QApplication::translate("MainWindowClass", "Scope Coordinate System", 0, QApplication::UnicodeUTF8));
-        actionViewScopeCoordinateSystem->setShortcut(QApplication::translate("MainWindowClass", "C", 0, QApplication::UnicodeUTF8));
-        actionViewRefresh->setText(QApplication::translate("MainWindowClass", "Refresh", 0, QApplication::UnicodeUTF8));
-        actionViewRefresh->setShortcut(QApplication::translate("MainWindowClass", "F5", 0, QApplication::UnicodeUTF8));
-        actionViewShadow->setText(QApplication::translate("MainWindowClass", "Shadow", 0, QApplication::UnicodeUTF8));
-        actionViewLineRendering->setText(QApplication::translate("MainWindowClass", "Line Rendering", 0, QApplication::UnicodeUTF8));
-        actionGenerateImages->setText(QApplication::translate("MainWindowClass", "Generate Images", 0, QApplication::UnicodeUTF8));
-        actionHoge->setText(QApplication::translate("MainWindowClass", "Hoge", 0, QApplication::UnicodeUTF8));
-        actionViewRegularRendering->setText(QApplication::translate("MainWindowClass", "Regular Rendering", 0, QApplication::UnicodeUTF8));
-        actionViewSketchyRendering->setText(QApplication::translate("MainWindowClass", "Sketchy Rendering", 0, QApplication::UnicodeUTF8));
-        actionLSD->setText(QApplication::translate("MainWindowClass", "LSD", 0, QApplication::UnicodeUTF8));
-        actionGenerateBuildingImages->setText(QApplication::translate("MainWindowClass", "Generate Building Images", 0, QApplication::UnicodeUTF8));
-        menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0, QApplication::UnicodeUTF8));
-        menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0, QApplication::UnicodeUTF8));
-        menuTool->setTitle(QApplication::translate("MainWindowClass", "Test", 0, QApplication::UnicodeUTF8));
+        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "MainWindow", 0));
+        actionOpenCGA->setText(QApplication::translate("MainWindowClass", "Open CGA", 0));
+        actionOpenCGA->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0));
+        actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0));
+        actionViewShadow->setText(QApplication::translate("MainWindowClass", "Shadow", 0));
+        actionViewRegularRendering->setText(QApplication::translate("MainWindowClass", "Regular Rendering", 0));
+        actionViewWireframe->setText(QApplication::translate("MainWindowClass", "Wireframe", 0));
+        actionViewLineRendering->setText(QApplication::translate("MainWindowClass", "Line Rendering", 0));
+        actionViewSketchyRendering->setText(QApplication::translate("MainWindowClass", "Sketchy Rendering", 0));
+        actionViewRefresh->setText(QApplication::translate("MainWindowClass", "Refresh", 0));
+        actionViewRefresh->setShortcut(QApplication::translate("MainWindowClass", "F5", 0));
+        actionGenerateWindowImages->setText(QApplication::translate("MainWindowClass", "Generate Window Images", 0));
+        actionGenerateBuildingImages->setText(QApplication::translate("MainWindowClass", "Generate Building Images", 0));
+        actionTest->setText(QApplication::translate("MainWindowClass", "Test", 0));
+        menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
+        menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
+        menuTool->setTitle(QApplication::translate("MainWindowClass", "Tool", 0));
     } // retranslateUi
 
 };

@@ -251,7 +251,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	updateGL();
 }
 
-void GLWidget3D::generateImages(int image_width, int image_height, bool invertImage, bool blur) {
+void GLWidget3D::generateWindowImages(int image_width, int image_height, bool invertImage, bool blur) {
 	QDir dir("..\\cga\\windows\\");
 	//QDir dir("..\\cga\\windows_low_LOD\\");
 
@@ -474,7 +474,7 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 	resizeGL(origWidth, origHeight);
 }
 
-void GLWidget3D::hoge() {
+void GLWidget3D::test() {
 	this->resize(512, 512);
 	resizeGL(512, 512);
 	updateGL();

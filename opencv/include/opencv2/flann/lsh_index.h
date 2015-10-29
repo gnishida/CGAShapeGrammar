@@ -90,9 +90,11 @@ public:
              Distance d = Distance()) :
         dataset_(input_data), index_params_(params), distance_(d)
     {
-        table_number_ = get_param<int>(index_params_,"table_number",12);
-        key_size_ = get_param<int>(index_params_,"key_size",20);
-        multi_probe_level_ = get_param<int>(index_params_,"multi_probe_level",2);
+        // cv::flann::IndexParams sets integer params as 'int', so it is used with get_param
+        // in place of 'unsigned int'
+        table_number_ = (unsigned int)get_param<int>(index_params_,"table_number",12);
+        key_size_ = (unsigned int)get_param<int>(index_params_,"key_size",20);
+        multi_probe_level_ = (unsigned int)get_param<int>(index_params_,"multi_probe_level",2);
 
         feature_size_ = (unsigned)dataset_.cols;
         fill_xor_mask(0, key_size_, multi_probe_level_, xor_masks_);
@@ -107,10 +109,22 @@ public:
      */
     void buildIndex()
     {
+        std::vector<size_t> indices(feature_size_ * CHAR_BIT);
+
         tables_.resize(table_number_);
         for (unsigned int i = 0; i < table_number_; ++i) {
+
+            //re-initialize the random indices table that the LshTable will use to pick its sub-dimensions
+            if( (indices.size() == feature_size_ * CHAR_BIT) || (indices.size() < key_size_) )
+            {
+              indices.resize( feature_size_ * CHAR_BIT );
+              for (size_t j = 0; j < feature_size_ * CHAR_BIT; ++j)
+                  indices[j] = j;
+              std::random_shuffle(indices.begin(), indices.end());
+            }
+
             lsh::LshTable<ElementType>& table = tables_[i];
-            table = lsh::LshTable<ElementType>(feature_size_, key_size_);
+            table = lsh::LshTable<ElementType>(feature_size_, key_size_, indices);
 
             // Add the features to the table
             table.add(dataset_);
@@ -258,8 +272,8 @@ private:
      * @param k_nn the number of nearest neighbors
      * @param checked_average used for debugging
      */
-    void getNeighbors(const ElementType* vec, bool do_radius, float radius, bool do_k, unsigned int k_nn,
-                      float& checked_average)
+    void getNeighbors(const ElementType* vec, bool /*do_radius*/, float radius, bool do_k, unsigned int k_nn,
+                      float& /*checked_average*/)
     {
         static std::vector<ScoreIndexPair> score_index_heap;
 

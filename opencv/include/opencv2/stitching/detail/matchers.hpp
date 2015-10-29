@@ -44,11 +44,13 @@
 #define __OPENCV_STITCHING_MATCHERS_HPP__
 
 #include "opencv2/core/core.hpp"
+#include "opencv2/core/gpumat.hpp"
 #include "opencv2/features2d/features2d.hpp"
 
 #include "opencv2/opencv_modules.hpp"
-#ifdef HAVE_OPENCV_GPU
-#include "opencv2/gpu/gpu.hpp"
+
+#if defined(HAVE_OPENCV_NONFREE)
+    #include "opencv2/nonfree/gpu.hpp"
 #endif
 
 namespace cv {
@@ -103,7 +105,7 @@ private:
 };
 
 
-#ifdef HAVE_OPENCV_GPU
+#if defined(HAVE_OPENCV_NONFREE)
 class CV_EXPORTS SurfFeaturesFinderGpu : public FeaturesFinder
 {
 public:
@@ -120,8 +122,10 @@ private:
     gpu::SURF_GPU surf_;
     gpu::GpuMat keypoints_;
     gpu::GpuMat descriptors_;
+#if defined(HAVE_OPENCV_GPU) && !defined(DYNAMIC_CUDA_SUPPORT)
     int num_octaves_, num_layers_;
     int num_octaves_descr_, num_layers_descr_;
+#endif
 };
 #endif
 
@@ -146,10 +150,10 @@ class CV_EXPORTS FeaturesMatcher
 public:
     virtual ~FeaturesMatcher() {}
 
-    void operator ()(const ImageFeatures &features1, const ImageFeatures &features2, 
+    void operator ()(const ImageFeatures &features1, const ImageFeatures &features2,
                      MatchesInfo& matches_info) { match(features1, features2, matches_info); }
 
-    void operator ()(const std::vector<ImageFeatures> &features, std::vector<MatchesInfo> &pairwise_matches, 
+    void operator ()(const std::vector<ImageFeatures> &features, std::vector<MatchesInfo> &pairwise_matches,
                      const cv::Mat &mask = cv::Mat());
 
     bool isThreadSafe() const { return is_thread_safe_; }
@@ -159,7 +163,7 @@ public:
 protected:
     FeaturesMatcher(bool is_thread_safe = false) : is_thread_safe_(is_thread_safe) {}
 
-    virtual void match(const ImageFeatures &features1, const ImageFeatures &features2, 
+    virtual void match(const ImageFeatures &features1, const ImageFeatures &features2,
                        MatchesInfo& matches_info) = 0;
 
     bool is_thread_safe_;

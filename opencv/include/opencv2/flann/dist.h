@@ -43,8 +43,12 @@ typedef unsigned __int64 uint64_t;
 
 #include "defines.h"
 
-#ifdef __ARM_NEON__
-#include "arm_neon.h"
+#if (defined WIN32 || defined _WIN32) && defined(_M_ARM)
+# include <Intrin.h>
+#endif
+
+#if defined(__ARM_NEON__) || defined(__ARM_NEON)
+# include "arm_neon.h"
 #endif
 
 namespace cvflann
@@ -77,6 +81,8 @@ struct Accumulator<short>  { typedef float Type; };
 template<>
 struct Accumulator<int> { typedef float Type; };
 
+#undef True
+#undef False
 
 class True
 {
@@ -382,7 +388,7 @@ struct HammingLUT
      */
     ResultType operator()(const unsigned char* a, const unsigned char* b, int size) const
     {
-        static const uchar popCountTable[] = 
+        static const uchar popCountTable[] =
         {
             0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
             1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
@@ -395,6 +401,41 @@ struct HammingLUT
         };
         ResultType result = 0;
         for (int i = 0; i < size; i++) {
+            result += popCountTable[a[i] ^ b[i]];
+        }
+        return result;
+    }
+};
+
+/**
+ * Hamming distance functor - counts the bit differences between two strings - useful for the Brief descriptor
+ * bit count of A exclusive XOR'ed with B
+ */
+struct HammingLUT2
+{
+    typedef False is_kdtree_distance;
+    typedef False is_vector_space_distance;
+
+    typedef unsigned char ElementType;
+    typedef int ResultType;
+
+    /** this will count the bits in a ^ b
+     */
+    ResultType operator()(const unsigned char* a, const unsigned char* b, size_t size) const
+    {
+        static const uchar popCountTable[] =
+        {
+            0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
+            1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+            1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+            2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+            1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+            2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+            2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+            3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8
+        };
+        ResultType result = 0;
+        for (size_t i = 0; i < size; i++) {
             result += popCountTable[a[i] ^ b[i]];
         }
         return result;
@@ -419,8 +460,7 @@ struct Hamming
     ResultType operator()(Iterator1 a, Iterator2 b, size_t size, ResultType /*worst_dist*/ = -1) const
     {
         ResultType result = 0;
-#ifdef __GNUC__
-#ifdef __ARM_NEON__
+#if defined(__ARM_NEON__) || defined(__ARM_NEON)
         {
             uint32x4_t bits = vmovq_n_u32(0);
             for (size_t i = 0; i < size; i += 16) {
@@ -436,7 +476,7 @@ struct Hamming
             result = vgetq_lane_s32 (vreinterpretq_s32_u64(bitSet2),0);
             result += vgetq_lane_s32 (vreinterpretq_s32_u64(bitSet2),2);
         }
-#else
+#elif __GNUC__
         {
             //for portability just use unsigned long -- and use the __builtin_popcountll (see docs for __builtin_popcountll)
             typedef unsigned long long pop_t;
@@ -456,8 +496,8 @@ struct Hamming
                 result += __builtin_popcountll(a_final ^ b_final);
             }
         }
-#endif //NEON
-#else
+#else // NO NEON and NOT GNUC
+        typedef unsigned long long pop_t;
         HammingLUT lut;
         result = lut(reinterpret_cast<const unsigned char*> (a),
                      reinterpret_cast<const unsigned char*> (b), size * sizeof(pop_t));
@@ -512,9 +552,9 @@ struct Hamming2
         ResultType result = 0;
         size /= (sizeof(uint32_t)/sizeof(unsigned char));
         for(size_t i = 0; i < size; ++i ) {
-        	result += popcnt32(*pa ^ *pb);
-        	++pa;
-        	++pb;
+            result += popcnt32(*pa ^ *pb);
+            ++pa;
+            ++pb;
         }
 #endif
         return result;
@@ -771,6 +811,126 @@ struct ZeroIterator
     }
 
 };
+
+
+/*
+ * Depending on processed distances, some of them are already squared (e.g. L2)
+ * and some are not (e.g.Hamming). In KMeans++ for instance we want to be sure
+ * we are working on ^2 distances, thus following templates to ensure that.
+ */
+template <typename Distance, typename ElementType>
+struct squareDistance
+{
+    typedef typename Distance::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist*dist; }
+};
+
+
+template <typename ElementType>
+struct squareDistance<L2_Simple<ElementType>, ElementType>
+{
+    typedef typename L2_Simple<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist; }
+};
+
+template <typename ElementType>
+struct squareDistance<L2<ElementType>, ElementType>
+{
+    typedef typename L2<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist; }
+};
+
+
+template <typename ElementType>
+struct squareDistance<MinkowskiDistance<ElementType>, ElementType>
+{
+    typedef typename MinkowskiDistance<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist; }
+};
+
+template <typename ElementType>
+struct squareDistance<HellingerDistance<ElementType>, ElementType>
+{
+    typedef typename HellingerDistance<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist; }
+};
+
+template <typename ElementType>
+struct squareDistance<ChiSquareDistance<ElementType>, ElementType>
+{
+    typedef typename ChiSquareDistance<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist; }
+};
+
+
+template <typename Distance>
+typename Distance::ResultType ensureSquareDistance( typename Distance::ResultType dist )
+{
+    typedef typename Distance::ElementType ElementType;
+
+    squareDistance<Distance, ElementType> dummy;
+    return dummy( dist );
+}
+
+
+/*
+ * ...and a template to ensure the user that he will process the normal distance,
+ * and not squared distance, without loosing processing time calling sqrt(ensureSquareDistance)
+ * that will result in doing actually sqrt(dist*dist) for L1 distance for instance.
+ */
+template <typename Distance, typename ElementType>
+struct simpleDistance
+{
+    typedef typename Distance::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return dist; }
+};
+
+
+template <typename ElementType>
+struct simpleDistance<L2_Simple<ElementType>, ElementType>
+{
+    typedef typename L2_Simple<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return sqrt(dist); }
+};
+
+template <typename ElementType>
+struct simpleDistance<L2<ElementType>, ElementType>
+{
+    typedef typename L2<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return sqrt(dist); }
+};
+
+
+template <typename ElementType>
+struct simpleDistance<MinkowskiDistance<ElementType>, ElementType>
+{
+    typedef typename MinkowskiDistance<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return sqrt(dist); }
+};
+
+template <typename ElementType>
+struct simpleDistance<HellingerDistance<ElementType>, ElementType>
+{
+    typedef typename HellingerDistance<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return sqrt(dist); }
+};
+
+template <typename ElementType>
+struct simpleDistance<ChiSquareDistance<ElementType>, ElementType>
+{
+    typedef typename ChiSquareDistance<ElementType>::ResultType ResultType;
+    ResultType operator()( ResultType dist ) { return sqrt(dist); }
+};
+
+
+template <typename Distance>
+typename Distance::ResultType ensureSimpleDistance( typename Distance::ResultType dist )
+{
+    typedef typename Distance::ElementType ElementType;
+
+    simpleDistance<Distance, ElementType> dummy;
+    return dummy( dist );
+}
 
 }
 

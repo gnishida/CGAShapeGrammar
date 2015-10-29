@@ -128,7 +128,7 @@ void Shader::loadTextFile(const string& filename, string& str) {
 		text += line + "\n"; 
 	}
 	file.close();
-	str = std::string(text.toAscii().constData());
+	str = std::string(text.toUtf8().constData());
 }
 
 /**

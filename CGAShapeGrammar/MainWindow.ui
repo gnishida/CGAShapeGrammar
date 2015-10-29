@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>795</width>
-    <height>575</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>CGA Shape Grammar</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>795</width>
+     <width>800</width>
      <height>21</height>
     </rect>
    </property>
@@ -27,7 +27,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpenCGARules"/>
+    <addaction name="actionOpenCGA"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -46,12 +46,12 @@
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="title">
-     <string>Test</string>
+     <string>Tool</string>
     </property>
-    <addaction name="actionGenerateImages"/>
+    <addaction name="actionGenerateWindowImages"/>
     <addaction name="actionGenerateBuildingImages"/>
     <addaction name="separator"/>
-    <addaction name="actionHoge"/>
+    <addaction name="actionTest"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -66,47 +66,17 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionExit">
+  <action name="actionOpenCGA">
    <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionViewWireframe">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Wireframe</string>
-   </property>
-   <property name="shortcut">
-    <string>W</string>
-   </property>
-  </action>
-  <action name="actionOpenCGARules">
-   <property name="text">
-    <string>Open CGA Rules</string>
+    <string>Open CGA</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionViewScopeCoordinateSystem">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
+  <action name="actionExit">
    <property name="text">
-    <string>Scope Coordinate System</string>
-   </property>
-   <property name="shortcut">
-    <string>C</string>
-   </property>
-  </action>
-  <action name="actionViewRefresh">
-   <property name="text">
-    <string>Refresh</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
+    <string>Exit</string>
    </property>
   </action>
   <action name="actionViewShadow">
@@ -117,30 +87,28 @@
     <string>Shadow</string>
    </property>
   </action>
-  <action name="actionViewLineRendering">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Line Rendering</string>
-   </property>
-  </action>
-  <action name="actionGenerateImages">
-   <property name="text">
-    <string>Generate Images</string>
-   </property>
-  </action>
-  <action name="actionHoge">
-   <property name="text">
-    <string>Hoge</string>
-   </property>
-  </action>
   <action name="actionViewRegularRendering">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Regular Rendering</string>
+   </property>
+  </action>
+  <action name="actionViewWireframe">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wireframe</string>
+   </property>
+  </action>
+  <action name="actionViewLineRendering">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Line Rendering</string>
    </property>
   </action>
   <action name="actionViewSketchyRendering">
@@ -151,14 +119,27 @@
     <string>Sketchy Rendering</string>
    </property>
   </action>
-  <action name="actionLSD">
+  <action name="actionViewRefresh">
    <property name="text">
-    <string>LSD</string>
+    <string>Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionGenerateWindowImages">
+   <property name="text">
+    <string>Generate Window Images</string>
    </property>
   </action>
   <action name="actionGenerateBuildingImages">
    <property name="text">
     <string>Generate Building Images</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>Test</string>
    </property>
   </action>
  </widget>

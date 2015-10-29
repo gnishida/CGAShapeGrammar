@@ -192,31 +192,31 @@ typedef struct CvLSVMFilterObject{
 
 // data type: STRUCT CvLatentSvmDetector
 // structure contains internal representation of trained Latent SVM detector
-// num_filters			- total number of filters (root plus part) in model
-// num_components		- number of components in model
-// num_part_filters		- array containing number of part filters for each component
-// filters				- root and part filters for all model components
-// b					- biases for all model components
-// score_threshold		- confidence level threshold
+// num_filters          - total number of filters (root plus part) in model
+// num_components       - number of components in model
+// num_part_filters     - array containing number of part filters for each component
+// filters              - root and part filters for all model components
+// b                    - biases for all model components
+// score_threshold      - confidence level threshold
 typedef struct CvLatentSvmDetector
 {
-	int num_filters;
-	int num_components;
-	int* num_part_filters;
-	CvLSVMFilterObject** filters;
-	float* b;
-	float score_threshold;
+    int num_filters;
+    int num_components;
+    int* num_part_filters;
+    CvLSVMFilterObject** filters;
+    float* b;
+    float score_threshold;
 }
 CvLatentSvmDetector;
 
 // data type: STRUCT CvObjectDetection
 // structure contains the bounding box and confidence level for detected object
-// rect					- bounding box for a detected object
-// score				- confidence level
+// rect                 - bounding box for a detected object
+// score                - confidence level
 typedef struct CvObjectDetection
 {
-	CvRect rect;
-	float score;
+    CvRect rect;
+    float score;
 } CvObjectDetection;
 
 //////////////// Object Detection using Latent SVM //////////////
@@ -228,8 +228,8 @@ typedef struct CvObjectDetection
 // API
 // CvLatentSvmDetector* cvLoadLatentSvmDetector(const char* filename);
 // INPUT
-// filename				- path to the file containing the parameters of
-						- trained Latent SVM detector
+// filename             - path to the file containing the parameters of
+                        - trained Latent SVM detector
 // OUTPUT
 // trained Latent SVM detector in internal representation
 */
@@ -241,7 +241,7 @@ CVAPI(CvLatentSvmDetector*) cvLoadLatentSvmDetector(const char* filename);
 // API
 // void cvReleaseLatentSvmDetector(CvLatentSvmDetector** detector);
 // INPUT
-// detector				- CvLatentSvmDetector structure to be released
+// detector             - CvLatentSvmDetector structure to be released
 // OUTPUT
 */
 CVAPI(void) cvReleaseLatentSvmDetector(CvLatentSvmDetector** detector);
@@ -252,24 +252,24 @@ CVAPI(void) cvReleaseLatentSvmDetector(CvLatentSvmDetector** detector);
 //
 // API
 // CvSeq* cvLatentSvmDetectObjects(const IplImage* image,
-//									CvLatentSvmDetector* detector,
-//									CvMemStorage* storage,
-//									float overlap_threshold = 0.5f,
+//                                  CvLatentSvmDetector* detector,
+//                                  CvMemStorage* storage,
+//                                  float overlap_threshold = 0.5f,
 //                                  int numThreads = -1);
 // INPUT
-// image				- image to detect objects in
-// detector				- Latent SVM detector in internal representation
-// storage				- memory storage to store the resultant sequence
-//							of the object candidate rectangles
-// overlap_threshold	- threshold for the non-maximum suppression algorithm
+// image                - image to detect objects in
+// detector             - Latent SVM detector in internal representation
+// storage              - memory storage to store the resultant sequence
+//                          of the object candidate rectangles
+// overlap_threshold    - threshold for the non-maximum suppression algorithm
                            = 0.5f [here will be the reference to original paper]
 // OUTPUT
 // sequence of detected objects (bounding boxes and confidence levels stored in CvObjectDetection structures)
 */
 CVAPI(CvSeq*) cvLatentSvmDetectObjects(IplImage* image,
-								CvLatentSvmDetector* detector,
-								CvMemStorage* storage,
-								float overlap_threshold CV_DEFAULT(0.5f),
+                                CvLatentSvmDetector* detector,
+                                CvMemStorage* storage,
+                                float overlap_threshold CV_DEFAULT(0.5f),
                                 int numThreads CV_DEFAULT(-1));
 
 #ifdef __cplusplus
@@ -327,13 +327,30 @@ private:
     vector<string> classNames;
 };
 
+// class for grouping object candidates, detected by Cascade Classifier, HOG etc.
+// instance of the class is to be passed to cv::partition (see cxoperations.hpp)
+class CV_EXPORTS SimilarRects
+{
+public:
+    SimilarRects(double _eps) : eps(_eps) {}
+    inline bool operator()(const Rect& r1, const Rect& r2) const
+    {
+        double delta = eps*(std::min(r1.width, r2.width) + std::min(r1.height, r2.height))*0.5;
+        return std::abs(r1.x - r2.x) <= delta &&
+            std::abs(r1.y - r2.y) <= delta &&
+            std::abs(r1.x + r1.width - r2.x - r2.width) <= delta &&
+            std::abs(r1.y + r1.height - r2.y - r2.height) <= delta;
+    }
+    double eps;
+};
+
 CV_EXPORTS void groupRectangles(CV_OUT CV_IN_OUT vector<Rect>& rectList, int groupThreshold, double eps=0.2);
 CV_EXPORTS_W void groupRectangles(CV_OUT CV_IN_OUT vector<Rect>& rectList, CV_OUT vector<int>& weights, int groupThreshold, double eps=0.2);
 CV_EXPORTS void groupRectangles( vector<Rect>& rectList, int groupThreshold, double eps, vector<int>* weights, vector<double>* levelWeights );
 CV_EXPORTS void groupRectangles(vector<Rect>& rectList, vector<int>& rejectLevels,
                                 vector<double>& levelWeights, int groupThreshold, double eps=0.2);
 CV_EXPORTS void groupRectangles_meanshift(vector<Rect>& rectList, vector<double>& foundWeights, vector<double>& foundScales,
-										  double detectThreshold = 0.0, Size winDetSize = Size(64, 128));
+                                          double detectThreshold = 0.0, Size winDetSize = Size(64, 128));
 
 
 class CV_EXPORTS FeatureEvaluator
@@ -359,10 +376,10 @@ template<> CV_EXPORTS void Ptr<CvHaarClassifierCascade>::delete_obj();
 
 enum
 {
-	CASCADE_DO_CANNY_PRUNING=1,
-	CASCADE_SCALE_IMAGE=2,
-	CASCADE_FIND_BIGGEST_OBJECT=4,
-	CASCADE_DO_ROUGH_SEARCH=8
+    CASCADE_DO_CANNY_PRUNING=1,
+    CASCADE_SCALE_IMAGE=2,
+    CASCADE_FIND_BIGGEST_OBJECT=4,
+    CASCADE_DO_ROUGH_SEARCH=8
 };
 
 class CV_EXPORTS_W CascadeClassifier
@@ -411,7 +428,7 @@ protected:
     enum { DO_CANNY_PRUNING = 1, SCALE_IMAGE = 2,
            FIND_BIGGEST_OBJECT = 4, DO_ROUGH_SEARCH = 8 };
 
-    friend struct CascadeClassifierInvoker;
+    friend class CascadeClassifierInvoker;
 
     template<class FEval>
     friend int predictOrdered( CascadeClassifier& cascade, Ptr<FeatureEvaluator> &featureEvaluator, double& weight);
@@ -491,6 +508,17 @@ protected:
 
 //////////////// HOG (Histogram-of-Oriented-Gradients) Descriptor and Object Detector //////////////
 
+// struct for detection region of interest (ROI)
+struct DetectionROI
+{
+   // scale(size) of the bounding box
+   double scale;
+   // set of requrested locations to be evaluated
+   vector<cv::Point> locations;
+   // vector that will contain confidence values for each location
+   vector<double> confidences;
+};
+
 struct CV_EXPORTS_W HOGDescriptor
 {
 public:
@@ -498,7 +526,7 @@ public:
     enum { DEFAULT_NLEVELS=64 };
 
     CV_WRAP HOGDescriptor() : winSize(64,128), blockSize(16,16), blockStride(8,8),
-    	cellSize(8,8), nbins(9), derivAperture(1), winSigma(-1),
+        cellSize(8,8), nbins(9), derivAperture(1), winSigma(-1),
         histogramNormType(HOGDescriptor::L2Hys), L2HysThreshold(0.2), gammaCorrection(true),
         nlevels(HOGDescriptor::DEFAULT_NLEVELS)
     {}
@@ -543,33 +571,33 @@ public:
                          CV_OUT vector<float>& descriptors,
                          Size winStride=Size(), Size padding=Size(),
                          const vector<Point>& locations=vector<Point>()) const;
-	//with found weights output
+    //with found weights output
     CV_WRAP virtual void detect(const Mat& img, CV_OUT vector<Point>& foundLocations,
-						CV_OUT vector<double>& weights,
+                        CV_OUT vector<double>& weights,
                         double hitThreshold=0, Size winStride=Size(),
-						Size padding=Size(),
+                        Size padding=Size(),
                         const vector<Point>& searchLocations=vector<Point>()) const;
-	//without found weights output
+    //without found weights output
     virtual void detect(const Mat& img, CV_OUT vector<Point>& foundLocations,
                         double hitThreshold=0, Size winStride=Size(),
                         Size padding=Size(),
                         const vector<Point>& searchLocations=vector<Point>()) const;
-	//with result weights output
+    //with result weights output
     CV_WRAP virtual void detectMultiScale(const Mat& img, CV_OUT vector<Rect>& foundLocations,
-								  CV_OUT vector<double>& foundWeights, double hitThreshold=0,
-								  Size winStride=Size(), Size padding=Size(), double scale=1.05,
-								  double finalThreshold=2.0,bool useMeanshiftGrouping = false) const;
-	//without found weights output
-	virtual void detectMultiScale(const Mat& img, CV_OUT vector<Rect>& foundLocations,
-								  double hitThreshold=0, Size winStride=Size(),
+                                  CV_OUT vector<double>& foundWeights, double hitThreshold=0,
+                                  Size winStride=Size(), Size padding=Size(), double scale=1.05,
+                                  double finalThreshold=2.0,bool useMeanshiftGrouping = false) const;
+    //without found weights output
+    virtual void detectMultiScale(const Mat& img, CV_OUT vector<Rect>& foundLocations,
+                                  double hitThreshold=0, Size winStride=Size(),
                                   Size padding=Size(), double scale=1.05,
-								  double finalThreshold=2.0, bool useMeanshiftGrouping = false) const;
+                                  double finalThreshold=2.0, bool useMeanshiftGrouping = false) const;
 
     CV_WRAP virtual void computeGradient(const Mat& img, CV_OUT Mat& grad, CV_OUT Mat& angleOfs,
                                  Size paddingTL=Size(), Size paddingBR=Size()) const;
 
     CV_WRAP static vector<float> getDefaultPeopleDetector();
-	CV_WRAP static vector<float> getDaimlerPeopleDetector();
+    CV_WRAP static vector<float> getDaimlerPeopleDetector();
 
     CV_PROP Size winSize;
     CV_PROP Size blockSize;
@@ -583,6 +611,24 @@ public:
     CV_PROP bool gammaCorrection;
     CV_PROP vector<float> svmDetector;
     CV_PROP int nlevels;
+
+
+   // evaluate specified ROI and return confidence value for each location
+   void detectROI(const cv::Mat& img, const vector<cv::Point> &locations,
+                                   CV_OUT std::vector<cv::Point>& foundLocations, CV_OUT std::vector<double>& confidences,
+                                   double hitThreshold = 0, cv::Size winStride = Size(),
+                                   cv::Size padding = Size()) const;
+
+   // evaluate specified ROI and return confidence value for each location in multiple scales
+   void detectMultiScaleROI(const cv::Mat& img,
+                                                       CV_OUT std::vector<cv::Rect>& foundLocations,
+                                                       std::vector<DetectionROI>& locations,
+                                                       double hitThreshold = 0,
+                                                       int groupThreshold = 0) const;
+
+   // read/parse Dalal's alt model file
+   void readALTModel(std::string modelfile);
+   void groupRectangles(vector<cv::Rect>& rectList, vector<double>& weights, int groupThreshold, double eps) const;
 };
 
 
@@ -736,7 +782,7 @@ public:
    *                 in quantized image and cannot be extracted as features.
    */
   Ptr<QuantizedPyramid> process(const Mat& src,
-				    const Mat& mask = Mat()) const
+                    const Mat& mask = Mat()) const
   {
     return processImpl(src, mask);
   }
@@ -763,7 +809,7 @@ public:
 protected:
   // Indirection is because process() has a default parameter.
   virtual Ptr<QuantizedPyramid> processImpl(const Mat& src,
-						const Mat& mask) const =0;
+                        const Mat& mask) const =0;
 };
 
 /**
@@ -798,7 +844,7 @@ public:
 
 protected:
   virtual Ptr<QuantizedPyramid> processImpl(const Mat& src,
-						const Mat& mask) const;
+                        const Mat& mask) const;
 };
 
 /**
@@ -837,7 +883,7 @@ public:
 
 protected:
   virtual Ptr<QuantizedPyramid> processImpl(const Mat& src,
-						const Mat& mask) const;
+                        const Mat& mask) const;
 };
 
 /**
@@ -935,7 +981,7 @@ public:
    * \return Template ID, or -1 if failed to extract a valid template.
    */
   int addTemplate(const std::vector<Mat>& sources, const std::string& class_id,
-		  const Mat& object_mask, Rect* bounding_box = NULL);
+          const Mat& object_mask, Rect* bounding_box = NULL);
 
   /**
    * \brief Add a new object template computed by external means.

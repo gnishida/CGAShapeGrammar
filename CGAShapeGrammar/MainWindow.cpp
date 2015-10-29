@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include <QFileDialog>
 
-MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
 
 	QActionGroup* renderingModeGroup = new QActionGroup(this);
@@ -15,16 +15,16 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 	ui.actionViewRegularRendering->setChecked(true);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
-	connect(ui.actionOpenCGARules, SIGNAL(triggered()), this, SLOT(onOpenCGARules()));
+	connect(ui.actionOpenCGA, SIGNAL(triggered()), this, SLOT(onOpenCGA()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
 	connect(ui.actionViewRegularRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
-	connect(ui.actionGenerateImages, SIGNAL(triggered()), this, SLOT(onGenerateImages()));
+	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
-	connect(ui.actionHoge, SIGNAL(triggered()), this, SLOT(onHoge()));
+	connect(ui.actionTest, SIGNAL(triggered()), this, SLOT(onTest()));
 
 	glWidget = new GLWidget3D();
 	setCentralWidget(glWidget);
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, 
 MainWindow::~MainWindow() {
 }
 
-void MainWindow::onOpenCGARules() {
+void MainWindow::onOpenCGA() {
 	QString new_filename = QFileDialog::getOpenFileName(this, tr("Open CGA file..."), "", tr("CGA Files (*.xml)"));
 	if (new_filename.isEmpty()) return;
 
@@ -69,16 +69,16 @@ void MainWindow::onViewRefresh() {
 	}
 }
 
-void MainWindow::onGenerateImages() {
+void MainWindow::onGenerateWindowImages() {
 	//glWidget->generateImages(256, 256, false, false);
-	glWidget->generateImages(512, 512, false, false);
+	glWidget->generateWindowImages(512, 512, false, false);
 }
 
 void MainWindow::onGenerateBuildingImages() {
 	glWidget->generateBuildingImages(512, 512, false, false);
 }
 
-void MainWindow::onHoge() {
-	glWidget->hoge();
+void MainWindow::onTest() {
+	glWidget->test();
 }
 

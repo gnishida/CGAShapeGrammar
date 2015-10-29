@@ -158,6 +158,7 @@ CVAPI(int) cvCreateTrackbar2( const char* trackbar_name, const char* window_name
 /* retrieve or set trackbar position */
 CVAPI(int) cvGetTrackbarPos( const char* trackbar_name, const char* window_name );
 CVAPI(void) cvSetTrackbarPos( const char* trackbar_name, const char* window_name, int pos );
+CVAPI(void) cvSetTrackbarMax(const char* trackbar_name, const char* window_name, int maxval);
 
 enum
 {
@@ -217,6 +218,7 @@ enum
     CV_IMWRITE_JPEG_QUALITY =1,
     CV_IMWRITE_PNG_COMPRESSION =16,
     CV_IMWRITE_PNG_STRATEGY =17,
+    CV_IMWRITE_PNG_BILEVEL =18,
     CV_IMWRITE_PNG_STRATEGY_DEFAULT =0,
     CV_IMWRITE_PNG_STRATEGY_FILTERED =1,
     CV_IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY =2,
@@ -296,6 +298,7 @@ enum
     CV_CAP_UNICAP   =600,   // Unicap drivers
 
     CV_CAP_DSHOW    =700,   // DirectShow (via videoInput)
+    CV_CAP_MSMF     =1400,  // Microsoft Media Foundation (via videoInput)
 
     CV_CAP_PVAPI    =800,   // PvAPI, Prosilica GigE SDK
 
@@ -303,10 +306,16 @@ enum
     CV_CAP_OPENNI_ASUS =910,   // OpenNI (for Asus Xtion)
 
     CV_CAP_ANDROID  =1000,  // Android
+    CV_CAP_ANDROID_BACK =CV_CAP_ANDROID+99, // Android back camera
+    CV_CAP_ANDROID_FRONT =CV_CAP_ANDROID+98, // Android front camera
 
     CV_CAP_XIAPI    =1100,   // XIMEA Camera API
 
-    CV_CAP_AVFOUNDATION = 1200  // AVFoundation framework for iOS (OS X Lion will have the same API)
+    CV_CAP_AVFOUNDATION = 1200,  // AVFoundation framework for iOS (OS X Lion will have the same API)
+
+    CV_CAP_GIGANETIX = 1300,  // Smartek Giganetix GigEVisionSDK
+
+    CV_CAP_INTELPERC = 1500 // Intel Perceptual Computing SDK
 };
 
 /* start capturing frames from camera: index = camera_index + domain_offset (CV_CAP_*) */
@@ -354,7 +363,7 @@ enum
     CV_CAP_PROP_GAIN          =14,
     CV_CAP_PROP_EXPOSURE      =15,
     CV_CAP_PROP_CONVERT_RGB   =16,
-    CV_CAP_PROP_WHITE_BALANCE_BLUE_U =17,
+    CV_CAP_PROP_WHITE_BALANCE_U =17,
     CV_CAP_PROP_RECTIFICATION =18,
     CV_CAP_PROP_MONOCROME     =19,
     CV_CAP_PROP_SHARPNESS     =20,
@@ -365,7 +374,7 @@ enum
     CV_CAP_PROP_TEMPERATURE   =23,
     CV_CAP_PROP_TRIGGER       =24,
     CV_CAP_PROP_TRIGGER_DELAY =25,
-    CV_CAP_PROP_WHITE_BALANCE_RED_V =26,
+    CV_CAP_PROP_WHITE_BALANCE_V =26,
     CV_CAP_PROP_ZOOM          =27,
     CV_CAP_PROP_FOCUS         =28,
     CV_CAP_PROP_GUID          =29,
@@ -377,6 +386,7 @@ enum
     CV_CAP_PROP_ROLL          =35,
     CV_CAP_PROP_IRIS          =36,
     CV_CAP_PROP_SETTINGS      =37,
+    CV_CAP_PROP_BUFFERSIZE    =38,
 
     CV_CAP_PROP_AUTOGRAB      =1024, // property for highgui class CvCapture_Android only
     CV_CAP_PROP_SUPPORTED_PREVIEW_SIZES_STRING=1025, // readonly, tricky property, returns cpnst char* indeed
@@ -446,13 +456,37 @@ enum
     CV_CAP_PROP_ANDROID_FOCUS_DISTANCE_NEAR = 8006,
     CV_CAP_PROP_ANDROID_FOCUS_DISTANCE_OPTIMAL = 8007,
     CV_CAP_PROP_ANDROID_FOCUS_DISTANCE_FAR = 8008,
+    CV_CAP_PROP_ANDROID_EXPOSE_LOCK = 8009,
+    CV_CAP_PROP_ANDROID_WHITEBALANCE_LOCK = 8010,
 
     // Properties of cameras available through AVFOUNDATION interface
     CV_CAP_PROP_IOS_DEVICE_FOCUS = 9001,
     CV_CAP_PROP_IOS_DEVICE_EXPOSURE = 9002,
     CV_CAP_PROP_IOS_DEVICE_FLASH = 9003,
     CV_CAP_PROP_IOS_DEVICE_WHITEBALANCE = 9004,
-    CV_CAP_PROP_IOS_DEVICE_TORCH = 9005
+    CV_CAP_PROP_IOS_DEVICE_TORCH = 9005,
+
+    // Properties of cameras available through Smartek Giganetix Ethernet Vision interface
+    /* --- Vladimir Litvinenko (litvinenko.vladimir@gmail.com) --- */
+    CV_CAP_PROP_GIGA_FRAME_OFFSET_X = 10001,
+    CV_CAP_PROP_GIGA_FRAME_OFFSET_Y = 10002,
+    CV_CAP_PROP_GIGA_FRAME_WIDTH_MAX = 10003,
+    CV_CAP_PROP_GIGA_FRAME_HEIGH_MAX = 10004,
+    CV_CAP_PROP_GIGA_FRAME_SENS_WIDTH = 10005,
+    CV_CAP_PROP_GIGA_FRAME_SENS_HEIGH = 10006,
+
+    CV_CAP_PROP_INTELPERC_PROFILE_COUNT               = 11001,
+    CV_CAP_PROP_INTELPERC_PROFILE_IDX                 = 11002,
+    CV_CAP_PROP_INTELPERC_DEPTH_LOW_CONFIDENCE_VALUE  = 11003,
+    CV_CAP_PROP_INTELPERC_DEPTH_SATURATION_VALUE      = 11004,
+    CV_CAP_PROP_INTELPERC_DEPTH_CONFIDENCE_THRESHOLD  = 11005,
+    CV_CAP_PROP_INTELPERC_DEPTH_FOCAL_LENGTH_HORZ     = 11006,
+    CV_CAP_PROP_INTELPERC_DEPTH_FOCAL_LENGTH_VERT     = 11007,
+
+    // Intel PerC streams
+    CV_CAP_INTELPERC_DEPTH_GENERATOR = 1 << 29,
+    CV_CAP_INTELPERC_IMAGE_GENERATOR = 1 << 28,
+    CV_CAP_INTELPERC_GENERATORS_MASK = CV_CAP_INTELPERC_DEPTH_GENERATOR + CV_CAP_INTELPERC_IMAGE_GENERATOR
 };
 
 enum
@@ -474,22 +508,25 @@ enum
 {
     CV_CAP_OPENNI_VGA_30HZ     = 0,
     CV_CAP_OPENNI_SXGA_15HZ    = 1,
-    CV_CAP_OPENNI_SXGA_30HZ    = 2
+    CV_CAP_OPENNI_SXGA_30HZ    = 2,
+    CV_CAP_OPENNI_QVGA_30HZ    = 3,
+    CV_CAP_OPENNI_QVGA_60HZ    = 4
 };
 
 //supported by Android camera output formats
 enum
 {
-  CV_CAP_ANDROID_COLOR_FRAME_BGR = 0, //BGR
-  CV_CAP_ANDROID_COLOR_FRAME = CV_CAP_ANDROID_COLOR_FRAME_BGR,
-  CV_CAP_ANDROID_GREY_FRAME  = 1,  //Y
-  CV_CAP_ANDROID_COLOR_FRAME_RGB = 2,
-  CV_CAP_ANDROID_COLOR_FRAME_BGRA = 3,
-  CV_CAP_ANDROID_COLOR_FRAME_RGBA = 4
+    CV_CAP_ANDROID_COLOR_FRAME_BGR = 0, //BGR
+    CV_CAP_ANDROID_COLOR_FRAME = CV_CAP_ANDROID_COLOR_FRAME_BGR,
+    CV_CAP_ANDROID_GREY_FRAME  = 1,  //Y
+    CV_CAP_ANDROID_COLOR_FRAME_RGB = 2,
+    CV_CAP_ANDROID_COLOR_FRAME_BGRA = 3,
+    CV_CAP_ANDROID_COLOR_FRAME_RGBA = 4
 };
 
 // supported Android camera flash modes
-enum {
+enum
+{
     CV_CAP_ANDROID_FLASH_MODE_AUTO = 0,
     CV_CAP_ANDROID_FLASH_MODE_OFF,
     CV_CAP_ANDROID_FLASH_MODE_ON,
@@ -498,8 +535,10 @@ enum {
 };
 
 // supported Android camera focus modes
-enum {
+enum
+{
     CV_CAP_ANDROID_FOCUS_MODE_AUTO = 0,
+    CV_CAP_ANDROID_FOCUS_MODE_CONTINUOUS_PICTURE,
     CV_CAP_ANDROID_FOCUS_MODE_CONTINUOUS_VIDEO,
     CV_CAP_ANDROID_FOCUS_MODE_EDOF,
     CV_CAP_ANDROID_FOCUS_MODE_FIXED,
@@ -508,7 +547,8 @@ enum {
 };
 
 // supported Android camera white balance modes
-enum {
+enum
+{
     CV_CAP_ANDROID_WHITE_BALANCE_AUTO = 0,
     CV_CAP_ANDROID_WHITE_BALANCE_CLOUDY_DAYLIGHT,
     CV_CAP_ANDROID_WHITE_BALANCE_DAYLIGHT,
@@ -520,11 +560,20 @@ enum {
 };
 
 // supported Android camera antibanding modes
-enum {
+enum
+{
     CV_CAP_ANDROID_ANTIBANDING_50HZ = 0,
     CV_CAP_ANDROID_ANTIBANDING_60HZ,
     CV_CAP_ANDROID_ANTIBANDING_AUTO,
     CV_CAP_ANDROID_ANTIBANDING_OFF
+};
+
+enum
+{
+    CV_CAP_INTELPERC_DEPTH_MAP              = 0, // Each pixel is a 16-bit integer. The value indicates the distance from an object to the camera's XY plane or the Cartesian depth.
+    CV_CAP_INTELPERC_UVDEPTH_MAP            = 1, // Each pixel contains two 32-bit floating point values in the range of 0-1, representing the mapping of depth coordinates to the color coordinates.
+    CV_CAP_INTELPERC_IR_MAP                 = 2, // Each pixel is a 16-bit integer. The value indicates the intensity of the reflected laser beam.
+    CV_CAP_INTELPERC_IMAGE                  = 3
 };
 
 /* retrieve or set capture properties */
@@ -537,9 +586,11 @@ CVAPI(int)    cvGetCaptureDomain( CvCapture* capture);
 /* "black box" video file writer structure */
 typedef struct CvVideoWriter CvVideoWriter;
 
+#define CV_FOURCC_MACRO(c1, c2, c3, c4) (((c1) & 255) + (((c2) & 255) << 8) + (((c3) & 255) << 16) + (((c4) & 255) << 24))
+
 CV_INLINE int CV_FOURCC(char c1, char c2, char c3, char c4)
 {
-    return (c1 & 255) + ((c2 & 255) << 8) + ((c3 & 255) << 16) + ((c4 & 255) << 24);
+    return CV_FOURCC_MACRO(c1, c2, c3, c4);
 }
 
 #define CV_FOURCC_PROMPT -1  /* Open Codec Selection Dialog (Windows only) */

@@ -20,9 +20,9 @@ public:
 
 	void drawScene(int drawMode);
 	void loadCGA(char* filename);
-	void generateImages(int image_width, int image_height, bool invertImage, bool blur);
+	void generateWindowImages(int image_width, int image_height, bool invertImage, bool blur);
 	void generateBuildingImages(int image_width, int image_height, bool invertImage, bool blur);
-	void hoge();
+	void test();
 	void EDLine(cv::Mat& result, float scale);
 	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
 

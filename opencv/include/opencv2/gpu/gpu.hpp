@@ -22,7 +22,7 @@
 //
 //   * Redistribution's in binary form must reproduce the above copyright notice,
 //     this list of conditions and the following disclaimer in the documentation
-//     and/or other GpuMaterials provided with the distribution.
+//     and/or other materials provided with the distribution.
 //
 //   * The name of the copyright holders may not be used to endorse or promote products
 //     derived from this software without specific prior written permission.
@@ -45,6 +45,8 @@
 
 #ifndef SKIP_INCLUDES
 #include <vector>
+#include <memory>
+#include <iosfwd>
 #endif
 
 #include "opencv2/core/gpumat.hpp"
@@ -143,43 +145,49 @@ public:
     ~Stream();
 
     Stream(const Stream&);
-    Stream& operator=(const Stream&);
+    Stream& operator =(const Stream&);
 
     bool queryIfComplete();
     void waitForCompletion();
 
-    //! downloads asynchronously.
+    //! downloads asynchronously
     // Warning! cv::Mat must point to page locked memory (i.e. to CudaMem data or to its subMat)
     void enqueueDownload(const GpuMat& src, CudaMem& dst);
     void enqueueDownload(const GpuMat& src, Mat& dst);
 
-    //! uploads asynchronously.
+    //! uploads asynchronously
     // Warning! cv::Mat must point to page locked memory (i.e. to CudaMem data or to its ROI)
     void enqueueUpload(const CudaMem& src, GpuMat& dst);
     void enqueueUpload(const Mat& src, GpuMat& dst);
 
+    //! copy asynchronously
     void enqueueCopy(const GpuMat& src, GpuMat& dst);
 
+    //! memory set asynchronously
     void enqueueMemSet(GpuMat& src, Scalar val);
     void enqueueMemSet(GpuMat& src, Scalar val, const GpuMat& mask);
 
-    // converts matrix type, ex from float to uchar depending on type
-    void enqueueConvert(const GpuMat& src, GpuMat& dst, int type, double a = 1, double b = 0);
+    //! converts matrix type, ex from float to uchar depending on type
+    void enqueueConvert(const GpuMat& src, GpuMat& dst, int dtype, double a = 1, double b = 0);
+
+    //! adds a callback to be called on the host after all currently enqueued items in the stream have completed
+    typedef void (*StreamCallback)(Stream& stream, int status, void* userData);
+    void enqueueHostCallback(StreamCallback callback, void* userData);
 
     static Stream& Null();
 
     operator bool() const;
 
 private:
+    struct Impl;
+
+    explicit Stream(Impl* impl);
     void create();
     void release();
 
-    struct Impl;
     Impl *impl;
 
     friend struct StreamAccessor;
-
-    explicit Stream(Impl* impl);
 };
 
 
@@ -457,6 +465,12 @@ CV_EXPORTS void cartToPolar(const GpuMat& x, const GpuMat& y, GpuMat& magnitude,
 //! supports only floating-point source
 CV_EXPORTS void polarToCart(const GpuMat& magnitude, const GpuMat& angle, GpuMat& x, GpuMat& y, bool angleInDegrees = false, Stream& stream = Stream::Null());
 
+//! scales and shifts array elements so that either the specified norm (alpha) or the minimum (alpha) and maximum (beta) array values get the specified values
+CV_EXPORTS void normalize(const GpuMat& src, GpuMat& dst, double alpha = 1, double beta = 0,
+                          int norm_type = NORM_L2, int dtype = -1, const GpuMat& mask = GpuMat());
+CV_EXPORTS void normalize(const GpuMat& src, GpuMat& dst, double a, double b,
+                          int norm_type, int dtype, const GpuMat& mask, GpuMat& norm_buf, GpuMat& cvt_buf);
+
 
 //////////////////////////// Per-element operations ////////////////////////////////////
 
@@ -523,8 +537,9 @@ CV_EXPORTS void log(const GpuMat& a, GpuMat& b, Stream& stream = Stream::Null())
 //! supports all, except depth == CV_64F
 CV_EXPORTS void pow(const GpuMat& src, double power, GpuMat& dst, Stream& stream = Stream::Null());
 
-//! compares elements of two arrays (c = a <cmpop> b)
+//! compares elements of two arrays (c = a \<cmpop\> b)
 CV_EXPORTS void compare(const GpuMat& a, const GpuMat& b, GpuMat& c, int cmpop, Stream& stream = Stream::Null());
+CV_EXPORTS void compare(const GpuMat& a, Scalar sc, GpuMat& c, int cmpop, Stream& stream = Stream::Null());
 
 //! performs per-elements bit-wise inversion
 CV_EXPORTS void bitwise_not(const GpuMat& src, GpuMat& dst, const GpuMat& mask=GpuMat(), Stream& stream = Stream::Null());
@@ -612,6 +627,26 @@ CV_EXPORTS void reprojectImageTo3D(const GpuMat& disp, GpuMat& xyzw, const Mat& 
 //! converts image from one color space to another
 CV_EXPORTS void cvtColor(const GpuMat& src, GpuMat& dst, int code, int dcn = 0, Stream& stream = Stream::Null());
 
+enum
+{
+    // Bayer Demosaicing (Malvar, He, and Cutler)
+    COLOR_BayerBG2BGR_MHT = 256,
+    COLOR_BayerGB2BGR_MHT = 257,
+    COLOR_BayerRG2BGR_MHT = 258,
+    COLOR_BayerGR2BGR_MHT = 259,
+
+    COLOR_BayerBG2RGB_MHT = COLOR_BayerRG2BGR_MHT,
+    COLOR_BayerGB2RGB_MHT = COLOR_BayerGR2BGR_MHT,
+    COLOR_BayerRG2RGB_MHT = COLOR_BayerBG2BGR_MHT,
+    COLOR_BayerGR2RGB_MHT = COLOR_BayerGB2BGR_MHT,
+
+    COLOR_BayerBG2GRAY_MHT = 260,
+    COLOR_BayerGB2GRAY_MHT = 261,
+    COLOR_BayerRG2GRAY_MHT = 262,
+    COLOR_BayerGR2GRAY_MHT = 263
+};
+CV_EXPORTS void demosaicing(const GpuMat& src, GpuMat& dst, int code, int dcn = -1, Stream& stream = Stream::Null());
+
 //! swap channels
 //! dstOrder - Integer array describing how channel values are permutated. The n-th entry
 //!            of the array contains the number of the channel that is stored in the n-th channel of
@@ -619,11 +654,14 @@ CV_EXPORTS void cvtColor(const GpuMat& src, GpuMat& dst, int code, int dcn = 0, 
 //!            channel order.
 CV_EXPORTS void swapChannels(GpuMat& image, const int dstOrder[4], Stream& stream = Stream::Null());
 
+//! Routines for correcting image color gamma
+CV_EXPORTS void gammaCorrection(const GpuMat& src, GpuMat& dst, bool forward = true, Stream& stream = Stream::Null());
+
 //! applies fixed threshold to the image
 CV_EXPORTS double threshold(const GpuMat& src, GpuMat& dst, double thresh, double maxval, int type, Stream& stream = Stream::Null());
 
 //! resizes the image
-//! Supports INTER_NEAREST, INTER_LINEAR, INTER_CUBIC
+//! Supports INTER_NEAREST, INTER_LINEAR, INTER_CUBIC, INTER_AREA
 CV_EXPORTS void resize(const GpuMat& src, GpuMat& dst, Size dsize, double fx=0, double fy=0, int interpolation = INTER_LINEAR, Stream& stream = Stream::Null());
 
 //! warps the image using affine transformation
@@ -695,11 +733,11 @@ CV_EXPORTS void cornerMinEigenVal(const GpuMat& src, GpuMat& dst, GpuMat& Dx, Gp
     int borderType=BORDER_REFLECT101, Stream& stream = Stream::Null());
 
 //! performs per-element multiplication of two full (not packed) Fourier spectrums
-//! supports 32FC2 matrixes only (interleaved format)
+//! supports 32FC2 matrices only (interleaved format)
 CV_EXPORTS void mulSpectrums(const GpuMat& a, const GpuMat& b, GpuMat& c, int flags, bool conjB=false, Stream& stream = Stream::Null());
 
 //! performs per-element multiplication of two full (not packed) Fourier spectrums
-//! supports 32FC2 matrixes only (interleaved format)
+//! supports 32FC2 matrices only (interleaved format)
 CV_EXPORTS void mulAndScaleSpectrums(const GpuMat& a, const GpuMat& b, GpuMat& c, int flags, float scale, bool conjB=false, Stream& stream = Stream::Null());
 
 //! Performs a forward or inverse discrete Fourier transform (1D or 2D) of floating point matrix.
@@ -763,30 +801,50 @@ CV_EXPORTS void pyrUp(const GpuMat& src, GpuMat& dst, Stream& stream = Stream::N
 CV_EXPORTS void blendLinear(const GpuMat& img1, const GpuMat& img2, const GpuMat& weights1, const GpuMat& weights2,
                             GpuMat& result, Stream& stream = Stream::Null());
 
+//! Performa bilateral filtering of passsed image
+CV_EXPORTS void bilateralFilter(const GpuMat& src, GpuMat& dst, int kernel_size, float sigma_color, float sigma_spatial,
+                                int borderMode = BORDER_DEFAULT, Stream& stream = Stream::Null());
 
-struct CV_EXPORTS CannyBuf;
+//! Brute force non-local means algorith (slow but universal)
+CV_EXPORTS void nonLocalMeans(const GpuMat& src, GpuMat& dst, float h, int search_window = 21, int block_size = 7, int borderMode = BORDER_DEFAULT, Stream& s = Stream::Null());
+
+//! Fast (but approximate)version of non-local means algorith similar to CPU function (running sums technique)
+class CV_EXPORTS FastNonLocalMeansDenoising
+{
+public:
+    //! Simple method, recommended for grayscale images (though it supports multichannel images)
+    void simpleMethod(const GpuMat& src, GpuMat& dst, float h, int search_window = 21, int block_size = 7, Stream& s = Stream::Null());
+
+    //! Processes luminance and color components separatelly
+    void labMethod(const GpuMat& src, GpuMat& dst, float h_luminance, float h_color, int search_window = 21, int block_size = 7, Stream& s = Stream::Null());
+
+private:
+
+    GpuMat buffer, extended_src_buffer;
+    GpuMat lab, l, ab;
+};
+
+struct CV_EXPORTS CannyBuf
+{
+    void create(const Size& image_size, int apperture_size = 3);
+    void release();
+
+    GpuMat dx, dy;
+    GpuMat mag;
+    GpuMat map;
+    GpuMat st1, st2;
+    GpuMat unused;
+    Ptr<FilterEngine_GPU> filterDX, filterDY;
+
+    CannyBuf() {}
+    explicit CannyBuf(const Size& image_size, int apperture_size = 3) {create(image_size, apperture_size);}
+    CannyBuf(const GpuMat& dx_, const GpuMat& dy_);
+};
 
 CV_EXPORTS void Canny(const GpuMat& image, GpuMat& edges, double low_thresh, double high_thresh, int apperture_size = 3, bool L2gradient = false);
 CV_EXPORTS void Canny(const GpuMat& image, CannyBuf& buf, GpuMat& edges, double low_thresh, double high_thresh, int apperture_size = 3, bool L2gradient = false);
 CV_EXPORTS void Canny(const GpuMat& dx, const GpuMat& dy, GpuMat& edges, double low_thresh, double high_thresh, bool L2gradient = false);
 CV_EXPORTS void Canny(const GpuMat& dx, const GpuMat& dy, CannyBuf& buf, GpuMat& edges, double low_thresh, double high_thresh, bool L2gradient = false);
-
-struct CV_EXPORTS CannyBuf
-{
-    CannyBuf() {}
-    explicit CannyBuf(const Size& image_size, int apperture_size = 3) {create(image_size, apperture_size);}
-    CannyBuf(const GpuMat& dx_, const GpuMat& dy_);
-
-    void create(const Size& image_size, int apperture_size = 3);
-
-    void release();
-
-    GpuMat dx, dy;
-    GpuMat dx_buf, dy_buf;
-    GpuMat edgeBuf;
-    GpuMat trackBuf1, trackBuf2;
-    Ptr<FilterEngine_GPU> filterDX, filterDY;
-};
 
 class CV_EXPORTS ImagePyramid
 {
@@ -814,6 +872,69 @@ private:
     int nLayers_;
 };
 
+//! HoughLines
+
+struct HoughLinesBuf
+{
+    GpuMat accum;
+    GpuMat list;
+};
+
+CV_EXPORTS void HoughLines(const GpuMat& src, GpuMat& lines, float rho, float theta, int threshold, bool doSort = false, int maxLines = 4096);
+CV_EXPORTS void HoughLines(const GpuMat& src, GpuMat& lines, HoughLinesBuf& buf, float rho, float theta, int threshold, bool doSort = false, int maxLines = 4096);
+CV_EXPORTS void HoughLinesDownload(const GpuMat& d_lines, OutputArray h_lines, OutputArray h_votes = noArray());
+
+//! HoughLinesP
+
+//! finds line segments in the black-n-white image using probabalistic Hough transform
+CV_EXPORTS void HoughLinesP(const GpuMat& image, GpuMat& lines, HoughLinesBuf& buf, float rho, float theta, int minLineLength, int maxLineGap, int maxLines = 4096);
+
+//! HoughCircles
+
+struct HoughCirclesBuf
+{
+    GpuMat edges;
+    GpuMat accum;
+    GpuMat list;
+    CannyBuf cannyBuf;
+};
+
+CV_EXPORTS void HoughCircles(const GpuMat& src, GpuMat& circles, int method, float dp, float minDist, int cannyThreshold, int votesThreshold, int minRadius, int maxRadius, int maxCircles = 4096);
+CV_EXPORTS void HoughCircles(const GpuMat& src, GpuMat& circles, HoughCirclesBuf& buf, int method, float dp, float minDist, int cannyThreshold, int votesThreshold, int minRadius, int maxRadius, int maxCircles = 4096);
+CV_EXPORTS void HoughCirclesDownload(const GpuMat& d_circles, OutputArray h_circles);
+
+//! finds arbitrary template in the grayscale image using Generalized Hough Transform
+//! Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
+//! Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
+class CV_EXPORTS GeneralizedHough_GPU : public Algorithm
+{
+public:
+    static Ptr<GeneralizedHough_GPU> create(int method);
+
+    virtual ~GeneralizedHough_GPU();
+
+    //! set template to search
+    void setTemplate(const GpuMat& templ, int cannyThreshold = 100, Point templCenter = Point(-1, -1));
+    void setTemplate(const GpuMat& edges, const GpuMat& dx, const GpuMat& dy, Point templCenter = Point(-1, -1));
+
+    //! find template on image
+    void detect(const GpuMat& image, GpuMat& positions, int cannyThreshold = 100);
+    void detect(const GpuMat& edges, const GpuMat& dx, const GpuMat& dy, GpuMat& positions);
+
+    void download(const GpuMat& d_positions, OutputArray h_positions, OutputArray h_votes = noArray());
+
+    void release();
+
+protected:
+    virtual void setTemplateImpl(const GpuMat& edges, const GpuMat& dx, const GpuMat& dy, Point templCenter) = 0;
+    virtual void detectImpl(const GpuMat& edges, const GpuMat& dx, const GpuMat& dy, GpuMat& positions) = 0;
+    virtual void releaseImpl() = 0;
+
+private:
+    GpuMat edges_;
+    CannyBuf cannyBuf_;
+};
+
 ////////////////////////////// Matrix reductions //////////////////////////////
 
 //! computes mean value and standard deviation of all or selected array elements
@@ -826,11 +947,8 @@ CV_EXPORTS void meanStdDev(const GpuMat& mtx, Scalar& mean, Scalar& stddev, GpuM
 //! supports NORM_INF, NORM_L1, NORM_L2
 //! supports all matrices except 64F
 CV_EXPORTS double norm(const GpuMat& src1, int normType=NORM_L2);
-
-//! computes norm of array
-//! supports NORM_INF, NORM_L1, NORM_L2
-//! supports all matrices except 64F
 CV_EXPORTS double norm(const GpuMat& src1, int normType, GpuMat& buf);
+CV_EXPORTS double norm(const GpuMat& src1, int normType, const GpuMat& mask, GpuMat& buf);
 
 //! computes norm of the difference between two arrays
 //! supports NORM_INF, NORM_L1, NORM_L2
@@ -840,45 +958,33 @@ CV_EXPORTS double norm(const GpuMat& src1, const GpuMat& src2, int normType=NORM
 //! computes sum of array elements
 //! supports only single channel images
 CV_EXPORTS Scalar sum(const GpuMat& src);
-
-//! computes sum of array elements
-//! supports only single channel images
 CV_EXPORTS Scalar sum(const GpuMat& src, GpuMat& buf);
+CV_EXPORTS Scalar sum(const GpuMat& src, const GpuMat& mask, GpuMat& buf);
 
 //! computes sum of array elements absolute values
 //! supports only single channel images
 CV_EXPORTS Scalar absSum(const GpuMat& src);
-
-//! computes sum of array elements absolute values
-//! supports only single channel images
 CV_EXPORTS Scalar absSum(const GpuMat& src, GpuMat& buf);
+CV_EXPORTS Scalar absSum(const GpuMat& src, const GpuMat& mask, GpuMat& buf);
 
 //! computes squared sum of array elements
 //! supports only single channel images
 CV_EXPORTS Scalar sqrSum(const GpuMat& src);
-
-//! computes squared sum of array elements
-//! supports only single channel images
 CV_EXPORTS Scalar sqrSum(const GpuMat& src, GpuMat& buf);
+CV_EXPORTS Scalar sqrSum(const GpuMat& src, const GpuMat& mask, GpuMat& buf);
 
 //! finds global minimum and maximum array elements and returns their values
 CV_EXPORTS void minMax(const GpuMat& src, double* minVal, double* maxVal=0, const GpuMat& mask=GpuMat());
-
-//! finds global minimum and maximum array elements and returns their values
 CV_EXPORTS void minMax(const GpuMat& src, double* minVal, double* maxVal, const GpuMat& mask, GpuMat& buf);
 
 //! finds global minimum and maximum array elements and returns their values with locations
 CV_EXPORTS void minMaxLoc(const GpuMat& src, double* minVal, double* maxVal=0, Point* minLoc=0, Point* maxLoc=0,
                           const GpuMat& mask=GpuMat());
-
-//! finds global minimum and maximum array elements and returns their values with locations
 CV_EXPORTS void minMaxLoc(const GpuMat& src, double* minVal, double* maxVal, Point* minLoc, Point* maxLoc,
                           const GpuMat& mask, GpuMat& valbuf, GpuMat& locbuf);
 
 //! counts non-zero array elements
 CV_EXPORTS int countNonZero(const GpuMat& src);
-
-//! counts non-zero array elements
 CV_EXPORTS int countNonZero(const GpuMat& src, GpuMat& buf);
 
 //! reduces a matrix to a vector
@@ -910,6 +1016,12 @@ CV_EXPORTS void graphcut(GpuMat& terminals, GpuMat& leftTransp, GpuMat& rightTra
                          GpuMat& bottom, GpuMat& bottomLeft, GpuMat& bottomRight,
                          GpuMat& labels,
                          GpuMat& buf, Stream& stream = Stream::Null());
+
+//! compute mask for Generalized Flood fill componetns labeling.
+CV_EXPORTS void connectivityMask(const GpuMat& image, GpuMat& mask, const cv::Scalar& lo, const cv::Scalar& hi, Stream& stream = Stream::Null());
+
+//! performs connected componnents labeling.
+CV_EXPORTS void labelComponents(const GpuMat& mask, GpuMat& components, int flags = 0, Stream& stream = Stream::Null());
 
 ////////////////////////////////// Histograms //////////////////////////////////
 
@@ -949,6 +1061,14 @@ CV_EXPORTS void calcHist(const GpuMat& src, GpuMat& hist, GpuMat& buf, Stream& s
 CV_EXPORTS void equalizeHist(const GpuMat& src, GpuMat& dst, Stream& stream = Stream::Null());
 CV_EXPORTS void equalizeHist(const GpuMat& src, GpuMat& dst, GpuMat& hist, Stream& stream = Stream::Null());
 CV_EXPORTS void equalizeHist(const GpuMat& src, GpuMat& dst, GpuMat& hist, GpuMat& buf, Stream& stream = Stream::Null());
+
+class CV_EXPORTS CLAHE : public cv::CLAHE
+{
+public:
+    using cv::CLAHE::apply;
+    virtual void apply(InputArray src, OutputArray dst, Stream& stream) = 0;
+};
+CV_EXPORTS Ptr<cv::gpu::CLAHE> createCLAHE(double clipLimit = 40.0, Size tileGridSize = Size(8, 8));
 
 //////////////////////////////// StereoBM_GPU ////////////////////////////////
 
@@ -1139,6 +1259,13 @@ private:
 
 
 //////////////// HOG (Histogram-of-Oriented-Gradients) Descriptor and Object Detector //////////////
+struct CV_EXPORTS HOGConfidence
+{
+   double scale;
+   vector<Point> locations;
+   vector<double> confidences;
+   vector<double> part_scores[4];
+};
 
 struct CV_EXPORTS HOGDescriptor
 {
@@ -1169,6 +1296,13 @@ struct CV_EXPORTS HOGDescriptor
                           double hit_threshold=0, Size win_stride=Size(),
                           Size padding=Size(), double scale0=1.05,
                           int group_threshold=2);
+
+    void computeConfidence(const GpuMat& img, vector<Point>& hits, double hit_threshold,
+                                                Size win_stride, Size padding, vector<Point>& locations, vector<double>& confidences);
+
+    void computeConfidenceMultiScale(const GpuMat& img, vector<Rect>& found_locations,
+                                                                    double hit_threshold, Size win_stride, Size padding,
+                                                                    vector<HOGConfidence> &conf_out, int group_threshold);
 
     void getDescriptors(const GpuMat& img, Size win_stride,
                         GpuMat& descriptors,
@@ -1395,8 +1529,14 @@ public:
     explicit BruteForceMatcher_GPU(Hamming /*d*/) : BruteForceMatcher_GPU_base(HammingDist) {}
 };
 
+class CV_EXPORTS BFMatcher_GPU : public BruteForceMatcher_GPU_base
+{
+public:
+    explicit BFMatcher_GPU(int norm = NORM_L2) : BruteForceMatcher_GPU_base(norm == NORM_L1 ? L1Dist : norm == NORM_L2 ? L2Dist : HammingDist) {}
+};
+
 ////////////////////////////////// CascadeClassifier_GPU //////////////////////////////////////////
-// The cascade classifier class for object detection.
+// The cascade classifier class for object detection: supports old haar and new lbp xlm formats and nvbin for haar cascades olny.
 class CV_EXPORTS CascadeClassifier_GPU
 {
 public:
@@ -1409,92 +1549,20 @@ public:
     void release();
 
     /* returns number of detected objects */
-    int detectMultiScale(const GpuMat& image, GpuMat& objectsBuf, double scaleFactor=1.2, int minNeighbors=4, Size minSize=Size());
+    int detectMultiScale(const GpuMat& image, GpuMat& objectsBuf, double scaleFactor = 1.2, int minNeighbors = 4, Size minSize = Size());
+    int detectMultiScale(const GpuMat& image, GpuMat& objectsBuf, Size maxObjectSize, Size minSize = Size(), double scaleFactor = 1.1, int minNeighbors = 4);
 
     bool findLargestObject;
     bool visualizeInPlace;
 
     Size getClassifierSize() const;
-private:
 
+private:
     struct CascadeClassifierImpl;
     CascadeClassifierImpl* impl;
-};
-
-////////////////////////////////// SURF //////////////////////////////////////////
-
-class CV_EXPORTS SURF_GPU
-{
-public:
-    enum KeypointLayout
-    {
-        X_ROW = 0,
-        Y_ROW,
-        LAPLACIAN_ROW,
-        OCTAVE_ROW,
-        SIZE_ROW,
-        ANGLE_ROW,
-        HESSIAN_ROW,
-        ROWS_COUNT
-    };
-
-    //! the default constructor
-    SURF_GPU();
-    //! the full constructor taking all the necessary parameters
-    explicit SURF_GPU(double _hessianThreshold, int _nOctaves=4,
-         int _nOctaveLayers=2, bool _extended=false, float _keypointsRatio=0.01f, bool _upright = false);
-
-    //! returns the descriptor size in float's (64 or 128)
-    int descriptorSize() const;
-
-    //! upload host keypoints to device memory
-    void uploadKeypoints(const vector<KeyPoint>& keypoints, GpuMat& keypointsGPU);
-    //! download keypoints from device to host memory
-    void downloadKeypoints(const GpuMat& keypointsGPU, vector<KeyPoint>& keypoints);
-
-    //! download descriptors from device to host memory
-    void downloadDescriptors(const GpuMat& descriptorsGPU, vector<float>& descriptors);
-
-    //! finds the keypoints using fast hessian detector used in SURF
-    //! supports CV_8UC1 images
-    //! keypoints will have nFeature cols and 6 rows
-    //! keypoints.ptr<float>(X_ROW)[i] will contain x coordinate of i'th feature
-    //! keypoints.ptr<float>(Y_ROW)[i] will contain y coordinate of i'th feature
-    //! keypoints.ptr<float>(LAPLACIAN_ROW)[i] will contain laplacian sign of i'th feature
-    //! keypoints.ptr<float>(OCTAVE_ROW)[i] will contain octave of i'th feature
-    //! keypoints.ptr<float>(SIZE_ROW)[i] will contain size of i'th feature
-    //! keypoints.ptr<float>(ANGLE_ROW)[i] will contain orientation of i'th feature
-    //! keypoints.ptr<float>(HESSIAN_ROW)[i] will contain response of i'th feature
-    void operator()(const GpuMat& img, const GpuMat& mask, GpuMat& keypoints);
-    //! finds the keypoints and computes their descriptors.
-    //! Optionally it can compute descriptors for the user-provided keypoints and recompute keypoints direction
-    void operator()(const GpuMat& img, const GpuMat& mask, GpuMat& keypoints, GpuMat& descriptors,
-        bool useProvidedKeypoints = false);
-
-    void operator()(const GpuMat& img, const GpuMat& mask, std::vector<KeyPoint>& keypoints);
-    void operator()(const GpuMat& img, const GpuMat& mask, std::vector<KeyPoint>& keypoints, GpuMat& descriptors,
-        bool useProvidedKeypoints = false);
-
-    void operator()(const GpuMat& img, const GpuMat& mask, std::vector<KeyPoint>& keypoints, std::vector<float>& descriptors,
-        bool useProvidedKeypoints = false);
-
-    void releaseMemory();
-
-    // SURF parameters
-    double hessianThreshold;
-    int nOctaves;
-    int nOctaveLayers;
-    bool extended;
-    bool upright;
-
-    //! max keypoints = min(keypointsRatio * img.size().area(), 65535)
-    float keypointsRatio;
-
-    GpuMat sum, mask1, maskSum, intBuffer;
-
-    GpuMat det, trace;
-
-    GpuMat maxPosBuffer;
+    struct HaarCascade;
+    struct LbpCascade;
+    friend class CascadeClassifier_GPU_LBP;
 };
 
 ////////////////////////////////// FAST //////////////////////////////////////////
@@ -1512,7 +1580,7 @@ public:
     // all features have same size
     static const int FEATURE_SIZE = 7;
 
-    explicit FAST_GPU(int threshold, bool nonmaxSupression = true, double keypointsRatio = 0.05);
+    explicit FAST_GPU(int threshold, bool nonmaxSuppression = true, double keypointsRatio = 0.05);
 
     //! finds the keypoints using FAST detector
     //! supports only CV_8UC1 images
@@ -1528,19 +1596,19 @@ public:
     //! release temporary buffer's memory
     void release();
 
-    bool nonmaxSupression;
+    bool nonmaxSuppression;
 
     int threshold;
 
     //! max keypoints = keypointsRatio * img.size().area()
     double keypointsRatio;
 
-    //! find keypoints and compute it's response if nonmaxSupression is true
+    //! find keypoints and compute it's response if nonmaxSuppression is true
     //! return count of detected keypoints
     int calcKeyPointsLocation(const GpuMat& image, const GpuMat& mask);
 
     //! get final array of keypoints
-    //! performs nonmax supression if needed
+    //! performs nonmax suppression if needed
     //! return final count of keypoints
     int getKeyPoints(GpuMat& keypoints);
 
@@ -1602,10 +1670,10 @@ public:
     //! returns the descriptor size in bytes
     inline int descriptorSize() const { return kBytes; }
 
-    inline void setFastParams(int threshold, bool nonmaxSupression = true)
+    inline void setFastParams(int threshold, bool nonmaxSuppression = true)
     {
         fastDetector_.threshold = threshold;
-        fastDetector_.nonmaxSupression = nonmaxSupression;
+        fastDetector_.nonmaxSuppression = nonmaxSuppression;
     }
 
     //! release temporary buffer's memory
@@ -1745,63 +1813,30 @@ inline GoodFeaturesToTrackDetector_GPU::GoodFeaturesToTrackDetector_GPU(int maxC
 class CV_EXPORTS PyrLKOpticalFlow
 {
 public:
-    PyrLKOpticalFlow()
-    {
-        winSize = Size(21, 21);
-        maxLevel = 3;
-        iters = 30;
-        derivLambda = 0.5;
-        useInitialFlow = false;
-        minEigThreshold = 1e-4f;
-        getMinEigenVals = false;
-        isDeviceArch11_ = !DeviceInfo().supports(FEATURE_SET_COMPUTE_12);
-    }
+    PyrLKOpticalFlow();
 
     void sparse(const GpuMat& prevImg, const GpuMat& nextImg, const GpuMat& prevPts, GpuMat& nextPts,
         GpuMat& status, GpuMat* err = 0);
 
     void dense(const GpuMat& prevImg, const GpuMat& nextImg, GpuMat& u, GpuMat& v, GpuMat* err = 0);
 
+    void releaseMemory();
+
     Size winSize;
     int maxLevel;
     int iters;
-    double derivLambda;
+    double derivLambda; //unused
     bool useInitialFlow;
-    float minEigThreshold;
-    bool getMinEigenVals;
-
-    void releaseMemory()
-    {
-        dx_calcBuf_.release();
-        dy_calcBuf_.release();
-
-        prevPyr_.clear();
-        nextPyr_.clear();
-
-        dx_buf_.release();
-        dy_buf_.release();
-
-        uPyr_.clear();
-        vPyr_.clear();
-    }
+    float minEigThreshold; //unused
+    bool getMinEigenVals;  //unused
 
 private:
-    void calcSharrDeriv(const GpuMat& src, GpuMat& dx, GpuMat& dy);
-
-    void buildImagePyramid(const GpuMat& img0, vector<GpuMat>& pyr, bool withBorder);
-
-    GpuMat dx_calcBuf_;
-    GpuMat dy_calcBuf_;
-
+    GpuMat uPyr_[2];
     vector<GpuMat> prevPyr_;
     vector<GpuMat> nextPyr_;
-
-    GpuMat dx_buf_;
-    GpuMat dy_buf_;
-
-    vector<GpuMat> uPyr_;
-    vector<GpuMat> vPyr_;
-
+    GpuMat vPyr_[2];
+    vector<GpuMat> buf_;
+    vector<GpuMat> unused;
     bool isDeviceArch11_;
 };
 
@@ -1872,6 +1907,113 @@ private:
 };
 
 
+// Implementation of the Zach, Pock and Bischof Dual TV-L1 Optical Flow method
+//
+// see reference:
+//   [1] C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
+//   [2] Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
+class CV_EXPORTS OpticalFlowDual_TVL1_GPU
+{
+public:
+    OpticalFlowDual_TVL1_GPU();
+
+    void operator ()(const GpuMat& I0, const GpuMat& I1, GpuMat& flowx, GpuMat& flowy);
+
+    void collectGarbage();
+
+    /**
+     * Time step of the numerical scheme.
+     */
+    double tau;
+
+    /**
+     * Weight parameter for the data term, attachment parameter.
+     * This is the most relevant parameter, which determines the smoothness of the output.
+     * The smaller this parameter is, the smoother the solutions we obtain.
+     * It depends on the range of motions of the images, so its value should be adapted to each image sequence.
+     */
+    double lambda;
+
+    /**
+     * Weight parameter for (u - v)^2, tightness parameter.
+     * It serves as a link between the attachment and the regularization terms.
+     * In theory, it should have a small value in order to maintain both parts in correspondence.
+     * The method is stable for a large range of values of this parameter.
+     */
+    double theta;
+
+    /**
+     * Number of scales used to create the pyramid of images.
+     */
+    int nscales;
+
+    /**
+     * Number of warpings per scale.
+     * Represents the number of times that I1(x+u0) and grad( I1(x+u0) ) are computed per scale.
+     * This is a parameter that assures the stability of the method.
+     * It also affects the running time, so it is a compromise between speed and accuracy.
+     */
+    int warps;
+
+    /**
+     * Stopping criterion threshold used in the numerical scheme, which is a trade-off between precision and running time.
+     * A small value will yield more accurate solutions at the expense of a slower convergence.
+     */
+    double epsilon;
+
+    /**
+     * Stopping criterion iterations number used in the numerical scheme.
+     */
+    int iterations;
+
+    bool useInitialFlow;
+
+private:
+    void procOneScale(const GpuMat& I0, const GpuMat& I1, GpuMat& u1, GpuMat& u2);
+
+    std::vector<GpuMat> I0s;
+    std::vector<GpuMat> I1s;
+    std::vector<GpuMat> u1s;
+    std::vector<GpuMat> u2s;
+
+    GpuMat I1x_buf;
+    GpuMat I1y_buf;
+
+    GpuMat I1w_buf;
+    GpuMat I1wx_buf;
+    GpuMat I1wy_buf;
+
+    GpuMat grad_buf;
+    GpuMat rho_c_buf;
+
+    GpuMat p11_buf;
+    GpuMat p12_buf;
+    GpuMat p21_buf;
+    GpuMat p22_buf;
+
+    GpuMat diff_buf;
+    GpuMat norm_buf;
+};
+
+
+//! Calculates optical flow for 2 images using block matching algorithm */
+CV_EXPORTS void calcOpticalFlowBM(const GpuMat& prev, const GpuMat& curr,
+                                  Size block_size, Size shift_size, Size max_range, bool use_previous,
+                                  GpuMat& velx, GpuMat& vely, GpuMat& buf,
+                                  Stream& stream = Stream::Null());
+
+class CV_EXPORTS FastOpticalFlowBM
+{
+public:
+    void operator ()(const GpuMat& I0, const GpuMat& I1, GpuMat& flowx, GpuMat& flowy, int search_window = 21, int block_window = 7, Stream& s = Stream::Null());
+
+private:
+    GpuMat buffer;
+    GpuMat extended_I0;
+    GpuMat extended_I1;
+};
+
+
 //! Interpolate frames (images) using provided optical flow (displacement field).
 //! frame0   - frame 0 (32-bit floating point images, single channel)
 //! frame1   - frame 1 (the same type and size)
@@ -1893,6 +2035,493 @@ CV_EXPORTS void interpolateFrames(const GpuMat& frame0, const GpuMat& frame1,
                                   Stream& stream = Stream::Null());
 
 CV_EXPORTS void createOpticalFlowNeedleMap(const GpuMat& u, const GpuMat& v, GpuMat& vertex, GpuMat& colors);
+
+
+//////////////////////// Background/foreground segmentation ////////////////////////
+
+// Foreground Object Detection from Videos Containing Complex Background.
+// Liyuan Li, Weimin Huang, Irene Y.H. Gu, and Qi Tian.
+// ACM MM2003 9p
+class CV_EXPORTS FGDStatModel
+{
+public:
+    struct CV_EXPORTS Params
+    {
+        int Lc;  // Quantized levels per 'color' component. Power of two, typically 32, 64 or 128.
+        int N1c; // Number of color vectors used to model normal background color variation at a given pixel.
+        int N2c; // Number of color vectors retained at given pixel.  Must be > N1c, typically ~ 5/3 of N1c.
+        // Used to allow the first N1c vectors to adapt over time to changing background.
+
+        int Lcc;  // Quantized levels per 'color co-occurrence' component.  Power of two, typically 16, 32 or 64.
+        int N1cc; // Number of color co-occurrence vectors used to model normal background color variation at a given pixel.
+        int N2cc; // Number of color co-occurrence vectors retained at given pixel.  Must be > N1cc, typically ~ 5/3 of N1cc.
+        // Used to allow the first N1cc vectors to adapt over time to changing background.
+
+        bool is_obj_without_holes; // If TRUE we ignore holes within foreground blobs. Defaults to TRUE.
+        int perform_morphing;     // Number of erode-dilate-erode foreground-blob cleanup iterations.
+        // These erase one-pixel junk blobs and merge almost-touching blobs. Default value is 1.
+
+        float alpha1; // How quickly we forget old background pixel values seen. Typically set to 0.1.
+        float alpha2; // "Controls speed of feature learning". Depends on T. Typical value circa 0.005.
+        float alpha3; // Alternate to alpha2, used (e.g.) for quicker initial convergence. Typical value 0.1.
+
+        float delta;   // Affects color and color co-occurrence quantization, typically set to 2.
+        float T;       // A percentage value which determines when new features can be recognized as new background. (Typically 0.9).
+        float minArea; // Discard foreground blobs whose bounding box is smaller than this threshold.
+
+        // default Params
+        Params();
+    };
+
+    // out_cn - channels count in output result (can be 3 or 4)
+    // 4-channels require more memory, but a bit faster
+    explicit FGDStatModel(int out_cn = 3);
+    explicit FGDStatModel(const cv::gpu::GpuMat& firstFrame, const Params& params = Params(), int out_cn = 3);
+
+    ~FGDStatModel();
+
+    void create(const cv::gpu::GpuMat& firstFrame, const Params& params = Params());
+    void release();
+
+    int update(const cv::gpu::GpuMat& curFrame);
+
+    //8UC3 or 8UC4 reference background image
+    cv::gpu::GpuMat background;
+
+    //8UC1 foreground image
+    cv::gpu::GpuMat foreground;
+
+    std::vector< std::vector<cv::Point> > foreground_regions;
+
+private:
+    FGDStatModel(const FGDStatModel&);
+    FGDStatModel& operator=(const FGDStatModel&);
+
+    class Impl;
+    std::auto_ptr<Impl> impl_;
+};
+
+/*!
+ Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm
+
+ The class implements the following algorithm:
+ "An improved adaptive background mixture model for real-time tracking with shadow detection"
+ P. KadewTraKuPong and R. Bowden,
+ Proc. 2nd European Workshp on Advanced Video-Based Surveillance Systems, 2001."
+ http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf
+*/
+class CV_EXPORTS MOG_GPU
+{
+public:
+    //! the default constructor
+    MOG_GPU(int nmixtures = -1);
+
+    //! re-initiaization method
+    void initialize(Size frameSize, int frameType);
+
+    //! the update operator
+    void operator()(const GpuMat& frame, GpuMat& fgmask, float learningRate = 0.0f, Stream& stream = Stream::Null());
+
+    //! computes a background image which are the mean of all background gaussians
+    void getBackgroundImage(GpuMat& backgroundImage, Stream& stream = Stream::Null()) const;
+
+    //! releases all inner buffers
+    void release();
+
+    int history;
+    float varThreshold;
+    float backgroundRatio;
+    float noiseSigma;
+
+private:
+    int nmixtures_;
+
+    Size frameSize_;
+    int frameType_;
+    int nframes_;
+
+    GpuMat weight_;
+    GpuMat sortKey_;
+    GpuMat mean_;
+    GpuMat var_;
+};
+
+/*!
+ The class implements the following algorithm:
+ "Improved adaptive Gausian mixture model for background subtraction"
+ Z.Zivkovic
+ International Conference Pattern Recognition, UK, August, 2004.
+ http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf
+*/
+class CV_EXPORTS MOG2_GPU
+{
+public:
+    //! the default constructor
+    MOG2_GPU(int nmixtures = -1);
+
+    //! re-initiaization method
+    void initialize(Size frameSize, int frameType);
+
+    //! the update operator
+    void operator()(const GpuMat& frame, GpuMat& fgmask, float learningRate = -1.0f, Stream& stream = Stream::Null());
+
+    //! computes a background image which are the mean of all background gaussians
+    void getBackgroundImage(GpuMat& backgroundImage, Stream& stream = Stream::Null()) const;
+
+    //! releases all inner buffers
+    void release();
+
+    // parameters
+    // you should call initialize after parameters changes
+
+    int history;
+
+    //! here it is the maximum allowed number of mixture components.
+    //! Actual number is determined dynamically per pixel
+    float varThreshold;
+    // threshold on the squared Mahalanobis distance to decide if it is well described
+    // by the background model or not. Related to Cthr from the paper.
+    // This does not influence the update of the background. A typical value could be 4 sigma
+    // and that is varThreshold=4*4=16; Corresponds to Tb in the paper.
+
+    /////////////////////////
+    // less important parameters - things you might change but be carefull
+    ////////////////////////
+
+    float backgroundRatio;
+    // corresponds to fTB=1-cf from the paper
+    // TB - threshold when the component becomes significant enough to be included into
+    // the background model. It is the TB=1-cf from the paper. So I use cf=0.1 => TB=0.
+    // For alpha=0.001 it means that the mode should exist for approximately 105 frames before
+    // it is considered foreground
+    // float noiseSigma;
+    float varThresholdGen;
+
+    //correspondts to Tg - threshold on the squared Mahalan. dist. to decide
+    //when a sample is close to the existing components. If it is not close
+    //to any a new component will be generated. I use 3 sigma => Tg=3*3=9.
+    //Smaller Tg leads to more generated components and higher Tg might make
+    //lead to small number of components but they can grow too large
+    float fVarInit;
+    float fVarMin;
+    float fVarMax;
+
+    //initial variance  for the newly generated components.
+    //It will will influence the speed of adaptation. A good guess should be made.
+    //A simple way is to estimate the typical standard deviation from the images.
+    //I used here 10 as a reasonable value
+    // min and max can be used to further control the variance
+    float fCT; //CT - complexity reduction prior
+    //this is related to the number of samples needed to accept that a component
+    //actually exists. We use CT=0.05 of all the samples. By setting CT=0 you get
+    //the standard Stauffer&Grimson algorithm (maybe not exact but very similar)
+
+    //shadow detection parameters
+    bool bShadowDetection; //default 1 - do shadow detection
+    unsigned char nShadowDetection; //do shadow detection - insert this value as the detection result - 127 default value
+    float fTau;
+    // Tau - shadow threshold. The shadow is detected if the pixel is darker
+    //version of the background. Tau is a threshold on how much darker the shadow can be.
+    //Tau= 0.5 means that if pixel is more than 2 times darker then it is not shadow
+    //See: Prati,Mikic,Trivedi,Cucchiarra,"Detecting Moving Shadows...",IEEE PAMI,2003.
+
+private:
+    int nmixtures_;
+
+    Size frameSize_;
+    int frameType_;
+    int nframes_;
+
+    GpuMat weight_;
+    GpuMat variance_;
+    GpuMat mean_;
+
+    GpuMat bgmodelUsedModes_; //keep track of number of modes per pixel
+};
+
+/**
+ * Background Subtractor module. Takes a series of images and returns a sequence of mask (8UC1)
+ * images of the same size, where 255 indicates Foreground and 0 represents Background.
+ * This class implements an algorithm described in "Visual Tracking of Human Visitors under
+ * Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
+ * A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
+ */
+class CV_EXPORTS GMG_GPU
+{
+public:
+    GMG_GPU();
+
+    /**
+     * Validate parameters and set up data structures for appropriate frame size.
+     * @param frameSize Input frame size
+     * @param min       Minimum value taken on by pixels in image sequence. Usually 0
+     * @param max       Maximum value taken on by pixels in image sequence. e.g. 1.0 or 255
+     */
+    void initialize(Size frameSize, float min = 0.0f, float max = 255.0f);
+
+    /**
+     * Performs single-frame background subtraction and builds up a statistical background image
+     * model.
+     * @param frame        Input frame
+     * @param fgmask       Output mask image representing foreground and background pixels
+     * @param learningRate determines how quickly features are “forgotten” from histograms
+     * @param stream       Stream for the asynchronous version
+     */
+    void operator ()(const GpuMat& frame, GpuMat& fgmask, float learningRate = -1.0f, Stream& stream = Stream::Null());
+
+    //! Releases all inner buffers
+    void release();
+
+    //! Total number of distinct colors to maintain in histogram.
+    int maxFeatures;
+
+    //! Set between 0.0 and 1.0, determines how quickly features are "forgotten" from histograms.
+    float learningRate;
+
+    //! Number of frames of video to use to initialize histograms.
+    int numInitializationFrames;
+
+    //! Number of discrete levels in each channel to be used in histograms.
+    int quantizationLevels;
+
+    //! Prior probability that any given pixel is a background pixel. A sensitivity parameter.
+    float backgroundPrior;
+
+    //! Value above which pixel is determined to be FG.
+    float decisionThreshold;
+
+    //! Smoothing radius, in pixels, for cleaning up FG image.
+    int smoothingRadius;
+
+    //! Perform background model update.
+    bool updateBackgroundModel;
+
+private:
+    float maxVal_, minVal_;
+
+    Size frameSize_;
+
+    int frameNum_;
+
+    GpuMat nfeatures_;
+    GpuMat colors_;
+    GpuMat weights_;
+
+    Ptr<FilterEngine_GPU> boxFilter_;
+    GpuMat buf_;
+};
+
+////////////////////////////////// Video Encoding //////////////////////////////////
+
+// Works only under Windows
+// Supports olny H264 video codec and AVI files
+class CV_EXPORTS VideoWriter_GPU
+{
+public:
+    struct EncoderParams;
+
+    // Callbacks for video encoder, use it if you want to work with raw video stream
+    class EncoderCallBack;
+
+    enum SurfaceFormat
+    {
+        SF_UYVY = 0,
+        SF_YUY2,
+        SF_YV12,
+        SF_NV12,
+        SF_IYUV,
+        SF_BGR,
+        SF_GRAY = SF_BGR
+    };
+
+    VideoWriter_GPU();
+    VideoWriter_GPU(const std::string& fileName, cv::Size frameSize, double fps, SurfaceFormat format = SF_BGR);
+    VideoWriter_GPU(const std::string& fileName, cv::Size frameSize, double fps, const EncoderParams& params, SurfaceFormat format = SF_BGR);
+    VideoWriter_GPU(const cv::Ptr<EncoderCallBack>& encoderCallback, cv::Size frameSize, double fps, SurfaceFormat format = SF_BGR);
+    VideoWriter_GPU(const cv::Ptr<EncoderCallBack>& encoderCallback, cv::Size frameSize, double fps, const EncoderParams& params, SurfaceFormat format = SF_BGR);
+    ~VideoWriter_GPU();
+
+    // all methods throws cv::Exception if error occurs
+    void open(const std::string& fileName, cv::Size frameSize, double fps, SurfaceFormat format = SF_BGR);
+    void open(const std::string& fileName, cv::Size frameSize, double fps, const EncoderParams& params, SurfaceFormat format = SF_BGR);
+    void open(const cv::Ptr<EncoderCallBack>& encoderCallback, cv::Size frameSize, double fps, SurfaceFormat format = SF_BGR);
+    void open(const cv::Ptr<EncoderCallBack>& encoderCallback, cv::Size frameSize, double fps, const EncoderParams& params, SurfaceFormat format = SF_BGR);
+
+    bool isOpened() const;
+    void close();
+
+    void write(const cv::gpu::GpuMat& image, bool lastFrame = false);
+
+    struct CV_EXPORTS EncoderParams
+    {
+        int       P_Interval;      //    NVVE_P_INTERVAL,
+        int       IDR_Period;      //    NVVE_IDR_PERIOD,
+        int       DynamicGOP;      //    NVVE_DYNAMIC_GOP,
+        int       RCType;          //    NVVE_RC_TYPE,
+        int       AvgBitrate;      //    NVVE_AVG_BITRATE,
+        int       PeakBitrate;     //    NVVE_PEAK_BITRATE,
+        int       QP_Level_Intra;  //    NVVE_QP_LEVEL_INTRA,
+        int       QP_Level_InterP; //    NVVE_QP_LEVEL_INTER_P,
+        int       QP_Level_InterB; //    NVVE_QP_LEVEL_INTER_B,
+        int       DeblockMode;     //    NVVE_DEBLOCK_MODE,
+        int       ProfileLevel;    //    NVVE_PROFILE_LEVEL,
+        int       ForceIntra;      //    NVVE_FORCE_INTRA,
+        int       ForceIDR;        //    NVVE_FORCE_IDR,
+        int       ClearStat;       //    NVVE_CLEAR_STAT,
+        int       DIMode;          //    NVVE_SET_DEINTERLACE,
+        int       Presets;         //    NVVE_PRESETS,
+        int       DisableCabac;    //    NVVE_DISABLE_CABAC,
+        int       NaluFramingType; //    NVVE_CONFIGURE_NALU_FRAMING_TYPE
+        int       DisableSPSPPS;   //    NVVE_DISABLE_SPS_PPS
+
+        EncoderParams();
+        explicit EncoderParams(const std::string& configFile);
+
+        void load(const std::string& configFile);
+        void save(const std::string& configFile) const;
+    };
+
+    EncoderParams getParams() const;
+
+    class CV_EXPORTS EncoderCallBack
+    {
+    public:
+        enum PicType
+        {
+            IFRAME = 1,
+            PFRAME = 2,
+            BFRAME = 3
+        };
+
+        virtual ~EncoderCallBack() {}
+
+        // callback function to signal the start of bitstream that is to be encoded
+        // must return pointer to buffer
+        virtual uchar* acquireBitStream(int* bufferSize) = 0;
+
+        // callback function to signal that the encoded bitstream is ready to be written to file
+        virtual void releaseBitStream(unsigned char* data, int size) = 0;
+
+        // callback function to signal that the encoding operation on the frame has started
+        virtual void onBeginFrame(int frameNumber, PicType picType) = 0;
+
+        // callback function signals that the encoding operation on the frame has finished
+        virtual void onEndFrame(int frameNumber, PicType picType) = 0;
+    };
+
+private:
+    VideoWriter_GPU(const VideoWriter_GPU&);
+    VideoWriter_GPU& operator=(const VideoWriter_GPU&);
+
+    class Impl;
+    std::auto_ptr<Impl> impl_;
+};
+
+
+////////////////////////////////// Video Decoding //////////////////////////////////////////
+
+namespace detail
+{
+    class FrameQueue;
+    class VideoParser;
+}
+
+class CV_EXPORTS VideoReader_GPU
+{
+public:
+    enum Codec
+    {
+        MPEG1 = 0,
+        MPEG2,
+        MPEG4,
+        VC1,
+        H264,
+        JPEG,
+        H264_SVC,
+        H264_MVC,
+
+        Uncompressed_YUV420 = (('I'<<24)|('Y'<<16)|('U'<<8)|('V')),   // Y,U,V (4:2:0)
+        Uncompressed_YV12   = (('Y'<<24)|('V'<<16)|('1'<<8)|('2')),   // Y,V,U (4:2:0)
+        Uncompressed_NV12   = (('N'<<24)|('V'<<16)|('1'<<8)|('2')),   // Y,UV  (4:2:0)
+        Uncompressed_YUYV   = (('Y'<<24)|('U'<<16)|('Y'<<8)|('V')),   // YUYV/YUY2 (4:2:2)
+        Uncompressed_UYVY   = (('U'<<24)|('Y'<<16)|('V'<<8)|('Y'))    // UYVY (4:2:2)
+    };
+
+    enum ChromaFormat
+    {
+        Monochrome=0,
+        YUV420,
+        YUV422,
+        YUV444
+    };
+
+    struct FormatInfo
+    {
+        Codec codec;
+        ChromaFormat chromaFormat;
+        int width;
+        int height;
+    };
+
+    class VideoSource;
+
+    VideoReader_GPU();
+    explicit VideoReader_GPU(const std::string& filename);
+    explicit VideoReader_GPU(const cv::Ptr<VideoSource>& source);
+
+    ~VideoReader_GPU();
+
+    void open(const std::string& filename);
+    void open(const cv::Ptr<VideoSource>& source);
+    bool isOpened() const;
+
+    void close();
+
+    bool read(GpuMat& image);
+
+    FormatInfo format() const;
+    void dumpFormat(std::ostream& st);
+
+    class CV_EXPORTS VideoSource
+    {
+    public:
+        VideoSource() : frameQueue_(0), videoParser_(0) {}
+        virtual ~VideoSource() {}
+
+        virtual FormatInfo format() const = 0;
+        virtual void start() = 0;
+        virtual void stop() = 0;
+        virtual bool isStarted() const = 0;
+        virtual bool hasError() const = 0;
+
+        void setFrameQueue(detail::FrameQueue* frameQueue) { frameQueue_ = frameQueue; }
+        void setVideoParser(detail::VideoParser* videoParser) { videoParser_ = videoParser; }
+
+    protected:
+        bool parseVideoData(const uchar* data, size_t size, bool endOfStream = false);
+
+    private:
+        VideoSource(const VideoSource&);
+        VideoSource& operator =(const VideoSource&);
+
+        detail::FrameQueue* frameQueue_;
+        detail::VideoParser* videoParser_;
+    };
+
+private:
+    VideoReader_GPU(const VideoReader_GPU&);
+    VideoReader_GPU& operator =(const VideoReader_GPU&);
+
+    class Impl;
+    std::auto_ptr<Impl> impl_;
+};
+
+//! removes points (CV_32FC2, single row matrix) with zero mask value
+CV_EXPORTS void compactPoints(GpuMat &points0, GpuMat &points1, const GpuMat &mask);
+
+CV_EXPORTS void calcWobbleSuppressionMaps(
+        int left, int idx, int right, Size size, const Mat &ml, const Mat &mr,
+        GpuMat &mapx, GpuMat &mapy);
 
 } // namespace gpu
 
