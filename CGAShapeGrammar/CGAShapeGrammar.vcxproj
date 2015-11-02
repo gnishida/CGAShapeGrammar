@@ -90,7 +90,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;..\glew;$(CGAL_DIR)\include;$(CGAL_DIR)\auxiliary\gmp\include;..\opencv\include;..\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR);.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;..\glew;$(CGAL_DIR)\include;$(CGAL_DIR)\auxiliary\gmp\include;..\opencv\include;..\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -99,9 +99,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;..\opencv\lib;..\glew;$(BOOST_ROOT)\lib;$(CGAL_DIR)\lib;$(CGAL_DIR)\auxiliary\gmp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;..\opencv\lib;..\glew;$(BOOST_LIBRARYDIR);$(CGAL_DIR)\lib;$(CGAL_DIR)\auxiliary\gmp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;glew32.lib;opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_legacy2411d.lib;opencv_ml2411d.lib;opencv_photo2411d.lib;opencv_video2411d.lib;libboost_thread-vc120-mt-gd-1_59.lib;CGAL-vc120-mt-gd-4.7.lib;CGAL_Core-vc120-mt-gd-4.7.lib;CGAL_ImageIO-vc120-mt-gd-4.7.lib;CGAL_Qt5-vc120-mt-gd-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;glew32.lib;opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_legacy2411d.lib;opencv_ml2411d.lib;opencv_photo2411d.lib;opencv_video2411d.lib;libboost_thread-vc120-mt-gd-1_58.lib;CGAL-vc120-mt-gd-4.7.lib;CGAL_Core-vc120-mt-gd-4.7.lib;CGAL_ImageIO-vc120-mt-gd-4.7.lib;CGAL_Qt5-vc120-mt-gd-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,7 +123,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;..\glew;$(CGAL_DIR)\include;$(CGAL_DIR)\auxiliary\gmp\include;..\opencv\include;..\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR);.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;..\glew;$(CGAL_DIR)\include;$(CGAL_DIR)\auxiliary\gmp\include;..\opencv\include;..\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -131,9 +131,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;..\opencv\lib;..\glew;$(BOOST_ROOT)\lib;$(CGAL_DIR)\lib;$(CGAL_DIR)\auxiliary\gmp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;..\opencv\lib;..\glew;$(BOOST_LIBRARYDIR);$(CGAL_DIR)\lib;$(CGAL_DIR)\auxiliary\gmp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;opengl32.lib;glu32.lib;Qt5Widgets.lib;Qt5Xml.lib;glew32.lib;opencv_core2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_legacy2411.lib;opencv_ml2411.lib;opencv_photo2411.lib;opencv_video2411.lib;libboost_thread-vc120-mt-1_59.lib;CGAL-vc120-mt-4.7.lib;CGAL_Core-vc120-mt-4.7.lib;CGAL_ImageIO-vc120-mt-4.7.lib;CGAL_Qt5-vc120-mt-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;opengl32.lib;glu32.lib;Qt5Widgets.lib;Qt5Xml.lib;glew32.lib;opencv_core2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_legacy2411.lib;opencv_ml2411.lib;opencv_photo2411.lib;opencv_video2411.lib;libboost_thread-vc120-mt-1_58.lib;CGAL-vc120-mt-4.7.lib;CGAL_Core-vc120-mt-4.7.lib;CGAL_ImageIO-vc120-mt-4.7.lib;CGAL_Qt5-vc120-mt-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
