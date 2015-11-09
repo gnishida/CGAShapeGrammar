@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
+	connect(ui.actionGenerateSimpleShapeImages, SIGNAL(triggered()), this, SLOT(onGenerateSimpleShapeImages()));
 	connect(ui.actionTest, SIGNAL(triggered()), this, SLOT(onTest()));
 
 	glWidget = new GLWidget3D();
@@ -76,6 +77,10 @@ void MainWindow::onGenerateWindowImages() {
 
 void MainWindow::onGenerateBuildingImages() {
 	glWidget->generateBuildingImages(512, 512, false, false);
+}
+
+void MainWindow::onGenerateSimpleShapeImages() {
+	glWidget->generateSimpleShapeImages(512, 512, 0.25);
 }
 
 void MainWindow::onTest() {

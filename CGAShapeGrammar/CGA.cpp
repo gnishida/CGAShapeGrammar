@@ -25,9 +25,9 @@ std::vector<float> CGA::randomParamValues(Grammar& grammar) {
 		if (it->second.hasRange) {
 			float r = (float)rand() / RAND_MAX;
 			float v = r * (it->second.range_end - it->second.range_start) + it->second.range_start;
-			//float v = (it->second.range_end - it->second.range_start) * distribution(generator) + it->second.range_start;
 			it->second.value = boost::lexical_cast<std::string>(v);
-			param_values.push_back(v);
+			//param_values.push_back(v);
+			param_values.push_back(r);
 		}
 	}
 

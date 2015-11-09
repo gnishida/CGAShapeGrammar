@@ -166,9 +166,7 @@ bool rayTriangleIntersection(const glm::vec3& a, const glm::vec3& v, const glm::
 	else return false;
 }
 
-void drawCircle(float r1, float r2, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
-	int slices = 12;
-
+void drawCircle(float r1, float r2, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
 	glm::vec4 p1(0, 0, 0, 1);
 	glm::vec4 n(0, 0, 1, 0);
 
@@ -689,19 +687,19 @@ void drawCylinderY(float radius1, float radius2, float h, const glm::vec4& color
 }
 
 /**
- * Z軸方向に高さ h、底面の半径 r1、上面の半径 r2の円錐を描画する。
+ * Z軸方向に高さ h、底面の半径 r1/r2、上面の半径 r3/r4の円錐を描画する。
  */
-void drawCylinderZ(float radius1, float radius2, float h, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
+void drawCylinderZ(float radius1, float radius2, float radius3, float radius4, float h, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices, int slices) {
 	float phi = atan2(radius1 - radius2, h);
 
 	for (int i = 0; i < slices; ++i) {
 		float theta1 = M_PI * 2.0 * (float)i / slices;
 		float theta2 = M_PI * 2.0 * (float)(i + 1) / slices;
 
-		glm::vec4 p1(cosf(theta1) * radius1, sinf(theta1) * radius1, 0, 1);
-		glm::vec4 p2(cosf(theta2) * radius1, sinf(theta2) * radius1, 0, 1);
-		glm::vec4 p3(cosf(theta2) * radius2, sinf(theta2) * radius2, h, 1);
-		glm::vec4 p4(cosf(theta1) * radius2, sinf(theta1) * radius2, h, 1);
+		glm::vec4 p1(cosf(theta1) * radius1, sinf(theta1) * radius2, 0, 1);
+		glm::vec4 p2(cosf(theta2) * radius1, sinf(theta2) * radius2, 0, 1);
+		glm::vec4 p3(cosf(theta2) * radius3, sinf(theta2) * radius4, h, 1);
+		glm::vec4 p4(cosf(theta1) * radius3, sinf(theta1) * radius4, h, 1);
 		glm::vec4 n1(cosf(theta1) * cosf(phi), sinf(theta1) * cosf(phi), sinf(phi), 0);
 		glm::vec4 n2(cosf(theta2) * cosf(phi), sinf(theta2) * cosf(phi), sinf(phi), 0);
 
@@ -726,9 +724,9 @@ void drawCylinderZ(float radius1, float radius2, float h, const glm::vec4& color
  * Z軸方向に、指定された長さ、色、半径の矢印を描画する。
  */
 void drawArrow(float radius, float length, const glm::vec4& color, const glm::mat4& mat, std::vector<Vertex>& vertices) {
-	drawCylinderZ(radius, radius, length - radius * 4, color, mat, vertices);
+	drawCylinderZ(radius, radius, radius, radius, length - radius * 4, color, mat, vertices);
 	glm::mat4 m = glm::translate(mat, glm::vec3(0, 0, length - radius * 4));
-	drawCylinderZ(radius * 2, 0, radius * 4, color, m, vertices);
+	drawCylinderZ(radius * 2, radius * 2, 0, 0, radius * 4, color, m, vertices);
 }
 
 void drawAxes(float radius, float length, const glm::mat4& mat, std::vector<Vertex>& vertices) {

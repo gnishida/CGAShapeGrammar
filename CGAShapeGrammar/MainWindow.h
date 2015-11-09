@@ -25,6 +25,7 @@ public slots:
 	void onViewRefresh();
 	void onGenerateWindowImages();
 	void onGenerateBuildingImages();
+	void onGenerateSimpleShapeImages();
 	void onTest();
 };
 

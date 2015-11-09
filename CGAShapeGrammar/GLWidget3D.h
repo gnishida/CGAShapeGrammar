@@ -22,6 +22,7 @@ public:
 	void loadCGA(char* filename);
 	void generateWindowImages(int image_width, int image_height, bool invertImage, bool blur);
 	void generateBuildingImages(int image_width, int image_height, bool invertImage, bool blur);
+	void generateSimpleShapeImages(int image_width, int image_height, float scale);
 	void test();
 	void EDLine(cv::Mat& result, float scale);
 	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);

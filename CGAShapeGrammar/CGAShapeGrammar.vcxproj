@@ -148,6 +148,7 @@
     <ClCompile Include="CopyOperator.cpp" />
     <ClCompile Include="CornerCutOperator.cpp" />
     <ClCompile Include="Cuboid.cpp" />
+    <ClCompile Include="Cylinder.cpp" />
     <ClCompile Include="ExtrudeOperator.cpp" />
     <ClCompile Include="GableRoof.cpp" />
     <ClCompile Include="GeneralObject.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Grammar.cpp" />
     <ClCompile Include="GrammarParser.cpp" />
     <ClCompile Include="HipRoof.cpp" />
+    <ClCompile Include="InnerCircleOperator.cpp" />
     <ClCompile Include="InnerSemiCircleOperator.cpp" />
     <ClCompile Include="InsertOperator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -257,6 +259,7 @@
     <ClInclude Include="CopyOperator.h" />
     <ClInclude Include="CornerCutOperator.h" />
     <ClInclude Include="Cuboid.h" />
+    <ClInclude Include="Cylinder.h" />
     <ClInclude Include="ExtrudeOperator.h" />
     <ClInclude Include="GableRoof.h" />
     <ClInclude Include="GeneralObject.h" />
@@ -266,6 +269,7 @@
     <ClInclude Include="Grammar.h" />
     <ClInclude Include="GrammarParser.h" />
     <ClInclude Include="HipRoof.h" />
+    <ClInclude Include="InnerCircleOperator.h" />
     <ClInclude Include="InnerSemiCircleOperator.h" />
     <ClInclude Include="InsertOperator.h" />
     <ClInclude Include="NumberEval.h" />

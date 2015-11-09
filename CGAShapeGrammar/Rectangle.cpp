@@ -1,5 +1,6 @@
 ﻿#include "Rectangle.h"
 #include "GLUtils.h"
+#include "Circle.h"
 #include "Pyramid.h"
 #include "HipRoof.h"
 #include "GableRoof.h"
@@ -73,12 +74,12 @@ boost::shared_ptr<Shape> Rectangle::extrude(const std::string& name, float heigh
 	return boost::shared_ptr<Shape>(new Cuboid(name, _pivot, _modelMat, _scope.x, _scope.y, height, _color));
 }
 
-boost::shared_ptr<Shape> Rectangle::innerSemiCircle(const std::string& name) {
-	return boost::shared_ptr<Shape>(new SemiCircle(name, _pivot, _modelMat, _scope.x, _scope.y, _color));
+boost::shared_ptr<Shape> Rectangle::innerCircle(const std::string& name) {
+	return boost::shared_ptr<Shape>(new Circle(name, _pivot, _modelMat, _scope.x, _scope.y, _color));
 }
 
-boost::shared_ptr<Shape> Rectangle::inscribeCircle(const std::string& name) {
-	return boost::shared_ptr<Shape>();
+boost::shared_ptr<Shape> Rectangle::innerSemiCircle(const std::string& name) {
+	return boost::shared_ptr<Shape>(new SemiCircle(name, _pivot, _modelMat, _scope.x, _scope.y, _color));
 }
 
 boost::shared_ptr<Shape> Rectangle::offset(const std::string& name, float offsetDistance, int offsetSelector) {

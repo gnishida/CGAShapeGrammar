@@ -37,6 +37,7 @@ public:
     QAction *actionGenerateWindowImages;
     QAction *actionGenerateBuildingImages;
     QAction *actionTest;
+    QAction *actionGenerateSimpleShapeImages;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -77,6 +78,8 @@ public:
         actionGenerateBuildingImages->setObjectName(QStringLiteral("actionGenerateBuildingImages"));
         actionTest = new QAction(MainWindowClass);
         actionTest->setObjectName(QStringLiteral("actionTest"));
+        actionGenerateSimpleShapeImages = new QAction(MainWindowClass);
+        actionGenerateSimpleShapeImages->setObjectName(QStringLiteral("actionGenerateSimpleShapeImages"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -113,6 +116,7 @@ public:
         menuView->addAction(actionViewRefresh);
         menuTool->addAction(actionGenerateWindowImages);
         menuTool->addAction(actionGenerateBuildingImages);
+        menuTool->addAction(actionGenerateSimpleShapeImages);
         menuTool->addSeparator();
         menuTool->addAction(actionTest);
 
@@ -137,6 +141,7 @@ public:
         actionGenerateWindowImages->setText(QApplication::translate("MainWindowClass", "Generate Window Images", 0));
         actionGenerateBuildingImages->setText(QApplication::translate("MainWindowClass", "Generate Building Images", 0));
         actionTest->setText(QApplication::translate("MainWindowClass", "Test", 0));
+        actionGenerateSimpleShapeImages->setText(QApplication::translate("MainWindowClass", "Generate Simple Shape Images", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
         menuTool->setTitle(QApplication::translate("MainWindowClass", "Tool", 0));

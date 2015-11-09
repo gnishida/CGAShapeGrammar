@@ -126,7 +126,7 @@ void lineRendering() {
 			if (nn.x == 0 && nn.y == 0 && nn.z == 0) {
 				normal_diff = normalSensitivity;
 			} else {
-				normal_diff = max(normal_diff, length(nn - n) * normalSensitivity);				
+				normal_diff = max(normal_diff, length(nn - n) * normalSensitivity);
 				depth_diff = max(depth_diff, abs(nn2 - n2) * depthSensitivity);
 			}
 
@@ -206,7 +206,8 @@ void sketchyRendering() {
 
 void main() {
 	if (pass == 1) {
-		outputF = vec4((fNormal + 1) * 0.5, abs(dot(fPosition, fNormal)));
+		//outputF = vec4((fNormal + 1) * 0.5, abs(dot(fPosition, fNormal)));	// for small objects
+		outputF = vec4((fNormal + 1) * 0.5, abs(dot(fPosition, fNormal)) * 0.1);	// for large objects (e.g. building)
 	} else {
 		if (renderingMode == 1) {
 			regularRendering();

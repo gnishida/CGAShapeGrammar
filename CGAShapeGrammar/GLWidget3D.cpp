@@ -197,41 +197,18 @@ void GLWidget3D::drawScene(int drawMode) {
 void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
-	/*
-	std::vector<Vertex> vertices;
-	glutils::drawGrid(60, 60, 1, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0)), vertices);
-	renderManager.addObject("grid", "", vertices);
-	*/
-
-	/*{ // for tutorial
-		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 35, 15, glm::vec3(1, 1, 1));
-		system.stack.push_back(lot);
-	}*/
-
 	float object_width = 16.0f;
-	float object_height = 8.0f;
+	float object_depth = 8.0f;
+
+	float offset_x = 5.0f;
+	float offset_y = 0.0f;
 
 	{ // for parthenon
-		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+
+		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
-
-	/*{ // This is for test.
-		cga::Rectangle* lot = new cga::Rectangle("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), 5, 5, glm::vec3(1, 1, 1));
-		system.stack.push_back(lot);
-	}*/
-
-	/*{
-		std::vector<glm::vec2> points;
-		points.push_back(glm::vec2(0, 0));
-		points.push_back(glm::vec2(2, 0));
-		points.push_back(glm::vec2(2, 2));
-		points.push_back(glm::vec2(5, 2));
-		points.push_back(glm::vec2(5, 5));
-		points.push_back(glm::vec2(0, 5));
-		cga::Polygon* lot = new cga::Polygon("Lot", glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::mat4(), points, glm::vec3(1, 1, 1), "");
-		system.stack.push_back(lot);
-	}*/
 
 	try {
 		cga::Grammar grammar;
@@ -239,7 +216,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.randomParamValues(grammar);
 		system.derive(grammar);
 		system.generateGeometry(&renderManager);
-		renderManager.centerObjects();
+		//renderManager.centerObjects();
 	} catch (const std::string& ex) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	} catch (const char* ex) {
@@ -393,8 +370,10 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 
 		QTextStream out(&file);
 
-		for (float object_width = 16.0f; object_width <= 20.0f; object_width += 1.0f) {
-			for (float object_height = 8.0f; object_height <= 12.0f; object_height += 1.0f) {
+		//for (float object_width = 16.0f; object_width <= 20.0f; object_width += 1.0f) {
+		for (float object_width = 16.0f; object_width <= 16.0f; object_width += 1.0f) {
+			//for (float object_depth = 8.0f; object_depth <= 12.0f; object_depth += 1.0f) {
+			for (float object_depth = 8.0f; object_depth <= 15.0f; object_depth += 1.0f) {
 				for (float pitch_angle = 15.0f; pitch_angle <= 40.0f; pitch_angle += 5.0f) {
 					for (float yaw_angle = -60.0f; yaw_angle <= -20.0f; yaw_angle += 5.0f) {
 						// change camera view direction
@@ -404,13 +383,13 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 						camera.pos = glm::vec3(0, 0, 2.3f);
 						camera.updateMVPMatrix();
 
-						for (int k = 0; k < 1; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
+						for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
 							std::vector<float> param_values;
 					
 							renderManager.removeObjects();
 
 							// generate a window
-							cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+							cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 							system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 
 							try {
@@ -426,8 +405,8 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 								std::cout << "ERROR:" << std::endl << ex << std::endl;
 							}
 
-							// put width/height at the begining of the param values array
-							param_values.insert(param_values.begin(), object_width / object_height);
+							// put depth/width at the begining of the param values array
+							param_values.insert(param_values.begin(), object_depth / object_width);
 
 							// write all the param values to the file
 							for (int pi = 0; pi < param_values.size(); ++pi) {
@@ -461,6 +440,140 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 							cv::imwrite(filename.toUtf8().constData(), result);
 
 							count++;
+						}
+					}
+				}
+			}
+		}
+
+		file.close();
+	}
+
+	resize(origWidth, origHeight);
+	resizeGL(origWidth, origHeight);
+}
+
+void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, float scale) {
+	QDir dir("..\\cga\\simple_shapes\\");
+
+	if (!QDir("results").exists()) QDir().mkdir("results");
+
+	srand(0);
+	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
+
+	int origWidth = width();
+	int origHeight = height();
+	resize(image_width, image_height);
+	resizeGL(image_width, image_height);
+
+	QStringList filters;
+	filters << "*.xml";
+	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
+	for (int i = 0; i < fileInfoList.size(); ++i) {
+		int count = 0;
+
+		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+
+		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		if (!file.open(QIODevice::WriteOnly)) {
+			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
+			return;
+		}
+
+		QTextStream out(&file);
+
+		for (int object_width = 8; object_width <= 16; object_width += 4) {
+			for (int object_depth = 8; object_depth <= 16; object_depth += 4) {
+				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
+					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
+						// change camera view direction
+						camera.xrot = pitch_angle;//35.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
+						camera.yrot = yaw_angle;//-45.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
+						camera.zrot = 0.0f;
+						camera.pos = glm::vec3(0, 0, 40.0f);
+						camera.updateMVPMatrix();
+
+						for (int offset_x = -6; offset_x <= 6; offset_x += 3) {
+							for (int offset_y = -6; offset_y <= 6; offset_y += 3) {
+								if (offset_x + offset_y < -10 || offset_x + offset_y > 10) continue;
+
+								for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
+									std::vector<float> param_values;
+
+									renderManager.removeObjects();
+
+									// generate a window
+									cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y -(float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+									system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+
+									try {
+										cga::Grammar grammar;
+										cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+										param_values = system.randomParamValues(grammar);
+										system.derive(grammar, true);
+										system.generateGeometry(&renderManager);
+										//renderManager.centerObjects();
+									}
+									catch (const std::string& ex) {
+										std::cout << "ERROR:" << std::endl << ex << std::endl;
+									}
+									catch (const char* ex) {
+										std::cout << "ERROR:" << std::endl << ex << std::endl;
+									}
+
+									// put depth/width at the begining of the param values array
+									param_values.insert(param_values.begin() + 0, (float)(offset_x + 6) / 12.0f);
+									param_values.insert(param_values.begin() + 1, (float)(offset_y + 6) / 12.0f);
+									param_values.insert(param_values.begin() + 2, (float)(object_width - 8) / 8.0f);
+									param_values.insert(param_values.begin() + 3, (float)(object_depth - 8) / 8.0f);
+
+									// write all the param values to the file
+									for (int pi = 0; pi < param_values.size(); ++pi) {
+										if (pi > 0) {
+											out << ",";
+										}
+										out << param_values[pi];
+									}
+									out << "\n";
+
+									// render a window
+									glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+									glEnable(GL_DEPTH_TEST);
+									glDisable(GL_TEXTURE_2D);
+
+									glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+
+									// Model view projection行列をシェーダに渡す
+									glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"), 1, GL_FALSE, &camera.mvpMatrix[0][0]);
+									glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"), 1, GL_FALSE, &camera.mvMatrix[0][0]);
+
+									// pass the light direction to the shader
+									//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+									glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+
+									drawScene(0);
+
+									cv::Mat result;
+									//EDLine(result, scale);
+									QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
+									//cv::imwrite(filename.toUtf8().constData(), result);
+
+									// スケッチ線を使わず、直線で描画
+									// 128x128、グレースケースの画像として保存
+									QImage img = grabFrameBuffer();
+									cv::Mat mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+									cv::cvtColor(mat, mat, cv::COLOR_BGR2GRAY);
+									cv::resize(mat, mat, cv::Size(256, 256));
+									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+									cv::resize(mat, mat, cv::Size(128, 128));
+									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+									cv::imwrite(filename.toUtf8().constData(), mat);
+
+									count++;
+								}
+
+
+							}
 						}
 					}
 				}
@@ -561,13 +674,17 @@ void GLWidget3D::EDLine(cv::Mat& result, float scale) {
 		if (!erased) break;
 	}
 
-	result = cv::Mat(mat.rows * scale, mat.cols * scale, CV_8UC3, cv::Scalar(255, 255, 255));
+	//result = cv::Mat(mat.rows * scale, mat.cols * scale, CV_8UC3, cv::Scalar(255, 255, 255));
+	result = cv::Mat(mat.rows, mat.cols, CV_8UC3, cv::Scalar(255, 255, 255));
 
 	for (int i = 0; i < edges.size(); ++i) {
 		int polyline_index = rand() % style_polylines.size();
 
-		draw2DPolyline(result, edges[i].first * scale, edges[i].second * scale, polyline_index);
+		draw2DPolyline(result, edges[i].first, edges[i].second, polyline_index);
+		//draw2DPolyline(result, edges[i].first * scale, edges[i].second * scale, polyline_index);
 	}
+
+	cv::resize(result, result, cv::Size(result.cols * scale, result.rows * scale));
 }
 
 void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index) {
