@@ -133,7 +133,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;..\opencv\lib;..\glew;$(BOOST_LIBRARYDIR);$(CGAL_DIR)\lib;$(CGAL_DIR)\auxiliary\gmp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;opengl32.lib;glu32.lib;Qt5Widgets.lib;Qt5Xml.lib;glew32.lib;opencv_core2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_legacy2411.lib;opencv_ml2411.lib;opencv_photo2411.lib;opencv_video2411.lib;libboost_thread-vc120-mt-1_58.lib;CGAL-vc120-mt-4.7.lib;CGAL_Core-vc120-mt-4.7.lib;CGAL_ImageIO-vc120-mt-4.7.lib;CGAL_Qt5-vc120-mt-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;opengl32.lib;glu32.lib;Qt5Widgets.lib;Qt5Xml.lib;glew32.lib;opencv_world300.lib;libboost_thread-vc120-mt-1_58.lib;CGAL-vc120-mt-4.7.lib;CGAL_Core-vc120-mt-4.7.lib;CGAL_ImageIO-vc120-mt-4.7.lib;CGAL_Qt5-vc120-mt-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

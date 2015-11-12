@@ -9,8 +9,9 @@
 #include "ShadowMapping.h"
 #include "RenderManager.h"
 #include "CGA.h"
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 class MainWindow;
 
@@ -26,6 +27,7 @@ public:
 	void test();
 	void EDLine(cv::Mat& result, float scale);
 	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
+	bool isImageValid(const cv::Mat& image);
 
 protected:
 	void initializeGL();

@@ -482,8 +482,8 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 
 		QTextStream out(&file);
 
-		for (int object_width = 8; object_width <= 16; object_width += 4) {
-			for (int object_depth = 8; object_depth <= 16; object_depth += 4) {
+		for (int object_width = 4; object_width <= 16; object_width += 4) {
+			for (int object_depth = 4; object_depth <= 16; object_depth += 4) {
 				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
 					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
 						// change camera view direction
@@ -493,11 +493,10 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 						camera.pos = glm::vec3(0, 0, 40.0f);
 						camera.updateMVPMatrix();
 
-						for (int offset_x = -6; offset_x <= 6; offset_x += 3) {
-							for (int offset_y = -6; offset_y <= 6; offset_y += 3) {
-								if (offset_x + offset_y < -10 || offset_x + offset_y > 10) continue;
+						for (int offset_x = -8; offset_x <= 8; offset_x += 4) {
+							for (int offset_y = -8; offset_y <= 8; offset_y += 4) {
 
-								for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
+								for (int k = 0; k < 5; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
 									std::vector<float> param_values;
 
 									renderManager.removeObjects();
@@ -521,21 +520,6 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 										std::cout << "ERROR:" << std::endl << ex << std::endl;
 									}
 
-									// put depth/width at the begining of the param values array
-									param_values.insert(param_values.begin() + 0, (float)(offset_x + 6) / 12.0f);
-									param_values.insert(param_values.begin() + 1, (float)(offset_y + 6) / 12.0f);
-									param_values.insert(param_values.begin() + 2, (float)(object_width - 8) / 8.0f);
-									param_values.insert(param_values.begin() + 3, (float)(object_depth - 8) / 8.0f);
-
-									// write all the param values to the file
-									for (int pi = 0; pi < param_values.size(); ++pi) {
-										if (pi > 0) {
-											out << ",";
-										}
-										out << param_values[pi];
-									}
-									out << "\n";
-
 									// render a window
 									glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 									glEnable(GL_DEPTH_TEST);
@@ -555,11 +539,11 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 
 									cv::Mat result;
 									//EDLine(result, scale);
-									QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
+									//QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
 									//cv::imwrite(filename.toUtf8().constData(), result);
 
 									// スケッチ線を使わず、直線で描画
-									// 128x128、グレースケースの画像として保存
+									// 128x128、グレースケースの画像に変換
 									QImage img = grabFrameBuffer();
 									cv::Mat mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
 									cv::cvtColor(mat, mat, cv::COLOR_BGR2GRAY);
@@ -567,9 +551,32 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
 									cv::resize(mat, mat, cv::Size(128, 128));
 									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
-									cv::imwrite(filename.toUtf8().constData(), mat);
 
-									count++;
+									// 画像が有効なら保存
+									if (isImageValid(mat)) {
+										// put depth, width at the begining of the param values array
+										param_values.insert(param_values.begin() + 0, (float)(offset_x + 8) / 16.0f);
+										param_values.insert(param_values.begin() + 1, (float)(offset_y + 8) / 16.0f);
+										param_values.insert(param_values.begin() + 2, (float)(object_width - 4) / 12.0f);
+										param_values.insert(param_values.begin() + 3, (float)(object_depth - 4) / 12.0f);
+
+										// set filename
+										QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 5, 10, QChar('0'));
+
+										cv::imwrite(filename.toUtf8().constData(), mat);
+
+										// write all the param values to the file
+										for (int pi = 0; pi < param_values.size(); ++pi) {
+											if (pi > 0) {
+												out << ",";
+											}
+											out << param_values[pi];
+										}
+										out << "\n";
+
+										count++;
+									}
+
 								}
 
 
@@ -714,4 +721,21 @@ void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::ve
 
 		cv::line(img, cv::Point(T0(0, 0), T0(1, 0)), cv::Point(T1(0, 0), T1(1, 0)), cv::Scalar(0, 0, 0), 1, CV_AA);
 	}
+}
+
+bool GLWidget3D::isImageValid(const cv::Mat& image) {
+	cv::Mat tmp;
+
+	cv::reduce(image, tmp, 0, CV_REDUCE_MIN);
+	if (tmp.at<uchar>(0, 0) == 0) return false;
+	if (tmp.at<uchar>(0, tmp.cols - 1) == 0) return false;
+
+	cv::reduce(image, tmp, 1, CV_REDUCE_MIN);
+	if (tmp.at<uchar>(0, 0) == 0) return false;
+	if (tmp.at<uchar>(tmp.rows - 1, 0) == 0) return false;	
+
+	// at least one pixel has to be black
+	cv::reduce(tmp, tmp, 0, CV_REDUCE_MIN);
+	if (tmp.at<uchar>(0, 0) == 0) return true;
+	else return false;
 }
