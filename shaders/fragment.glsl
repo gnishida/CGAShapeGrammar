@@ -63,7 +63,7 @@ void regularRendering() {
 
 	// lighting
 	vec4 ambient = vec4(0.6, 0.6, 0.6, 1.0);
-	vec4 diffuse = vec4(0.8, 0.8, 0.8, 1.0) * max(0.0, dot(-lightDir, fNormal));
+	vec4 diffuse = vec4(0.5, 0.5, 0.5, 1.0) * max(0.0, dot(-lightDir, fNormal));
 
 	float shadow_coef = 1.0;
 	if (useShadow == 1) {

@@ -210,7 +210,7 @@
       <Filter>Source Files\shape</Filter>
     </ClCompile>
     <ClCompile Include="UShapePrism.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,7 +382,7 @@
       <Filter>Source Files\shape</Filter>
     </ClInclude>
     <ClInclude Include="UShapePrism.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

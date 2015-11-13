@@ -198,25 +198,75 @@ void GLWidget3D::drawScene(int drawMode) {
 void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
-	float object_width = 16.0f;
-	float object_depth = 8.0f;
+	float object_width = 32.0f;// 16.0f;
+	float object_depth = 20.0f;// 8.0f;
 
-	float offset_x = 5.0f;
+	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
+#if 0
 	{ // for parthenon
-		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
-		cga::UShape* start = new cga::UShape("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, 4, 4, glm::vec3(1, 1, 1));
+		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
 		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
+#endif
+
+	{ // for building G
+		float object_width = 10.0f;
+		float object_depth = 10.0f;// 8.0f;
+
+		cga::Rectangle* start1 = new cga::Rectangle("Start1", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width * 1.5, offset_y - (float)object_depth * 1.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
+		cga::Rectangle* start2 = new cga::Rectangle("Start2", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width * 0.5, offset_y - (float)object_depth * 1.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start2));
+		cga::Rectangle* start3 = new cga::Rectangle("Start3", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x + (float)object_width * 0.5, offset_y - (float)object_depth * 1.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3));
+
+		cga::Rectangle* start4 = new cga::Rectangle("Start4", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width * 1.5, offset_y - (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start4));
+		cga::Rectangle* start5 = new cga::Rectangle("Start5", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width * 0.5, offset_y - (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start5));
+		cga::Rectangle* start6 = new cga::Rectangle("Start6", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x + (float)object_width * 0.5, offset_y - (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start6));
+
+		cga::Rectangle* start7 = new cga::Rectangle("Start7", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width * 1.5, offset_y + (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start7));
+		cga::Rectangle* start8 = new cga::Rectangle("Start8", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width * 0.5, offset_y + (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start8));
+		cga::Rectangle* start9 = new cga::Rectangle("Start9", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x + (float)object_width * 0.5, offset_y + (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start9));
+	}
+
+#if 0
+	{ // for building R
+		cga::UShape* start = new cga::UShape("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, 10, 8, glm::vec3(1, 1, 1));
+
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+	}
+#endif
+
+#if 0
+	{ // for building T
+		float object_depth = 14.0f;// 8.0f;
+
+		cga::Rectangle* start1 = new cga::Rectangle("Start1", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)50 * 0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), 50, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
+		cga::Rectangle* start2 = new cga::Rectangle("Start2", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)50 * 0.5f, offset_y - (float)object_depth*0.5f, 20)), glm::mat4(), 40, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start2));
+		cga::Rectangle* start3 = new cga::Rectangle("Start3", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)50 * 0.5f, offset_y - (float)object_depth*0.5f, 25)), glm::mat4(), 35, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3));
+		cga::Rectangle* start4 = new cga::Rectangle("Start4", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)50 * 0.5f, offset_y - (float)object_depth*0.5f, 30)), glm::mat4(), 25, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start4));
+	}
+#endif
 
 	try {
 		cga::Grammar grammar;
 		cga::parseGrammar(filename, grammar);
 		system.randomParamValues(grammar);
-		system.derive(grammar);
+		system.derive(grammar, true);
 		system.generateGeometry(&renderManager);
 		//renderManager.centerObjects();
 	} catch (const std::string& ex) {

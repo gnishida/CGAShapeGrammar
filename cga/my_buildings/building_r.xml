@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<grammar version="1.0" author="Gen Nishida">
+	<!-- building mass -->
+	<rule name="Start">
+		<extrude height="10"/>
+		<split splitAxis="z">
+			<param type="absolute" value="9.95" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="TopLayer">
+		<comp>
+			<param name="side" value="RoofWall"/>
+			<param name="top" value="TopFace"/>
+		</comp>
+	</rule>
+	
+	<!-- roof modeling -->
+	<rule name="TopFace">
+		<offset offsetDistance="-0.3" inside="Roof" border="TopFaceBorder"/>
+	</rule>
+	<rule name="TopFaceBorder">
+		<extrude height="0.5"/>
+		<comp>
+			<param name="side" value="RoofWall"/>
+			<param name="top" value="RoofWall"/>
+		</comp>
+	</rule>
+	
+	<!-- facade modeling -->
+	<rule name="BuildingMass">
+		<split splitAxis="z">
+			<param type="absolute" value="0.15" name="BaseFloor"/>
+			<param type="absolute" value="4.8" name="GroundFloor"/>
+			<param type="absolute" value="0.5" name="Ledge"/>
+			<param type="absolute" value="4" name="Floor"/>
+			<param type="absolute" value="0.5" name="Ledge"/>
+		</split>
+	</rule>
+	<rule name="GroundFloor">
+		<comp>
+			<param name="side" value="GroundFacade"/>
+		</comp>
+	</rule>
+	<rule name="Floor">
+		<comp>
+			<param name="side" value="Facade"/>
+		</comp>
+	</rule>
+	
+	<!-- floor modeling -->
+	<rule name="GroundFacade">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
+		<split splitAxis="x">
+			<param type="absolute" value="0.5" name="Wall"/>
+			<param type="floating" value="4" name="GroundTile" repeat="true"/>
+			<param type="absolute" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="GroundTile">
+		<split splitAxis="x">
+			<param type="floating" value="0.5" name="Wall"/>
+			<param type="absolute" value="2.5" name="GroundWindowColumn"/>
+			<param type="floating" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="GroundWindowColumn">
+		<split splitAxis="y">
+			<param type="absolute" value="0.8" name="Wall"/>
+			<param type="floating" value="4" name="WindowTile"/>
+			<param type="absolute" value="0.8" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="Facade">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
+		<split splitAxis="x">
+			<param type="absolute" value="0.5" name="Wall"/>
+			<param type="floating" value="4" name="Tile" repeat="true"/>
+			<param type="absolute" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="Tile">
+		<split splitAxis="x">
+			<param type="floating" value="0.5" name="Wall"/>
+			<param type="absolute" value="2.5" name="WindowColumn"/>
+			<param type="floating" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="WindowColumn">
+		<split splitAxis="y">
+			<param type="absolute" value="0.8" name="Wall"/>
+			<param type="floating" value="2" name="WindowTile"/>
+			<param type="absolute" value="0.8" name="Wall"/>
+		</split>
+	</rule>
+	
+	<!-- window modeling -->
+	<rule name="WindowTile">
+		<split splitAxis="y">
+			<param type="absolute" value="0.3" name="WindowSillTile"/>
+			<param type="floating" value="1" name="WindowTileMain"/>
+		</split>
+	</rule>
+	<rule name="WindowSillTile">
+		<split splitAxis="y">
+			<param type="relative" value="0.5" name="WindowSillTileLayer1"/>
+			<param type="relative" value="0.5" name="WindowSillTileLayer2"/>
+		</split>
+	</rule>
+	<rule name="WindowSillTileLayer1">
+		<split splitAxis="x">
+			<param type="absolute" value="0.05" name="Wall"/>
+			<param type="floating" value="1" name="WindowSillTileLayer1Main"/>
+			<param type="absolute" value="0.05" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="WindowSillTileLayer1Main">
+		<extrude height="0.1"/>
+		<comp>
+			<param name="top" value="WindowSillFace"/>
+			<param name="side" value="WindowSillFace"/>
+		</comp>
+	</rule>
+	<rule name="WindowSillTileLayer2">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="top" value="WindowSillFace"/>
+			<param name="side" value="WindowSillFace"/>
+		</comp>
+	</rule>
+	<rule name="WindowTileMain">
+		<split splitAxis="x">
+			<param type="absolute" value="0.2" name="Wall"/>
+			<param type="floating" value="1" name="WindowTileMainMain"/>
+			<param type="absolute" value="0.2" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="WindowTileMainMain">
+		<extrude height="0.1"/>
+		<comp>
+			<param name="side" value="WindowFrame"/>
+			<param name="top" value="WindowTileMainMainTop"/>
+		</comp>
+	</rule>
+	<rule name="WindowTileMainMainTop">
+		<offset offsetDistance="-0.1" inside="WindowTileMainMainTopInside" border="WindowFrame"/>
+	</rule>
+	<rule name="WindowTileMainMainTopInside">
+		<extrude height="-0.1"/>
+		<comp>
+			<param name="side" value="WindowFrame"/>
+			<param name="top" value="WindowTileMainMainTopInsideBottom"/>
+		</comp>
+	</rule>
+	<rule name="WindowTileMainMainTopInsideBottom">
+		<offset offsetDistance="-0.1" inside="WindowTileMainMainTopInsideBottomInside" border="WindowFrame"/>
+	</rule>
+	<rule name="WindowTileMainMainTopInsideBottomInside">
+		<extrude height="-0.2"/>
+		<comp>
+			<param name="side" value="WindowFrame"/>
+			<param name="top" value="WindowGlassArea"/>
+		</comp>
+	</rule>
+	<rule name="WindowGlassArea">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="relative" value="1"/>
+			<param name="texHeight" type="relative" value="1"/>
+		</setupProjection>
+		<split splitAxis="x">
+			<param type="floating" value="1" name="WindowGlassColumnArea"/>
+			<param type="absolute" value="0.1" name="WindowGlassSeparateTile"/>
+			<param type="floating" value="1" name="WindowGlassColumnArea"/>
+		</split>
+	</rule>
+	<rule name="WindowGlassSeparateTile">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="side" value="WindowFrame"/>
+			<param name="top" value="WindowFrame"/>
+		</comp>
+	</rule>
+	<rule name="WindowGlassColumnArea">
+		<split splitAxis="y">
+			<param type="floating" value="1" name="WindowGlass"/>
+			<param type="absolute" value="0.1" name="WindowGlassSeparateTile"/>
+			<param type="floating" value="1" name="WindowGlass"/>
+		</split>
+	</rule>
+	
+	<!-- ledge modeling -->
+	<rule name="Ledge">
+		<split splitAxis="z">
+			<param type="relative" value="0.25" name="LedgeLayer1"/>
+			<param type="relative" value="0.25" name="LedgeLayer2"/>
+			<param type="relative" value="0.25" name="LedgeLayer3"/>
+			<param type="relative" value="0.25" name="LedgeLayer4"/>
+		</split>
+	</rule>
+	<rule name="LedgeLayer1">
+		<offset offsetDistance="0.04" inside="LedgeLayerBody"/>
+	</rule>
+	<rule name="LedgeLayer2">
+		<offset offsetDistance="0.06" inside="LedgeLayerBody"/>
+	</rule>
+	<rule name="LedgeLayer3">
+		<offset offsetDistance="0.1" inside="LedgeLayerBody"/>
+	</rule>
+	<rule name="LedgeLayer4">
+		<offset offsetDistance="0.2" inside="LedgeLayerBody"/>
+	</rule>
+	<rule name="LedgeLayerBody">
+		<comp>
+			<param name="side" value="LedgeFace"/>
+			<param name="top" value="LedgeFace"/>
+		</comp>
+	</rule>
+	
+	<!-- material -->
+	<rule name="Roof">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="relative" value="1"/>
+			<param name="texHeight" type="relative" value="1"/>
+		</setupProjection>
+		<texture texturePath="../assets/textures/roof.jpg"/>
+	</rule>
+	<rule name="Wall">
+		<texture texturePath="../assets/textures/bricks.jpg"/>
+	</rule>
+	<rule name="WindowGlass">
+		<texture texturePath="../assets/textures/window.9.tif"/>
+	</rule>
+	<rule name="WindowSillFace">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="1"/>
+			<param name="texHeight" type="absolute" value="0.7"/>
+		</setupProjection>
+		<texture texturePath="../assets/textures/stucco.jpg"/>
+	</rule>
+	<rule name="RoofWall">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="1"/>
+			<param name="texHeight" type="absolute" value="0.7"/>
+		</setupProjection>
+		<texture texturePath="../assets/textures/stucco.jpg"/>
+	</rule>
+	<rule name="LedgeFace">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="1"/>
+			<param name="texHeight" type="absolute" value="0.7"/>
+		</setupProjection>
+		<texture texturePath="../assets/textures/stucco.jpg"/>
+	</rule>
+</grammar>
