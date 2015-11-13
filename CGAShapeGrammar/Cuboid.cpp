@@ -11,9 +11,7 @@ Cuboid::Cuboid(const std::string& name, const glm::mat4& pivot, const glm::mat4&
 	this->_removed = false;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
-	this->_scope.x = width;
-	this->_scope.y = depth;
-	this->_scope.z = height;
+	this->_scope = glm::vec3(width, depth, height);
 	this->_color = color;
 }
 

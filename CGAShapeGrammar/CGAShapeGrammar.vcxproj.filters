@@ -206,6 +206,12 @@
     <ClCompile Include="Cylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UShape.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="UShapePrism.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -370,6 +376,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UShape.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="UShapePrism.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

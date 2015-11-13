@@ -101,7 +101,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;..\opencv\lib;..\glew;$(BOOST_LIBRARYDIR);$(CGAL_DIR)\lib;$(CGAL_DIR)\auxiliary\gmp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;glew32.lib;opencv_core2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_legacy2411d.lib;opencv_ml2411d.lib;opencv_photo2411d.lib;opencv_video2411d.lib;libboost_thread-vc120-mt-gd-1_58.lib;CGAL-vc120-mt-gd-4.7.lib;CGAL_Core-vc120-mt-gd-4.7.lib;CGAL_ImageIO-vc120-mt-gd-4.7.lib;CGAL_Qt5-vc120-mt-gd-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;glew32.lib;opencv_world300d.lib;libboost_thread-vc120-mt-gd-1_58.lib;CGAL-vc120-mt-gd-4.7.lib;CGAL_Core-vc120-mt-gd-4.7.lib;CGAL_ImageIO-vc120-mt-gd-4.7.lib;CGAL_Qt5-vc120-mt-gd-4.7.lib;libgmp-10.lib;libmpfr-4.lib;EDLinesLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -206,6 +206,8 @@
     <ClCompile Include="TaperOperator.cpp" />
     <ClCompile Include="TextureOperator.cpp" />
     <ClCompile Include="TranslateOperator.cpp" />
+    <ClCompile Include="UShape.cpp" />
+    <ClCompile Include="UShapePrism.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -298,6 +300,8 @@
     <ClInclude Include="TaperOperator.h" />
     <ClInclude Include="TextureOperator.h" />
     <ClInclude Include="TranslateOperator.h" />
+    <ClInclude Include="UShape.h" />
+    <ClInclude Include="UShapePrism.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
