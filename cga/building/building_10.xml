@@ -79,7 +79,9 @@
 	</rule>
 	
 	<rule name="Roof">
-		<offset offsetDistance="roof_hang" offsetSelector="inside"/>
+		<offset offsetDistance="roof_hang" inside="RoofInside"/>
+	</rule>
+	<rule name="RoofInside">
 		<roofGable angle="20"/>
 	</rule>
 

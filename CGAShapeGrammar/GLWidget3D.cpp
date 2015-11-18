@@ -140,7 +140,8 @@ void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", false);
 
 	// set the clear color for the screen
-	qglClearColor(QColor(113, 112, 117));
+	//qglClearColor(QColor(113, 112, 117));
+	glClearColor(0.95, 0.95, 0.95, 1.0);
 
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 
@@ -198,14 +199,14 @@ void GLWidget3D::drawScene(int drawMode) {
 void GLWidget3D::loadCGA(char* filename) {
 	renderManager.removeObjects();
 
-	float object_width = 32.0f;// 16.0f;
-	float object_depth = 20.0f;// 8.0f;
-
 	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
 #if 0
-	{ // for parthenon
+	{ // for window
+		float object_width = 3.0f;
+		float object_depth = 1.5f;
+
 		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
 		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
@@ -213,6 +214,21 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
+#if 1
+	{ // for building
+		float object_width = 18.0f;
+		float object_depth = 12.0f;
+
+		float offset_x = 0.0f;
+		float offset_y = 0.0f;
+		cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+
+		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+	}
+#endif
+
+#if 0
 	{ // for building G
 		float object_width = 10.0f;
 		float object_depth = 10.0f;// 8.0f;
@@ -238,6 +254,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::Rectangle* start9 = new cga::Rectangle("Start9", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x + (float)object_width * 0.5, offset_y + (float)object_depth * 0.5, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start9));
 	}
+#endif
 
 #if 0
 	{ // for building R

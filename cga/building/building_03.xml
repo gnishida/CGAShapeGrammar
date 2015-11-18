@@ -7,7 +7,9 @@
 	
 	<rule name="Start">
 		<copy name="Start2"/>
-		<offset offsetDistance="building_offset" offsetSelector="inside"/>
+		<offset offsetDistance="building_offset" inside="StartInside"/>
+	</rule>
+	<rule name="StartInside">
 		<extrude height="building_height"/>
 	</rule>
 	<rule name="Start2">

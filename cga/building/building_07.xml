@@ -16,7 +16,9 @@
 		</split>
 	</rule>
 	<rule name="Start2">
-		<offset offsetDistance="building_offset" offsetSelector="inside"/>
+		<offset offsetDistance="building_offset" inside="Start2Inside"/>
+	</rule>
+	<rule name="Start2Inside">
 		<split splitAxis="x">
 			<param type="floating" value="building_corner_width+building_offset" name="Start6"/>
 			<param type="floating" value="building_between_column_length+building_column_width" name="Start8" repeat="true"/>

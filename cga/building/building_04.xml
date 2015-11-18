@@ -44,7 +44,9 @@
 		</split>
 	</rule>
 	<rule name="GroundFloorTop2">
-		<offset offsetDistance="roof_overhang" offsetSelector="inside"/>
+		<offset offsetDistance="roof_overhang" inside="GroundFloorTop2Inside"/>
+	</rule>
+	<rule name="GroundFloorTop2Inside">
 		<roofHip angle="20"/>
 	</rule>
 	<rule name="SecondFloorBase">
@@ -56,11 +58,15 @@
 		</comp>
 	</rule>
 	<rule name="SecondFloorRoof">
-		<offset offsetDistance="roof_overhang" offsetSelector="inside"/>
+		<offset offsetDistance="roof_overhang" inside="SecondFloorRoofInside"/>
+	</rule>
+	<rule name="SecondFloorRoofInside">
 		<taper height="2"/>
 	</rule>
 	<rule name="GarageRoof">
-		<offset offsetDistance="roof_overhang" offsetSelector="inside"/>
+		<offset offsetDistance="roof_overhang" inside="GarageRoofInside"/>
+	</rule>
+	<rule name="GarageRoofInside">
 		<roofHip angle="20"/>
 	</rule>
 </rules>

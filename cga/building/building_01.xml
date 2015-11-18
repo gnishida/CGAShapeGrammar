@@ -11,7 +11,9 @@
 	
 	<rule name="Start">
 		<copy name="Start2"/>
-		<offset offsetDistance="building_offset" offsetSelector="inside"/>
+		<offset offsetDistance="building_offset" inside="StartInside"/>
+	</rule>
+	<rule name="StartInside">
 		<extrude height="building_height"/>
 		<comp>
 			<param name="side" value="Facade."/>
@@ -72,11 +74,15 @@
 		</comp>
 	</rule>
 	<rule name="Roof">
-		<offset offsetDistance="0.3" offsetSelector="inside"/>
+		<offset offsetDistance="0.3" inside="RoofMain"/>
+	</rule>
+	<rule name="RoofMain">
 		<roofGable angle="18"/>
 	</rule>
 	<rule name="CornerRoof">
-		<offset offsetDistance="0.3" offsetSelector="inside"/>
+		<offset offsetDistance="0.3" inside="CornerRoofMain"/>
+	</rule>
+	<rule name="CornerRoofMain">
 		<roofHip angle="40"/>
 	</rule>
 	<rule name="GableRoof">

@@ -68,11 +68,15 @@
 	</rule>
 
 	<rule name="MainRoof">
-		<offset offsetDistance="roof_hang" offsetSelector="inside"/>
+		<offset offsetDistance="roof_hang" inside="MainRoofInside"/>
+	</rule>
+	<rule name="MainRoofInside">
 		<roofGable angle="30"/>
 	</rule>
 	<rule name="GarageRoof">
-		<offset offsetDistance="roof_hang" offsetSelector="inside"/>
+		<offset offsetDistance="roof_hang" inside="GarageRoofInside"/>
+	</rule>
+	<rule name="GarageRoofInside">
 		<roofHip angle="30"/>
 	</rule>
 </rules>

@@ -22,7 +22,9 @@
 		</comp>
 	</rule>
 	<rule name="Start2">
-		<offset offsetDistance="building_offset" offsetSelector="inside"/>
+		<offset offsetDistance="building_offset" inside="Start2Inside"/>
+	</rule>
+	<rule name="Start2Inside">
 		<extrude height="ground_floor_height"/>
 	</rule>
 	<rule name="Start3">

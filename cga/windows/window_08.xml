@@ -96,11 +96,7 @@
 		</comp>
 	</rule>
 	<rule name="WindowShutterMainFace">
-		<offset offsetDistance="-window_shutter_border" offsetSelector="all"/>
-		<comp>
-			<param name="inside" value="WindowShutterMainFaceInside"/>
-			<param name="border" value="WindowShutterBorder"/>
-		</comp>
+		<offset offsetDistance="-window_shutter_border" inside="WindowShutterMainFaceInside" border="WindowShutterBorder"/>
 	</rule>
 	<rule name="WindowShutterMainFaceInside">
 		<split splitAxis="y">
