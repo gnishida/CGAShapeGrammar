@@ -8,14 +8,14 @@
 
 namespace cga {
 
-class UShape : public Shape {
+class LShape : public Shape {
 private:
 	float _front_width;
-	float _back_height;
+	float _left_width;
 
 public:
-	UShape() {}
-	UShape(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, float front_width, float back_height, const glm::vec3& color);
+	LShape() {}
+	LShape(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, float front_width, float left_width, const glm::vec3& color);
 	boost::shared_ptr<Shape> clone(const std::string& name) const;
 	boost::shared_ptr<Shape> extrude(const std::string& name, float height);
 	void offset(const std::string& name, float offsetDistance, const std::string& inside, const std::string& border, std::vector<boost::shared_ptr<Shape> >& shapes);

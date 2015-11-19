@@ -1,6 +1,7 @@
 ﻿#include "Rectangle.h"
 #include "GLUtils.h"
 #include "Circle.h"
+#include "LShape.h"
 #include "Pyramid.h"
 #include "HipRoof.h"
 #include "GableRoof.h"
@@ -9,6 +10,7 @@
 #include "Cuboid.h"
 #include "SemiCircle.h"
 #include "OffsetRectangle.h"
+#include "UShape.h"
 #include "CGA.h"
 
 namespace cga {
@@ -115,6 +117,15 @@ void Rectangle::offset(const std::string& name, float offsetDistance, const std:
 	}
 }
 
+boost::shared_ptr<Shape> Rectangle::pyramid(const std::string& name, float height) {
+	std::vector<glm::vec2> points(4);
+	points[0] = glm::vec2(0, 0);
+	points[1] = glm::vec2(_scope.x, 0);
+	points[2] = glm::vec2(_scope.x, _scope.y);
+	points[3] = glm::vec2(0, _scope.y);
+	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, 0, _color, _texture));
+}
+
 boost::shared_ptr<Shape> Rectangle::roofGable(const std::string& name, float angle) {
 	std::vector<glm::vec2> points(4);
 	points[0] = glm::vec2(0, 0);
@@ -142,15 +153,11 @@ void Rectangle::setupProjection(int axesSelector, float texWidth, float texHeigh
 }
 
 boost::shared_ptr<Shape> Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
-	std::vector<glm::vec2> points(6);
-	points[0] = glm::vec2(0, 0);
-	points[1] = glm::vec2(_scope.x, 0);
-	points[2] = glm::vec2(_scope.x, frontWidth);
-	points[3] = glm::vec2(leftWidth, frontWidth);
-	points[4] = glm::vec2(leftWidth, _scope.y);
-	points[5] = glm::vec2(0, _scope.y);
+	return boost::shared_ptr<Shape>(new LShape(name, _pivot, _modelMat, _scope.x, _scope.y, frontWidth, leftWidth, _color));
+}
 
-	return boost::shared_ptr<Shape>(new Polygon(name, _pivot, _modelMat, points, _color, _texture));
+boost::shared_ptr<Shape> Rectangle::shapeU(const std::string& name, float frontWidth, float backDepth) {
+	return boost::shared_ptr<Shape>(new UShape(name, _pivot, _modelMat, _scope.x, _scope.y, frontWidth, backDepth, _color));
 }
 
 void Rectangle::size(float xSize, float ySize, float zSize, bool centered) {
@@ -208,46 +215,20 @@ boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height,
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
-void Rectangle::generateGeometry(RenderManager* renderManager, float opacity) const {
+void Rectangle::generateGeometry(std::vector<glutils::Face>& faces, float opacity) const {
 	if (_removed) return;
 
 	std::vector<Vertex> vertices;
 
-	vertices.resize(6);
-
-	glm::vec4 p1(0, 0, 0, 1);
-	p1 = _pivot * _modelMat * p1;
-	glm::vec4 p2(_scope.x, 0, 0, 1);
-	p2 = _pivot * _modelMat * p2;
-	glm::vec4 p3(_scope.x, _scope.y, 0, 1);
-	p3 = _pivot * _modelMat * p3;
-	glm::vec4 p4(0, _scope.y, 0, 1);
-	p4 = _pivot * _modelMat * p4;
-
-	glm::vec4 normal(0, 0, 1, 0);
-	normal = _pivot * _modelMat * normal;
+	glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, 0));
 
 	if (_textureEnabled) {
-		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[0]);
-		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[1], 1);
-		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[2]);
-
-		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[0]);
-		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[2]);
-		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), glm::vec4(_color, opacity), _texCoords[3], 1);
-
-		renderManager->addObject(_name.c_str(), _texture.c_str(), vertices);
+		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
+		faces.push_back(glutils::Face(_name, vertices, _texture));
 	} else {
-		vertices[0] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity));
-		vertices[1] = Vertex(glm::vec3(p2), glm::vec3(normal), glm::vec4(_color, opacity), 1);
-		vertices[2] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity));
-
-		vertices[3] = Vertex(glm::vec3(p1), glm::vec3(normal), glm::vec4(_color, opacity));
-		vertices[4] = Vertex(glm::vec3(p3), glm::vec3(normal), glm::vec4(_color, opacity));
-		vertices[5] = Vertex(glm::vec3(p4), glm::vec3(normal), glm::vec4(_color, opacity), 1);
-
-		renderManager->addObject(_name.c_str(), "", vertices);
-	}	
+		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
+		faces.push_back(glutils::Face(_name, vertices));
+	}
 }
 
 }

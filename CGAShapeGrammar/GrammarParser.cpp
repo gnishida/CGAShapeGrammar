@@ -9,11 +9,13 @@
 #include "InnerSemiCircleOperator.h"
 #include "InsertOperator.h"
 #include "OffsetOperator.h"
+#include "PyramidOperator.h"
 #include "RoofGableOperator.h"
 #include "RoofHipOperator.h"
 #include "RotateOperator.h"
 #include "SetupProjectionOperator.h"
 #include "ShapeLOperator.h"
+#include "ShapeUOperator.h"
 #include "SizeOperator.h"
 #include "SplitOperator.h"
 #include "TaperOperator.h"
@@ -89,6 +91,8 @@ void parseGrammar(const char* filename, Grammar& grammar) {
 					grammar.addOperator(name, parseInsertOperator(operator_node));
 				} else if (operator_name == "offset") {
 					grammar.addOperator(name, parseOffsetOperator(operator_node));
+				} else if (operator_name == "pyramid") {
+					grammar.addOperator(name, parsePyramidOperator(operator_node));
 				} else if (operator_name == "roofGable") {
 					grammar.addOperator(name, parseRoofGableOperator(operator_node));
 				} else if (operator_name == "roofHip") {
@@ -99,6 +103,8 @@ void parseGrammar(const char* filename, Grammar& grammar) {
 					grammar.addOperator(name, parseSetupProjectionOperator(operator_node));
 				} else if (operator_name == "shapeL") {
 					grammar.addOperator(name, parseShapeLOperator(operator_node));
+				} else if (operator_name == "shapeU") {
+					grammar.addOperator(name, parseShapeUOperator(operator_node));
 				} else if (operator_name == "size") {
 					grammar.addOperator(name, parseSizeOperator(operator_node));
 				} else if (operator_name == "split") {
@@ -109,9 +115,6 @@ void parseGrammar(const char* filename, Grammar& grammar) {
 					grammar.addOperator(name, parseTextureOperator(operator_node));
 				} else if (operator_name == "translate") {
 					grammar.addOperator(name, parseTranslateOperator(operator_node));
-				}
-				else {
-					throw std::string("Unknown operator name: ") + operator_name;
 				}
 
 				operator_node = operator_node.nextSibling();
@@ -290,6 +293,16 @@ boost::shared_ptr<Operator> parseOffsetOperator(const QDomNode& node) {
 	return boost::shared_ptr<Operator>(new OffsetOperator(offsetDistance, inside, border));
 }
 
+boost::shared_ptr<Operator> parsePyramidOperator(const QDomNode& node) {
+	if (!node.toElement().hasAttribute("height")) {
+		throw "pyramid node has to have height attribute.";
+	}
+
+	std::string height = node.toElement().attribute("height").toUtf8().constData();
+
+	return boost::shared_ptr<Operator>(new PyramidOperator(height));
+}
+
 boost::shared_ptr<Operator> parseRoofGableOperator(const QDomNode& node) {
 	if (!node.toElement().hasAttribute("angle")) {
 		throw "roofGable node has to have angle attribute.";
@@ -388,18 +401,43 @@ boost::shared_ptr<Operator> parseSetupProjectionOperator(const QDomNode& node) {
 }
 
 boost::shared_ptr<Operator> parseShapeLOperator(const QDomNode& node) {
-	float frontWidth;
-	float leftWidth;
+	Value frontWidth;
+	Value leftWidth;
 
 	QDomNode child = node.firstChild();
 	while (!child.isNull()) {
 		if (child.toElement().tagName() == "param") {
 			QString name = child.toElement().attribute("name");
+			QString type;
+
+			if (!child.toElement().hasAttribute("type")) {
+				throw "param node under size node has to have type attribute.";
+			}
+
+			type = child.toElement().attribute("type");
+			std::string value = child.toElement().attribute("value").toUtf8().constData();
 
 			if (name == "frontWidth") {
-				frontWidth = child.toElement().attribute("value").toFloat();
-			} else if (name == "leftWidth") {
-				leftWidth = child.toElement().attribute("value").toFloat();
+				if (type == "relative") {
+					frontWidth = Value(Value::TYPE_RELATIVE, value);
+				}
+				else if (type == "absolute") {
+					frontWidth = Value(Value::TYPE_ABSOLUTE, value);
+				}
+				else {
+					throw "type attribute under shapeL node has to be either relative or absolute.";
+				}
+			}
+			else if (name == "leftWidth") {
+				if (type == "relative") {
+					leftWidth = Value(Value::TYPE_RELATIVE, value);
+				}
+				else if (type == "absolute") {
+					leftWidth = Value(Value::TYPE_ABSOLUTE, value);
+				}
+				else {
+					throw "type attribute under shapeL node has to be either relative or absolute.";
+				}
 			}
 		}
 
@@ -407,6 +445,53 @@ boost::shared_ptr<Operator> parseShapeLOperator(const QDomNode& node) {
 	}
 
 	return boost::shared_ptr<Operator>(new ShapeLOperator(frontWidth, leftWidth));
+}
+
+boost::shared_ptr<Operator> parseShapeUOperator(const QDomNode& node) {
+	Value frontWidth;
+	Value backDepth;
+
+	QDomNode child = node.firstChild();
+	while (!child.isNull()) {
+		if (child.toElement().tagName() == "param") {
+			QString name = child.toElement().attribute("name");
+			QString type;
+
+			if (!child.toElement().hasAttribute("type")) {
+				throw "param node under size node has to have type attribute.";
+			}
+
+			type = child.toElement().attribute("type");
+			std::string value = child.toElement().attribute("value").toUtf8().constData();
+
+			if (name == "frontWidth") {
+				if (type == "relative") {
+					frontWidth = Value(Value::TYPE_RELATIVE, value);
+				}
+				else if (type == "absolute") {
+					frontWidth = Value(Value::TYPE_ABSOLUTE, value);
+				}
+				else {
+					throw "type attribute under shapeL node has to be either relative or absolute.";
+				}
+			}
+			else if (name == "backDepth") {
+				if (type == "relative") {
+					backDepth = Value(Value::TYPE_RELATIVE, value);
+				}
+				else if (type == "absolute") {
+					backDepth = Value(Value::TYPE_ABSOLUTE, value);
+				}
+				else {
+					throw "type attribute under shapeL node has to be either relative or absolute.";
+				}
+			}
+		}
+
+		child = child.nextSibling();
+	}
+
+	return boost::shared_ptr<Operator>(new ShapeUOperator(frontWidth, backDepth));
 }
 
 boost::shared_ptr<Operator> parseSizeOperator(const QDomNode& node) {

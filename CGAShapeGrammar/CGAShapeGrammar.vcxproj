@@ -178,6 +178,8 @@
     <ClCompile Include="InnerCircleOperator.cpp" />
     <ClCompile Include="InnerSemiCircleOperator.cpp" />
     <ClCompile Include="InsertOperator.cpp" />
+    <ClCompile Include="LShape.cpp" />
+    <ClCompile Include="LShapePrism.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NumberEval.cpp" />
@@ -189,6 +191,7 @@
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="PyramidOperator.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="RoofGableOperator.cpp" />
@@ -200,6 +203,7 @@
     <ClCompile Include="ShadowMapping.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="ShapeLOperator.cpp" />
+    <ClCompile Include="ShapeUOperator.cpp" />
     <ClCompile Include="SizeOperator.cpp" />
     <ClCompile Include="SketchyRenderingBuffer.cpp" />
     <ClCompile Include="SplitOperator.cpp" />
@@ -274,6 +278,8 @@
     <ClInclude Include="InnerCircleOperator.h" />
     <ClInclude Include="InnerSemiCircleOperator.h" />
     <ClInclude Include="InsertOperator.h" />
+    <ClInclude Include="LShape.h" />
+    <ClInclude Include="LShapePrism.h" />
     <ClInclude Include="NumberEval.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="OffsetOperator.h" />
@@ -283,6 +289,7 @@
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="PyramidOperator.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="RoofGableOperator.h" />
@@ -294,6 +301,7 @@
     <ClInclude Include="ShadowMapping.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="ShapeLOperator.h" />
+    <ClInclude Include="ShapeUOperator.h" />
     <ClInclude Include="SizeOperator.h" />
     <ClInclude Include="SketchyRenderingBuffer.h" />
     <ClInclude Include="SplitOperator.h" />

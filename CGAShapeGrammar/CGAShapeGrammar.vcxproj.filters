@@ -200,17 +200,29 @@
     <ClCompile Include="InnerSemiCircleOperator.cpp">
       <Filter>Source Files\rule</Filter>
     </ClCompile>
-    <ClCompile Include="InnerCircleOperator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cylinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UShape.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
     <ClCompile Include="UShapePrism.cpp">
       <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="LShape.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="LShapePrism.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeUOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="Cylinder.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="InnerCircleOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="PyramidOperator.cpp">
+      <Filter>Source Files\rule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -372,16 +384,28 @@
     <ClInclude Include="InnerSemiCircleOperator.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="InnerCircleOperator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cylinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UShape.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
     <ClInclude Include="UShapePrism.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="LShape.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="LShapePrism.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeUOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="PyramidOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="InnerCircleOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="Cylinder.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>

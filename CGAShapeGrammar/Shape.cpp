@@ -137,6 +137,10 @@ void Shape::offset(const std::string& name, float offsetDistance, const std::str
 	throw "offset() is not supported.";
 }
 
+boost::shared_ptr<Shape> Shape::pyramid(const std::string& name, float height) {
+	throw "pyramid() is not supported.";
+}
+
 boost::shared_ptr<Shape> Shape::roofGable(const std::string& name, float angle) {
 	throw "roofGable() is not supported.";
 }
@@ -157,6 +161,10 @@ void Shape::setupProjection(int axesSelector, float texWidth, float texHeight) {
 
 boost::shared_ptr<Shape> Shape::shapeL(const std::string& name, float frontWidth, float leftWidth) {
 	throw "shapeL() is not supported.";
+}
+
+boost::shared_ptr<Shape> Shape::shapeU(const std::string& name, float frontWidth, float backDepth) {
+	throw "shapeU() is not supported.";
 }
 
 void Shape::size(float xSize, float ySize, float zSize, bool centered) {
@@ -196,7 +204,7 @@ void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	}
 }
 
-void Shape::generateGeometry(RenderManager* renderManager, float opacity) const {
+void Shape::generateGeometry(std::vector<glutils::Face>& faces, float opacity) const {
 	throw "render() is not supported.";
 }
 
