@@ -9,7 +9,6 @@
 #include "Polygon.h"
 #include "Cuboid.h"
 #include "SemiCircle.h"
-#include "OffsetRectangle.h"
 #include "UShape.h"
 #include "CGA.h"
 
@@ -145,11 +144,16 @@ boost::shared_ptr<Shape> Rectangle::roofHip(const std::string& name, float angle
 }
 
 void Rectangle::setupProjection(int axesSelector, float texWidth, float texHeight) {
-	_texCoords.resize(4);
-	_texCoords[0] = glm::vec2(0, 0);
-	_texCoords[1] = glm::vec2(_scope.x / texWidth, 0);
-	_texCoords[2] = glm::vec2(_scope.x / texWidth, _scope.y / texHeight);
-	_texCoords[3] = glm::vec2(0, _scope.y / texHeight);
+	if (axesSelector == AXES_SCOPE_XY) {
+		_texCoords.resize(4);
+		_texCoords[0] = glm::vec2(0, 0);
+		_texCoords[1] = glm::vec2(_scope.x / texWidth, 0);
+		_texCoords[2] = glm::vec2(_scope.x / texWidth, _scope.y / texHeight);
+		_texCoords[3] = glm::vec2(0, _scope.y / texHeight);
+	}
+	else {
+		throw "Rectangle supports only scope.xy for setupProjection().";
+	}
 }
 
 boost::shared_ptr<Shape> Rectangle::shapeL(const std::string& name, float frontWidth, float leftWidth) {
@@ -222,8 +226,8 @@ void Rectangle::generateGeometry(std::vector<glutils::Face>& faces, float opacit
 
 	glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, 0));
 
-	if (_textureEnabled) {
-		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
+	if (!_texture.empty() && _texCoords.size() >= 4) {
+		glutils::drawQuad(_scope.x, _scope.y, _texCoords[0], _texCoords[1], _texCoords[2], _texCoords[3], mat, vertices);
 		faces.push_back(glutils::Face(_name, vertices, _texture));
 	} else {
 		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);

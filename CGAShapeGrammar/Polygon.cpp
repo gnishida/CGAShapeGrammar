@@ -2,7 +2,6 @@
 #include "Pyramid.h"
 #include "GableRoof.h"
 #include "HipRoof.h"
-#include "OffsetPolygon.h"
 #include "Prism.h"
 #include "GeneralObject.h"
 #include "CGA.h"
@@ -44,14 +43,16 @@ boost::shared_ptr<Shape> Polygon::inscribeCircle(const std::string& name) {
 	return NULL;
 }
 
-boost::shared_ptr<Shape> Polygon::offset(const std::string& name, float offsetDistance, int offsetSelector) {
-	if (offsetSelector == SELECTOR_ALL) {
-		return boost::shared_ptr<Shape>(new OffsetPolygon(name, _pivot, _modelMat, _points, offsetDistance, _color, _texture));
-	} else if (offsetSelector == SELECTOR_INSIDE) {
+void Polygon::offset(const std::string& name, float offsetDistance, const std::string& inside, const std::string& border, std::vector<boost::shared_ptr<Shape> >& shapes) {
+	// inner shape
+	if (!inside.empty()) {
 		std::vector<glm::vec2> offset_points;
 		glutils::offsetPolygon(_points, offsetDistance, offset_points);
-		return boost::shared_ptr<Shape>(new Polygon(name, _pivot, _modelMat, offset_points, _color, _texture));
-	} else {
+		shapes.push_back(boost::shared_ptr<Shape>(new Polygon(name, _pivot, _modelMat, offset_points, _color, _texture)));
+	}
+
+	// border shape
+	if (!border.empty()) {
 		std::vector<glm::vec2> offset_points;
 		glutils::offsetPolygon(_points, offsetDistance, offset_points);
 
@@ -74,7 +75,7 @@ boost::shared_ptr<Shape> Polygon::offset(const std::string& name, float offsetDi
 			normals.push_back(glm::vec3(0, 0, 1));
 		}
 		
-		return boost::shared_ptr<Shape>(new GeneralObject(name, _pivot, _modelMat, pts, normals, _color));
+		shapes.push_back(boost::shared_ptr<Shape>(new GeneralObject(name, _pivot, _modelMat, pts, normals, _color)));
 	}
 }
 
@@ -86,10 +87,15 @@ boost::shared_ptr<Shape> Polygon::roofGable(const std::string& name, float angle
 	return boost::shared_ptr<Shape>(new GableRoof(name, _pivot, _modelMat, _points, angle, _color));
 }
 
-void Polygon::setupProjection(float texWidth, float texHeight) {
-	_texCoords.resize(_points.size());
-	for (int i = 0; i < _points.size(); ++i) {
-		_texCoords[i] = glm::vec2(_points[i].x / texWidth, _points[i].y / texHeight);
+void Polygon::setupProjection(int axesSelector, float texWidth, float texHeight) {
+	if (axesSelector == AXES_SCOPE_XY) {
+		_texCoords.resize(_points.size());
+		for (int i = 0; i < _points.size(); ++i) {
+			_texCoords[i] = glm::vec2(_points[i].x / texWidth, _points[i].y / texHeight);
+		}
+	}
+	else {
+		throw "Polygon supports only scope.xy for setupProjection().";
 	}
 }
 
@@ -114,10 +120,17 @@ boost::shared_ptr<Shape> Polygon::taper(const std::string& name, float height, f
 void Polygon::generateGeometry(std::vector<glutils::Face>& faces, float opacity) const {
 	if (_removed) return;
 
-	std::vector<Vertex> vertices;
-	glutils::drawConcavePolygon(_points, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
+	if (!_texture.empty() && _texCoords.size() >= _points.size()) {
+		std::vector<Vertex> vertices;
+		glutils::drawConcavePolygon(_points, glm::vec4(_color, opacity), _texCoords, _pivot * _modelMat, vertices);
 
-	faces.push_back(glutils::Face(_name, vertices));
+		faces.push_back(glutils::Face(_name, vertices, _texture));
+	} else {
+		std::vector<Vertex> vertices;
+		glutils::drawConcavePolygon(_points, glm::vec4(_color, opacity), _pivot * _modelMat, vertices);
+
+		faces.push_back(glutils::Face(_name, vertices));
+	}
 }
 
 }
