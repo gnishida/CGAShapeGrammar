@@ -16,7 +16,7 @@ namespace cga {
 
 Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color) {
 	this->_name = name;
-	this->_removed = false;
+	this->_active = true;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_scope = glm::vec3(width, height, 0);
@@ -26,7 +26,7 @@ Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm:
 
 Rectangle::Rectangle(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float height, const glm::vec3& color, const std::string& texture, float u1, float v1, float u2, float v2) {
 	this->_name = name;
-	this->_removed = false;
+	this->_active = true;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_scope = glm::vec3(width, height, 0);
@@ -219,8 +219,8 @@ boost::shared_ptr<Shape> Rectangle::taper(const std::string& name, float height,
 	return boost::shared_ptr<Shape>(new Pyramid(name, _pivot, _modelMat, points, glm::vec2(_scope.x * 0.5, _scope.y * 0.5), height, top_ratio, _color, _texture));
 }
 
-void Rectangle::generateGeometry(std::vector<glutils::Face>& faces, float opacity) const {
-	if (_removed) return;
+void Rectangle::generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, float opacity) const {
+	if (!_active) return;
 
 	std::vector<Vertex> vertices;
 
@@ -228,10 +228,10 @@ void Rectangle::generateGeometry(std::vector<glutils::Face>& faces, float opacit
 
 	if (!_texture.empty() && _texCoords.size() >= 4) {
 		glutils::drawQuad(_scope.x, _scope.y, _texCoords[0], _texCoords[1], _texCoords[2], _texCoords[3], mat, vertices);
-		faces.push_back(glutils::Face(_name, vertices, _texture));
+		faces.push_back(boost::shared_ptr<glutils::Face>(new glutils::Face(_name, vertices, _texture)));
 	} else {
 		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
-		faces.push_back(glutils::Face(_name, vertices));
+		faces.push_back(boost::shared_ptr<glutils::Face>(new glutils::Face(_name, vertices)));
 	}
 }
 

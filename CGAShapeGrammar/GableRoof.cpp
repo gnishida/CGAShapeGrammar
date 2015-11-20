@@ -6,7 +6,6 @@
 #include "Polygon.h"
 #include "Rectangle.h"
 #include "CGA.h"
-#include "GeneralObject.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K ;
 typedef K::Point_2 KPoint;
@@ -18,7 +17,7 @@ namespace cga {
 
 GableRoof::GableRoof(const std::string& name, const glm::mat4& pivot, const glm::mat4& modelMat, const std::vector<glm::vec2>& points, float angle, const glm::vec3& color) {
 	this->_name = name;
-	this->_removed = false;
+	this->_active = true;
 	this->_pivot = pivot;
 	this->_modelMat = modelMat;
 	this->_points = points;
@@ -183,7 +182,7 @@ void GableRoof::comp(const std::map<std::string, std::string>& name_map, std::ve
 	}
 }
 
-void GableRoof::generateGeometry(std::vector<glutils::Face>& faces, float opacity) const {
+void GableRoof::generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, float opacity) const {
 	std::vector<Vertex> vertices;
 
 	Polygon_2 poly;
@@ -278,7 +277,7 @@ void GableRoof::generateGeometry(std::vector<glutils::Face>& faces, float opacit
 		} while ((edge = edge->next()) != edge0);
 	}
 
-	faces.push_back(glutils::Face(_name, vertices));
+	faces.push_back(boost::shared_ptr<glutils::Face>(new glutils::Face(_name, vertices)));
 }
 
 }

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <sstream>
 #include "CGA.h"
-#include "BoundingBox.h"
 
 namespace cga {
 
@@ -68,7 +67,7 @@ boost::shared_ptr<Shape> Shape::insert(const std::string& name, const std::strin
 	float scaleY = 1.0f;
 	float scaleZ = 1.0f;
 
-	BoundingBox bbox(asset.points);
+	glutils::BoundingBox bbox(asset.points);
 	if (_scope.x != 0 && _scope.y != 0 && _scope.z != 0) {			// all non-zero
 		scaleX = _scope.x / bbox.sx();
 		scaleY = _scope.y / bbox.sy();
@@ -122,15 +121,43 @@ boost::shared_ptr<Shape> Shape::insert(const std::string& name, const std::strin
 		}
 	}
 
+	/*
+	for (int i = 0; i < asset.points.size(); ++i) {
+		glm::vec3 x_dir = glm::normalize(asset.points[i][1] - asset.points[i][0]);
+		glm::vec3 y_dir(0, 1, 0);
+		glm::vec3 z_dir(0, 0, 1);
+		if (glm::dot(x_dir, y_dir) < glm::dot(x_dir, z_dir)) {
+			z_dir = glm::cross(x_dir, y_dir);
+			y_dir = glm::cross(z_dir, x_dir);
+		}
+		else {
+			y_dir = glm::cross(z_dir, x_dir);
+			z_dir = glm::cross(x_dir, y_dir);
+		}
+
+		glm::mat4 convMat;
+		convMat[0] = glm::vec4(x_dir, 0);
+		convMat[1] = glm::vec4(y_dir, 0);
+		convMat[2] = glm::vec4(z_dir, 0);
+		convMat[3] = glm::vec4(0, 0, 0, 1);
+
+		glm::mat4 invMat = glm::inverse(convMat);
+
+		std::vector<glm::vec2> pts;
+		for (int j = 0; j < asset.points[i].size(); ++j) {
+			pts.push_back(glm::vec2(invMat * glm::vec4(asset.points[i][j] - asset.points[i][0], 1)));
+		}
+
+		glm::mat4 mat = glm::translate(glm::mat4(), asset.points[i][0]) * convMat;
+		boost::shared_ptr<Shape>(new Polygon(name, _pivot, mat, pts, _color, _texture));
+	}
+	*/
+
 	if (asset.texCoords.size() > 0) {
 		return boost::shared_ptr<Shape>(new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color, asset.texCoords, _texture));
 	} else {
 		return boost::shared_ptr<Shape>(new GeneralObject(name, _pivot, _modelMat, asset.points, asset.normals, _color));
 	}
-}
-
-void Shape::nil() {
-	_removed = true;
 }
 
 void Shape::offset(const std::string& name, float offsetDistance, const std::string& inside, const std::string& border, std::vector<boost::shared_ptr<Shape> >& shapes) {
@@ -204,7 +231,7 @@ void Shape::translate(int mode, int coordSystem, float x, float y, float z) {
 	}
 }
 
-void Shape::generateGeometry(std::vector<glutils::Face>& faces, float opacity) const {
+void Shape::generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, float opacity) const {
 	throw "render() is not supported.";
 }
 
