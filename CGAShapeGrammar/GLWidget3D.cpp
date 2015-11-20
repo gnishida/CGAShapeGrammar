@@ -202,7 +202,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
-#if 1
+#if 0
 	{ // for window
 		float object_width = 3.0f;
 		float object_depth = 1.5f;
@@ -272,13 +272,16 @@ void GLWidget3D::loadCGA(char* filename) {
 
 #if 0
 	{ // for building R
+		float object_width = 32.0f;
+		float object_depth = 24.0f;
+
 		cga::UShape* start = new cga::UShape("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, 10, 8, glm::vec3(1, 1, 1));
 
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building T
 		float object_depth = 14.0f;// 8.0f;
 
@@ -298,7 +301,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::parseGrammar(filename, grammar);
 		system.randomParamValues(grammar);
 		system.derive(grammar, true);
-		std::vector<glutils::Face> faces;
+		std::vector<boost::shared_ptr<glutils::Face> > faces;
 		system.generateGeometry(faces);
 		renderManager.addFaces(faces);
 		//renderManager.centerObjects();
@@ -366,7 +369,7 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool in
 						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
 						param_values = system.randomParamValues(grammar);
 						system.derive(grammar, true);
-						std::vector<glutils::Face> faces;
+						std::vector<boost::shared_ptr<glutils::Face> > faces;
 						system.generateGeometry(faces);
 						renderManager.addFaces(faces);
 						renderManager.centerObjects();
@@ -484,7 +487,7 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 								cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
 								param_values = system.randomParamValues(grammar);
 								system.derive(grammar, true);
-								std::vector<glutils::Face> faces;
+								std::vector<boost::shared_ptr<glutils::Face> > faces;
 								system.generateGeometry(faces);
 								renderManager.addFaces(faces);
 								renderManager.centerObjects();
@@ -599,7 +602,7 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 										cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
 										param_values = system.randomParamValues(grammar);
 										system.derive(grammar, true);
-										std::vector<glutils::Face> faces;
+										std::vector<boost::shared_ptr<glutils::Face> > faces;
 										system.generateGeometry(faces);
 										renderManager.addFaces(faces);
 										//renderManager.centerObjects();
