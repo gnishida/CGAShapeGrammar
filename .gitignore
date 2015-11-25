@@ -91,6 +91,9 @@ ipch/
 *.vsp
 *.vspx
 
+# results
+results/
+
 # Guidance Automation Toolkit
 *.gpState
 
