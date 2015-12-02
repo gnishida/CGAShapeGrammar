@@ -21,11 +21,11 @@ public:
 
 	void drawScene(int drawMode);
 	void loadCGA(char* filename);
-	void generateWindowImages(int image_width, int image_height, bool invertImage, bool blur);
-	void generateBuildingImages(int image_width, int image_height, bool invertImage, bool blur);
+	void generateWindowImages(int image_width, int image_height, bool grayscale);
+	void generateBuildingImages(int image_width, int image_height, bool grayscale);
 	void generateSimpleShapeImages(int image_width, int image_height, float scale);
 	void test();
-	void EDLine(cv::Mat& result, float scale);
+	void EDLine(const cv::Mat& source, cv::Mat& result, bool grayscale);
 	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
 	bool isImageValid(const cv::Mat& image);
 

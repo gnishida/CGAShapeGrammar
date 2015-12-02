@@ -202,10 +202,12 @@ void GLWidget3D::loadCGA(char* filename) {
 	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
-#if 0
+#if 1
 	{ // for window
+		camera.pos = glm::vec3(0, 0, 7);
+		camera.updateMVPMatrix();
 		float object_width = 2.0f;
-		float object_depth = 2.0f;
+		float object_depth = 1.0f;
 
 		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
@@ -216,12 +218,16 @@ void GLWidget3D::loadCGA(char* filename) {
 
 #if 0
 	{ // for building
-		float object_width = 18.0f;
-		float object_depth = 12.0f;
+		camera.pos = glm::vec3(0, 5, 80);
+		camera.updateMVPMatrix();
+
+		float object_width = 28.0f;
+		float object_depth = 28.0f;
 
 		float offset_x = 0.0f;
 		float offset_y = 0.0f;
-		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		float offset_z = 0.0f;
+		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, offset_z)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
 		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
@@ -242,7 +248,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for ledge
 		float object_width = 12.0f;
 		float object_depth = 0.5f;
@@ -313,7 +319,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	try {
 		cga::Grammar grammar;
 		cga::parseGrammar(filename, grammar);
-		system.randomParamValues(grammar);
+		//system.randomParamValues(grammar);
 		system.derive(grammar, true);
 		std::vector<boost::shared_ptr<glutils::Face> > faces;
 		system.generateGeometry(faces);
@@ -330,9 +336,8 @@ void GLWidget3D::loadCGA(char* filename) {
 	updateGL();
 }
 
-void GLWidget3D::generateWindowImages(int image_width, int image_height, bool invertImage, bool blur) {
-	QDir dir("..\\cga\\windows\\");
-	//QDir dir("..\\cga\\windows_low_LOD\\");
+void GLWidget3D::generateWindowImages(int image_width, int image_height, bool grayscale) {
+	QDir dir("..\\cga\\window\\");
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
@@ -342,13 +347,13 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool in
 	camera.xrot = 90.0f;
 	camera.yrot = 0.0f;
 	camera.zrot = 0.0f;
-	camera.pos = glm::vec3(0, 0, 2.5f);
+	camera.pos = glm::vec3(0, 0, 2.7f);
 	camera.updateMVPMatrix();
 
 	int origWidth = width();
 	int origHeight = height();
-	resize(image_width, image_height);
-	resizeGL(image_width, image_height);
+	resize(512, 512);
+	resizeGL(512, 512);
 
 	QStringList filters;
 	filters << "*.xml";
@@ -366,12 +371,11 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool in
 
 		QTextStream out(&file);
 
-		for (float object_width = 1.0f; object_width <= 2.6f; object_width += 0.05f) {
-			for (float object_height = 1.0f; object_height <= 1.8f; object_height += 0.05f) {
-				for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height
+		for (float object_width = 1.0f; object_width <= 5.0f; object_width += 0.5f) {
+			for (float object_height = 1.0f; object_height <= 1.0f; object_height += 0.5f) {
+				for (int k = 0; k < 10; ++k) { // 1 images (parameter values are randomly selected) for each width and height
 					std::vector<float> param_values;
-
-
+					
 					renderManager.removeObjects();
 
 					// generate a window
@@ -386,24 +390,13 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool in
 						std::vector<boost::shared_ptr<glutils::Face> > faces;
 						system.generateGeometry(faces);
 						renderManager.addFaces(faces);
-						renderManager.centerObjects();
+						//renderManager.centerObjects();
 					} catch (const std::string& ex) {
 						std::cout << "ERROR:" << std::endl << ex << std::endl;
 					} catch (const char* ex) {
 						std::cout << "ERROR:" << std::endl << ex << std::endl;
 					}
 
-					// put width/height at the begining of the param values array
-					param_values.insert(param_values.begin(), object_width / object_height);
-
-					// write all the param values to the file
-					for (int pi = 0; pi < param_values.size(); ++pi) {
-						if (pi > 0) {
-							out << ",";
-						}
-						out << param_values[pi];
-					}
-					out << "\n";
 
 					// put a background plane
 					std::vector<Vertex> vertices;
@@ -427,10 +420,39 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool in
 	
 					drawScene(0);
 
-					cv::Mat result;
-					EDLine(result, 0.5f);
-					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
-					cv::imwrite(filename.toUtf8().constData(), result);
+					QImage img = this->grabFrameBuffer();
+					cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+					cv::Mat mat;
+					EDLine(source, mat, grayscale);
+
+					// 画像を縮小
+					cv::resize(mat, mat, cv::Size(256, 256));
+					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+					cv::resize(mat, mat, cv::Size(image_width, image_height));
+					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+					// put depth, width at the begining of the param values array
+					/*
+					param_values.insert(param_values.begin() + 2, (float)(object_width - 1) / 4.0f);
+					param_values.insert(param_values.begin() + 3, (float)(object_height - 1) / 3.0f);
+					*/
+
+					// set filename
+					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+
+					cv::imwrite(filename.toUtf8().constData(), mat);
+
+					// write all the param values to the file
+					for (int pi = 0; pi < param_values.size(); ++pi) {
+						if (pi > 0) {
+							out << ",";
+						}
+						out << param_values[pi];
+					}
+					out << "\n";
+
+
 
 					count++;
 				}
@@ -444,9 +466,8 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool in
 	resizeGL(origWidth, origHeight);
 }
 
-void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool invertImage, bool blur) {
+void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool grayscale) {
 	QDir dir("..\\cga\\building\\");
-	//QDir dir("..\\cga\\building_low_LOD\\");
 
 	if (!QDir("results").exists()) QDir().mkdir("results");
 
@@ -455,15 +476,15 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 
 	int origWidth = width();
 	int origHeight = height();
-	resize(image_width, image_height);
-	resizeGL(image_width, image_height);
+	resize(512, 512);
+	resizeGL(512, 512);
 
 	QStringList filters;
 	filters << "*.xml";
-	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files|QDir::NoDotAndDotDot);
+	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
-	
+
 		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
 
 		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
@@ -474,78 +495,106 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 
 		QTextStream out(&file);
 
-		//for (float object_width = 16.0f; object_width <= 20.0f; object_width += 1.0f) {
-		for (float object_width = 16.0f; object_width <= 16.0f; object_width += 1.0f) {
-			//for (float object_depth = 8.0f; object_depth <= 12.0f; object_depth += 1.0f) {
-			for (float object_depth = 8.0f; object_depth <= 15.0f; object_depth += 1.0f) {
-				for (float pitch_angle = 15.0f; pitch_angle <= 40.0f; pitch_angle += 5.0f) {
-					for (float yaw_angle = -60.0f; yaw_angle <= -20.0f; yaw_angle += 5.0f) {
+		for (int object_width = 4; object_width <= 28; object_width += 2) {
+			for (int object_depth = 4; object_depth <= 28; object_depth += 2) {
+				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
+					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
 						// change camera view direction
 						camera.xrot = pitch_angle;//35.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
 						camera.yrot = yaw_angle;//-45.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
 						camera.zrot = 0.0f;
-						camera.pos = glm::vec3(0, 0, 2.3f);
+						camera.pos = glm::vec3(0, 5, 80);
 						camera.updateMVPMatrix();
 
-						for (int k = 0; k < 2; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
-							std::vector<float> param_values;
-					
-							renderManager.removeObjects();
+						for (int offset_x = -8; offset_x <= 8; offset_x += 2) {
+							for (int offset_y = -8; offset_y <= 8; offset_y += 2) {
+								// sample only half the total combinations
+								if (rand() % 2 != 0) continue;
 
-							// generate a window
-							cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
-							system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+								for (int k = 0; k < 1; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
+									std::vector<float> param_values;
 
-							try {
-								cga::Grammar grammar;
-								cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
-								param_values = system.randomParamValues(grammar);
-								system.derive(grammar, true);
-								std::vector<boost::shared_ptr<glutils::Face> > faces;
-								system.generateGeometry(faces);
-								renderManager.addFaces(faces);
-								renderManager.centerObjects();
-							} catch (const std::string& ex) {
-								std::cout << "ERROR:" << std::endl << ex << std::endl;
-							} catch (const char* ex) {
-								std::cout << "ERROR:" << std::endl << ex << std::endl;
-							}
+									renderManager.removeObjects();
 
-							// put depth/width at the begining of the param values array
-							param_values.insert(param_values.begin(), object_depth / object_width);
+									// generate a window
+									cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+									system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 
-							// write all the param values to the file
-							for (int pi = 0; pi < param_values.size(); ++pi) {
-								if (pi > 0) {
-									out << ",";
+									try {
+										cga::Grammar grammar;
+										cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+										param_values = system.randomParamValues(grammar);
+										system.derive(grammar, true);
+										std::vector<boost::shared_ptr<glutils::Face> > faces;
+										system.generateGeometry(faces);
+										renderManager.addFaces(faces);
+										//renderManager.centerObjects();
+									}
+									catch (const std::string& ex) {
+										std::cout << "ERROR:" << std::endl << ex << std::endl;
+									}
+									catch (const char* ex) {
+										std::cout << "ERROR:" << std::endl << ex << std::endl;
+									}
+
+									// render a window
+									glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+									glEnable(GL_DEPTH_TEST);
+									glDisable(GL_TEXTURE_2D);
+
+									glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+
+									// Model view projection行列をシェーダに渡す
+									glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"), 1, GL_FALSE, &camera.mvpMatrix[0][0]);
+									glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"), 1, GL_FALSE, &camera.mvMatrix[0][0]);
+
+									// pass the light direction to the shader
+									//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+									glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+
+									drawScene(0);
+
+									QImage img = this->grabFrameBuffer();
+									cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+									cv::Mat mat;
+									EDLine(source, mat, grayscale);
+
+									// 画像を縮小
+									cv::resize(mat, mat, cv::Size(256, 256));
+									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+									cv::resize(mat, mat, cv::Size(image_width, image_height));
+									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+									// 画像が有効なら保存
+									if (isImageValid(mat)) {
+										// put depth, width at the begining of the param values array
+										param_values.insert(param_values.begin() + 0, (float)(offset_x + 8) / 16.0f);
+										param_values.insert(param_values.begin() + 1, (float)(offset_y + 8) / 16.0f);
+										param_values.insert(param_values.begin() + 2, (float)(object_width - 4) / 24.0f);
+										param_values.insert(param_values.begin() + 3, (float)(object_depth - 4) / 24.0f);
+
+										// set filename
+										QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+
+										cv::imwrite(filename.toUtf8().constData(), mat);
+
+										// write all the param values to the file
+										for (int pi = 0; pi < param_values.size(); ++pi) {
+											if (pi > 0) {
+												out << ",";
+											}
+											out << param_values[pi];
+										}
+										out << "\n";
+
+										count++;
+									}
+
 								}
-								out << param_values[pi];
+
+
 							}
-							out << "\n";
-
-							// render a window
-							glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-							glEnable(GL_DEPTH_TEST);
-							glDisable(GL_TEXTURE_2D);
-
-							glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
-
-							// Model view projection行列をシェーダに渡す
-							glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
-							glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
-
-							// pass the light direction to the shader
-							//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
-							glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
-	
-							drawScene(0);
-
-							cv::Mat result;
-							EDLine(result, 0.5f);
-							QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
-							cv::imwrite(filename.toUtf8().constData(), result);
-
-							count++;
 						}
 					}
 				}
@@ -569,8 +618,8 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 
 	int origWidth = width();
 	int origHeight = height();
-	resize(image_width, image_height);
-	resizeGL(image_width, image_height);
+	resize(512, 512);
+	resizeGL(512, 512);
 
 	QStringList filters;
 	filters << "*.xml";
@@ -645,16 +694,20 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 
 									drawScene(0);
 
-									cv::Mat result;
-									//EDLine(result, scale);
+									QImage img = this->grabFrameBuffer();
+									cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+									cv::Mat mat;
+									EDLine(source, mat, scale);
 									//QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
 									//cv::imwrite(filename.toUtf8().constData(), result);
 
 									// スケッチ線を使わず、直線で描画
 									// 128x128、グレースケースの画像に変換
+									/*
 									QImage img = grabFrameBuffer();
 									cv::Mat mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
 									cv::cvtColor(mat, mat, cv::COLOR_BGR2GRAY);
+									*/
 									cv::resize(mat, mat, cv::Size(256, 256));
 									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
 									cv::resize(mat, mat, cv::Size(128, 128));
@@ -703,6 +756,7 @@ void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, fl
 }
 
 void GLWidget3D::test() {
+	/*
 	this->resize(512, 512);
 	resizeGL(512, 512);
 	updateGL();
@@ -710,25 +764,26 @@ void GLWidget3D::test() {
 					cv::Mat result;
 					EDLine(result, 0.5f);
 					cv::imwrite("result.png", result);
+					*/
 }
 
 /**
  * http://www.ceng.anadolu.edu.tr/CV/EDLines/
  */
-void GLWidget3D::EDLine(cv::Mat& result, float scale) {
-	QImage img = this->grabFrameBuffer();
+void GLWidget3D::EDLine(const cv::Mat& source, cv::Mat& result, bool grayscale) {
+	//QImage img = this->grabFrameBuffer();
 
-	cv::Mat mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+	//cv::Mat mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
 
-	unsigned char* image = (unsigned char *)malloc(mat.cols * mat.rows);
-	for (int r = 0; r < mat.rows; ++r) {
-		for (int c = 0; c < mat.cols; ++c) {
-			image[c+r*mat.cols] = (mat.at<cv::Vec4b>(r, c)[0] + mat.at<cv::Vec4b>(r, c)[1] + mat.at<cv::Vec4b>(r, c)[2]) / 3 < 240 ? 255: 0;
+	unsigned char* image = (unsigned char *)malloc(source.cols * source.rows);
+	for (int r = 0; r < source.rows; ++r) {
+		for (int c = 0; c < source.cols; ++c) {
+			image[c + r*source.cols] = (source.at<cv::Vec4b>(r, c)[0] + source.at<cv::Vec4b>(r, c)[1] + source.at<cv::Vec4b>(r, c)[2]) / 3 < 240 ? 255 : 0;
 		}
 	}
 
 	int noLines;
-	LS *lines = DetectLinesByED(image, mat.cols, mat.rows, &noLines);
+	LS *lines = DetectLinesByED(image, source.cols, source.rows, &noLines);
 	free(image);
 
 	// I use simple workaround for now.
@@ -789,17 +844,18 @@ void GLWidget3D::EDLine(cv::Mat& result, float scale) {
 		if (!erased) break;
 	}
 
-	//result = cv::Mat(mat.rows * scale, mat.cols * scale, CV_8UC3, cv::Scalar(255, 255, 255));
-	result = cv::Mat(mat.rows, mat.cols, CV_8UC3, cv::Scalar(255, 255, 255));
+	if (grayscale) {
+		result = cv::Mat(source.rows, source.cols, CV_8U, cv::Scalar(255));
+	}
+	else {
+		result = cv::Mat(source.rows, source.cols, CV_8UC3, cv::Scalar(255, 255, 255));
+	}
 
 	for (int i = 0; i < edges.size(); ++i) {
 		int polyline_index = rand() % style_polylines.size();
 
 		draw2DPolyline(result, edges[i].first, edges[i].second, polyline_index);
-		//draw2DPolyline(result, edges[i].first * scale, edges[i].second * scale, polyline_index);
 	}
-
-	cv::resize(result, result, cv::Size(result.cols * scale, result.rows * scale));
 }
 
 void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index) {
@@ -827,23 +883,39 @@ void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::ve
 		X1(1, 0) = style_polylines[polyline_index][i+1].y;
 		cv::Mat_<float> T1 = R * X1 + A;
 
-		cv::line(img, cv::Point(T0(0, 0), T0(1, 0)), cv::Point(T1(0, 0), T1(1, 0)), cv::Scalar(0, 0, 0), 1, CV_AA);
+		cv::line(img, cv::Point(T0(0, 0), T0(1, 0)), cv::Point(T1(0, 0), T1(1, 0)), cv::Scalar(0), 1, CV_AA);
 	}
 }
 
 bool GLWidget3D::isImageValid(const cv::Mat& image) {
 	cv::Mat tmp;
 
-	cv::reduce(image, tmp, 0, CV_REDUCE_MIN);
-	if (tmp.at<uchar>(0, 0) == 0) return false;
-	if (tmp.at<uchar>(0, tmp.cols - 1) == 0) return false;
+	if (image.channels() == 1) {
+		cv::reduce(image, tmp, 0, CV_REDUCE_MIN);
+		if (tmp.at<uchar>(0, 0) == 0) return false;
+		if (tmp.at<uchar>(0, tmp.cols - 1) == 0) return false;
 
-	cv::reduce(image, tmp, 1, CV_REDUCE_MIN);
-	if (tmp.at<uchar>(0, 0) == 0) return false;
-	if (tmp.at<uchar>(tmp.rows - 1, 0) == 0) return false;	
+		cv::reduce(image, tmp, 1, CV_REDUCE_MIN);
+		if (tmp.at<uchar>(0, 0) == 0) return false;
+		if (tmp.at<uchar>(tmp.rows - 1, 0) == 0) return false;
 
-	// at least one pixel has to be black
-	cv::reduce(tmp, tmp, 0, CV_REDUCE_MIN);
-	if (tmp.at<uchar>(0, 0) == 0) return true;
-	else return false;
+		// at least one pixel has to be black
+		cv::reduce(tmp, tmp, 0, CV_REDUCE_MIN);
+		if (tmp.at<uchar>(0, 0) == 0) return true;
+		else return false;
+	}
+	else {
+		cv::reduce(image, tmp, 0, CV_REDUCE_MIN);
+		if (tmp.at<cv::Vec3b>(0, 0)[0] == 0) return false;
+		if (tmp.at<cv::Vec3b>(0, tmp.cols - 1)[0] == 0) return false;
+
+		cv::reduce(image, tmp, 1, CV_REDUCE_MIN);
+		if (tmp.at<cv::Vec3b>(0, 0)[0] == 0) return false;
+		if (tmp.at<cv::Vec3b>(tmp.rows - 1, 0)[0] == 0) return false;
+
+		// at least one pixel has to be black
+		cv::reduce(tmp, tmp, 0, CV_REDUCE_MIN);
+		if (tmp.at<cv::Vec3b>(0, 0)[0] == 0) return true;
+		else return false;
+	}
 }

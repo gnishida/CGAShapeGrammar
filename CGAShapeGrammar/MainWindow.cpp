@@ -71,12 +71,13 @@ void MainWindow::onViewRefresh() {
 }
 
 void MainWindow::onGenerateWindowImages() {
-	//glWidget->generateImages(256, 256, false, false);
-	glWidget->generateWindowImages(512, 512, false, false);
+	//glWidget->generateWindowImages(128, 128, true);
+	glWidget->generateWindowImages(256, 256, false);
 }
 
 void MainWindow::onGenerateBuildingImages() {
-	glWidget->generateBuildingImages(512, 512, false, false);
+	//glWidget->generateBuildingImages(128, 128, true);
+	glWidget->generateBuildingImages(256, 256, false);
 }
 
 void MainWindow::onGenerateSimpleShapeImages() {

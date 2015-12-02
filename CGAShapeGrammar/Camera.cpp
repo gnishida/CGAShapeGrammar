@@ -9,7 +9,7 @@ Camera::Camera() {
 	xrot = 40.0f;
 	yrot = 0.0;
 	zrot = 0.0f;
-	pos = glm::vec3(0, 0, 40);
+	pos = glm::vec3(0, 15, 80);
 	fovy = 45.0f;
 }
 
