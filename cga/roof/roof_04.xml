@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<grammar type="roof" version="1.0" author="Gen Nishida">
+	<attr name="overhang" value="0.3" range="0.01,1"/>
+	<attr name="roof_pyramid_height" value="3" range="1,6"/>
+	
+	<rule name="Start">
+		<offset offsetDistance="overhang" inside="TopFaceOffset"/>
+	</rule>
+	<rule name="TopFaceOffset">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="side" value="RoofLedge"/>
+			<param name="top" value="TopFaceOffsetTop"/>
+			<param name="bottom" value="RoofLedge"/>
+		</comp>
+	</rule>
+	<rule name="TopFaceOffsetTop">
+		<offset offsetDistance="-overhang*0.2" inside="TopFaceOffsetTopInside"/>
+	</rule>
+	<rule name="TopFaceOffsetTopInside">
+		<pyramid height="roof_pyramid_height"/>
+		<comp>
+			<param name="side" value="RoofTop"/>
+			<param name="bottom" value="RoofLedge"/>
+		</comp>
+	</rule>
+</grammar>

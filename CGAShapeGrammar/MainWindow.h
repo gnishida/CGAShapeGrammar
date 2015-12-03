@@ -23,8 +23,10 @@ public slots:
 	void onViewShadow();
 	void onViewRendering();
 	void onViewRefresh();
-	void onGenerateWindowImages();
 	void onGenerateBuildingImages();
+	void onGenerateRoofImages();
+	void onGenerateWindowImages();
+	void onGenerateLedgeImages();
 	void onGenerateSimpleShapeImages();
 	void onTest();
 };

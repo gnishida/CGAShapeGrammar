@@ -48,8 +48,10 @@
     <property name="title">
      <string>Tool</string>
     </property>
-    <addaction name="actionGenerateWindowImages"/>
     <addaction name="actionGenerateBuildingImages"/>
+    <addaction name="actionGenerateRoofImages"/>
+    <addaction name="actionGenerateWindowImages"/>
+    <addaction name="actionGenerateLedgeImages"/>
     <addaction name="actionGenerateSimpleShapeImages"/>
     <addaction name="separator"/>
     <addaction name="actionTest"/>
@@ -146,6 +148,16 @@
   <action name="actionGenerateSimpleShapeImages">
    <property name="text">
     <string>Generate Simple Shape Images</string>
+   </property>
+  </action>
+  <action name="actionGenerateLedgeImages">
+   <property name="text">
+    <string>Generate Ledge Images</string>
+   </property>
+  </action>
+  <action name="actionGenerateRoofImages">
+   <property name="text">
+    <string>Generate Roof Images</string>
    </property>
   </action>
  </widget>

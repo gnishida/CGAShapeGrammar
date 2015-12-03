@@ -336,136 +336,6 @@ void GLWidget3D::loadCGA(char* filename) {
 	updateGL();
 }
 
-void GLWidget3D::generateWindowImages(int image_width, int image_height, bool grayscale) {
-	QDir dir("..\\cga\\window\\");
-
-	if (!QDir("results").exists()) QDir().mkdir("results");
-
-	srand(0);
-	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
-
-	camera.xrot = 90.0f;
-	camera.yrot = 0.0f;
-	camera.zrot = 0.0f;
-	camera.pos = glm::vec3(0, 0, 2.7f);
-	camera.updateMVPMatrix();
-
-	int origWidth = width();
-	int origHeight = height();
-	resize(512, 512);
-	resizeGL(512, 512);
-
-	QStringList filters;
-	filters << "*.xml";
-	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files|QDir::NoDotAndDotDot);
-	for (int i = 0; i < fileInfoList.size(); ++i) {
-		int count = 0;
-	
-		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
-
-		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
-		if (!file.open(QIODevice::WriteOnly)) {
-			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
-			return;
-		}
-
-		QTextStream out(&file);
-
-		for (float object_width = 1.0f; object_width <= 5.0f; object_width += 0.5f) {
-			for (float object_height = 1.0f; object_height <= 1.0f; object_height += 0.5f) {
-				for (int k = 0; k < 10; ++k) { // 1 images (parameter values are randomly selected) for each width and height
-					std::vector<float> param_values;
-					
-					renderManager.removeObjects();
-
-					// generate a window
-					cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
-					system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
-
-					try {
-						cga::Grammar grammar;
-						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
-						param_values = system.randomParamValues(grammar);
-						system.derive(grammar, true);
-						std::vector<boost::shared_ptr<glutils::Face> > faces;
-						system.generateGeometry(faces);
-						renderManager.addFaces(faces);
-						//renderManager.centerObjects();
-					} catch (const std::string& ex) {
-						std::cout << "ERROR:" << std::endl << ex << std::endl;
-					} catch (const char* ex) {
-						std::cout << "ERROR:" << std::endl << ex << std::endl;
-					}
-
-
-					// put a background plane
-					std::vector<Vertex> vertices;
-					glutils::drawQuad(100, 100, glm::vec4(1, 1, 1, 1), glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, -10)), vertices);
-					renderManager.addObject("background", "", vertices);
-
-					// render a window
-					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-					glEnable(GL_DEPTH_TEST);
-					glDisable(GL_TEXTURE_2D);
-
-					glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
-
-					// Model view projection行列をシェーダに渡す
-					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
-					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
-
-					// pass the light direction to the shader
-					//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
-					glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
-	
-					drawScene(0);
-
-					QImage img = this->grabFrameBuffer();
-					cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
-					cv::Mat mat;
-					EDLine(source, mat, grayscale);
-
-					// 画像を縮小
-					cv::resize(mat, mat, cv::Size(256, 256));
-					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
-
-					cv::resize(mat, mat, cv::Size(image_width, image_height));
-					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
-
-					// put depth, width at the begining of the param values array
-					/*
-					param_values.insert(param_values.begin() + 2, (float)(object_width - 1) / 4.0f);
-					param_values.insert(param_values.begin() + 3, (float)(object_height - 1) / 3.0f);
-					*/
-
-					// set filename
-					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
-
-					cv::imwrite(filename.toUtf8().constData(), mat);
-
-					// write all the param values to the file
-					for (int pi = 0; pi < param_values.size(); ++pi) {
-						if (pi > 0) {
-							out << ",";
-						}
-						out << param_values[pi];
-					}
-					out << "\n";
-
-
-
-					count++;
-				}
-			}
-		}
-
-		file.close();
-	}
-
-	resize(origWidth, origHeight);
-	resizeGL(origWidth, origHeight);
-}
-
 void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool grayscale) {
 	QDir dir("..\\cga\\building\\");
 
@@ -597,6 +467,391 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 							}
 						}
 					}
+				}
+			}
+		}
+
+		file.close();
+	}
+
+	resize(origWidth, origHeight);
+	resizeGL(origWidth, origHeight);
+}
+
+void GLWidget3D::generateRoofImages(int image_width, int image_height, bool grayscale) {
+	QDir dir("..\\cga\\roof\\");
+
+	if (!QDir("results").exists()) QDir().mkdir("results");
+
+	srand(0);
+	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
+
+	int origWidth = width();
+	int origHeight = height();
+	resize(512, 512);
+	resizeGL(512, 512);
+
+	QStringList filters;
+	filters << "*.xml";
+	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
+	for (int i = 0; i < fileInfoList.size(); ++i) {
+		int count = 0;
+
+		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+
+		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		if (!file.open(QIODevice::WriteOnly)) {
+			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
+			return;
+		}
+
+		QTextStream out(&file);
+
+		for (float object_width = 4.0f; object_width <= 28.0f; object_width += 4.0f) {
+			for (float object_depth = 4.0f; object_depth <= 28.0f; object_depth += 4.0f) {
+				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
+					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
+						// change camera view direction
+						camera.xrot = pitch_angle;//35.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
+						camera.yrot = yaw_angle;//-45.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
+						camera.zrot = 0.0f;
+						camera.pos = glm::vec3(0, 5, 80);
+						camera.updateMVPMatrix();
+
+						for (int k = 0; k < 5; ++k) { // 1 images (parameter values are randomly selected) for each width and height
+							std::vector<float> param_values;
+
+							renderManager.removeObjects();
+
+							// generate a roof
+							cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+							system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+
+							try {
+								cga::Grammar grammar;
+								cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+								param_values = system.randomParamValues(grammar);
+								system.derive(grammar, true);
+								std::vector<boost::shared_ptr<glutils::Face> > faces;
+								system.generateGeometry(faces);
+								renderManager.addFaces(faces);
+							}
+							catch (const std::string& ex) {
+								std::cout << "ERROR:" << std::endl << ex << std::endl;
+							}
+							catch (const char* ex) {
+								std::cout << "ERROR:" << std::endl << ex << std::endl;
+							}
+
+							// render a window
+							glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+							glEnable(GL_DEPTH_TEST);
+							glDisable(GL_TEXTURE_2D);
+
+							glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+
+							// Model view projection行列をシェーダに渡す
+							glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"), 1, GL_FALSE, &camera.mvpMatrix[0][0]);
+							glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"), 1, GL_FALSE, &camera.mvMatrix[0][0]);
+
+							// pass the light direction to the shader
+							//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+							glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+
+							drawScene(0);
+
+							QImage img = this->grabFrameBuffer();
+							cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+							cv::Mat mat;
+							EDLine(source, mat, grayscale);
+
+							// 画像を縮小
+							cv::resize(mat, mat, cv::Size(256, 256));
+							cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+							cv::resize(mat, mat, cv::Size(image_width, image_height));
+							cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+							// set filename
+							QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+
+							cv::imwrite(filename.toUtf8().constData(), mat);
+
+							// write all the param values to the file
+							for (int pi = 0; pi < param_values.size(); ++pi) {
+								if (pi > 0) {
+									out << ",";
+								}
+								out << param_values[pi];
+							}
+							out << "\n";
+
+
+
+							count++;
+						}
+					}
+				}
+			}
+		}
+
+		file.close();
+	}
+
+	resize(origWidth, origHeight);
+	resizeGL(origWidth, origHeight);
+}
+
+void GLWidget3D::generateWindowImages(int image_width, int image_height, bool grayscale) {
+	QDir dir("..\\cga\\window\\");
+
+	if (!QDir("results").exists()) QDir().mkdir("results");
+
+	srand(0);
+	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
+
+	camera.xrot = 90.0f;
+	camera.yrot = 0.0f;
+	camera.zrot = 0.0f;
+	camera.pos = glm::vec3(0, 0, 5.0f);
+	camera.updateMVPMatrix();
+
+	int origWidth = width();
+	int origHeight = height();
+	resize(512, 512);
+	resizeGL(512, 512);
+
+	QStringList filters;
+	filters << "*.xml";
+	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
+	for (int i = 0; i < fileInfoList.size(); ++i) {
+		int count = 0;
+
+		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+
+		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		if (!file.open(QIODevice::WriteOnly)) {
+			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
+			return;
+		}
+
+		QTextStream out(&file);
+
+		for (float object_width = 0.3f; object_width <= 3.0f; object_width += 0.1f) {
+			for (float object_height = 1.0f; object_height <= 1.0f; object_height += 0.1f) {
+				for (int k = 0; k < 10; ++k) { // 1 images (parameter values are randomly selected) for each width and height
+					std::vector<float> param_values;
+
+					renderManager.removeObjects();
+
+					// generate a window
+					cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+					system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+
+					try {
+						cga::Grammar grammar;
+						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+						param_values = system.randomParamValues(grammar);
+						system.derive(grammar, true);
+						std::vector<boost::shared_ptr<glutils::Face> > faces;
+						system.generateGeometry(faces);
+						renderManager.addFaces(faces);
+						//renderManager.centerObjects();
+					}
+					catch (const std::string& ex) {
+						std::cout << "ERROR:" << std::endl << ex << std::endl;
+					}
+					catch (const char* ex) {
+						std::cout << "ERROR:" << std::endl << ex << std::endl;
+					}
+
+
+					// put a background plane
+					std::vector<Vertex> vertices;
+					glutils::drawQuad(100, 100, glm::vec4(1, 1, 1, 1), glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, -10)), vertices);
+					renderManager.addObject("background", "", vertices);
+
+					// render a window
+					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+					glEnable(GL_DEPTH_TEST);
+					glDisable(GL_TEXTURE_2D);
+
+					glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+
+					// Model view projection行列をシェーダに渡す
+					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"), 1, GL_FALSE, &camera.mvpMatrix[0][0]);
+					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"), 1, GL_FALSE, &camera.mvMatrix[0][0]);
+
+					// pass the light direction to the shader
+					//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+					glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+
+					drawScene(0);
+
+					QImage img = this->grabFrameBuffer();
+					cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+					cv::Mat mat;
+					EDLine(source, mat, grayscale);
+
+					// 画像を縮小
+					cv::resize(mat, mat, cv::Size(256, 256));
+					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+					cv::resize(mat, mat, cv::Size(image_width, image_height));
+					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+					// put depth, width at the begining of the param values array
+					/*
+					param_values.insert(param_values.begin() + 2, (float)(object_width - 1) / 4.0f);
+					param_values.insert(param_values.begin() + 3, (float)(object_height - 1) / 3.0f);
+					*/
+
+					// set filename
+					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+
+					cv::imwrite(filename.toUtf8().constData(), mat);
+
+					// write all the param values to the file
+					for (int pi = 0; pi < param_values.size(); ++pi) {
+						if (pi > 0) {
+							out << ",";
+						}
+						out << param_values[pi];
+					}
+					out << "\n";
+
+
+
+					count++;
+				}
+			}
+		}
+
+		file.close();
+	}
+
+	resize(origWidth, origHeight);
+	resizeGL(origWidth, origHeight);
+}
+
+void GLWidget3D::generateLedgeImages(int image_width, int image_height, bool grayscale) {
+	QDir dir("..\\cga\\ledge\\");
+
+	if (!QDir("results").exists()) QDir().mkdir("results");
+
+	srand(0);
+	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
+
+	camera.xrot = 0.0f;
+	camera.yrot = 0.0f;
+	camera.zrot = 0.0f;
+	camera.pos = glm::vec3(0, 0, 3);
+	camera.updateMVPMatrix();
+
+	int origWidth = width();
+	int origHeight = height();
+	resize(512, 512);
+	resizeGL(512, 512);
+
+	QStringList filters;
+	filters << "*.xml";
+	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
+	for (int i = 0; i < fileInfoList.size(); ++i) {
+		int count = 0;
+
+		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+
+		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		if (!file.open(QIODevice::WriteOnly)) {
+			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
+			return;
+		}
+
+		QTextStream out(&file);
+
+		for (float object_width = 3.0f; object_width <= 3.0f; object_width += 0.1f) {
+			for (float object_height = 0.5f; object_height <= 0.5f; object_height += 0.1f) {
+				for (int k = 0; k < 100; ++k) { // 1 images (parameter values are randomly selected) for each width and height
+					std::vector<float> param_values;
+
+					renderManager.removeObjects();
+
+					// generate a window
+					//cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), -3.141592f * 0.5f, glm::vec3(0, 1, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+					cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), 3.141592f * 0.5f, glm::vec3(0, 1, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+					system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+
+					try {
+						cga::Grammar grammar;
+						cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
+						param_values = system.randomParamValues(grammar);
+						system.derive(grammar, true);
+						std::vector<boost::shared_ptr<glutils::Face> > faces;
+						system.generateGeometry(faces);
+						renderManager.addFaces(faces);
+						//renderManager.centerObjects();
+					}
+					catch (const std::string& ex) {
+						std::cout << "ERROR:" << std::endl << ex << std::endl;
+					}
+					catch (const char* ex) {
+						std::cout << "ERROR:" << std::endl << ex << std::endl;
+					}
+
+
+					// put a background plane
+					/*
+					std::vector<Vertex> vertices;
+					glutils::drawQuad(100, 100, glm::vec4(1, 1, 1, 1), glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, -10)), vertices);
+					renderManager.addObject("background", "", vertices);
+					*/
+
+					// render a window
+					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+					glEnable(GL_DEPTH_TEST);
+					glDisable(GL_TEXTURE_2D);
+
+					glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
+
+					// Model view projection行列をシェーダに渡す
+					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"), 1, GL_FALSE, &camera.mvpMatrix[0][0]);
+					glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"), 1, GL_FALSE, &camera.mvMatrix[0][0]);
+
+					// pass the light direction to the shader
+					//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
+					glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+
+					drawScene(0);
+
+					QImage img = this->grabFrameBuffer();
+					cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
+					cv::Mat mat;
+					EDLine(source, mat, grayscale);
+
+					// 画像を縮小
+					cv::resize(mat, mat, cv::Size(256, 256));
+					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+					cv::resize(mat, mat, cv::Size(image_width, image_height));
+					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
+
+					// set filename
+					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+
+					cv::imwrite(filename.toUtf8().constData(), mat);
+
+					// write all the param values to the file
+					for (int pi = 0; pi < param_values.size(); ++pi) {
+						if (pi > 0) {
+							out << ",";
+						}
+						out << param_values[pi];
+					}
+					out << "\n";
+
+
+
+					count++;
 				}
 			}
 		}

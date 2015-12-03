@@ -22,8 +22,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
-	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
+
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
+	connect(ui.actionGenerateRoofImages, SIGNAL(triggered()), this, SLOT(onGenerateRoofImages()));
+	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
+	connect(ui.actionGenerateLedgeImages, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages()));
 	connect(ui.actionGenerateSimpleShapeImages, SIGNAL(triggered()), this, SLOT(onGenerateSimpleShapeImages()));
 	connect(ui.actionTest, SIGNAL(triggered()), this, SLOT(onTest()));
 
@@ -70,14 +73,24 @@ void MainWindow::onViewRefresh() {
 	}
 }
 
+void MainWindow::onGenerateBuildingImages() {
+	//glWidget->generateBuildingImages(128, 128, true);
+	glWidget->generateBuildingImages(256, 256, false);
+}
+
+void MainWindow::onGenerateRoofImages() {
+	//glWidget->generateRoofImages(128, 128, true);
+	glWidget->generateRoofImages(256, 256, false);
+}
+
 void MainWindow::onGenerateWindowImages() {
 	//glWidget->generateWindowImages(128, 128, true);
 	glWidget->generateWindowImages(256, 256, false);
 }
 
-void MainWindow::onGenerateBuildingImages() {
-	//glWidget->generateBuildingImages(128, 128, true);
-	glWidget->generateBuildingImages(256, 256, false);
+void MainWindow::onGenerateLedgeImages() {
+	//glWidget->generateLedgeImages(128, 128, true);
+	glWidget->generateLedgeImages(256, 256, false);
 }
 
 void MainWindow::onGenerateSimpleShapeImages() {

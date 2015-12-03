@@ -21,8 +21,10 @@ public:
 
 	void drawScene(int drawMode);
 	void loadCGA(char* filename);
-	void generateWindowImages(int image_width, int image_height, bool grayscale);
 	void generateBuildingImages(int image_width, int image_height, bool grayscale);
+	void generateRoofImages(int image_width, int image_height, bool grayscale);
+	void generateWindowImages(int image_width, int image_height, bool grayscale);
+	void generateLedgeImages(int image_width, int image_height, bool grayscale);
 	void generateSimpleShapeImages(int image_width, int image_height, float scale);
 	void test();
 	void EDLine(const cv::Mat& source, cv::Mat& result, bool grayscale);
