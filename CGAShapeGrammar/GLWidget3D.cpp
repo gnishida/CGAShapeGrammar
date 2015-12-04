@@ -20,7 +20,7 @@ GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers
 	light_dir = glm::normalize(glm::vec3(-4, -5, -8));
 
 	// シャドウマップ用のmodel/view/projection行列を作成
-	glm::mat4 light_pMatrix = glm::ortho<float>(-100, 100, -100, 100, 0.1, 200);
+	glm::mat4 light_pMatrix = glm::ortho<float>(-50, 50, -50, 50, 0.1, 200);
 	glm::mat4 light_mvMatrix = glm::lookAt(-light_dir * 50.0f, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	light_mvpMatrix = light_pMatrix * light_mvMatrix;
 
@@ -137,7 +137,7 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  * This function is called once before the first call to paintGL() or resizeGL().
  */
 void GLWidget3D::initializeGL() {
-	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", false);
+	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", true, 4096);
 
 	// set the clear color for the screen
 	//qglClearColor(QColor(113, 112, 117));
@@ -202,7 +202,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
-#if 1
+#if 0
 	{ // for window
 		camera.pos = glm::vec3(0, 0, 7);
 		camera.updateMVPMatrix();
@@ -290,12 +290,12 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building R
 		float object_width = 32.0f;
 		float object_depth = 24.0f;
 
-		cga::UShape* start = new cga::UShape("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, 10, 8, glm::vec3(1, 1, 1));
+		cga::UShape* start = new cga::UShape("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, 10, 8, glm::vec3(1, 1, 1));
 
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
