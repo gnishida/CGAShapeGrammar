@@ -290,7 +290,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building R
 		float object_width = 32.0f;
 		float object_depth = 24.0f;
@@ -313,6 +313,17 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3));
 		cga::Rectangle* start4 = new cga::Rectangle("Start4", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)50 * 0.5f, offset_y - (float)object_depth*0.5f, 30)), glm::mat4(), 25, object_depth, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start4));
+	}
+#endif
+
+#if 1
+	{ // for building Paris
+		float object_width = 28.0f;
+		float object_depth = 20.0f;
+
+		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
 #endif
 

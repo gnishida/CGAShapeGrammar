@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<grammar version="1.0" author="Gen Nishida">
+	<attr name="z_floor_border_size" value="0" range="0,0.08"/>
+
+	<!-- building mass -->
+	<rule name="Start">
+		<extrude height="24"/>
+		<comp>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base."/>
+		</comp>
+	</rule>
+	
+	<!-- roof -->
+	<rule name="Roof">
+		<offset offsetDistance="0.2" inside="TopFaceOffset"/>
+	</rule>
+	<rule name="TopFaceOffset">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="side" value="RoofLedge"/>
+			<param name="top" value="TopFaceOffsetTop"/>
+			<param name="bottom" value="RoofLedge"/>
+		</comp>
+	</rule>
+	<rule name="TopFaceOffsetTop">
+		<offset offsetDistance="0.2" inside="TopFaceOffsetTopOffset"/>
+	</rule>
+	<rule name="TopFaceOffsetTopOffset">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="side" value="RoofLedge"/>
+			<param name="top" value="TopFaceOffsetTopOffsetTop"/>
+			<param name="bottom" value="RoofLedge"/>
+		</comp>
+	</rule>
+	<rule name="TopFaceOffsetTopOffsetTop">
+		<roofHip angle="30"/>
+		<comp>
+			<param name="top" value="RoofTop"/>
+		</comp>
+	</rule>
+	
+	<!-- facade -->
+	<rule name="Facade">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
+		<split splitAxis="y">
+			<param type="absolute" value="4" name="GroundFloor"/>
+			<param type="absolute" value="z_floor_border_size" name="Border"/>
+			<param type="absolute" value="4" name="Floor"/>
+			<param type="absolute" value="0.5" name="Ledge"/>
+			<param type="absolute" value="4" name="Floor"/>
+			<param type="absolute" value="z_floor_border_size" name="Border"/>
+			<param type="absolute" value="4" name="Floor"/>
+			<param type="absolute" value="0.5" name="Ledge"/>
+			<param type="absolute" value="4" name="Floor"/>
+			<param type="absolute" value="0.5" name="Ledge"/>
+			<param type="floating" value="4" name="Floor"/>
+		</split>
+	</rule>
+	
+	<!-- floor -->
+	
+	<!-- ledge -->
+	<rule name="Ledge">
+		<split splitAxis="y">
+			<param type="relative" value="0.5" name="LedgeBottomHalf"/>
+			<param type="relative" value="0.5" name="LedgeTopHalf"/>
+		</split>
+	</rule>
+	<rule name="LedgeBottomHalf">
+		<split splitAxis="x">
+			<param type="absolute" value="0.7" name="LedgeBottomColumnAndInterval" repeat="true"/>
+		</split>
+	</rule>
+	<rule name="LedgeBottomColumnAndInterval">
+		<split splitAxis="x">
+			<param type="relative" value="0.5" name="LedgeBottomColumn"/>
+			<param type="relative" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="LedgeBottomColumn">
+		<split splitAxis="y">
+			<param type="relative" value="0.5" name="LedgeBottomColumnBottom"/>
+			<param type="relative" value="0.5" name="LedgeBottomColumnTop"/>
+		</split>
+	</rule>
+	<rule name="LedgeBottomColumnBottom">
+		<split splitAxis="x">
+			<param type="relative" value="0.2" name="Wall"/>
+			<param type="relative" value="0.6" name="LedgeBottomColumnBottomMain"/>
+			<param type="relative" value="0.2" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="LedgeBottomColumnBottomMain">
+		<extrude height="0.1"/>
+		<comp>
+			<param name="side" value="LedgeFace"/>
+			<param name="top" value="LedgeFace"/>
+		</comp>
+	</rule>
+	<rule name="LedgeBottomColumnTop">
+		<split splitAxis="x">
+			<param type="relative" value="0.1" name="Wall"/>
+			<param type="relative" value="0.8" name="LedgeBottomColumnTopMain"/>
+			<param type="relative" value="0.1" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="LedgeBottomColumnTopMain">
+		<extrude height="0.12"/>
+		<comp>
+			<param name="side" value="LedgeFace"/>
+			<param name="top" value="LedgeFace"/>
+		</comp>
+	</rule>
+	<rule name="LedgeTopHalf">
+		<split splitAxis="y">
+			<param type="relative" value="0.4" name="LedgeTopBottom"/>
+			<param type="relative" value="0.4" name="LedgeTopMiddle"/>
+			<param type="relative" value="0.2" name="LedgeTopTop"/>
+		</split>
+	</rule>
+	<rule name="LedgeTopBottom">
+		<extrude height="0.15"/>
+		<comp>
+			<param name="side" value="LedgeFace"/>
+			<param name="top" value="LedgeFace"/>
+		</comp>
+	</rule>
+	<rule name="LedgeTopMiddle">
+		<extrude height="0.16"/>
+		<comp>
+			<param name="side" value="LedgeFace"/>
+			<param name="top" value="LedgeFace"/>
+		</comp>
+	</rule>
+	<rule name="LedgeTopTop">
+		<extrude height="0.17"/>
+		<comp>
+			<param name="side" value="LedgeFace"/>
+			<param name="top" value="LedgeFace"/>
+		</comp>
+	</rule>
+</grammar>
