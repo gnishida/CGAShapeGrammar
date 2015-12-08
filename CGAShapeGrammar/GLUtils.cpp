@@ -99,6 +99,13 @@ BoundingBox::BoundingBox(const std::vector<std::vector<glm::vec3> >& points) {
 	}
 }
 
+void BoundingBox::addPoint(const glm::vec2& point) {
+	minPt.x = std::min(minPt.x, point.x);
+	minPt.y = std::min(minPt.y, point.y);
+	maxPt.x = std::max(maxPt.x, point.x);
+	maxPt.y = std::max(maxPt.y, point.y);
+}
+
 void BoundingBox::addPoint(const glm::vec3& point) {
 	minPt.x = std::min(minPt.x, point.x);
 	minPt.y = std::min(minPt.y, point.y);
@@ -106,6 +113,19 @@ void BoundingBox::addPoint(const glm::vec3& point) {
 	maxPt.x = std::max(maxPt.x, point.x);
 	maxPt.y = std::max(maxPt.y, point.y);
 	maxPt.z = std::max(maxPt.z, point.z);
+}
+
+bool BoundingBox::contains(const glm::vec2& point, float threshold) {
+	if (point.x < minPt.x - threshold || point.x > maxPt.x + threshold) return false;
+	if (point.y < minPt.y - threshold || point.y > maxPt.y + threshold) return false;
+	return true;
+}
+
+bool BoundingBox::contains(const glm::vec3& point, float threshold) {
+	if (point.x < minPt.x - threshold || point.x > maxPt.x + threshold) return false;
+	if (point.y < minPt.y - threshold || point.y > maxPt.y + threshold) return false;
+	if (point.z < minPt.z - threshold || point.z > maxPt.z + threshold) return false;
+	return true;
 }
 
 Face::Face(const std::string& name, const std::string& grammar_type, const std::vector<Vertex>& vertices) {
@@ -178,6 +198,8 @@ bool isWithinPolygon(const glm::vec2& p, const std::vector<glm::vec2>& points) {
  * Compute the offset polygon.
  */
 void offsetPolygon(const std::vector<glm::vec2>& points, float offsetDistance, std::vector<glm::vec2>& offset_points) {
+	offset_points.clear();
+
 	Polygon_2 poly;
 
 	for (int i = 0; i < points.size(); ++i) {
@@ -188,14 +210,19 @@ void offsetPolygon(const std::vector<glm::vec2>& points, float offsetDistance, s
 	if (offsetDistance >= 0) {
 		K::FT lOffset = offsetDistance;
 		offset_poly = CGAL::create_exterior_skeleton_and_offset_polygons_2(lOffset, poly);
-	} else {
-		K::FT lOffset = -offsetDistance;
-		offset_poly = CGAL::create_interior_skeleton_and_offset_polygons_2(lOffset,poly);
-	}
 
-	offset_points.clear();
-	for (auto it = offset_poly[0]->vertices_begin(); it != offset_poly[0]->vertices_end(); ++it) {
-		offset_points.push_back(glm::vec2(it->x(), it->y()));
+		for (auto it = offset_poly[1]->vertices_begin(); it != offset_poly[1]->vertices_end(); ++it) {
+			offset_points.push_back(glm::vec2(it->x(), it->y()));
+		}
+		std::reverse(offset_points.begin(), offset_points.end());
+	}
+	else {
+		K::FT lOffset = -offsetDistance;
+		offset_poly = CGAL::create_interior_skeleton_and_offset_polygons_2(lOffset, poly);
+
+		for (auto it = offset_poly[0]->vertices_begin(); it != offset_poly[0]->vertices_end(); ++it) {
+			offset_points.push_back(glm::vec2(it->x(), it->y()));
+		}
 	}
 }
 
@@ -533,6 +560,10 @@ void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec4& c
 			max_y = points[i].y;
 		}
 	}
+
+	if (polygon.is_clockwise_oriented()) {
+		polygon.reverse_orientation();
+	}
 	
 	// tesselate the concave polygon
 	Polygon_list partition_polys;
@@ -555,6 +586,10 @@ void drawConcavePolygon(const std::vector<glm::vec2>& points, const glm::vec4& c
 	Polygon_2 polygon;
 	for (int i = 0; i < points.size(); ++i) {
 		polygon.push_back(Point_2(points[i].x, points[i].y));
+	}
+
+	if (polygon.is_clockwise_oriented()) {
+		polygon.reverse_orientation();
 	}
 		
 	// tesselate the concave polygon

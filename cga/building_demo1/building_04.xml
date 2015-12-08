@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<grammar type="building" version="1.0" author="Gen Nishida">
+	<attr name="height" value="5" range="4,30"/>
+	
+	<rule name="Start">
+		<innerCircle/>
+		<extrude height="height"/>
+		<comp>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base."/>
+		</comp>
+	</rule>
+</rules>

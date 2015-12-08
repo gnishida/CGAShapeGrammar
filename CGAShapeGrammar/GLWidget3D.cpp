@@ -6,6 +6,7 @@
 #include "GrammarParser.h"
 #include <map>
 #include "Rectangle.h"
+#include "Circle.h"
 #include "Polygon.h"
 #include "UShape.h"
 #include "GLUtils.h"
@@ -316,7 +317,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building Paris
 		float object_width = 28.0f;
 		float object_depth = 20.0f;
@@ -324,6 +325,27 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+	}
+#endif
+
+#if 1
+	{ // for building Griffith Observatory
+		float object_width = 10.0f;
+		float object_depth = 10.0f;
+
+		cga::Circle* start1 = new cga::Circle("Start1", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(- (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
+		cga::Rectangle* start2 = new cga::Rectangle("Start2", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-3, -15, 0)), glm::mat4(), 6, 10, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start2));
+		cga::Rectangle* start3 = new cga::Rectangle("Start3", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-12, -14, 0)), glm::mat4(), 9, 6, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3));
+		cga::Rectangle* start4 = new cga::Rectangle("Start4", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(3, -14, 0)), glm::mat4(), 9, 6, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start4));
+		cga::Circle* start5 = new cga::Circle("Start5", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-14, -13, -0)), glm::mat4(), 4, 4, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start5));
+		cga::Circle* start6 = new cga::Circle("Start6", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(10, -13, 0)), glm::mat4(), 4, 4, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start6));
+
 	}
 #endif
 
