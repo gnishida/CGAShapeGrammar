@@ -204,12 +204,12 @@ void GLWidget3D::loadCGA(char* filename) {
 	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
-#if 0
+#if 1
 	{ // for window
 		camera.pos = glm::vec3(0, 0, 7);
 		camera.updateMVPMatrix();
 		float object_width = 2.0f;
-		float object_depth = 1.0f;
+		float object_depth = 2.0f;
 
 		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
@@ -250,7 +250,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for circular roof
 		float object_width = 6.0f;
 		float object_depth = 6.0f;
@@ -396,6 +396,7 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 	QDir().mkpath(resultDir);
 
 	srand(0);
+	renderManager.depthSensitivity = 1.0f;
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
 
 	int origWidth = width();
@@ -546,6 +547,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 	QDir().mkpath(resultDir);
 
 	srand(0);
+	renderManager.depthSensitivity = 1.0f;
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
 
 	int origWidth = width();
@@ -692,6 +694,7 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool gr
 	QDir().mkpath(resultDir);
 
 	srand(0);
+	renderManager.depthSensitivity = 100.0f;
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
 
 	camera.xrot = 90.0f;
@@ -832,6 +835,7 @@ void GLWidget3D::generateLedgeImages(int image_width, int image_height, bool gra
 	QDir().mkpath(resultDir);
 
 	srand(0);
+	renderManager.depthSensitivity = 100.0f;
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
 
 	camera.xrot = 0.0f;
