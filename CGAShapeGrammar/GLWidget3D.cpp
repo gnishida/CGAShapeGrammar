@@ -235,7 +235,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for roof
 		float object_width = 18.0f;
 		float object_depth = 12.0f;
@@ -261,7 +261,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for ledge
 		float object_width = 12.0f;
 		float object_depth = 0.5f;
@@ -554,6 +554,8 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 
 		for (float object_width = 4.0f; object_width <= 28.0f; object_width += 4.0f) {
 			for (float object_depth = 4.0f; object_depth <= 28.0f; object_depth += 4.0f) {
+				if (i >= 5 && object_width != object_depth) continue;
+
 				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
 					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
 						// change camera view direction
@@ -563,15 +565,24 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 						camera.pos = glm::vec3(0, 5, 80);
 						camera.updateMVPMatrix();
 
-						for (int k = 0; k < 5; ++k) { // 1 images (parameter values are randomly selected) for each width and height
+						int numSamples = 5;
+						if (i >= 5) numSamples *= 7;
+						for (int k = 0; k < numSamples; ++k) { // 1 images (parameter values are randomly selected) for each width and height
 							std::vector<float> param_values;
 
 							renderManager.removeObjects();
 
-							// generate a roof
-							cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
-							system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+							// generate a roof base
+							if (i < 5) { // rectangular base
+								cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+								system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+							}
+							else {	// circular base
+								cga::Circle* start = new cga::Circle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+								system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+							}
 
+							// generate a roof
 							try {
 								cga::Grammar grammar;
 								cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
@@ -588,7 +599,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 								std::cout << "ERROR:" << std::endl << ex << std::endl;
 							}
 
-							// render a window
+							// render the roof
 							glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 							glEnable(GL_DEPTH_TEST);
 							glDisable(GL_TEXTURE_2D);
@@ -605,6 +616,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 
 							drawScene(0);
 
+							// replace the edges by sketchy polylines
 							QImage img = this->grabFrameBuffer();
 							cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
 							cv::Mat mat;

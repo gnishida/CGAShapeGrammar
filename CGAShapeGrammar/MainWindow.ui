@@ -49,10 +49,16 @@
      <string>Tool</string>
     </property>
     <addaction name="actionGenerateBuildingImages"/>
+    <addaction name="actionGenerateBuildingImages2"/>
+    <addaction name="separator"/>
     <addaction name="actionGenerateRoofImages"/>
+    <addaction name="actionGenerateRoofImages2"/>
+    <addaction name="separator"/>
     <addaction name="actionGenerateWindowImages"/>
+    <addaction name="actionGenerateWindowImages2"/>
+    <addaction name="separator"/>
     <addaction name="actionGenerateLedgeImages"/>
-    <addaction name="actionGenerateSimpleShapeImages"/>
+    <addaction name="actionGenerateLedgeImages2"/>
     <addaction name="separator"/>
     <addaction name="actionTest"/>
    </widget>
@@ -132,12 +138,12 @@
   </action>
   <action name="actionGenerateWindowImages">
    <property name="text">
-    <string>Generate Window Images</string>
+    <string>Generate Window Images (256x256 color)</string>
    </property>
   </action>
   <action name="actionGenerateBuildingImages">
    <property name="text">
-    <string>Generate Building Images</string>
+    <string>Generate Building Images (256x256 color)</string>
    </property>
   </action>
   <action name="actionTest">
@@ -152,12 +158,32 @@
   </action>
   <action name="actionGenerateLedgeImages">
    <property name="text">
-    <string>Generate Ledge Images</string>
+    <string>Generate Ledge Images (256x256 color)</string>
    </property>
   </action>
   <action name="actionGenerateRoofImages">
    <property name="text">
-    <string>Generate Roof Images</string>
+    <string>Generate Roof Images (256x256 color)</string>
+   </property>
+  </action>
+  <action name="actionGenerateRoofImages2">
+   <property name="text">
+    <string>Generate Roof Images (128x128 grayscale)</string>
+   </property>
+  </action>
+  <action name="actionGenerateWindowImages2">
+   <property name="text">
+    <string>Generate Window Images (128x128 grayscale)</string>
+   </property>
+  </action>
+  <action name="actionGenerateLedgeImages2">
+   <property name="text">
+    <string>Generate Ledge Images (128x128 grayscale)</string>
+   </property>
+  </action>
+  <action name="actionGenerateBuildingImages2">
+   <property name="text">
+    <string>Generate Building Images (128x128 grayscale)</string>
    </property>
   </action>
  </widget>

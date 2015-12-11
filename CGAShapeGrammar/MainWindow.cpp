@@ -24,10 +24,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
-	connect(ui.actionGenerateRoofImages, SIGNAL(triggered()), this, SLOT(onGenerateRoofImages()));
+	connect(ui.actionGenerateBuildingImages2, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages2()));
 	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
+	connect(ui.actionGenerateWindowImages2, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages2()));
 	connect(ui.actionGenerateLedgeImages, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages()));
-	connect(ui.actionGenerateSimpleShapeImages, SIGNAL(triggered()), this, SLOT(onGenerateSimpleShapeImages()));
+	connect(ui.actionGenerateLedgeImages2, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages2()));
 	connect(ui.actionTest, SIGNAL(triggered()), this, SLOT(onTest()));
 
 	glWidget = new GLWidget3D();
@@ -74,27 +75,35 @@ void MainWindow::onViewRefresh() {
 }
 
 void MainWindow::onGenerateBuildingImages() {
-	//glWidget->generateBuildingImages(128, 128, true);
 	glWidget->generateBuildingImages(256, 256, false);
 }
 
+void MainWindow::onGenerateBuildingImages2() {
+	glWidget->generateBuildingImages(128, 128, true);
+}
+
 void MainWindow::onGenerateRoofImages() {
-	//glWidget->generateRoofImages(128, 128, true);
 	glWidget->generateRoofImages(256, 256, false);
 }
 
+void MainWindow::onGenerateRoofImages2() {
+	glWidget->generateRoofImages(128, 128, true);
+}
+
 void MainWindow::onGenerateWindowImages() {
-	//glWidget->generateWindowImages(128, 128, true);
 	glWidget->generateWindowImages(256, 256, false);
 }
 
+void MainWindow::onGenerateWindowImages2() {
+	glWidget->generateWindowImages(128, 128, true);
+}
+
 void MainWindow::onGenerateLedgeImages() {
-	//glWidget->generateLedgeImages(128, 128, true);
 	glWidget->generateLedgeImages(256, 256, false);
 }
 
-void MainWindow::onGenerateSimpleShapeImages() {
-	glWidget->generateSimpleShapeImages(512, 512, 0.25);
+void MainWindow::onGenerateLedgeImages2() {
+	glWidget->generateLedgeImages(128, 128, true);
 }
 
 void MainWindow::onTest() {
