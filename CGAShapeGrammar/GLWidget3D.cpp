@@ -536,6 +536,8 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 	resize(512, 512);
 	resizeGL(512, 512);
 
+	const int NUM_RECTANGULAR_TYPE = 5;
+
 	QStringList filters;
 	filters << "*.xml";
 	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
@@ -554,7 +556,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 
 		for (float object_width = 4.0f; object_width <= 28.0f; object_width += 4.0f) {
 			for (float object_depth = 4.0f; object_depth <= 28.0f; object_depth += 4.0f) {
-				if (i >= 5 && object_width != object_depth) continue;
+				if (i >= NUM_RECTANGULAR_TYPE && object_width != object_depth) continue;
 
 				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
 					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
@@ -566,14 +568,14 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 						camera.updateMVPMatrix();
 
 						int numSamples = 5;
-						if (i >= 5) numSamples *= 7;
+						if (i >= NUM_RECTANGULAR_TYPE) numSamples *= 7;
 						for (int k = 0; k < numSamples; ++k) { // 1 images (parameter values are randomly selected) for each width and height
 							std::vector<float> param_values;
 
 							renderManager.removeObjects();
 
 							// generate a roof base
-							if (i < 5) { // rectangular base
+							if (i < NUM_RECTANGULAR_TYPE) { // rectangular base
 								cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 								system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 							}
