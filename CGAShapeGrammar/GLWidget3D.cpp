@@ -141,7 +141,7 @@ void GLWidget3D::initializeGL() {
 	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", true, 4096);
 
 	// set the clear color for the screen
-	//qglClearColor(QColor(113, 112, 117));
+	//glClearColor(1, 1, 1, 1);
 	glClearColor(0.95, 0.95, 0.95, 1.0);
 
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
@@ -235,7 +235,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for roof
 		float object_width = 18.0f;
 		float object_depth = 12.0f;
@@ -245,6 +245,18 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
 		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+	}
+#endif
+
+#if 0
+	{ // for circular roof
+		float object_width = 12.0f;
+		float object_depth = 12.0f;
+
+		float offset_x = 0.0f;
+		float offset_y = 0.0f;
+		cga::Circle* start = new cga::Circle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
 #endif
@@ -328,7 +340,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building Griffith Observatory
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
