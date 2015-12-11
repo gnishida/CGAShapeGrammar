@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
 	connect(ui.actionGenerateBuildingImages2, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages2()));
+	connect(ui.actionGenerateRoofImages, SIGNAL(triggered()), this, SLOT(onGenerateRoofImages()));
+	connect(ui.actionGenerateRoofImages2, SIGNAL(triggered()), this, SLOT(onGenerateRoofImages2()));
 	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
 	connect(ui.actionGenerateWindowImages2, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages2()));
 	connect(ui.actionGenerateLedgeImages, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages()));

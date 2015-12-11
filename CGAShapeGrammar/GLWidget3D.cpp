@@ -14,6 +14,7 @@
 #include <QTextStream>
 #include <iostream>
 #include "EDLinesLib.h"
+#include <QProcess>
 
 GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	// 光源位置をセット
@@ -249,10 +250,10 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for circular roof
-		float object_width = 12.0f;
-		float object_depth = 12.0f;
+		float object_width = 6.0f;
+		float object_depth = 6.0f;
 
 		float offset_x = 0.0f;
 		float offset_y = 0.0f;
@@ -261,7 +262,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for ledge
 		float object_width = 12.0f;
 		float object_depth = 0.5f;
@@ -384,7 +385,15 @@ void GLWidget3D::loadCGA(char* filename) {
 void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool grayscale) {
 	QDir dir("..\\cga\\building\\");
 
-	if (!QDir("results").exists()) QDir().mkdir("results");
+	QString resultDir = "results/buildings/";
+	if (grayscale) {
+		resultDir = "results/buildings_grayscale/";
+	}
+
+	if (QDir(resultDir).exists()) {
+		QDir(resultDir).removeRecursively();
+	}
+	QDir().mkpath(resultDir);
 
 	srand(0);
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
@@ -400,9 +409,9 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
 
-		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+		if (!QDir(resultDir + fileInfoList[i].baseName()).exists()) QDir().mkdir(resultDir + fileInfoList[i].baseName());
 
-		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		QFile file(resultDir + fileInfoList[i].baseName() + "/parameters.txt");
 		if (!file.open(QIODevice::WriteOnly)) {
 			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
 			return;
@@ -490,7 +499,7 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 										param_values.insert(param_values.begin() + 3, (float)(object_depth - 4) / 24.0f);
 
 										// set filename
-										QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+										QString filename = resultDir + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
 
 										cv::imwrite(filename.toUtf8().constData(), mat);
 
@@ -526,7 +535,15 @@ void GLWidget3D::generateBuildingImages(int image_width, int image_height, bool 
 void GLWidget3D::generateRoofImages(int image_width, int image_height, bool grayscale) {
 	QDir dir("..\\cga\\roof\\");
 
-	if (!QDir("results").exists()) QDir().mkdir("results");
+	QString resultDir = "results/roofs/";
+	if (grayscale) {
+		resultDir = "results/roofs_grayscale/";
+	}
+
+	if (QDir(resultDir).exists()) {
+		QDir(resultDir).removeRecursively();
+	}
+	QDir().mkpath(resultDir);
 
 	srand(0);
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
@@ -544,9 +561,9 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
 
-		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+		if (!QDir(resultDir + fileInfoList[i].baseName()).exists()) QDir().mkdir(resultDir + fileInfoList[i].baseName());
 
-		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		QFile file(resultDir + fileInfoList[i].baseName() + "/parameters.txt");
 		if (!file.open(QIODevice::WriteOnly)) {
 			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
 			return;
@@ -556,7 +573,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 
 		for (float object_width = 4.0f; object_width <= 28.0f; object_width += 4.0f) {
 			for (float object_depth = 4.0f; object_depth <= 28.0f; object_depth += 4.0f) {
-				if (i >= NUM_RECTANGULAR_TYPE && object_width != object_depth) continue;
+				if (i >= NUM_RECTANGULAR_TYPE && (object_width != object_depth || object_width < 6)) continue;
 
 				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
 					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
@@ -568,7 +585,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 						camera.updateMVPMatrix();
 
 						int numSamples = 5;
-						if (i >= NUM_RECTANGULAR_TYPE) numSamples *= 7;
+						if (i >= NUM_RECTANGULAR_TYPE) numSamples *= 8;
 						for (int k = 0; k < numSamples; ++k) { // 1 images (parameter values are randomly selected) for each width and height
 							std::vector<float> param_values;
 
@@ -632,7 +649,7 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 							cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
 
 							// set filename
-							QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+							QString filename = resultDir + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
 
 							cv::imwrite(filename.toUtf8().constData(), mat);
 
@@ -664,7 +681,15 @@ void GLWidget3D::generateRoofImages(int image_width, int image_height, bool gray
 void GLWidget3D::generateWindowImages(int image_width, int image_height, bool grayscale) {
 	QDir dir("..\\cga\\window\\");
 
-	if (!QDir("results").exists()) QDir().mkdir("results");
+	QString resultDir = "results/windows/";
+	if (grayscale) {
+		resultDir = "results/windows_grayscale/";
+	}
+
+	if (QDir(resultDir).exists()) {
+		QDir(resultDir).removeRecursively();
+	}
+	QDir().mkpath(resultDir);
 
 	srand(0);
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
@@ -686,9 +711,9 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool gr
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
 
-		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+		if (!QDir(resultDir + fileInfoList[i].baseName()).exists()) QDir().mkdir(resultDir + fileInfoList[i].baseName());
 
-		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		QFile file(resultDir + fileInfoList[i].baseName() + "/parameters.txt");
 		if (!file.open(QIODevice::WriteOnly)) {
 			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
 			return;
@@ -766,7 +791,7 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool gr
 					*/
 
 					// set filename
-					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+					QString filename = resultDir + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
 
 					cv::imwrite(filename.toUtf8().constData(), mat);
 
@@ -796,7 +821,15 @@ void GLWidget3D::generateWindowImages(int image_width, int image_height, bool gr
 void GLWidget3D::generateLedgeImages(int image_width, int image_height, bool grayscale) {
 	QDir dir("..\\cga\\ledge\\");
 
-	if (!QDir("results").exists()) QDir().mkdir("results");
+	QString resultDir = "results/ledges/";
+	if (grayscale) {
+		resultDir = "results/ledges_grayscale/";
+	}
+
+	if (QDir(resultDir).exists()) {
+		QDir(resultDir).removeRecursively();
+	}
+	QDir().mkpath(resultDir);
 
 	srand(0);
 	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
@@ -818,9 +851,9 @@ void GLWidget3D::generateLedgeImages(int image_width, int image_height, bool gra
 	for (int i = 0; i < fileInfoList.size(); ++i) {
 		int count = 0;
 
-		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
+		if (!QDir(resultDir + fileInfoList[i].baseName()).exists()) QDir().mkdir(resultDir + fileInfoList[i].baseName());
 
-		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
+		QFile file(resultDir + fileInfoList[i].baseName() + "/parameters.txt");
 		if (!file.open(QIODevice::WriteOnly)) {
 			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
 			return;
@@ -895,7 +928,7 @@ void GLWidget3D::generateLedgeImages(int image_width, int image_height, bool gra
 					cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
 
 					// set filename
-					QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
+					QString filename = resultDir + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 6, 10, QChar('0'));
 
 					cv::imwrite(filename.toUtf8().constData(), mat);
 
@@ -922,163 +955,10 @@ void GLWidget3D::generateLedgeImages(int image_width, int image_height, bool gra
 	resizeGL(origWidth, origHeight);
 }
 
-void GLWidget3D::generateSimpleShapeImages(int image_width, int image_height, float scale) {
-	QDir dir("..\\cga\\simple_shapes\\");
-
-	if (!QDir("results").exists()) QDir().mkdir("results");
-
-	srand(0);
-	renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
-
-	int origWidth = width();
-	int origHeight = height();
-	resize(512, 512);
-	resizeGL(512, 512);
-
-	QStringList filters;
-	filters << "*.xml";
-	QFileInfoList fileInfoList = dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot);
-	for (int i = 0; i < fileInfoList.size(); ++i) {
-		int count = 0;
-
-		if (!QDir("results/" + fileInfoList[i].baseName()).exists()) QDir().mkdir("results/" + fileInfoList[i].baseName());
-
-		QFile file("results/" + fileInfoList[i].baseName() + "/parameters.txt");
-		if (!file.open(QIODevice::WriteOnly)) {
-			std::cerr << "Cannot open file for writing: " << qPrintable(file.errorString()) << std::endl;
-			return;
-		}
-
-		QTextStream out(&file);
-
-		for (int object_width = 4; object_width <= 16; object_width += 4) {
-			for (int object_depth = 4; object_depth <= 16; object_depth += 4) {
-				for (int pitch_angle = 25; pitch_angle <= 35; pitch_angle += 5) {
-					for (int yaw_angle = -50; yaw_angle <= -40; yaw_angle += 5) {
-						// change camera view direction
-						camera.xrot = pitch_angle;//35.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
-						camera.yrot = yaw_angle;//-45.0f + ((float)rand() / RAND_MAX - 0.5f) * 40.0f;
-						camera.zrot = 0.0f;
-						camera.pos = glm::vec3(0, 0, 40.0f);
-						camera.updateMVPMatrix();
-
-						for (int offset_x = -8; offset_x <= 8; offset_x += 4) {
-							for (int offset_y = -8; offset_y <= 8; offset_y += 4) {
-
-								for (int k = 0; k < 5; ++k) { // 1 images (parameter values are randomly selected) for each width and height				
-									std::vector<float> param_values;
-
-									renderManager.removeObjects();
-
-									// generate a window
-									cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y -(float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
-									system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
-
-									try {
-										cga::Grammar grammar;
-										cga::parseGrammar(fileInfoList[i].absoluteFilePath().toUtf8().constData(), grammar);
-										param_values = system.randomParamValues(grammar);
-										system.derive(grammar, true);
-										std::vector<boost::shared_ptr<glutils::Face> > faces;
-										system.generateGeometry(faces);
-										renderManager.addFaces(faces);
-										//renderManager.centerObjects();
-									}
-									catch (const std::string& ex) {
-										std::cout << "ERROR:" << std::endl << ex << std::endl;
-									}
-									catch (const char* ex) {
-										std::cout << "ERROR:" << std::endl << ex << std::endl;
-									}
-
-									// render a window
-									glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-									glEnable(GL_DEPTH_TEST);
-									glDisable(GL_TEXTURE_2D);
-
-									glUniform1i(glGetUniformLocation(renderManager.program, "seed"), rand() % 100);
-
-									// Model view projection行列をシェーダに渡す
-									glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"), 1, GL_FALSE, &camera.mvpMatrix[0][0]);
-									glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"), 1, GL_FALSE, &camera.mvMatrix[0][0]);
-
-									// pass the light direction to the shader
-									//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
-									glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
-
-									drawScene(0);
-
-									QImage img = this->grabFrameBuffer();
-									cv::Mat source(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
-									cv::Mat mat;
-									EDLine(source, mat, scale);
-									//QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 4, 10, QChar('0'));
-									//cv::imwrite(filename.toUtf8().constData(), result);
-
-									// スケッチ線を使わず、直線で描画
-									// 128x128、グレースケースの画像に変換
-									/*
-									QImage img = grabFrameBuffer();
-									cv::Mat mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine());
-									cv::cvtColor(mat, mat, cv::COLOR_BGR2GRAY);
-									*/
-									cv::resize(mat, mat, cv::Size(256, 256));
-									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
-									cv::resize(mat, mat, cv::Size(128, 128));
-									cv::threshold(mat, mat, 250, 255, CV_THRESH_BINARY);
-
-									// 画像が有効なら保存
-									if (isImageValid(mat)) {
-										// put depth, width at the begining of the param values array
-										param_values.insert(param_values.begin() + 0, (float)(offset_x + 8) / 16.0f);
-										param_values.insert(param_values.begin() + 1, (float)(offset_y + 8) / 16.0f);
-										param_values.insert(param_values.begin() + 2, (float)(object_width - 4) / 12.0f);
-										param_values.insert(param_values.begin() + 3, (float)(object_depth - 4) / 12.0f);
-
-										// set filename
-										QString filename = "results/" + fileInfoList[i].baseName() + "/" + QString("image_%1.png").arg(count, 5, 10, QChar('0'));
-
-										cv::imwrite(filename.toUtf8().constData(), mat);
-
-										// write all the param values to the file
-										for (int pi = 0; pi < param_values.size(); ++pi) {
-											if (pi > 0) {
-												out << ",";
-											}
-											out << param_values[pi];
-										}
-										out << "\n";
-
-										count++;
-									}
-
-								}
-
-
-							}
-						}
-					}
-				}
-			}
-		}
-
-		file.close();
-	}
-
-	resize(origWidth, origHeight);
-	resizeGL(origWidth, origHeight);
-}
-
 void GLWidget3D::test() {
-	/*
-	this->resize(512, 512);
-	resizeGL(512, 512);
-	updateGL();
-
-					cv::Mat result;
-					EDLine(result, 0.5f);
-					cv::imwrite("result.png", result);
-					*/
+	QProcess p;
+	p.start("cmd.exe", QStringList() << "/C" << "copy_roof.bat");
+	p.waitForFinished();
 }
 
 /**

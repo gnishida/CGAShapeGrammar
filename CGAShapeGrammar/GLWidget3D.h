@@ -25,7 +25,6 @@ public:
 	void generateRoofImages(int image_width, int image_height, bool grayscale);
 	void generateWindowImages(int image_width, int image_height, bool grayscale);
 	void generateLedgeImages(int image_width, int image_height, bool grayscale);
-	void generateSimpleShapeImages(int image_width, int image_height, float scale);
 	void test();
 	void EDLine(const cv::Mat& source, cv::Mat& result, bool grayscale);
 	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
