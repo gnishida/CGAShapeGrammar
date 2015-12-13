@@ -24,6 +24,10 @@ Shader::~Shader() {
  * @param fragment_file		frament shader file
  * @return					program id
  */
+uint Shader::createProgram(const string& vertex_file, const string& fragment_file) {
+	return createProgram(vertex_file, fragment_file, std::vector<QString>());
+}
+
 uint Shader::createProgram(const string& vertex_file, const string& fragment_file, const std::vector<QString>& fragDataNamesP1) {
 	std::string source;
 	loadTextFile(vertex_file, source);

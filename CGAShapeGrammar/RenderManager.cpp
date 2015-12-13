@@ -107,9 +107,10 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	programs["pass3"] = shader.createProgram("../shaders/lc_vert_pass3.glsl", "../shaders/lc_frag_pass3.glsl", fragDataNamesP3);
 
 	// Line rendering
-	std::vector<QString> fragDataNamesP4;//default
-	fragDataNamesP4.push_back("outputF");
-	programs["line"] = shader.createProgram("../shaders/lc_vert_line.glsl", "../shaders/lc_frag_line.glsl", fragDataNamesP4);
+	programs["line"] = shader.createProgram("../shaders/lc_vert_line.glsl", "../shaders/lc_frag_line.glsl");
+
+	// Shadow mapping
+	programs["shadow"] = shader.createProgram("../shaders/lc_vert_shadow.glsl", "../shaders/lc_frag_shadow.glsl");
 
 	glUseProgram(programs["pass1"]);
 
@@ -149,7 +150,7 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	GLuint texId;
 	glGenTextures(1, &texId);
 
-	//shadow.init(program, shadowMapSize, shadowMapSize);
+	shadow.init(programs["shadow"], shadowMapSize, shadowMapSize);
 }
 
 void RenderManager::resize(int winWidth, int winHeight){
@@ -444,6 +445,7 @@ void RenderManager::render(const QString& object_name) {
 
 		if (texId > 0) {
 			// テクスチャなら、バインドする
+			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, texId);
 			glUniform1i(glGetUniformLocation(programs["pass1"], "textureEnabled"), 1);
 			glUniform1i(glGetUniformLocation(programs["pass1"], "tex0"), 0);
@@ -482,11 +484,11 @@ void RenderManager::render(const QString& object_name) {
 	}
 }
 
-/*void RenderManager::updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix) {
+void RenderManager::updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix) {
 	if (useShadow) {
 		shadow.update(glWidget3D, light_dir, light_mvpMatrix);
 	}
-}*/
+}
 
 GLuint RenderManager::loadTexture(const QString& filename) {
 	QImage img;

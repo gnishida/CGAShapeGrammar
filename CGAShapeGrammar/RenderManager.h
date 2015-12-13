@@ -4,7 +4,7 @@
 #include <vector>
 #include <QMap>
 #include "Vertex.h"
-//#include "ShadowMapping.h"
+#include "ShadowMapping.h"
 #include "GLUtils.h"
 #include <boost/shared_ptr.hpp>
 #include "Shader.h"
@@ -37,9 +37,7 @@ public:
 	QMap<QString, GLuint> textures;
 
 	bool useShadow;
-	//ShadowMapping shadow;
-
-	//SketchyRenderingBuffer rb;
+	ShadowMapping shadow;
 
 	int renderingMode;
 
@@ -82,7 +80,7 @@ public:
 	void renderAll();
 	void renderAllExcept(const QString& object_name);
 	void render(const QString& object_name);
-	//void updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix);
+	void updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& light_dir, const glm::mat4& light_mvpMatrix);
 	
 
 private:

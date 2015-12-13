@@ -19,48 +19,53 @@ uniform mat4 mvMatrix;
 uniform mat3 normalMatrix;
 //uniform mat4 mvpMatrix;
 
+uniform int useShadow;
+uniform mat4 light_mvpMatrix;
+uniform vec3 lightDir;
+uniform sampler2D shadowMap;
+uniform int textureEnabled;
+
+float shadowCoef(){
+	vec4 shadow_coord2 = light_mvpMatrix * vec4(origVertex, 1.0);
+	vec3 ProjCoords = shadow_coord2.xyz / shadow_coord2.w;
+	vec2 UVCoords;
+	UVCoords.x = 0.5 * ProjCoords.x + 0.5;
+	UVCoords.y = 0.5 * ProjCoords.y + 0.5;
+	float z = 0.5 * ProjCoords.z + 0.5;
+
+	float visibility = 1.0f;
+	if (texture2D(shadowMap, UVCoords).z  <  z) {
+		visibility = 0;
+	}
+	return visibility;
+}
+
 void main(){
 	def_diffuse = outColor.xyz;
-	//if(false){//mv space
-	//	def_normal = normalMatrix*varyingNormal;
-	//	def_originPos = (mvMatrix*vec4(origVertex, 1.0)).xyz;
-	//} else {//object space
-		def_normal = varyingNormal;
-		def_originPos = origVertex;
-	//}
-	//def_originPos = (mvpMatrix*vec4(origVertex, 1.0)).xyz;// origVertex;
+	def_normal = varyingNormal;
+	def_originPos = origVertex;
 
-	// TEXTURE
-	if((mode&0xFF)==2||(mode&0xFF)==4||(mode&0xFF)==6){// tex / water / model texture
-		def_diffuse = texture( tex0, outUV.rg ).rgb;
+	////// DEBUG //////
+	/*
+	vec4 shadow_coord2 = light_mvpMatrix * vec4(origVertex, 1.0);
+	def_diffuse = vec3(shadow_coord2.x * 0.5 + 0.5, shadow_coord2.y * 0.5 + 0.5, 1);
+	return;
+	*/
+	////// DEBUG //////
+
+	if (textureEnabled == 1) { // for texture mode
+		def_diffuse = def_diffuse * texture(tex0, outUV.rg).xyz;
 	}
-	
-	//////////////
-	// TERRAIN
-	if((mode&0xFF)==3){
 
-		vec4 terrainColor=vec4(0,0,0,1.0);
-		float factor;
-		float height=(origVertex.z)/255.0;//0-1
-		height=min(height,1.0);
-		height=max(height,0);
+	// lighting
+	vec3 ambient = vec3(0.6, 0.6, 0.6);
+	vec3 diffuse = vec3(0.5, 0.5, 0.5) * max(0.0, dot(-lightDir, varyingNormal));
 
-		if(height<=0.33){
-			factor=height/0.33;//0-1
-			terrainColor+=(1-factor)*texture( tex_3D, vec3(outUV.rg,0.0));
-			terrainColor+=factor*texture( tex_3D, vec3(outUV.rg+vec2(0.1,0.1),1.0));
-		}else{
-			if(height<=0.66){
-				factor=(height-0.33)/0.33f;//0-1
-				terrainColor+=(1-factor)*texture( tex_3D, vec3(outUV.rg+vec2(0.1,0.1),1.0));
-				terrainColor+=factor*texture( tex_3D, vec3(outUV.rg+vec2(0.45,0.45),2.0));
-			}else{
-				factor=(height-0.66)/0.33f;//0-1
-				terrainColor+=(1-factor)*texture( tex_3D, vec3(outUV.rg+vec2(0.45,0.45),2.0));
-				terrainColor+=factor*texture( tex_3D, vec3(outUV.rg+vec2(0.3,0.3),3.0));
-			}
-		}
-		def_diffuse =terrainColor.rgb;
+	float visibility = 1.0;
+	if (useShadow == 1) {
+		visibility = shadowCoef();
 	}
-}//
+
+	def_diffuse = (ambient + (visibility * 0.95 + 0.05) * diffuse) * def_diffuse;
+}
 

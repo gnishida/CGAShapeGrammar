@@ -9,6 +9,7 @@ public:
 	Shader();
 	~Shader();
 
+	uint createProgram(const std::string& vertex_file, const std::string& fragment_file);
 	uint createProgram(const std::string& vertex_file, const std::string& fragment_file, const std::vector<QString>& fragDataNamesP1);
 	void cleanShaders();
 

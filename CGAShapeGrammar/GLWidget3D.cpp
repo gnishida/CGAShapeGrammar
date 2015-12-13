@@ -191,7 +191,7 @@ void GLWidget3D::initializeGL() {
 	glCullFace(GL_BACK);
 
 	////////////////////////////////
-	renderManager.init("", "", "", false);
+	renderManager.init("", "", "", true, 4096);
 	renderManager.resize(this->width(), this->height());
 
 	glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], "tex0"), 0);//tex0: 0
@@ -240,6 +240,12 @@ void GLWidget3D::paintGL() {
 		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvMatrix"), 1, false, &camera.mvMatrix[0][0]);//mvMatrixArray);
 		//glUniformMatrix3fv(glGetUniformLocation(vboRenderManager.programs["pass1"], "normalMatrix"), 1, false, normMatrixArray);
 	}
+
+	glUniform3f(glGetUniformLocation(renderManager.programs["pass1"], "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+	glUniform1i(glGetUniformLocation(renderManager.programs["pass1"], "shadowMap"), 6);
+	glActiveTexture(GL_TEXTURE6);
+	glBindTexture(GL_TEXTURE_2D, renderManager.shadow.textureDepth);
+
 
 	glBindFramebuffer(GL_FRAMEBUFFER, renderManager.fragDataFB);
 	//qglClearColor(QColor(0x00, 0xFF, 0xFF));
@@ -640,7 +646,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 	
-	//renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
+	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
 	updateGL();
 }
