@@ -1,4 +1,4 @@
-#version 330
+#version 420
 #extension GL_EXT_gpu_shader4 : enable
 
 in vec4 outColor;

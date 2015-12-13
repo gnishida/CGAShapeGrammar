@@ -80,7 +80,8 @@ RenderManager::~RenderManager() {
 
 void RenderManager::init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, bool useShadow, int shadowMapSize) {
 	this->useShadow = useShadow;
-	renderingMode = RENDERING_MODE_BASIC;
+	//renderingMode = RENDERING_MODE_BASIC;
+	renderingMode = RENDERING_MODE_LINE;
 
 	// init glew
 	GLenum err = glewInit();
@@ -105,6 +106,11 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	std::vector<QString> fragDataNamesP3;//default
 	fragDataNamesP3.push_back("outputF");
 	program_pass3 = shader.createProgram("../shaders/lc_vert_pass3.glsl", "../shaders/lc_frag_pass3.glsl", fragDataNamesP3);
+
+	// Line rendering
+	std::vector<QString> fragDataNamesP4;//default
+	fragDataNamesP4.push_back("outputF");
+	program_pass4 = shader.createProgram("../shaders/lc_vert_line.glsl", "../shaders/lc_frag_line.glsl", fragDataNamesP4);
 
 	glUseProgram(program_pass1);
 

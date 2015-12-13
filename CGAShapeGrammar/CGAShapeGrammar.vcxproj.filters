@@ -425,5 +425,11 @@
     <None Include="..\shaders\lc_vert_pass3.glsl">
       <Filter>Source Files\shaders</Filter>
     </None>
+    <None Include="..\shaders\lc_frag_line.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_vert_line.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

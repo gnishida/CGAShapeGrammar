@@ -34,7 +34,8 @@ public:
 	GLuint program_pass1;
 	GLuint program_pass2;
 	GLuint program_pass3;
-	
+	GLuint program_pass4;
+
 	QMap<QString, QMap<GLuint, GeometryObject> > objects;
 	QMap<QString, GLuint> textures;
 

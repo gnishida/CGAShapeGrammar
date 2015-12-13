@@ -331,9 +331,11 @@
   <ItemGroup>
     <None Include="..\shaders\fragment.glsl" />
     <None Include="..\shaders\geometry.glsl" />
+    <None Include="..\shaders\lc_frag_line.glsl" />
     <None Include="..\shaders\lc_frag_pass1.glsl" />
     <None Include="..\shaders\lc_frag_pass2.glsl" />
     <None Include="..\shaders\lc_frag_pass3.glsl" />
+    <None Include="..\shaders\lc_vert_line.glsl" />
     <None Include="..\shaders\lc_vert_pass1.glsl" />
     <None Include="..\shaders\lc_vert_pass2.glsl" />
     <None Include="..\shaders\lc_vert_pass3.glsl" />
