@@ -173,9 +173,6 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SketchyRenderingBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OBJLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -357,9 +354,6 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SketchyRenderingBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShadowMapping.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -411,6 +405,24 @@
       <Filter>Source Files\shaders</Filter>
     </None>
     <None Include="..\shaders\vertex.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_frag_pass1.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_frag_pass2.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_frag_pass3.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_vert_pass1.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_vert_pass2.glsl">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\lc_vert_pass3.glsl">
       <Filter>Source Files\shaders</Filter>
     </None>
   </ItemGroup>

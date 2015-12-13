@@ -37,8 +37,8 @@
     </property>
     <addaction name="actionViewShadow"/>
     <addaction name="separator"/>
-    <addaction name="actionViewRegularRendering"/>
-    <addaction name="actionViewWireframe"/>
+    <addaction name="actionViewBasicRendering"/>
+    <addaction name="actionViewSSAO"/>
     <addaction name="actionViewLineRendering"/>
     <addaction name="actionViewSketchyRendering"/>
     <addaction name="separator"/>
@@ -96,7 +96,7 @@
     <string>Shadow</string>
    </property>
   </action>
-  <action name="actionViewRegularRendering">
+  <action name="actionViewBasicRendering">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -104,12 +104,12 @@
     <string>Regular Rendering</string>
    </property>
   </action>
-  <action name="actionViewWireframe">
+  <action name="actionViewSSAO">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Wireframe</string>
+    <string>SSAO</string>
    </property>
   </action>
   <action name="actionViewLineRendering">

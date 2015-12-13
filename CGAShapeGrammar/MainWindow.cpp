@@ -5,20 +5,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
 
 	QActionGroup* renderingModeGroup = new QActionGroup(this);
-	renderingModeGroup->addAction(ui.actionViewRegularRendering);
-	renderingModeGroup->addAction(ui.actionViewWireframe);
+	renderingModeGroup->addAction(ui.actionViewBasicRendering);
+	renderingModeGroup->addAction(ui.actionViewSSAO);
 	renderingModeGroup->addAction(ui.actionViewLineRendering);
 	renderingModeGroup->addAction(ui.actionViewSketchyRendering);
 
-	ui.actionViewWireframe->setChecked(true);
-	ui.actionViewShadow->setChecked(true);
-	ui.actionViewRegularRendering->setChecked(true);
+	//ui.actionViewSSAO->setChecked(true);
+	//ui.actionViewShadow->setChecked(true);
+	ui.actionViewBasicRendering->setChecked(true);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGA, SIGNAL(triggered()), this, SLOT(onOpenCGA()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
-	connect(ui.actionViewRegularRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
-	connect(ui.actionViewWireframe, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewBasicRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewSSAO, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
@@ -58,10 +58,10 @@ void MainWindow::onViewShadow() {
 }
 
 void MainWindow::onViewRendering() {
-	if (ui.actionViewRegularRendering->isChecked()) {
-		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_REGULAR;
-	} else if (ui.actionViewWireframe->isChecked()) {
-		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_WIREFRAME;
+	if (ui.actionViewBasicRendering->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_BASIC;
+	} else if (ui.actionViewSSAO->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_SSAO;
 	} else if (ui.actionViewLineRendering->isChecked()) {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
 	} else {
@@ -77,35 +77,35 @@ void MainWindow::onViewRefresh() {
 }
 
 void MainWindow::onGenerateBuildingImages() {
-	glWidget->generateBuildingImages(256, 256, false);
+	//glWidget->generateBuildingImages(256, 256, false);
 }
 
 void MainWindow::onGenerateBuildingImages2() {
-	glWidget->generateBuildingImages(128, 128, true);
+	//glWidget->generateBuildingImages(128, 128, true);
 }
 
 void MainWindow::onGenerateRoofImages() {
-	glWidget->generateRoofImages(256, 256, false);
+	//glWidget->generateRoofImages(256, 256, false);
 }
 
 void MainWindow::onGenerateRoofImages2() {
-	glWidget->generateRoofImages(128, 128, true);
+	//glWidget->generateRoofImages(128, 128, true);
 }
 
 void MainWindow::onGenerateWindowImages() {
-	glWidget->generateWindowImages(256, 256, false);
+	//glWidget->generateWindowImages(256, 256, false);
 }
 
 void MainWindow::onGenerateWindowImages2() {
-	glWidget->generateWindowImages(128, 128, true);
+	//glWidget->generateWindowImages(128, 128, true);
 }
 
 void MainWindow::onGenerateLedgeImages() {
-	glWidget->generateLedgeImages(256, 256, false);
+	//glWidget->generateLedgeImages(256, 256, false);
 }
 
 void MainWindow::onGenerateLedgeImages2() {
-	glWidget->generateLedgeImages(128, 128, true);
+	//glWidget->generateLedgeImages(128, 128, true);
 }
 
 void MainWindow::onTest() {
