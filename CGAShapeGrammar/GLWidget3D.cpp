@@ -194,7 +194,7 @@ void GLWidget3D::initializeGL() {
 	renderManager.init("", "", "", false);
 	renderManager.resize(this->width(), this->height());
 
-	glUniform1i(glGetUniformLocation(renderManager.program_pass2, "tex0"), 0);//tex0: 0
+	glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], "tex0"), 0);//tex0: 0
 
 
 
@@ -209,7 +209,6 @@ void GLWidget3D::resizeGL(int width, int height) {
 	glViewport(0, 0, width, height);
 	camera.updatePMatrix(width, height);
 
-	//rb.update(width, height);
 	renderManager.resize(width, height);
 }
 
@@ -233,15 +232,13 @@ void GLWidget3D::paintGL() {
 	drawScene(0);
 	*/
 
-	//VBOUtil::disaplay_memory_usage();
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// PASS 1: Render to texture
-	glUseProgram(renderManager.program_pass1);
+	glUseProgram(renderManager.programs["pass1"]);
 	{
-		glUniformMatrix4fv(glGetUniformLocation(renderManager.program_pass1, "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
-		glUniformMatrix4fv(glGetUniformLocation(renderManager.program_pass1, "mvMatrix"), 1, false, &camera.mvMatrix[0][0]);//mvMatrixArray);
-		//glUniformMatrix3fv(glGetUniformLocation(vboRenderManager.program_pass1, "normalMatrix"), 1, false, normMatrixArray);
+		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
+		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvMatrix"), 1, false, &camera.mvMatrix[0][0]);//mvMatrixArray);
+		//glUniformMatrix3fv(glGetUniformLocation(vboRenderManager.programs["pass1"], "normalMatrix"), 1, false, normMatrixArray);
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, renderManager.fragDataFB);
@@ -294,46 +291,46 @@ void GLWidget3D::paintGL() {
 		glDisable(GL_DEPTH_TEST);
 		glDepthFunc(GL_ALWAYS);
 
-		glUseProgram(renderManager.program_pass2);
-		glUniform2f(glGetUniformLocation(renderManager.program_pass2, "pixelSize"), 2.0f / this->width(), 2.0f / this->height());
-		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.program_pass2, "pixelSize"));
+		glUseProgram(renderManager.programs["pass2"]);
+		glUniform2f(glGetUniformLocation(renderManager.programs["pass2"], "pixelSize"), 2.0f / this->width(), 2.0f / this->height());
+		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.programs["pass2"], "pixelSize"));
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass2, ("tex0")), 1);
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], ("tex0")), 1);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[0]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass2, ("tex1")), 2);
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], ("tex1")), 2);
 		glActiveTexture(GL_TEXTURE2);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[1]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass2, ("tex2")), 3);
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], ("tex2")), 3);
 		glActiveTexture(GL_TEXTURE3);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[2]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass2, ("depthTex")), 8);
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], ("depthTex")), 8);
 		glActiveTexture(GL_TEXTURE8);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDepthTex);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass2, ("noiseTex")), 7);
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], ("noiseTex")), 7);
 		glActiveTexture(GL_TEXTURE7);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragNoiseTex);
 
 		{
-			glUniformMatrix4fv(glGetUniformLocation(renderManager.program_pass2, "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
-			glUniformMatrix4fv(glGetUniformLocation(renderManager.program_pass2, "pMatrix"), 1, false, &camera.pMatrix[0][0]);//pMatrixArray);
+			glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass2"], "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
+			glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass2"], "pMatrix"), 1, false, &camera.pMatrix[0][0]);//pMatrixArray);
 		}
 
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass2, ("uKernelSize")), renderManager.uKernelSize);
-		glUniform3fv(glGetUniformLocation(renderManager.program_pass2, ("uKernelOffsets")), renderManager.uKernelOffsets.size(), (const GLfloat*)renderManager.uKernelOffsets.data());
-		//printf("** ukernel %d %d\n", glGetUniformLocation(vboRenderManager.program_pass2, ("uKernelSize")), glGetUniformLocation(vboRenderManager.program_pass2, ("uKernelOffsets")));
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], ("uKernelSize")), renderManager.uKernelSize);
+		glUniform3fv(glGetUniformLocation(renderManager.programs["pass2"], ("uKernelOffsets")), renderManager.uKernelOffsets.size(), (const GLfloat*)renderManager.uKernelOffsets.data());
+		//printf("** ukernel %d %d\n", glGetUniformLocation(vboRenderManager.programs["pass2"], ("uKernelSize")), glGetUniformLocation(vboRenderManager.programs["pass2"], ("uKernelOffsets")));
 
-		glUniform1f(glGetUniformLocation(renderManager.program_pass2, ("uPower")), renderManager.uPower);
-		glUniform1f(glGetUniformLocation(renderManager.program_pass2, ("uRadius")), renderManager.uRadius);
+		glUniform1f(glGetUniformLocation(renderManager.programs["pass2"], ("uPower")), renderManager.uPower);
+		glUniform1f(glGetUniformLocation(renderManager.programs["pass2"], ("uRadius")), renderManager.uRadius);
 
 		glBindVertexArray(renderManager.secondPassVAO);
 
@@ -350,35 +347,32 @@ void GLWidget3D::paintGL() {
 		glDisable(GL_DEPTH_TEST);
 		glDepthFunc(GL_ALWAYS);
 
-		glUseProgram(renderManager.program_pass4);
-		glUniform2f(glGetUniformLocation(renderManager.program_pass4, "pixelSize"), 1.0f / this->width(), 1.0f / this->height());
-		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.program_pass2, "pixelSize"));
+		glUseProgram(renderManager.programs["line"]);
+		glUniform2f(glGetUniformLocation(renderManager.programs["line"], "pixelSize"), 1.0f / this->width(), 1.0f / this->height());
+		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.programs["line"], "pixelSize"));
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("tex0")), 1);
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("tex0")), 1);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[0]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("tex1")), 2);
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("tex1")), 2);
 		glActiveTexture(GL_TEXTURE2);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[1]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("tex2")), 3);
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("tex2")), 3);
 		glActiveTexture(GL_TEXTURE3);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[2]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("depthTex")), 8);
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("depthTex")), 8);
 		glActiveTexture(GL_TEXTURE8);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDepthTex);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("screenWidth")), width());
-		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("screenHeight")), height());
-
 		{
-			glUniformMatrix4fv(glGetUniformLocation(renderManager.program_pass4, "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
-			glUniformMatrix4fv(glGetUniformLocation(renderManager.program_pass4, "pMatrix"), 1, false, &camera.pMatrix[0][0]);//pMatrixArray);
+			glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
+			glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "pMatrix"), 1, false, &camera.pMatrix[0][0]);//pMatrixArray);
 		}
 
 		glBindVertexArray(renderManager.secondPassVAO);
@@ -400,35 +394,35 @@ void GLWidget3D::paintGL() {
 		glDisable(GL_DEPTH_TEST);
 		glDepthFunc(GL_ALWAYS);
 
-		glUseProgram(renderManager.program_pass3);
-		glUniform2f(glGetUniformLocation(renderManager.program_pass3, "pixelSize"), 2.0f / this->width(), 2.0f / this->height());
-		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.program_pass3, "pixelSize"));
+		glUseProgram(renderManager.programs["pass3"]);
+		glUniform2f(glGetUniformLocation(renderManager.programs["pass3"], "pixelSize"), 2.0f / this->width(), 2.0f / this->height());
+		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.programs["pass3"], "pixelSize"));
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass3, ("tex0")), 1);//COLOR
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("tex0")), 1);//COLOR
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[0]);
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass3, ("tex1")), 2);//NORMAL
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("tex1")), 2);//NORMAL
 		glActiveTexture(GL_TEXTURE2);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[1]);
 
-		/*glUniform1i(glGetUniformLocation(renderManager.program_pass3, ("tex2")), 3);
+		/*glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("tex2")), 3);
 		glActiveTexture(GL_TEXTURE3);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[2]);*/
 
-		glUniform1i(glGetUniformLocation(renderManager.program_pass3, ("tex3")), 4);//AO
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("tex3")), 4);//AO
 		glActiveTexture(GL_TEXTURE4);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragAOTex);
-		//printf(">> tex3 loc %d\n", glGetUniformLocation(renderManager.program_pass3, "tex3"));
+		//printf(">> tex3 loc %d\n", glGetUniformLocation(renderManager.programs["pass3"], "tex3"));
 
 		if (renderManager.renderingMode == RenderManager::RENDERING_MODE_SSAO) {
-			glUniform1i(glGetUniformLocation(renderManager.program_pass3, ("pass2used")), 1); // pass2 used
+			glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("pass2used")), 1); // pass2 used
 		}
 		else {
-			glUniform1i(glGetUniformLocation(renderManager.program_pass3, ("pass2used")), 0); // no pass2
+			glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("pass2used")), 0); // no pass2
 		}
 
 		glBindVertexArray(renderManager.secondPassVAO);
