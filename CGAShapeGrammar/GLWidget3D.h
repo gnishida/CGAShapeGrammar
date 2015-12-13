@@ -19,7 +19,7 @@ class GLWidget3D : public QGLWidget {
 public:
 	GLWidget3D(QWidget *parent = 0);
 
-	void drawScene(int drawMode);
+	void drawScene();
 	void loadCGA(char* filename);
 #if 0
 	void generateBuildingImages(int image_width, int image_height, bool grayscale);

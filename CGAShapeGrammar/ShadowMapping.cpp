@@ -85,7 +85,7 @@ void ShadowMapping::update(GLWidget3D* glWidget3D, const glm::vec3& light_dir, c
 	glUniformMatrix4fv(glGetUniformLocation(programId, "light_mvpMatrix"), 1, GL_FALSE, &light_mvpMatrix[0][0]);
 
 	// 光の方向を設定
-	glUniform3f(glGetUniformLocation(programId, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+	//glUniform3f(glGetUniformLocation(programId, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 
 	// 色バッファには描画しない
 	glDrawBuffer(GL_NONE);
@@ -96,8 +96,7 @@ void ShadowMapping::update(GLWidget3D* glWidget3D, const glm::vec3& light_dir, c
 	glDepthFunc(GL_LEQUAL);
 
 	//RENDER
-	glUniform1i(glGetUniformLocation(programId, "depthComputation"), 1);
-	glWidget3D->drawScene(1);
+	glWidget3D->drawScene();
 	
 	// この時点で、textureDepthにデプス情報が格納されている
 	

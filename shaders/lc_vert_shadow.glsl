@@ -11,10 +11,6 @@ out vec3 origVertex;// L
 
 out vec3 varyingNormal;
 
-uniform mat4 mvpMatrix;
-uniform mat4 mvMatrix;
-
-uniform int depthComputation;	// 1 -- depth computation / 0 -- otherwise
 uniform mat4 light_mvpMatrix;
 
 void main(){
