@@ -19,9 +19,6 @@ uniform vec2 pixelSize;//in texture space
 uniform mat4 pMatrix;
 uniform mat4 mvpMatrix;
 
-uniform int screenWidth;
-uniform int screenHeight;
-
 float LinearizeDepth(float z){
 		const float zNear = 5.0; // camera z near
 		const float zFar = 10000.0; // camera z far
@@ -29,70 +26,9 @@ float LinearizeDepth(float z){
 		return (2.0 * zNear) / (zFar + zNear - z * (zFar - zNear));
 }//
 
-/*----------------------------------------------------------------------------*/
-//	ssao uniforms:
-const int MAX_KERNEL_SIZE = 128;
-uniform int uKernelSize=16;//16
-uniform vec3 uKernelOffsets[MAX_KERNEL_SIZE];
-uniform float uRadius = 20.0;//1.5
-uniform float uPower = 1.0;//2.0
-
 float linearizeDepth(in float depth, in mat4 projMatrix) {
 	return projMatrix[3][2] / (depth - projMatrix[2][2]);
 }
-
-float ssao(in mat3 kernelBasis, in vec3 originPos, in float radius) {
-	float occlusion = 0.0;
-	
-	vec4 originPosProj = mvpMatrix * vec4(originPos, 1.0);//for rangecheck
-	originPosProj.xyz /= originPosProj.w; 
-	originPosProj.xyz = originPosProj.xyz * 0.5 + 0.5; // scale/bias to texcoords
-	float originDepth = texture(depthTex, originPosProj.xy).r;
-	//originDepth = linearizeDepth(originDepth, pMatrix);
-
-	for (int i = 0; i < uKernelSize; ++i) {
-		//	get sample position:
-		vec3 samplePos = kernelBasis * uKernelOffsets[i];
-		samplePos = samplePos * radius + originPos;
-		
-		//samplePos = originPos + uKernelOffsets[i];
-		//	project sample position:
-		vec4 offset;
-		//if (false) {
-		//	offset = pMatrix * vec4(samplePos, 1.0);
-		//} else {
-			offset = mvpMatrix * vec4(samplePos, 1.0);
-		//}
-		//vec4 offset = uProjectionMatrix * vec4(samplePos, 1.0);
-		
-		offset.xyz /= offset.w; // only need xy
-		offset.xyz = offset.xyz * 0.5 + 0.5; // scale/bias to texcoords
-
-		//	get sample depth:
-		float sampleDepth = texture(depthTex, offset.xy).r;
-		//sampleDepth = linearizeDepth(sampleDepth, pMatrix);
-
-		//float rangeCheck = smoothstep(0.0, 1.0, radius / abs(originPos.z - sampleDepth));
-		//occlusion += rangeCheck * step(sampleDepth, samplePos.z);
-		//occlusion += (sampleDepth <= samplePos.z ? 1.0 : 0.0);// *rangeCheck;
-
-		float offsetDepth = offset.z;
-
-		float rangeCheck = 1.0f;// abs(offsetDepth - sampleDepth) < radius ? 1.0 : 0.0;
-		//float rangeCheck = smoothstep(0.0, 1.0, radius / abs(originPosProj.z - sampleDepth));
-
-
-		
-		//offsetDepth = linearizeDepth(offsetDepth, pMatrix);
-
-		
-
-		occlusion += (sampleDepth <= offsetDepth ? 1.0 : 0.0)*rangeCheck;// *rangeCheck;
-	}
-
-	occlusion = 1.0 - (occlusion / float(uKernelSize));
-	return pow(occlusion, uPower);
-}//
 
 void main(){
 	float normalSensitivity = 50.0;
@@ -118,10 +54,10 @@ void main(){
 		for (int yy = -range; yy <= range; ++yy) {
 			if (xx == 0 && yy == 0) continue;
 
-			vec3 nn = texture(tex1, vec2(coord.x + float(xx) / screenWidth, coord.y + float(yy) / screenHeight)).xyz;
-			float dd = texture(depthTex, vec2(coord.x + float(xx) / screenWidth, coord.y + float(yy) / screenHeight)).x;
+			vec3 nn = texture(tex1, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).xyz;
+			float dd = texture(depthTex, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).x;
 			//dd = linearizeDepth(dd, pMatrix);
-			vec3 pp = texture(tex2, vec2(coord.x + float(xx) / screenWidth, coord.y + float(yy) / screenHeight)).xyz;
+			vec3 pp = texture(tex2, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).xyz;
 
 			if (abs(dot(normalize(pp - originPos), normal)) < 0.4) continue;
 

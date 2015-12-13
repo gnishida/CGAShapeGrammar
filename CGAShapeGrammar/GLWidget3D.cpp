@@ -270,7 +270,8 @@ void GLWidget3D::paintGL() {
 	// PASS 2: Create AO
 	if (renderManager.renderingMode == RenderManager::RENDERING_MODE_SSAO) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		qglClearColor(QColor(0xFF, 0xFF, 0xFF));
+		//qglClearColor(QColor(0xFF, 0xFF, 0xFF));
+		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (true){
@@ -342,14 +343,15 @@ void GLWidget3D::paintGL() {
 	}
 	else if (renderManager.renderingMode == RenderManager::RENDERING_MODE_LINE) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		qglClearColor(QColor(0xFF, 0xFF, 0xFF));
+		//qglClearColor(QColor(0xFF, 0xFF, 0xFF));
+		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glDisable(GL_DEPTH_TEST);
 		glDepthFunc(GL_ALWAYS);
 
 		glUseProgram(renderManager.program_pass4);
-		glUniform2f(glGetUniformLocation(renderManager.program_pass4, "pixelSize"), 2.0f / this->width(), 2.0f / this->height());
+		glUniform2f(glGetUniformLocation(renderManager.program_pass4, "pixelSize"), 1.0f / this->width(), 1.0f / this->height());
 		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.program_pass2, "pixelSize"));
 
 		glUniform1i(glGetUniformLocation(renderManager.program_pass4, ("tex0")), 1);
