@@ -3,21 +3,15 @@
 
 in vec4 outColor;
 in vec2 outUV;
-in vec3 origVertex;// L
-
+in vec3 origVertex;
 in vec3 varyingNormal;
 
 layout(location = 0)out vec3 def_diffuse;
 layout(location = 1)out vec3 def_normal;
 layout(location = 2)out vec3 def_originPos;
 
-uniform int mode;
 uniform sampler2D tex0;
 uniform sampler2DArray tex_3D;
-
-uniform mat4 mvMatrix;
-uniform mat3 normalMatrix;
-//uniform mat4 mvpMatrix;
 
 uniform int useShadow;
 uniform mat4 light_mvpMatrix;
@@ -45,15 +39,7 @@ void main(){
 	def_normal = varyingNormal;
 	def_originPos = origVertex;
 
-	////// DEBUG //////
-	/*
-	vec4 shadow_coord2 = light_mvpMatrix * vec4(origVertex, 1.0);
-	def_diffuse = vec3(shadow_coord2.x * 0.5 + 0.5, shadow_coord2.y * 0.5 + 0.5, 1);
-	return;
-	*/
-	////// DEBUG //////
-
-	if (textureEnabled == 1) { // for texture mode
+	if (textureEnabled == 1) {
 		def_diffuse = def_diffuse * texture(tex0, outUV.rg).xyz;
 	}
 

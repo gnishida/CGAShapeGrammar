@@ -42,6 +42,8 @@ void main(){
 			}
 			ssaoVal = ssaoVal / float(uBlurSize * uBlurSize);
 		}
+
+		/*
 		////////////////////////////////
 		// LIGHTING
 		vec3 normal = texture(tex1, coord).rgb;
@@ -50,12 +52,12 @@ void main(){
 		if (length(normal) > 0.1) {
 			lighting = max(0.0, dot(lightDir, normalize(normal)));
 		}
-		
+		*/
 		
 		
 		
 		outputF.rgb = outputF.rgb*ssaoVal;
-		outputF.rgb = vec3(0.2) + vec3(0.8)*lighting*outputF.rgb;
+		//outputF.rgb = vec3(0.2) + vec3(0.8)*lighting*outputF.rgb;
 		outputF.a = 1.0;
 	
 }//

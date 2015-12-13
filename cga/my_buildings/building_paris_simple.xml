@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<grammar version="1.0" author="Gen Nishida">
+	<attr name="z_floor_border_size" value="0" range="0,0.08"/>
+	<attr name="z_window_border_size" value="0" range="0,0.08"/>
+
+	<!-- building mass -->
+	<rule name="Start">
+		<cornerCut type="straight" length="4"/>
+		<extrude height="21"/>
+		<comp>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base."/>
+		</comp>
+	</rule>
+	
+	<!-- roof -->
+	<rule name="Roof">
+		<offset offsetDistance="0.2" inside="TopFaceOffset"/>
+	</rule>
+	<rule name="TopFaceOffset">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="side" value="RoofLedge"/>
+			<param name="top" value="TopFaceOffsetTop"/>
+			<param name="bottom" value="RoofLedge"/>
+		</comp>
+	</rule>
+	<rule name="TopFaceOffsetTop">
+		<offset offsetDistance="0.2" inside="TopFaceOffsetTopOffset"/>
+	</rule>
+	<rule name="TopFaceOffsetTopOffset">
+		<extrude height="0.2"/>
+		<comp>
+			<param name="side" value="RoofLedge"/>
+			<param name="top" value="TopFaceOffsetTopOffsetTop"/>
+			<param name="bottom" value="RoofLedge"/>
+		</comp>
+	</rule>
+	<rule name="TopFaceOffsetTopOffsetTop">
+		<taper height="3" top_ratio="0.8"/>
+		<comp>
+			<param name="side" value="RoofSide"/>
+			<param name="top" value="RoofTop"/>
+		</comp>
+	</rule>
+	
+</grammar>

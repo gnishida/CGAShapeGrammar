@@ -229,7 +229,7 @@ void GLWidget3D::paintGL() {
 	//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
 	glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
 	
-	drawScene(0);
+	drawScene();
 	*/
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,6 +242,7 @@ void GLWidget3D::paintGL() {
 	}
 
 	glUniform3f(glGetUniformLocation(renderManager.programs["pass1"], "lightDir"), light_dir.x, light_dir.y, light_dir.z);
+	glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "light_mvpMatrix"), 1, false, &light_mvpMatrix[0][0]);
 	glUniform1i(glGetUniformLocation(renderManager.programs["pass1"], "shadowMap"), 6);
 	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, renderManager.shadow.textureDepth);
@@ -265,7 +266,7 @@ void GLWidget3D::paintGL() {
 	}
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	drawScene(0);
+	drawScene();
 
 
 
@@ -357,6 +358,8 @@ void GLWidget3D::paintGL() {
 		glUniform2f(glGetUniformLocation(renderManager.programs["line"], "pixelSize"), 1.0f / this->width(), 1.0f / this->height());
 		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.programs["line"], "pixelSize"));
 
+		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "pMatrix"), 1, false, &camera.pMatrix[0][0]);
+
 		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("tex0")), 1);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[0]);
@@ -375,11 +378,6 @@ void GLWidget3D::paintGL() {
 		glActiveTexture(GL_TEXTURE8);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDepthTex);
-
-		{
-			glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
-			glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "pMatrix"), 1, false, &camera.pMatrix[0][0]);//pMatrixArray);
-		}
 
 		glBindVertexArray(renderManager.secondPassVAO);
 
@@ -451,15 +449,7 @@ void GLWidget3D::paintGL() {
 /**
  * Draw the scene.
  */
-void GLWidget3D::drawScene(int drawMode) {
-	/*
-	if (drawMode == 0) {
-		glUniform1i(glGetUniformLocation(renderManager.program, "depthComputation"), 0);
-	} else {
-		glUniform1i(glGetUniformLocation(renderManager.program, "depthComputation"), 1);
-	}
-	*/
-
+void GLWidget3D::drawScene() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glDepthMask(true);
