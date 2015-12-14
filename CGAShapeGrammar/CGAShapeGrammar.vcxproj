@@ -333,13 +333,13 @@
     <None Include="..\shaders\geometry.glsl" />
     <None Include="..\shaders\lc_frag_line.glsl" />
     <None Include="..\shaders\lc_frag_pass1.glsl" />
-    <None Include="..\shaders\lc_frag_pass2.glsl" />
-    <None Include="..\shaders\lc_frag_pass3.glsl" />
+    <None Include="..\shaders\lc_frag_ssao.glsl" />
+    <None Include="..\shaders\lc_frag_blur.glsl" />
     <None Include="..\shaders\lc_frag_shadow.glsl" />
     <None Include="..\shaders\lc_vert_line.glsl" />
     <None Include="..\shaders\lc_vert_pass1.glsl" />
-    <None Include="..\shaders\lc_vert_pass2.glsl" />
-    <None Include="..\shaders\lc_vert_pass3.glsl" />
+    <None Include="..\shaders\lc_vert_ssao.glsl" />
+    <None Include="..\shaders\lc_vert_blur.glsl" />
     <None Include="..\shaders\lc_vert_shadow.glsl" />
     <None Include="..\shaders\vertex.glsl" />
   </ItemGroup>

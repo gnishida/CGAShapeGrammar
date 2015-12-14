@@ -13,7 +13,7 @@ uniform sampler2D tex3;//AO
 uniform sampler2D depthTex;
 
 uniform vec2 pixelSize;//in texture space
-uniform int pass2used;
+uniform int ssao_used;	// 1 -- ssao used / 0 -- no ssao used
 
 const int uBlurSize = 4; // use size of noise texture
 
@@ -38,7 +38,7 @@ void main(){
 		// SSAO
 		//float ssaoVal = texture(tex3, coord).r;
 		float ssaoVal = 1.0;
-		if (pass2used == 1) {
+		if (ssao_used == 1) {
 			vec2 texelSize = 1.0 / vec2(textureSize(tex3, 0));
 			ssaoVal = 0.0f;
 			vec2 hlim = vec2(float(-uBlurSize) * 0.5 + 0.5);

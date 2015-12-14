@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include <QImage>
 #include <QGLWidget>
+#include <sstream>
 
 GeometryObject::GeometryObject() {
 	vaoCreated = false;
@@ -80,6 +81,7 @@ RenderManager::~RenderManager() {
 
 void RenderManager::init(const std::string& vertex_file, const std::string& geometry_file, const std::string& fragment_file, bool useShadow, int shadowMapSize) {
 	this->useShadow = useShadow;
+	this->softShadow = true;
 	renderingMode = RENDERING_MODE_BASIC;
 
 	// init glew
@@ -100,12 +102,12 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	printf("PASS 2\n");
 	std::vector<QString> fragDataNamesP2;
 	fragDataNamesP2.push_back("def_AO");
-	programs["pass2"] = shader.createProgram("../shaders/lc_vert_pass2.glsl", "../shaders/lc_frag_pass2.glsl", fragDataNamesP2);
+	programs["ssao"] = shader.createProgram("../shaders/lc_vert_ssao.glsl", "../shaders/lc_frag_ssao.glsl", fragDataNamesP2);
 	// PASS 3
 	printf("PASS 3\n");
 	std::vector<QString> fragDataNamesP3;//default
 	fragDataNamesP3.push_back("outputF");
-	programs["pass3"] = shader.createProgram("../shaders/lc_vert_pass3.glsl", "../shaders/lc_frag_pass3.glsl", fragDataNamesP3);
+	programs["blur"] = shader.createProgram("../shaders/lc_vert_blur.glsl", "../shaders/lc_frag_blur.glsl", fragDataNamesP3);
 
 	// Line rendering
 	programs["line"] = shader.createProgram("../shaders/lc_vert_line.glsl", "../shaders/lc_frag_line.glsl");
@@ -144,10 +146,7 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	glBindVertexArray(0);
 	// fragm
 	fragDataFB=INT_MAX;
-
-
-
-
+	
 	///// load 3d texture for hatching
 	std::vector<QString> hatchingTextureFiles;
 	hatchingTextureFiles.push_back("hatching/hatching0.png");
@@ -161,7 +160,6 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	hatchingTextureFiles.push_back("hatching/hatching8.png");
 	hatchingTextures = load3DTexture(hatchingTextureFiles);
 	
-
 	shadow.init(programs["shadow"], shadowMapSize, shadowMapSize);
 }
 
@@ -307,8 +305,8 @@ void RenderManager::resize(int winWidth, int winHeight){
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &fragNoiseTex);
 	glBindTexture(GL_TEXTURE_2D, fragNoiseTex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);// GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);// GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		
@@ -322,7 +320,7 @@ void RenderManager::resize(int winWidth, int winHeight){
 		if (c % 3 == 0 || c % 3 == 1)
 			data[c] = (float(qrand()) / RAND_MAX)*2.0f - 1.0f;
 		else
-			data[c] = 0.0f;//0 in component z
+			data[c] = 0.0f; //0 in component z
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, sizeX, sizeZ, 0, GL_RGB, GL_FLOAT, &data[0]);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -433,26 +431,9 @@ void RenderManager::centerObjects() {
 }
 
 void RenderManager::renderAll() {
-	//if (renderingMode == RENDERING_MODE_REGULAR || renderingMode == RENDERING_MODE_WIREFRAME) {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-		glDisable(GL_TEXTURE_2D);
-
-		for (auto it = objects.begin(); it != objects.end(); ++it) {
-			render(it.key());
-		}
-		/*
-	} else if (renderingMode == RENDERING_MODE_LINE || RENDERING_MODE_SKETCHY) {
-		rb.pass1();
-		for (auto it = objects.begin(); it != objects.end(); ++it) {
-			render(it.key());
-		}
-		rb.pass2();
-		for (auto it = objects.begin(); it != objects.end(); ++it) {
-			render(it.key());
-		}
+	for (auto it = objects.begin(); it != objects.end(); ++it) {
+		render(it.key());
 	}
-	*/
 }
 
 void RenderManager::renderAllExcept(const QString& object_name) {
@@ -482,26 +463,15 @@ void RenderManager::render(const QString& object_name) {
 
 		if (useShadow) {
 			glUniform1i(glGetUniformLocation(programs["pass1"], "useShadow"), 1);
+			if (softShadow) {
+				glUniform1i(glGetUniformLocation(programs["pass1"], "softShadow"), 1);
+			}
+			else {
+				glUniform1i(glGetUniformLocation(programs["pass1"], "softShadow"), 0);
+			}
 		} else {
 			glUniform1i(glGetUniformLocation(programs["pass1"], "useShadow"), 0);
 		}
-
-		/*
-		if (renderingMode == RENDERING_MODE_REGULAR) {
-			glUniform1i(glGetUniformLocation(programs["pass1"], "renderingMode"), 1);
-		} else if (renderingMode == RENDERING_MODE_WIREFRAME) {
-			glUniform1i(glGetUniformLocation(programs["pass1"], "renderingMode"), 2);
-		} else {
-			if (renderingMode == RENDERING_MODE_LINE) {
-				glUniform1i(glGetUniformLocation(programs["pass1"], "renderingMode"), 3);
-			} else {
-				glUniform1i(glGetUniformLocation(programs["pass1"], "renderingMode"), 4);
-			}
-		}
-		*/
-
-		glUniform1i(glGetUniformLocation(programs["pass1"], "mode"), 513);
-
 
 		// 描画
 		glBindVertexArray(it->vao);
@@ -520,15 +490,19 @@ void RenderManager::updateShadowMap(GLWidget3D* glWidget3D, const glm::vec3& lig
 GLuint RenderManager::loadTexture(const QString& filename) {
 	QImage img;
 	if (!img.load(filename)) {
-		printf("ERROR: loading %s\n",filename.toUtf8().data());
-		return INT_MAX;
+		std::stringstream ss;
+		ss << "load texture failed : " << filename.toUtf8().constData();
+		std::cout << ss.str() << std::endl;
+		throw ss.str();
 	}
 
 	QImage GL_formatted_image;
 	GL_formatted_image = QGLWidget::convertToGLFormat(img);
 	if (GL_formatted_image.isNull()) {
-		printf("ERROR: GL_formatted_image\n");
-		return INT_MAX;
+		std::stringstream ss;
+		ss << "Failed to convert to gl format : " << filename.toUtf8().constData();
+		std::cout << ss.str() << std::endl;
+		throw ss.str();
 	}
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -547,8 +521,6 @@ GLuint RenderManager::loadTexture(const QString& filename) {
 }
 
 GLuint RenderManager::load3DTexture(const std::vector<QString> & pathes) {
-	GLuint texture;
-
 	GLsizei width, height, depth = (GLsizei)pathes.size();
 
 	std::vector<QImage> formatedImages(pathes.size());
@@ -557,57 +529,60 @@ GLuint RenderManager::load3DTexture(const std::vector<QString> & pathes) {
 	{
 		for (uint i = 0; i < pathes.size(); ++i) {
 			QImage imageToConvert;
-			if (!imageToConvert.load(pathes[i]))
-			{
-				std::cout << "exture3D::load() failed : " << pathes[i].toUtf8().constData() << std::endl;
-				return texture;
+			if (!imageToConvert.load(pathes[i])) {
+				std::stringstream ss;
+				ss << "Failed to load 3D texture : " << pathes[i].toUtf8().constData();
+				std::cout << ss.str() << std::endl;
+				throw ss.str();
 			}
 
 			QImage GL_formatted_image = QGLWidget::convertToGLFormat(imageToConvert);
-			if (GL_formatted_image.isNull())
-			{
-				std::cout << "Texture3D::load() failed to convert to gl format : " << pathes[i].toUtf8().constData() << std::endl;
-				return texture;
+			if (GL_formatted_image.isNull()) {
+				std::stringstream ss;
+				ss << "Failed to convert to gl format : " << pathes[i].toUtf8().constData();
+				std::cout << ss.str() << std::endl;
+				throw ss.str();
 			}
 
 			formatedImages[i] = GL_formatted_image;
 
-			if (i == 0)
-			{
+			if (i == 0) {
 				width = formatedImages[i].width();
 				height = formatedImages[i].height();
 			}
-			else
-			{
-				if (width != formatedImages[i].width() || height != formatedImages[i].height())
-				{
-					std::cout << "Texture3D::load() failed : different dimensions of images. " << pathes[0].toUtf8().constData() << " " << pathes[i].toUtf8().constData() << std::endl;
-					return texture;
+			else {
+				if (width != formatedImages[i].width() || height != formatedImages[i].height())	{
+					std::stringstream ss;
+					ss << "Texture3D::load() failed : different dimensions of images. " << pathes[0].toUtf8().constData() << " " << pathes[i].toUtf8().constData();
+					std::cout << ss.str() << std::endl;
+					throw ss.str();
 				}
 			}
 		}
 	}
 
+	GLuint texture;
+
 	// create empty 3D texture
-   {
+	{
 	   glGenTextures(1, &texture);
 	   glBindTexture(GL_TEXTURE_3D, texture);
 	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);// GL_CLAMP_TO_EDGE);
+	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
 	   // allocate memory for 3D texture
 	   glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, width, height, depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-   }
+	}
 
 	// copy image data to each layer of 3D texture
-   {
-	   for (uint i = 0; i < pathes.size(); ++i) {
-		   glTexSubImage3D(GL_TEXTURE_3D, 0, 0, 0, (GLint)i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, formatedImages[i].bits());
-	   }
-   }
+	{
+		for (uint i = 0; i < pathes.size(); ++i) {
+			glTexSubImage3D(GL_TEXTURE_3D, 0, 0, 0, (GLint)i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, formatedImages[i].bits());
+		}
+	}
 
 	glGenerateMipmap(GL_TEXTURE_3D);
 	glBindTexture(GL_TEXTURE_3D, 0);
