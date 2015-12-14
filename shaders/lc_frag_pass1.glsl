@@ -16,6 +16,7 @@ uniform sampler2DArray tex_3D;
 
 uniform int useShadow;
 uniform int softShadow;
+uniform int lighting;
 uniform mat4 light_mvpMatrix;
 uniform vec3 lightDir;
 uniform sampler2D shadowMap;
@@ -90,16 +91,24 @@ void main(){
 		def_diffuse = def_diffuse * texture(tex0, outUV.rg).xyz;
 	}
 
-	// lighting
-	vec3 ambient = vec3(0.6, 0.6, 0.6);
-	vec3 diffuse = vec3(0.5, 0.5, 0.5) * max(0.0, dot(-lightDir, varyingNormal));
-
 	float visibility = 1.0;
 	if (useShadow == 1) {
 		visibility = shadowCoef(softShadow);
 	}
 
-	def_intensity = vec3(0.5, 0.5, 0.5) + (visibility * 0.95 + 0.05) * diffuse;
-	def_diffuse = (ambient + (visibility * 0.95 + 0.05) * diffuse) * def_diffuse;
+	float ambient = 0.6;
+	float diffuse = 0.5;
+	float intensity;
+
+	// lighting
+	if (lighting == 1) {
+		intensity = ambient + (visibility * 0.95 + 0.05) * diffuse * max(0.0, dot(-lightDir, varyingNormal));
+	}
+	else {
+		intensity = ambient + (visibility * 0.95 + 0.05) * diffuse;
+	}
+
+	def_intensity = vec3(intensity, intensity, intensity);
+	def_diffuse = def_diffuse * intensity;
 }
 

@@ -15,12 +15,13 @@ public:
 	GLuint vao;
 	GLuint vbo;
 	std::vector<Vertex> vertices;
+	bool lighting;
 	bool vaoCreated;
 	bool vaoOutdated;
 
 public:
 	GeometryObject();
-	GeometryObject(const std::vector<Vertex>& vertices);
+	GeometryObject(const std::vector<Vertex>& vertices, bool lighting = true);
 	void addVertices(const std::vector<Vertex>& vertices);
 	void createVAO();
 };
@@ -75,7 +76,7 @@ public:
 	void resizeSsaoKernel();
 
 	void addFaces(const std::vector<boost::shared_ptr<glutils::Face> >& faces);
-	void addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices);
+	void addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices, bool lighting);
 	void removeObjects();
 	void removeObject(const QString& object_name);
 	void centerObjects();

@@ -163,7 +163,7 @@ public:
         actionOpenCGA->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0));
         actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0));
         actionViewShadow->setText(QApplication::translate("MainWindowClass", "Shadow", 0));
-        actionViewBasicRendering->setText(QApplication::translate("MainWindowClass", "Regular Rendering", 0));
+        actionViewBasicRendering->setText(QApplication::translate("MainWindowClass", "Basic Rendering", 0));
         actionViewSSAO->setText(QApplication::translate("MainWindowClass", "SSAO", 0));
         actionViewLineRendering->setText(QApplication::translate("MainWindowClass", "Line Rendering", 0));
         actionViewSketchyRendering->setText(QApplication::translate("MainWindowClass", "Sketchy Rendering", 0));

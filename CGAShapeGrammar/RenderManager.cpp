@@ -10,8 +10,9 @@ GeometryObject::GeometryObject() {
 	vaoOutdated = true;
 }
 
-GeometryObject::GeometryObject(const std::vector<Vertex>& vertices) {
+GeometryObject::GeometryObject(const std::vector<Vertex>& vertices, bool lighting) {
 	this->vertices = vertices;
+	this->lighting = lighting;
 	vaoCreated = false;
 	vaoOutdated = true;
 }
@@ -351,11 +352,11 @@ void RenderManager::resizeSsaoKernel() {
 
 void RenderManager::addFaces(const std::vector<boost::shared_ptr<glutils::Face> >& faces) {
 	for (int i = 0; i < faces.size(); ++i) {
-		addObject(faces[i]->name.c_str(), faces[i]->texture.c_str(), faces[i]->vertices);
+		addObject(faces[i]->name.c_str(), faces[i]->texture.c_str(), faces[i]->vertices, true);
 	}
 }
 
-void RenderManager::addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices) {
+void RenderManager::addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices, bool lighting) {
 	GLuint texId;
 	
 	if (texture_file.length() > 0) {
@@ -374,10 +375,10 @@ void RenderManager::addObject(const QString& object_name, const QString& texture
 		if (objects[object_name].contains(texId)) {
 			objects[object_name][texId].addVertices(vertices);
 		} else {
-			objects[object_name][texId] = GeometryObject(vertices);
+			objects[object_name][texId] = GeometryObject(vertices, lighting);
 		}
 	} else {
-		objects[object_name][texId] = GeometryObject(vertices);
+		objects[object_name][texId] = GeometryObject(vertices, lighting);
 	}
 }
 
@@ -459,6 +460,13 @@ void RenderManager::render(const QString& object_name) {
 			glUniform1i(glGetUniformLocation(programs["pass1"], "tex0"), 0);
 		} else {
 			glUniform1i(glGetUniformLocation(programs["pass1"], "textureEnabled"), 0);
+		}
+
+		if (it->lighting) {
+			glUniform1i(glGetUniformLocation(programs["pass1"], "lighting"), 1);
+		}
+		else {
+			glUniform1i(glGetUniformLocation(programs["pass1"], "lighting"), 0);
 		}
 
 		if (useShadow) {
