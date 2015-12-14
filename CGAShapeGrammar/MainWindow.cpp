@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	renderingModeGroup->addAction(ui.actionViewBasicRendering);
 	renderingModeGroup->addAction(ui.actionViewSSAO);
 	renderingModeGroup->addAction(ui.actionViewLineRendering);
+	renderingModeGroup->addAction(ui.actionViewHatching);
 	renderingModeGroup->addAction(ui.actionViewSketchyRendering);
 
 	ui.actionViewShadow->setChecked(true);
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionViewBasicRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSSAO, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewHatching, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 
@@ -59,11 +61,17 @@ void MainWindow::onViewShadow() {
 void MainWindow::onViewRendering() {
 	if (ui.actionViewBasicRendering->isChecked()) {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_BASIC;
-	} else if (ui.actionViewSSAO->isChecked()) {
+	}
+	else if (ui.actionViewSSAO->isChecked()) {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_SSAO;
-	} else if (ui.actionViewLineRendering->isChecked()) {
+	}
+	else if (ui.actionViewLineRendering->isChecked()) {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
-	} else {
+	}
+	else if (ui.actionViewHatching->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_HATCHING;
+	}
+	else {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_SKETCHY;
 	}
 	glWidget->updateGL();

@@ -94,6 +94,7 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	fragDataNamesP1.push_back("def_diffuse");
 	fragDataNamesP1.push_back("def_normal");
 	fragDataNamesP1.push_back("def_originPos");
+	fragDataNamesP1.push_back("def_intensity");
 	programs["pass1"] = shader.createProgram("../shaders/lc_vert_pass1.glsl", "../shaders/lc_frag_pass1.glsl", fragDataNamesP1);
 	// PASS 2
 	printf("PASS 2\n");
@@ -154,6 +155,10 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	hatchingTextureFiles.push_back("hatching/hatching2.png");
 	hatchingTextureFiles.push_back("hatching/hatching3.png");
 	hatchingTextureFiles.push_back("hatching/hatching4.png");
+	hatchingTextureFiles.push_back("hatching/hatching5.png");
+	hatchingTextureFiles.push_back("hatching/hatching6.png");
+	hatchingTextureFiles.push_back("hatching/hatching7.png");
+	hatchingTextureFiles.push_back("hatching/hatching8.png");
 	hatchingTextures = load3DTexture(hatchingTextureFiles);
 	
 
@@ -219,6 +224,19 @@ void RenderManager::resize(int winWidth, int winHeight){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, winWidth, winHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
+
+	// TEX5: Light intensity
+	glActiveTexture(GL_TEXTURE5);
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1, &fragDataTex[3]);
+	glBindTexture(GL_TEXTURE_2D, fragDataTex[3]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);// GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);// GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, winWidth, winHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+
 	/////////////////////////////////////////
 
 	// DEPTH
@@ -252,6 +270,7 @@ void RenderManager::resize(int winWidth, int winHeight){
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fragDataTex[0], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, fragDataTex[1], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, fragDataTex[2], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, fragDataTex[3], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, fragDepthTex, 0);
 	// Set the list of draw buffers.
 	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
@@ -324,7 +343,7 @@ void RenderManager::resizeSsaoKernel() {
 		glm::vec3 kernel = glm::normalize(glm::vec3((float(qrand()) / RAND_MAX)*2.0f - 1.0f, (float(qrand()) / RAND_MAX)*2.0f - 1.0f, (float(qrand()) / RAND_MAX)));
 		float scale = float(i) / uKernelSize;
 		kernel *= lerp<float>(0.1f, 1.0f, scale*scale);
-		printf("[%d] %f %f %f\n",i,kernel.x,kernel.y,kernel.z);
+		//printf("[%d] %f %f %f\n",i,kernel.x,kernel.y,kernel.z);
 		uKernelOffsets[i * 3 + 0] = kernel.x;
 		uKernelOffsets[i * 3 + 1] = kernel.y;
 		uKernelOffsets[i * 3 + 2] = kernel.z;

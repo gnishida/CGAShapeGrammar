@@ -79,8 +79,6 @@ void ShadowMapping::update(GLWidget3D* glWidget3D, const glm::vec3& light_dir, c
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(1.1f, 4.0f);
 
-	std::cout << glm::to_string(light_mvpMatrix) << std::endl;
-
 	// シャドウマップ用のmodel/view/projection行列を設定
 	glUniformMatrix4fv(glGetUniformLocation(programId, "light_mvpMatrix"), 1, GL_FALSE, &light_mvpMatrix[0][0]);
 

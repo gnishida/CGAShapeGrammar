@@ -9,6 +9,7 @@ in vec3 varyingNormal;
 layout(location = 0)out vec3 def_diffuse;
 layout(location = 1)out vec3 def_normal;
 layout(location = 2)out vec3 def_originPos;
+layout(location = 3)out vec3 def_intensity;
 
 uniform sampler2D tex0;
 uniform sampler2DArray tex_3D;
@@ -52,6 +53,7 @@ void main(){
 		visibility = shadowCoef();
 	}
 
+	def_intensity = vec3(0.5, 0.5, 0.5) + (visibility * 0.95 + 0.05) * diffuse;
 	def_diffuse = (ambient + (visibility * 0.95 + 0.05) * diffuse) * def_diffuse;
 }
 

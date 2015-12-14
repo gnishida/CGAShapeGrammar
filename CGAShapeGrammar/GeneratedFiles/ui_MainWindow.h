@@ -44,6 +44,7 @@ public:
     QAction *actionGenerateWindowImages2;
     QAction *actionGenerateLedgeImages2;
     QAction *actionGenerateBuildingImages2;
+    QAction *actionViewHatching;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -98,6 +99,9 @@ public:
         actionGenerateLedgeImages2->setObjectName(QStringLiteral("actionGenerateLedgeImages2"));
         actionGenerateBuildingImages2 = new QAction(MainWindowClass);
         actionGenerateBuildingImages2->setObjectName(QStringLiteral("actionGenerateBuildingImages2"));
+        actionViewHatching = new QAction(MainWindowClass);
+        actionViewHatching->setObjectName(QStringLiteral("actionViewHatching"));
+        actionViewHatching->setCheckable(true);
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -129,6 +133,7 @@ public:
         menuView->addAction(actionViewBasicRendering);
         menuView->addAction(actionViewSSAO);
         menuView->addAction(actionViewLineRendering);
+        menuView->addAction(actionViewHatching);
         menuView->addAction(actionViewSketchyRendering);
         menuView->addSeparator();
         menuView->addAction(actionViewRefresh);
@@ -174,6 +179,7 @@ public:
         actionGenerateWindowImages2->setText(QApplication::translate("MainWindowClass", "Generate Window Images (128x128 grayscale)", 0));
         actionGenerateLedgeImages2->setText(QApplication::translate("MainWindowClass", "Generate Ledge Images (128x128 grayscale)", 0));
         actionGenerateBuildingImages2->setText(QApplication::translate("MainWindowClass", "Generate Building Images (128x128 grayscale)", 0));
+        actionViewHatching->setText(QApplication::translate("MainWindowClass", "Hatching", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
         menuTool->setTitle(QApplication::translate("MainWindowClass", "Tool", 0));

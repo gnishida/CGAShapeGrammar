@@ -199,29 +199,12 @@ void GLWidget3D::resizeGL(int width, int height) {
  * This function is called whenever the widget needs to be painted.
  */
 void GLWidget3D::paintGL() {
-	/*
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_TEXTURE_2D);
-
-	// Model view projection行列をシェーダに渡す
-	glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvpMatrix"),  1, GL_FALSE, &camera.mvpMatrix[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "mvMatrix"),  1, GL_FALSE, &camera.mvMatrix[0][0]);
-
-	// pass the light direction to the shader
-	//glUniform1fv(glGetUniformLocation(renderManager.program, "lightDir"), 3, &light_dir[0]);
-	glUniform3f(glGetUniformLocation(renderManager.program, "lightDir"), light_dir.x, light_dir.y, light_dir.z);
-	
-	drawScene();
-	*/
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// PASS 1: Render to texture
 	glUseProgram(renderManager.programs["pass1"]);
 	{
-		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);//mvpMatrixArray);
-		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvMatrix"), 1, false, &camera.mvMatrix[0][0]);//mvMatrixArray);
-		//glUniformMatrix3fv(glGetUniformLocation(vboRenderManager.programs["pass1"], "normalMatrix"), 1, false, normMatrixArray);
+		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvpMatrix"), 1, false, &camera.mvpMatrix[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["pass1"], "mvMatrix"), 1, false, &camera.mvMatrix[0][0]);
 	}
 
 	glUniform3f(glGetUniformLocation(renderManager.programs["pass1"], "lightDir"), light_dir.x, light_dir.y, light_dir.z);
@@ -231,17 +214,16 @@ void GLWidget3D::paintGL() {
 	glBindTexture(GL_TEXTURE_2D, renderManager.shadow.textureDepth);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, renderManager.fragDataFB);
-	//qglClearColor(QColor(0x00, 0xFF, 0xFF));
 	glClearColor(0.95, 0.95, 0.95, 1);
-	//glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderManager.fragDataTex[0], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, renderManager.fragDataTex[1], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, renderManager.fragDataTex[2], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, renderManager.fragDataTex[3], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, renderManager.fragDepthTex, 0);
 	// Set the list of draw buffers.
-	GLenum DrawBuffers[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, DrawBuffers); // "3" is the size of DrawBuffers
+	GLenum DrawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+	glDrawBuffers(4, DrawBuffers); // "3" is the size of DrawBuffers
 	// Always check that our framebuffer is ok
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 		printf("+ERROR: GL_FRAMEBUFFER_COMPLETE false\n");
@@ -329,7 +311,7 @@ void GLWidget3D::paintGL() {
 		glBindVertexArray(0);
 		glDepthFunc(GL_LEQUAL);
 	}
-	else if (renderManager.renderingMode == RenderManager::RENDERING_MODE_LINE) {
+	else if (renderManager.renderingMode == RenderManager::RENDERING_MODE_LINE || renderManager.renderingMode == RenderManager::RENDERING_MODE_HATCHING) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//qglClearColor(QColor(0xFF, 0xFF, 0xFF));
 		glClearColor(1, 1, 1, 1);
@@ -343,6 +325,9 @@ void GLWidget3D::paintGL() {
 		//printf("pixelSize loc %d\n", glGetUniformLocation(vboRenderManager.programs["line"], "pixelSize"));
 
 		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "pMatrix"), 1, false, &camera.pMatrix[0][0]);
+		if (renderManager.renderingMode == RenderManager::RENDERING_MODE_HATCHING) {
+			glUniform1i(glGetUniformLocation(renderManager.programs["line"], "useHatching"), 1);
+		}
 
 		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("tex0")), 1);
 		glActiveTexture(GL_TEXTURE1);
@@ -358,21 +343,24 @@ void GLWidget3D::paintGL() {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[2]);
 
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("tex3")), 4);
+		glActiveTexture(GL_TEXTURE4);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[3]);
+
 		glUniform1i(glGetUniformLocation(renderManager.programs["line"], ("depthTex")), 8);
 		glActiveTexture(GL_TEXTURE8);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDepthTex);
 
-		glUniform1i(glGetUniformLocation(renderManager.programs["line"], "hatchingTexture"), 4);
-		glActiveTexture(GL_TEXTURE4);
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], "hatchingTexture"), 5);
+		glActiveTexture(GL_TEXTURE5);
 		glBindTexture(GL_TEXTURE_3D, renderManager.hatchingTextures);
-		/*
 		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-		*/
 
 
 		glBindVertexArray(renderManager.secondPassVAO);
@@ -384,9 +372,9 @@ void GLWidget3D::paintGL() {
 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// PASS 3: Final
+	// Blur
 
-	if (renderManager.renderingMode != RenderManager::RENDERING_MODE_LINE) {
+	if (renderManager.renderingMode != RenderManager::RENDERING_MODE_LINE && renderManager.renderingMode != RenderManager::RENDERING_MODE_HATCHING) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		qglClearColor(QColor(0xFF, 0xFF, 0xFF));
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

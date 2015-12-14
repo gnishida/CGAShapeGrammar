@@ -8,12 +8,15 @@ layout(location = 0)out vec4 outputF;
 uniform sampler2D tex0;//color
 uniform sampler2D tex1;//normals
 uniform sampler2D tex2;//orig pos
+uniform sampler2D tex3;//light intensity
 
 uniform sampler2D depthTex;
 uniform sampler3D hatchingTexture;
 
 uniform vec2 pixelSize;//in texture space
 uniform mat4 pMatrix;
+
+uniform int useHatching;	// 1 -- use hatching / 0 -- use white color
 
 float linearizeDepth(float depth, mat4 pMatrix) {
 	return pMatrix[3][2] / (depth + pMatrix[2][2]);
@@ -77,27 +80,25 @@ void main(){
 		outputF = vec4(0, 0, 0, 1);	// line
 	}
 	else {
-		vec3 color = texture(tex0, coord).rgb;
+		if (useHatching == 1) {
+			float lightIntensity = texture(tex3, coord).r;
 
-		float lightIntensity = (color.r + color.g + color.b) / 3.0;
+			////////////////////// DEBUG ///////////////////////
+			/*
+			outputF = vec4(lightIntensity, lightIntensity, lightIntensity, 1);
+			return;
+			*/
+			////////////////////// DEBUG ///////////////////////
 
-		float texCoordZ = lightIntensity;
+			ivec3 sizeOfTex = textureSize(hatchingTexture, 0);
 
-		////////////////////// DEBUG ///////////////////////
-		/*
-		outputF = vec4(texture(hatchingTexture2, coord).rgb, 1);
-		return;
-		*/
-		////////////////////// DEBUG ///////////////////////
-
-
-
-		ivec3 sizeOfTex = textureSize(hatchingTexture, 0);
-			
-		// sample 3D texture to get hatching intensity
-		outputF.rgb = texture(hatchingTexture, vec3(coord.x / pixelSize.x / sizeOfTex.x, coord.y / pixelSize.y / sizeOfTex.y, texCoordZ)).rgb;
-		//outputF.rgb = texture(hatchingTexture, vec3(coord.x * 100, coord.y *100, texCoordZ)).rgb;
-		outputF.a = 1;
+			// sample 3D texture to get hatching intensity
+			outputF.rgb = texture(hatchingTexture, vec3(coord.x / pixelSize.x / sizeOfTex.x, coord.y / pixelSize.y / sizeOfTex.y, lightIntensity)).rgb;
+			outputF.a = 1;
+		}
+		else {
+			outputF = vec4(1, 1, 1, 1);
+		}
 	}
 }
 
