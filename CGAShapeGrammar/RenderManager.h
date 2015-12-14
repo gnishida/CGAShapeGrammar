@@ -37,6 +37,7 @@ public:
 	QMap<QString, GLuint> textures;
 
 	bool useShadow;
+	bool softShadow;
 	ShadowMapping shadow;
 	GLuint hatchingTextures;
 

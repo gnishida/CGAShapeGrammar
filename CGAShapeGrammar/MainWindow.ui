@@ -102,7 +102,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Regular Rendering</string>
+    <string>Basic Rendering</string>
    </property>
   </action>
   <action name="actionViewSSAO">
