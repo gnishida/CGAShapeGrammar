@@ -10,8 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	renderingModeGroup->addAction(ui.actionViewLineRendering);
 	renderingModeGroup->addAction(ui.actionViewSketchyRendering);
 
-	//ui.actionViewSSAO->setChecked(true);
-	//ui.actionViewShadow->setChecked(true);
+	ui.actionViewShadow->setChecked(true);
 	ui.actionViewBasicRendering->setChecked(true);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));

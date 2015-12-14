@@ -145,10 +145,17 @@ void RenderManager::init(const std::string& vertex_file, const std::string& geom
 	fragDataFB=INT_MAX;
 
 
-	// ダミーのtexture idを作成する。
-	// これにより、実際に使われるtexture idは1以上の値となる
-	GLuint texId;
-	glGenTextures(1, &texId);
+
+
+	///// load 3d texture for hatching
+	std::vector<QString> hatchingTextureFiles;
+	hatchingTextureFiles.push_back("hatching/hatching0.png");
+	hatchingTextureFiles.push_back("hatching/hatching1.png");
+	hatchingTextureFiles.push_back("hatching/hatching2.png");
+	hatchingTextureFiles.push_back("hatching/hatching3.png");
+	hatchingTextureFiles.push_back("hatching/hatching4.png");
+	hatchingTextures = load3DTexture(hatchingTextureFiles);
+	
 
 	shadow.init(programs["shadow"], shadowMapSize, shadowMapSize);
 }
@@ -520,3 +527,71 @@ GLuint RenderManager::loadTexture(const QString& filename) {
 	return texture;
 }
 
+GLuint RenderManager::load3DTexture(const std::vector<QString> & pathes) {
+	GLuint texture;
+
+	GLsizei width, height, depth = (GLsizei)pathes.size();
+
+	std::vector<QImage> formatedImages(pathes.size());
+
+	// load and format each image
+	{
+		for (uint i = 0; i < pathes.size(); ++i) {
+			QImage imageToConvert;
+			if (!imageToConvert.load(pathes[i]))
+			{
+				std::cout << "exture3D::load() failed : " << pathes[i].toUtf8().constData() << std::endl;
+				return texture;
+			}
+
+			QImage GL_formatted_image = QGLWidget::convertToGLFormat(imageToConvert);
+			if (GL_formatted_image.isNull())
+			{
+				std::cout << "Texture3D::load() failed to convert to gl format : " << pathes[i].toUtf8().constData() << std::endl;
+				return texture;
+			}
+
+			formatedImages[i] = GL_formatted_image;
+
+			if (i == 0)
+			{
+				width = formatedImages[i].width();
+				height = formatedImages[i].height();
+			}
+			else
+			{
+				if (width != formatedImages[i].width() || height != formatedImages[i].height())
+				{
+					std::cout << "Texture3D::load() failed : different dimensions of images. " << pathes[0].toUtf8().constData() << " " << pathes[i].toUtf8().constData() << std::endl;
+					return texture;
+				}
+			}
+		}
+	}
+
+	// create empty 3D texture
+   {
+	   glGenTextures(1, &texture);
+	   glBindTexture(GL_TEXTURE_3D, texture);
+	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);// GL_CLAMP_TO_EDGE);
+
+	   // allocate memory for 3D texture
+	   glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, width, height, depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+   }
+
+	// copy image data to each layer of 3D texture
+   {
+	   for (uint i = 0; i < pathes.size(); ++i) {
+		   glTexSubImage3D(GL_TEXTURE_3D, 0, 0, 0, (GLint)i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, formatedImages[i].bits());
+	   }
+   }
+
+	glGenerateMipmap(GL_TEXTURE_3D);
+	glBindTexture(GL_TEXTURE_3D, 0);
+
+	return texture;
+}

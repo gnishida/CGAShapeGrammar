@@ -139,32 +139,20 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
  * This function is called once before the first call to paintGL() or resizeGL().
  */
 void GLWidget3D::initializeGL() {
-	/*
-	renderManager.init("../shaders/vertex.glsl", "../shaders/geometry.glsl", "../shaders/fragment.glsl", true, 4096);
-
-	// set the clear color for the screen
-	glClearColor(0.95, 0.95, 0.95, 1.0);
-	*/
-
-
-	////////////////////////////////////////
-	//---- GLEW extensions ----
+	// init glew
 	GLenum err = glewInit();
-	if (GLEW_OK != err) {// Problem: glewInit failed, something is seriously wrong.
-		std::cout << "Error: " << glewGetErrorString(err);
+	if (err != GLEW_OK) {
+		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
 	}
-	std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION);
-	//while ((err = glGetError()) != GL_NO_ERROR) qDebug() << "**4ERROR INIT: OpenGL-->" << err << endl;
+
 	if (glewIsSupported("GL_VERSION_4_2"))
 		printf("Ready for OpenGL 4.2\n");
 	else {
 		printf("OpenGL 4.2 not supported\n");
-		//exit(1);
+		exit(1);
 	}
-	const GLubyte* text =
-		glGetString(GL_VERSION);
+	const GLubyte* text = glGetString(GL_VERSION);
 	printf("VERSION: %s\n", text);
-	//while ((err = glGetError()) != GL_NO_ERROR) qDebug() << "**3ERROR INIT: OpenGL-->" << err << endl;
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -187,16 +175,11 @@ void GLWidget3D::initializeGL() {
 	glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glDisable(GL_TEXTURE_2D_ARRAY);
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-
 	////////////////////////////////
 	renderManager.init("", "", "", true, 4096);
 	renderManager.resize(this->width(), this->height());
 
 	glUniform1i(glGetUniformLocation(renderManager.programs["pass2"], "tex0"), 0);//tex0: 0
-
-
 
 	system.modelMat = glm::rotate(glm::mat4(), -3.1415926f * 0.5f, glm::vec3(1, 0, 0));
 }
@@ -247,10 +230,10 @@ void GLWidget3D::paintGL() {
 	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, renderManager.shadow.textureDepth);
 
-
 	glBindFramebuffer(GL_FRAMEBUFFER, renderManager.fragDataFB);
 	//qglClearColor(QColor(0x00, 0xFF, 0xFF));
 	glClearColor(0.95, 0.95, 0.95, 1);
+	//glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderManager.fragDataTex[0], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, renderManager.fragDataTex[1], 0);
@@ -264,6 +247,7 @@ void GLWidget3D::paintGL() {
 		printf("+ERROR: GL_FRAMEBUFFER_COMPLETE false\n");
 		exit(0);
 	}
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	drawScene();
@@ -379,6 +363,18 @@ void GLWidget3D::paintGL() {
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDepthTex);
 
+		glUniform1i(glGetUniformLocation(renderManager.programs["line"], "hatchingTexture"), 4);
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_3D, renderManager.hatchingTextures);
+		/*
+		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		*/
+
+
 		glBindVertexArray(renderManager.secondPassVAO);
 
 		glDrawArrays(GL_QUADS, 0, 4);
@@ -415,6 +411,11 @@ void GLWidget3D::paintGL() {
 		glActiveTexture(GL_TEXTURE3);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, renderManager.fragDataTex[2]);*/
+
+		glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("depthTex")), 8);
+		glActiveTexture(GL_TEXTURE8);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, renderManager.fragDepthTex);
 
 		glUniform1i(glGetUniformLocation(renderManager.programs["pass3"], ("tex3")), 4);//AO
 		glActiveTexture(GL_TEXTURE4);

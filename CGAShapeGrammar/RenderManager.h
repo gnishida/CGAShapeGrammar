@@ -38,6 +38,7 @@ public:
 
 	bool useShadow;
 	ShadowMapping shadow;
+	GLuint hatchingTextures;
 
 	int renderingMode;
 
@@ -85,5 +86,6 @@ public:
 
 private:
 	GLuint loadTexture(const QString& filename);
+	GLuint load3DTexture(const std::vector<QString> & pathes);
 };
 

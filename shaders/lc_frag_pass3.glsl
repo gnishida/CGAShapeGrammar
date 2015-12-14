@@ -10,13 +10,21 @@ uniform sampler2D tex1;//normals
 uniform sampler2D tex2;//orig pos
 uniform sampler2D tex3;//AO
 
+uniform sampler2D depthTex;
+
 uniform vec2 pixelSize;//in texture space
 uniform int pass2used;
 
 const int uBlurSize = 4; // use size of noise texture
 
 void main(){
+	float depth = texture(depthTex, outUV.xy).r;
 
+	// background
+	if (depth == 1) {
+		outputF = vec4(0.95, 0.95, 0.95, 1);
+		return;
+	}
 		
 
 		vec2 coord =  outUV.xy;

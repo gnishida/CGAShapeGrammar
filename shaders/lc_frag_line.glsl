@@ -10,6 +10,7 @@ uniform sampler2D tex1;//normals
 uniform sampler2D tex2;//orig pos
 
 uniform sampler2D depthTex;
+uniform sampler3D hatchingTexture;
 
 uniform vec2 pixelSize;//in texture space
 uniform mat4 pMatrix;
@@ -19,8 +20,8 @@ float linearizeDepth(float depth, mat4 pMatrix) {
 }
 
 void main(){
-	float normalSensitivity = 50.0;
-	float depthSensitivity = 40.0;
+	float normalSensitivity = 1.0;
+	float depthSensitivity = 10.0;
 
 	vec2 coord = outUV.xy;
 	
@@ -30,9 +31,12 @@ void main(){
 	float depth = texture(depthTex, coord).r;
 	float orig_depth = linearizeDepth(depth, pMatrix);
 
+	vec3 originPos = texture(tex2, coord).rgb;
+
 	/////// DEBUG //////
 	/*
-	outputF = vec4(depth / 300, depth / 300, depth / 300, 1);
+	//outputF = vec4(orig_depth / 300, orig_depth / 300, orig_depth / 300, 1);
+	outputF = vec4(originPos.x / 10, originPos.y / 10, originPos.z / 10, 1);
 	return;
 	*/
 	/////// DEBUG //////
@@ -45,7 +49,6 @@ void main(){
 	}
 
 
-	vec3 originPos = texture(tex2, coord).rgb;
 
 	// check the normal and depth in the surrounding pixels
 	int range = 1;
@@ -61,7 +64,7 @@ void main(){
 			dd = linearizeDepth(dd, pMatrix);
 			vec3 pp = texture(tex2, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).xyz;
 
-			if (abs(dot(normalize(pp - originPos), normal)) < 0.4) continue;
+			if (length(pp - vec3(0.95, 0.95, 0.95)) > 0.1 && abs(dot(normalize(pp - originPos), normal)) < 0.4) continue;
 
 			normal_diff = max(normal_diff, length(normal - nn));
 			depth_diff = max(depth_diff, length(orig_depth - dd));
@@ -70,9 +73,31 @@ void main(){
 
 	float diff = min(1, max(depth_diff * depthSensitivity, normal_diff * normalSensitivity));
 
-	if (diff > 0.3) diff = 1;
-	else diff = 0;
-	outputF = vec4(1 - diff, 1 - diff, 1 - diff, 1);
+	if (diff > 0.3) {
+		outputF = vec4(0, 0, 0, 1);	// line
+	}
+	else {
+		vec3 color = texture(tex0, coord).rgb;
 
+		float lightIntensity = (color.r + color.g + color.b) / 3.0;
+
+		float texCoordZ = lightIntensity;
+
+		////////////////////// DEBUG ///////////////////////
+		/*
+		outputF = vec4(texture(hatchingTexture2, coord).rgb, 1);
+		return;
+		*/
+		////////////////////// DEBUG ///////////////////////
+
+
+
+		ivec3 sizeOfTex = textureSize(hatchingTexture, 0);
+			
+		// sample 3D texture to get hatching intensity
+		outputF.rgb = texture(hatchingTexture, vec3(coord.x / pixelSize.x / sizeOfTex.x, coord.y / pixelSize.y / sizeOfTex.y, texCoordZ)).rgb;
+		//outputF.rgb = texture(hatchingTexture, vec3(coord.x * 100, coord.y *100, texCoordZ)).rgb;
+		outputF.a = 1;
+	}
 }
 
