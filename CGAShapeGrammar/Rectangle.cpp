@@ -110,7 +110,7 @@ void Rectangle::offset(const std::string& name, float offsetDistance, const std:
 	}
 
 	// border shape
-	if (!border.empty()) {
+	if (!border.empty() && offsetDistance < 0) {
 		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, _modelMat, _scope.x, -offsetDistance, _color)));
 		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, -offsetDistance, 0)), M_PI * 0.5f, glm::vec3(0, 0, 1)), _scope.y + offsetDistance * 2, -offsetDistance, _color)));
 		shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, glm::rotate(glm::translate(_modelMat, glm::vec3(_scope.x, _scope.y, 0)), M_PI, glm::vec3(0, 0, 1)), _scope.x, -offsetDistance, _color)));
@@ -183,26 +183,26 @@ void Rectangle::split(int splitAxis, const std::vector<float>& sizes, const std:
 	
 	for (int i = 0; i < sizes.size(); ++i) {
 		if (splitAxis == DIRECTION_X) {
-			if (names[i] != "NIL") {
-				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(offset, 0, 0));
+			if (names[i] != "NIL" && sizes[i] > 0) {
+				glm::mat4 mat = glm::translate(_modelMat, glm::vec3(offset, 0, 0));
 				if (_texCoords.size() > 0) {
-					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, _modelMat * mat, sizes[i], _scope.y, _color, _texture,
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, mat, sizes[i], _scope.y, _color, _texture,
 						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * offset / _scope.x, _texCoords[0].y,
 						_texCoords[0].x + (_texCoords[1].x - _texCoords[0].x) * (offset + sizes[i]) / _scope.x, _texCoords[2].y)));
 				} else {
-					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, _modelMat * mat, sizes[i], _scope.y, _color)));
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, mat, sizes[i], _scope.y, _color)));
 				}
 			}
 			offset += sizes[i];
 		} else if (splitAxis == DIRECTION_Y) {
-			if (names[i] != "NIL") {
-				glm::mat4 mat = glm::translate(glm::mat4(), glm::vec3(0, offset, 0));
+			if (names[i] != "NIL" && sizes[i] > 0) {
+				glm::mat4 mat = glm::translate(_modelMat, glm::vec3(0, offset, 0));
 				if (_texCoords.size() > 0) {
-					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, _modelMat * mat, _scope.x, sizes[i], _color, _texture,
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, mat, _scope.x, sizes[i], _color, _texture,
 						_texCoords[0].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * offset / _scope.y,
 						_texCoords[1].x, _texCoords[0].y + (_texCoords[2].y - _texCoords[0].y) * (offset + sizes[i]) / _scope.y)));
 				} else {
-					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, _modelMat * mat, _scope.x, sizes[i], _color)));
+					objects.push_back(boost::shared_ptr<Shape>(new Rectangle(names[i], _grammar_type, _pivot, mat, _scope.x, sizes[i], _color)));
 				}
 			}
 			offset += sizes[i];
