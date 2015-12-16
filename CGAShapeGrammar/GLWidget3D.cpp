@@ -567,7 +567,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building Paris
 		float object_width = 28.0f;
 		float object_depth = 20.0f;
@@ -596,6 +596,16 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::Circle* start6 = new cga::Circle("Start6", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(10, -13, 0)), glm::mat4(), 4, 4, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start6));
 
+	}
+#endif
+
+#if 1
+	{ // for cylinder
+		float object_width = 10.0f;
+		float object_depth = 10.0f;
+
+		cga::Circle* start1 = new cga::Circle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)object_width*0.5f, -(float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
 	}
 #endif
 

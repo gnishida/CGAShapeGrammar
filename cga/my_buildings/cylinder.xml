@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<grammar version="1.0" author="Gen Nishida">
+	<attr name="z_floor_border_size" value="0" range="0,0.08"/>
+	<attr name="z_window_border_size" value="0" range="0,0.08"/>
+	
+	<!-- building mass -->
+	<rule name="Start">
+		<extrude height="6.5"/>
+		<comp>
+			<param name="side" value="Facade"/>
+			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base."/>
+		</comp>
+	</rule>
+	
+	<!-- facade -->
+	<rule name="Facade">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
+		<split splitAxis="y">
+			<param type="floating" value="3" name="Floor"/>
+			<param type="floating" value="3.5" name="LedgeAndFloor" repeat="true"/>
+		</split>
+	</rule>
+	<rule name="LedgeAndFloor">
+		<split splitAxis="y">
+			<param type="floating" value="0.5" name="Ledge"/>
+			<param type="floating" value="3" name="Floor"/>
+		</split>
+	</rule>
+	
+	<!-- floor -->
+	<rule name="Floor">
+		<split splitAxis="x">
+			<param type="floating" value="3" name="FloorColumnAndWall" repeat="true"/>
+		</split>
+	</rule>
+	<rule name="FloorColumnAndWall">
+		<split splitAxis="x">
+			<param type="floating" value="1" name="Wall"/>
+			<param type="floating" value="2" name="FloorColumn"/>
+		</split>
+	</rule>
+	<rule name="FloorColumn">
+		<split splitAxis="y">
+			<param type="floating" value="0.5" name="Wall"/>
+			<param type="floating" value="2" name="Window"/>
+			<param type="floating" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	
+	<!-- widnow -->
+	<rule name="Window">
+		<offset offsetDistance="-0.2" inside="WindowMain" border="Wall2"/>
+	</rule>
+	<rule name="WindowMain">
+		<color s="#00ff00"/>
+		<!--<extrude height="0.2"/>-->
+	</rule>
+	
+	<!-- ledge -->
+	<rule name="Ledge">
+		<extrude height="0.2"/>
+	</rule>
+	
+	<rule name="Wall">
+		<color s="#ff0000"/>
+	</rule>
+	<rule name="Wall2">
+		<color s="#808080"/>
+	</rule>
+</grammar>
