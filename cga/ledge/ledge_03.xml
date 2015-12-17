@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <grammar type="ledge" version="1.0" author="Gen Nishida">
 	<attr name="ledge_bottom_half_ratio" value="0.5" range="0.3,0.7"/>
+	<attr name="ledge_column_extrusion" value="0.18" range="0.15,0.2"/>
 	<attr name="ledge_column_interval" value="0.35" range="0.2,0.7"/>
 	<attr name="ledge_extrusion" value="0.26" range="0.22,0.3"/>
-	<attr name="ledge_column_extrusion" value="0.18" range="0.15,0.2"/>
 	
 	<!-- ledge -->
 	<rule name="Start">
@@ -40,8 +40,8 @@
 	<rule name="LedgeBottomColumnBottomMain">
 		<extrude height="ledge_column_extrusion*0.833"/>
 		<comp>
-			<param name="side" value="LedgeFace"/>
-			<param name="top" value="LedgeFace"/>
+			<param name="side" value="LedgeFace_03"/>
+			<param name="top" value="LedgeFace_03"/>
 		</comp>
 	</rule>
 	<rule name="LedgeBottomColumnTop">
@@ -54,8 +54,8 @@
 	<rule name="LedgeBottomColumnTopMain">
 		<extrude height="ledge_column_extrusion"/>
 		<comp>
-			<param name="side" value="LedgeFace"/>
-			<param name="top" value="LedgeFace"/>
+			<param name="side" value="LedgeFace_03"/>
+			<param name="top" value="LedgeFace_03"/>
 		</comp>
 	</rule>
 	<rule name="LedgeTopHalf">
@@ -67,38 +67,38 @@
 	</rule>
 	<rule name="LedgeTopBottom">
 		<size centered="true">
-			<param name="xSize" type="absolute" value="scope.sx+0.44"/>
+			<param name="xSize" type="absolute" value="scope.sx+ledge_extrusion*2*0.846"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
 		<extrude height="ledge_extrusion*0.846"/>
 		<comp>
-			<param name="side" value="LedgeFace"/>
-			<param name="top" value="LedgeFace"/>
+			<param name="side" value="LedgeFace_03"/>
+			<param name="top" value="LedgeFace_03"/>
 		</comp>
 	</rule>
 	<rule name="LedgeTopMiddle">
 		<size centered="true">
-			<param name="xSize" type="absolute" value="scope.sx+0.48"/>
+			<param name="xSize" type="absolute" value="scope.sx+ledge_extrusion*2*0.923"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
 		<extrude height="ledge_extrusion*0.923"/>
 		<comp>
-			<param name="side" value="LedgeFace"/>
-			<param name="top" value="LedgeFace"/>
+			<param name="side" value="LedgeFace_03"/>
+			<param name="top" value="LedgeFace_03"/>
 		</comp>
 	</rule>
 	<rule name="LedgeTopTop">
 		<size centered="true">
-			<param name="xSize" type="absolute" value="scope.sx+0.52"/>
+			<param name="xSize" type="absolute" value="scope.sx+ledge_extrusion*2"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
 		<extrude height="ledge_extrusion"/>
 		<comp>
-			<param name="side" value="LedgeFace"/>
-			<param name="top" value="LedgeFace"/>
+			<param name="side" value="LedgeFace_03"/>
+			<param name="top" value="LedgeFace_03"/>
 		</comp>
 	</rule>
 </grammar>

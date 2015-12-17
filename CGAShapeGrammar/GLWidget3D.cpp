@@ -455,13 +455,13 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building
 		camera.pos = glm::vec3(0, 5, 80);
 		camera.updateMVPMatrix();
 
-		float object_width = 28.0f;
-		float object_depth = 28.0f;
+		float object_width = 15.0f;
+		float object_depth = 10.0f;
 
 		float offset_x = 0.0f;
 		float offset_y = 0.0f;
@@ -599,7 +599,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for cylinder
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
