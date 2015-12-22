@@ -600,6 +600,38 @@ void GLWidget3D::loadCGA(char* filename) {
 #endif
 
 #if 1
+	{ // for Empire State Building
+		float object_width = 10.0f;
+		float object_depth = 10.0f;
+
+		cga::Rectangle* start1 = new cga::Rectangle("Start1", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)20 * 0.5f, -(float)16 * 0.5f, 0)), glm::mat4(), 20, 16, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
+		cga::Rectangle* start2 = new cga::Rectangle("Start2", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)18 * 0.5f, -(float)12 * 0.5f, 10)), glm::mat4(), 18, 12, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start2));
+		cga::Rectangle* start3 = new cga::Rectangle("Start3", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)14 * 0.5f, -(float)8 * 0.5f, 20)), glm::mat4(), 14, 8, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3));
+		cga::Rectangle* start4 = new cga::Rectangle("Start4", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)10 * 0.5f, -(float)6 * 0.5f, 60)), glm::mat4(), 10, 6, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start4));
+		cga::Rectangle* start5 = new cga::Rectangle("Start5", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)8 * 0.5f, -(float)4 * 0.5f, 70)), glm::mat4(), 8, 4, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start5));
+		cga::Rectangle* start6 = new cga::Rectangle("Start6", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-(float)2 * 0.5f, -(float)2 * 0.5f, 74)), glm::mat4(), 2, 2, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start6));
+
+		cga::Rectangle* start7a = new cga::Rectangle("Start7", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-5.5 - (float)5 * 0.5f, -(float)10 * 0.5f, 20)), glm::mat4(), 5.5, 10, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start7a));
+		cga::Rectangle* start7b = new cga::Rectangle("Start7", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(5.5 - (float)5 * 0.5f, -(float)10 * 0.5f, 20)), glm::mat4(), 5.5, 10, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start7b));
+
+		cga::Rectangle* start8a = new cga::Rectangle("Start8", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-4.5 - (float)3 * 0.5f, -(float)8 * 0.5f, 60)), glm::mat4(), 3, 8, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start8a));
+		cga::Rectangle* start8b = new cga::Rectangle("Start8", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(4.5 - (float)3 * 0.5f, -(float)8 * 0.5f, 60)), glm::mat4(), 3, 8, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start8b));
+
+
+	}
+#endif
+
+#if 0
 	{ // for cylinder
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
