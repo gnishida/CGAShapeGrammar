@@ -1,28 +1,29 @@
 <?xml version="1.0"?>
 <grammar type="window" version="1.0" author="Gen Nishida">
+	<attr name="offset_size" value="0.05" range="0.02,0.15"/>
 	<attr name="window_top_ratio" value="0.23" range="0.2,0.3"/>
 
 	<rule name="Start">
 		<extrude height="-0.1"/>
 		<comp>
-			<param name="side" value="Wall"/>
-			<param name="top" value="WindowTop"/>
+			<param name="side" value="Wall_04"/>
+			<param name="top" value="WindowTop_08"/>
 		</comp>
 	</rule>
-	<rule name="WindowTop">
-		<offset offsetDistance="-0.05" inside="WindowTopInside" border="Wall"/>
+	<rule name="WindowTop_08">
+		<offset offsetDistance="-offset_size" inside="WindowTopInside_08" border="Wall_04"/>
 	</rule>
-	<rule name="WindowTopInside">
+	<rule name="WindowTopInside_08">
 		<split splitAxis="y">
-			<param type="relative" value="1-window_top_ratio" name="WindowTopInsideMain"/>
-			<param type="relative" value="window_top_ratio" name="Wall"/>
+			<param type="relative" value="1-window_top_ratio" name="WindowTopInsideMain_08"/>
+			<param type="relative" value="window_top_ratio" name="Wall_04"/>
 		</split>
 	</rule>
-	<rule name="WindowTopInsideMain">
+	<rule name="WindowTopInsideMain_08">
 		<extrude height="-0.1"/>
 		<comp>
-			<param name="side" value="Wall"/>
-			<param name="top" value="WindowGlass"/>
+			<param name="side" value="Wall_04"/>
+			<param name="top" value="WindowGlass_08"/>
 		</comp>
 	</rule>
 </grammar>
