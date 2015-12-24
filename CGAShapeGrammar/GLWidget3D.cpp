@@ -599,7 +599,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for Empire State Building
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
@@ -628,6 +628,31 @@ void GLWidget3D::loadCGA(char* filename) {
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start8b));
 
 
+	}
+#endif
+
+#if 1
+	{ // for Washington State Capitol
+		float object_width = 10.0f;
+		float object_depth = 10.0f;
+
+		cga::Rectangle* start1 = new cga::Rectangle("Start1", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-6, -16, 0)), glm::mat4(), 12, 20, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
+		cga::Rectangle* start2a = new cga::Rectangle("Start2", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-19, -8, 0)), glm::mat4(), 14, 12, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start2a));
+		cga::Rectangle* start2b = new cga::Rectangle("Start2", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(5, -8, 0)), glm::mat4(), 14, 12, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start2b));
+		cga::Rectangle* start3a = new cga::Rectangle("Start3", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-30, -16, 0)), glm::mat4(), 12, 24, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3a));
+		cga::Rectangle* start3b = new cga::Rectangle("Start3", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(18, -16, 0)), glm::mat4(), 12, 24, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start3b));
+
+		cga::Circle* start4 = new cga::Circle("Start4", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-6, -8, 8)), glm::mat4(), 12, 12, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start4));
+		cga::Circle* start5 = new cga::Circle("Start5", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-5.5, -7.5, 10.5)), glm::mat4(), 11, 11, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start5));
+		cga::Circle* start6 = new cga::Circle("Start6", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-5, -7, 14.5)), glm::mat4(), 10, 10, glm::vec3(1, 1, 1));
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start6));
 	}
 #endif
 
