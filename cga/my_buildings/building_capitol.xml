@@ -76,12 +76,16 @@
 		</comp>
 	</rule>
 	<rule name="TopFaceOffsetTopInsideSide">
-		<offset offsetDistance="-0.1" inside="TopFaceOffsetTopInsideSideInside" border="RoofSide"/>
+		<offset offsetDistance="-0.1" inside="TopFaceOffsetTopInsideSideInside" border="RoofWall"/>
 	</rule>
 	<rule name="TopFaceOffsetTopInsideSideInside">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
 		<extrude height="-0.3"/>
 		<comp>
-			<param name="side" value="RoofSide"/>
+			<param name="side" value="RoofWall"/>
 			<param name="top" value="RoofSide"/>
 		</comp>
 	</rule>
@@ -113,7 +117,7 @@
 		<offset offsetDistance="-0.1" inside="Roof02_TopFaceOffsetTopOffsetTopInside" border="RoofLedge"/>
 	</rule>
 	<rule name="Roof02_TopFaceOffsetTopOffsetTopInside">
-		<extrude height="-0.1"/>
+		<extrude height="-0.05"/>
 		<comp>
 			<param name="side" value="RoofLedge"/>
 			<param name="top" value="RoofTop"/>
@@ -136,6 +140,10 @@
 	</rule>
 	<rule name="Roof05_OffsetTopOffset_07">
 		<hemisphere/>
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="relative" value="1"/>
+			<param name="texHeight" type="relative" value="1"/>
+		</setupProjection>
 		<comp>
 			<param name="side" value="RoofWall"/>
 			<param name="top" value="Roof05_OffsetTopOffset_07_Top"/>
@@ -681,14 +689,17 @@
 		</setupProjection>
 		<texture texturePath="../assets/textures/roof.jpg"/>
 	</rule>
+	<rule name="RoofSide">
+		<texture texturePath="../assets/textures/stucco3.jpg"/>
+	</rule>
 	<rule name="RoofLedge">
-		<color s="#c0c0c0"/>
+		<color s="#dedede"/>
 	</rule>
 	<rule name="RoofWall">
-		<color s="#f0f0f0"/>
+		<color s="#e0e0e0"/>
 	</rule>
 	<rule name="Wall">
-		<texture texturePath="../assets/textures/bricks.jpg"/>
+		<texture texturePath="../assets/textures/stucco3.jpg"/>
 	</rule>
 	<rule name="BlackWall">
 		<color s="#000000"/>
@@ -699,5 +710,11 @@
 			<param name="texHeight" type="relative" value="1"/>
 		</setupProjection>
 		<texture texturePath="../assets/textures/window.9.tif"/>
+	</rule>
+	<rule name="WindowFrame">
+		<color s="#f0f0f0"/>
+	</rule>
+	<rule name="WindowSill">
+		<color s="#f0f0f0"/>
 	</rule>
 </grammar>

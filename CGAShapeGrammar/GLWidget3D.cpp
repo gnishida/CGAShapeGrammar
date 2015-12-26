@@ -569,7 +569,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building Paris
 		float object_width = 28.0f;
 		float object_depth = 20.0f;
@@ -633,7 +633,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for Washington State Capitol
 		float object_width = 10.0f;
 		float object_depth = 10.0f;

@@ -9,6 +9,7 @@ namespace cga {
 
 Hemisphere::Hemisphere(const std::string& name, const std::string& grammar_type, const glm::mat4& pivot, const glm::mat4& modelMat, float width, float depth, const glm::vec3& color) {
 	this->_active = true;
+	this->_axiom = false;
 	this->_name = name;
 	this->_grammar_type = grammar_type;
 	this->_pivot = pivot;
@@ -80,6 +81,10 @@ void Hemisphere::comp(const std::map<std::string, std::string>& name_map, std::v
 			}
 		}
 	}
+}
+
+void Hemisphere::setupProjection(int axesSelector, float texWidth, float texHeight) {
+
 }
 
 void Hemisphere::generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, float opacity) const {
