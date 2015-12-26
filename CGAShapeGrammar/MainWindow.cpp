@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionViewHatching, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
+	connect(ui.actionRotationStart, SIGNAL(triggered()), this, SLOT(onRotationStart()));
+	connect(ui.actionRotationEnd, SIGNAL(triggered()), this, SLOT(onRotationEnd()));
 
 	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
 	connect(ui.actionGenerateBuildingImages2, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages2()));
@@ -34,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionGenerateLedgeImages2, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages2()));
 	connect(ui.actionTest, SIGNAL(triggered()), this, SLOT(onTest()));
 
-	glWidget = new GLWidget3D();
+	glWidget = new GLWidget3D(this);
 	setCentralWidget(glWidget);
 
 	fileLoaded = false;
@@ -83,6 +85,14 @@ void MainWindow::onViewRefresh() {
 	}
 }
 
+void MainWindow::onRotationStart() {
+	glWidget->rotationStart();
+}
+
+void MainWindow::onRotationEnd() {
+	glWidget->rotationEnd();
+}
+
 void MainWindow::onGenerateBuildingImages() {
 	//glWidget->generateBuildingImages(256, 256, false);
 }
@@ -119,3 +129,8 @@ void MainWindow::onTest() {
 	glWidget->test();
 }
 
+void MainWindow::camera_update() {
+	glWidget->camera.yrot += 0.02;
+	glWidget->camera.updateMVPMatrix();
+	glWidget->updateGL();
+}

@@ -23,6 +23,8 @@ public slots:
 	void onViewShadow();
 	void onViewRendering();
 	void onViewRefresh();
+	void onRotationStart();
+	void onRotationEnd();
 	void onGenerateBuildingImages();
 	void onGenerateBuildingImages2();
 	void onGenerateRoofImages();
@@ -32,6 +34,7 @@ public slots:
 	void onGenerateLedgeImages();
 	void onGenerateLedgeImages2();
 	void onTest();
+	void camera_update();
 };
 
 #endif // MAINWINDOW_H

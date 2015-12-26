@@ -16,7 +16,9 @@
 #include "EDLinesLib.h"
 #include <QProcess>
 
-GLWidget3D::GLWidget3D(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
+GLWidget3D::GLWidget3D(MainWindow *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
+	this->mainWin = parent;
+
 	// 光源位置をセット
 	// ShadowMappingは平行光源を使っている。この位置から原点方向を平行光源の方向とする。
 	light_dir = glm::normalize(glm::vec3(-4, -5, -8));
@@ -567,7 +569,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building Paris
 		float object_width = 28.0f;
 		float object_depth = 20.0f;
@@ -631,7 +633,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for Washington State Capitol
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
@@ -1423,4 +1425,20 @@ bool GLWidget3D::isImageValid(const cv::Mat& image) {
 		if (tmp.at<cv::Vec3b>(0, 0)[0] == 0) return true;
 		else return false;
 	}
+}
+
+void GLWidget3D::rotationStart() {
+	camera.xrot = 0;
+	camera.yrot = -90;
+	camera.zrot = 0;
+	camera.pos = glm::vec3(0, 10, 60);
+	updateGL();
+
+	rotationTimer = boost::shared_ptr<QTimer>(new QTimer(this));
+	connect(rotationTimer.get(), SIGNAL(timeout()), mainWin, SLOT(camera_update()));
+	rotationTimer->start(20);
+}
+
+void GLWidget3D::rotationEnd() {
+	rotationTimer->stop();
 }

@@ -44,6 +44,9 @@
     <addaction name="actionViewSketchyRendering"/>
     <addaction name="separator"/>
     <addaction name="actionViewRefresh"/>
+    <addaction name="separator"/>
+    <addaction name="actionRotationStart"/>
+    <addaction name="actionRotationEnd"/>
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="title">
@@ -193,6 +196,16 @@
    </property>
    <property name="text">
     <string>Hatching</string>
+   </property>
+  </action>
+  <action name="actionRotationStart">
+   <property name="text">
+    <string>Rotation Start</string>
+   </property>
+  </action>
+  <action name="actionRotationEnd">
+   <property name="text">
+    <string>Rotation End</string>
    </property>
   </action>
  </widget>

@@ -45,6 +45,8 @@ public:
     QAction *actionGenerateLedgeImages2;
     QAction *actionGenerateBuildingImages2;
     QAction *actionViewHatching;
+    QAction *actionRotationStart;
+    QAction *actionRotationEnd;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -102,6 +104,10 @@ public:
         actionViewHatching = new QAction(MainWindowClass);
         actionViewHatching->setObjectName(QStringLiteral("actionViewHatching"));
         actionViewHatching->setCheckable(true);
+        actionRotationStart = new QAction(MainWindowClass);
+        actionRotationStart->setObjectName(QStringLiteral("actionRotationStart"));
+        actionRotationEnd = new QAction(MainWindowClass);
+        actionRotationEnd->setObjectName(QStringLiteral("actionRotationEnd"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -137,6 +143,9 @@ public:
         menuView->addAction(actionViewSketchyRendering);
         menuView->addSeparator();
         menuView->addAction(actionViewRefresh);
+        menuView->addSeparator();
+        menuView->addAction(actionRotationStart);
+        menuView->addAction(actionRotationEnd);
         menuTool->addAction(actionGenerateBuildingImages);
         menuTool->addAction(actionGenerateBuildingImages2);
         menuTool->addSeparator();
@@ -180,6 +189,8 @@ public:
         actionGenerateLedgeImages2->setText(QApplication::translate("MainWindowClass", "Generate Ledge Images (128x128 grayscale)", 0));
         actionGenerateBuildingImages2->setText(QApplication::translate("MainWindowClass", "Generate Building Images (128x128 grayscale)", 0));
         actionViewHatching->setText(QApplication::translate("MainWindowClass", "Hatching", 0));
+        actionRotationStart->setText(QApplication::translate("MainWindowClass", "Rotation Start", 0));
+        actionRotationEnd->setText(QApplication::translate("MainWindowClass", "Rotation End", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
         menuTool->setTitle(QApplication::translate("MainWindowClass", "Tool", 0));
