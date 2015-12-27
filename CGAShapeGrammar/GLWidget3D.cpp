@@ -501,7 +501,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for ledge
 		float object_width = 12.0f;
 		float object_depth = 0.5f;
@@ -644,7 +644,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for Washington State Capitol
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
@@ -694,6 +694,11 @@ void GLWidget3D::loadCGA(char* filename) {
 		std::cout << "ERROR:" << std::endl << ex << std::endl;
 	}
 	
+	// add a ground plane
+	std::vector<Vertex> vertices;
+	glutils::drawGrid(100, 100, 2.5, glm::vec4(0.521, 0.815, 0.917, 1), glm::vec4(0.898, 0.933, 0.941, 1), system.modelMat, vertices);
+	renderManager.addObject("grid", "", vertices, false);
+
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
 	updateGL();
