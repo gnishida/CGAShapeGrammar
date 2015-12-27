@@ -580,6 +580,17 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
+#if 1
+	{ // for building Paris2
+		float object_width = 28.0f;
+		float object_depth = 20.0f;
+
+		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, 0)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
+
+		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
+	}
+#endif
+
 #if 0
 	{ // for building Griffith Observatory
 		float object_width = 10.0f;
@@ -633,7 +644,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for Washington State Capitol
 		float object_width = 10.0f;
 		float object_depth = 10.0f;
