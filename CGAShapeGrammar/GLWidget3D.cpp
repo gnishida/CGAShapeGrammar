@@ -443,7 +443,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	float offset_x = 0.0f;
 	float offset_y = 0.0f;
 
-#if 0
+#if 1
 	{ // for window
 		camera.pos = glm::vec3(0, 0, 7);
 		camera.updateMVPMatrix();
@@ -457,7 +457,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building
 		camera.pos = glm::vec3(0, 5, 80);
 		camera.updateMVPMatrix();
