@@ -218,6 +218,18 @@
     <ClCompile Include="CylinderSide.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="CornerCutPrism.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="CornerCutRectangle.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="CornerCutGableRoof.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="CornerCutTaper.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -394,6 +406,18 @@
       <Filter>Source Files\shape</Filter>
     </ClInclude>
     <ClInclude Include="CylinderSide.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerCutPrism.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerCutRectangle.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerCutGableRoof.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerCutTaper.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>

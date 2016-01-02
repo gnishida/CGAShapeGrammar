@@ -1,6 +1,7 @@
 ﻿#include "Rectangle.h"
 #include "GLUtils.h"
 #include "Circle.h"
+#include "CornerCutRectangle.h"
 #include "LShape.h"
 #include "Pyramid.h"
 #include "HipRoof.h"
@@ -54,6 +55,9 @@ boost::shared_ptr<Shape> Rectangle::clone(const std::string& name) const {
 boost::shared_ptr<Shape> Rectangle::cornerCut(const std::string& name, int type, float length) {
 	length = std::min(std::min(length, _scope.x), _scope.y);
 
+	return boost::shared_ptr<Shape>(new CornerCutRectangle(name, _grammar_type, _pivot, _modelMat, _scope.x, _scope.y, type, length, _color));
+
+	/*
 	std::vector<glm::vec2> points;
 	points.push_back(glm::vec2(0, 0));
 	points.push_back(glm::vec2(_scope.x - length, 0));
@@ -75,6 +79,7 @@ boost::shared_ptr<Shape> Rectangle::cornerCut(const std::string& name, int type,
 	points.push_back(glm::vec2(_scope.x, _scope.y));
 	points.push_back(glm::vec2(0, _scope.y));
 	return boost::shared_ptr<Shape>(new Polygon(name, _grammar_type, _pivot, _modelMat, points, _color, _texture));
+	*/
 }
 
 boost::shared_ptr<Shape> Rectangle::extrude(const std::string& name, float height) {
