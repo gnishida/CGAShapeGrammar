@@ -14,7 +14,7 @@
 
 	<!-- building mass -->
 	<rule name="Start">
-		<cornerCut type="straight" length="4"/>
+		<cornerCut type="curve" length="4"/>
 		<extrude height="21"/>
 		<comp>
 			<param name="side" value="Facade"/>
@@ -47,7 +47,7 @@
 		</comp>
 	</rule>
 	<rule name="TopFaceOffsetTopOffsetTop">
-		<taper height="3" top_ratio="0.8"/>
+		<taper height="3" slope="60"/>
 		<comp>
 			<param name="side" value="RoofSide"/>
 			<param name="top" value="RoofTop"/>

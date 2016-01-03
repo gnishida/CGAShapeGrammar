@@ -457,7 +457,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building
 		camera.pos = glm::vec3(0, 5, 80);
 		camera.updateMVPMatrix();
@@ -580,7 +580,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building Paris2
 		float object_width = 28.0f;
 		float object_depth = 20.0f;
