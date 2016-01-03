@@ -299,10 +299,10 @@
 	</rule>
 	<rule name="RoofSide">
 		<setupProjection axesSelector="scope.xy">
-			<param name="texWidth" type="absolute" value="1"/>
-			<param name="texHeight" type="absolute" value="1"/>
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/roof_paris.png"/>
+		<texture texturePath="../assets/textures/roof_paris2.png"/>
 	</rule>
 	<rule name="RoofLedge">
 		<color s="#f2f2c5"/>
