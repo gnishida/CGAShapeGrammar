@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <QFileDialog>
+#include "OBJWriter.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGA, SIGNAL(triggered()), this, SLOT(onOpenCGA()));
+	connect(ui.actionSaveGeometry, SIGNAL(triggered()), this, SLOT(onSaveGeometry()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
 	connect(ui.actionViewBasicRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSSAO, SIGNAL(triggered()), this, SLOT(onViewRendering()));
@@ -53,6 +55,13 @@ void MainWindow::onOpenCGA() {
 	filename = new_filename;
 	glWidget->loadCGA(filename.toUtf8().data());
 	this->setWindowTitle("CGA Shape Grammar - " + new_filename);
+}
+
+void MainWindow::onSaveGeometry() {
+	QString filename = QFileDialog::getSaveFileName(this, tr("Save OBJ file..."), "", tr("OBJ Files (*.obj)"));
+	if (filename.isEmpty()) return;
+
+	OBJWriter::write(glWidget->faces, filename.toUtf8().constData());
 }
 
 void MainWindow::onViewShadow() {

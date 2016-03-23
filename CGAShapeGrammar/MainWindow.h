@@ -20,6 +20,7 @@ public:
 
 public slots:
 	void onOpenCGA();
+	void onSaveGeometry();
 	void onViewShadow();
 	void onViewRendering();
 	void onViewRefresh();

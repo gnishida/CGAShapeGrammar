@@ -47,6 +47,7 @@ public:
     QAction *actionViewHatching;
     QAction *actionRotationStart;
     QAction *actionRotationEnd;
+    QAction *actionSaveGeometry;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -108,6 +109,8 @@ public:
         actionRotationStart->setObjectName(QStringLiteral("actionRotationStart"));
         actionRotationEnd = new QAction(MainWindowClass);
         actionRotationEnd->setObjectName(QStringLiteral("actionRotationEnd"));
+        actionSaveGeometry = new QAction(MainWindowClass);
+        actionSaveGeometry->setObjectName(QStringLiteral("actionSaveGeometry"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -132,6 +135,7 @@ public:
         menuBar->addAction(menuView->menuAction());
         menuBar->addAction(menuTool->menuAction());
         menuFile->addAction(actionOpenCGA);
+        menuFile->addAction(actionSaveGeometry);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuView->addAction(actionViewShadow);
@@ -191,6 +195,8 @@ public:
         actionViewHatching->setText(QApplication::translate("MainWindowClass", "Hatching", 0));
         actionRotationStart->setText(QApplication::translate("MainWindowClass", "Rotation Start", 0));
         actionRotationEnd->setText(QApplication::translate("MainWindowClass", "Rotation End", 0));
+        actionSaveGeometry->setText(QApplication::translate("MainWindowClass", "Save Geometry", 0));
+        actionSaveGeometry->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+S", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
         menuTool->setTitle(QApplication::translate("MainWindowClass", "Tool", 0));

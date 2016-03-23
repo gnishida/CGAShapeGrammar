@@ -239,6 +239,9 @@
     <ClCompile Include="UShapeTaper.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
+    <ClCompile Include="OBJWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -437,6 +440,9 @@
     </ClInclude>
     <ClInclude Include="UShapeTaper.h">
       <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJWriter.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

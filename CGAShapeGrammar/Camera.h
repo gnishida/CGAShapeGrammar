@@ -9,7 +9,8 @@ public:
 
 	void mousePress(int mouse_x, int mouse_y);
 	void rotate(int mouse_x, int mouse_y);
-	void zoom(int mouse_x, int mouse_y);
+	//void zoom(int mouse_x, int mouse_y);
+	void zoom(float delta);
 	void move(int mouse_x, int mouse_y);
 	void updatePMatrix(int width,int height);
 	void updateMVPMatrix();

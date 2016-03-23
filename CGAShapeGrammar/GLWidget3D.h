@@ -34,6 +34,8 @@ public:
 	bool isImageValid(const cv::Mat& image);
 	void rotationStart();
 	void rotationEnd();
+	void keyPressEvent(QKeyEvent* e);
+	void keyReleaseEvent(QKeyEvent* e);
 
 public slots:
 	void camera_update();
@@ -45,6 +47,7 @@ protected:
 	void mousePressEvent(QMouseEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);
+	void wheelEvent(QWheelEvent* e);
 
 public:
 	static enum { RENDERING_MODE_REGULAR = 0, RENDERING_MODE_LINE };
@@ -54,11 +57,13 @@ public:
 	Camera camera;
 	glm::vec3 light_dir;
 	glm::mat4 light_mvpMatrix;
+	bool shiftPressed;
 
 	RenderManager renderManager;
 
 	cga::CGA system;
 	std::vector<std::vector<glm::vec2> > style_polylines;
+	std::vector<boost::shared_ptr<glutils::Face> > faces;
 
 	boost::shared_ptr<QTimer> rotationTimer;
 };

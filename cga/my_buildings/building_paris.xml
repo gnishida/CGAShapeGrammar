@@ -38,7 +38,7 @@
 		</comp>
 	</rule>
 	<rule name="TopFaceOffsetTopOffsetTop">
-		<taper height="3" top_ratio="0.8"/>
+		<taper height="4.5" slope="70"/>
 		<comp>
 			<param name="side" value="RoofSide"/>
 			<param name="top" value="RoofTop"/>
@@ -703,21 +703,21 @@
 	
 	<!-- material -->
 	<rule name="Wall">
-		<texture texturePath="../assets/textures/wall_paris.png"/>
+		<texture texturePath="textures/wall_paris.png"/>
 	</rule>
 	<rule name="RoofTop">
 		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="relative" value="1"/>
 			<param name="texHeight" type="relative" value="1"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/roof.jpg"/>
+		<texture texturePath="textures/roof.jpg"/>
 	</rule>
 	<rule name="RoofSide">
 		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="1"/>
 			<param name="texHeight" type="absolute" value="1"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/roof_paris.png"/>
+		<texture texturePath="textures/roof_paris.png"/>
 	</rule>
 	<rule name="RoofLedge">
 		<color s="#e5d2ba"/>
@@ -730,7 +730,7 @@
 			<param name="texWidth" type="relative" value="1"/>
 			<param name="texHeight" type="relative" value="1"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/window.9.tif"/>
+		<texture texturePath="textures/window.9.tif"/>
 	</rule>
 	<rule name="LedgeFace">
 		<color s="#e5d2ba"/>

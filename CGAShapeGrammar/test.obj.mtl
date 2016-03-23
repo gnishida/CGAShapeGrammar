@@ -1,0 +1,8646 @@
+newmtl Material1
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+
+newmtl Material2
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material3
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material4
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material5
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material6
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material7
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material8
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material9
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material10
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material11
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material12
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material13
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material14
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material15
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material16
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material17
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material18
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material19
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material20
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material21
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material22
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material23
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material24
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material25
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material26
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material27
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material28
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material29
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material30
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material31
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material32
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material33
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material34
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material35
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material36
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material37
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material38
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material39
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material40
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material41
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material42
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material43
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material44
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material45
+Ka 0.941176 0.941176 0.952941
+Kd 0.941176 0.941176 0.952941
+Ks 0.941176 0.941176 0.952941
+Ke 0.941176 0.941176 0.952941
+d 1
+Ns 20
+illum 2
+
+newmtl Material46
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material47
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/roof.jpg
+
+newmtl Material48
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/roof_paris2.png
+
+newmtl Material49
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material50
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material51
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material52
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material53
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material54
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material55
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material56
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material57
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material58
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material59
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material60
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material61
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material62
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material63
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material64
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material65
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material66
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material67
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material68
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material69
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material70
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material71
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material72
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material73
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material74
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material75
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material76
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material77
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material78
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material79
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material80
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material81
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material82
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material83
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material84
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material85
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material86
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material87
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material88
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material89
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material90
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material91
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material92
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material93
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material94
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material95
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material96
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material97
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material98
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material99
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material100
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material101
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material102
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material103
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material104
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material105
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material106
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material107
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material108
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material109
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material110
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material111
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material112
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material113
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material114
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material115
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material116
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material117
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material118
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material119
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material120
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material121
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material122
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material123
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material124
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material125
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material126
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material127
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material128
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material129
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material130
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material131
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material132
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material133
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material134
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material135
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material136
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material137
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material138
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material139
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material140
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material141
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material142
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material143
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material144
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material145
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material146
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material147
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material148
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material149
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material150
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material151
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material152
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material153
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material154
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material155
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material156
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material157
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material158
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material159
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material160
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material161
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material162
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material163
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material164
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material165
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material166
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material167
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material168
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material169
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material170
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material171
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material172
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material173
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material174
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material175
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material176
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material177
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material178
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material179
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material180
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material181
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material182
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material183
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material184
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material185
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material186
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material187
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material188
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material189
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material190
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material191
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material192
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material193
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material194
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material195
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material196
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material197
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material198
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material199
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material200
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material201
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material202
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material203
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material204
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material205
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material206
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material207
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material208
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material209
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material210
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material211
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material212
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material213
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material214
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material215
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material216
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material217
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material218
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material219
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material220
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material221
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material222
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material223
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material224
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material225
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material226
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material227
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material228
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material229
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/wall_paris3.png
+
+newmtl Material230
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material231
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material232
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material233
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material234
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material235
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material236
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material237
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material238
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material239
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material240
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material241
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material242
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material243
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material244
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material245
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material246
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material247
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material248
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material249
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material250
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material251
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material252
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material253
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material254
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material255
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material256
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material257
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material258
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material259
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material260
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material261
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material262
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material263
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material264
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material265
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material266
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material267
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material268
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material269
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material270
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material271
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material272
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material273
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material274
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material275
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material276
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material277
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material278
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material279
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material280
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material281
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material282
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material283
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material284
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material285
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material286
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material287
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material288
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material289
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material290
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material291
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material292
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material293
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material294
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material295
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material296
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material297
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material298
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material299
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material300
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material301
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material302
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material303
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material304
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material305
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material306
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material307
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material308
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material309
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material310
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material311
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material312
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material313
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material314
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material315
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material316
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material317
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material318
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material319
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material320
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material321
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material322
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material323
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material324
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material325
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material326
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material327
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material328
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material329
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material330
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material331
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material332
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material333
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material334
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material335
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material336
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material337
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material338
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material339
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material340
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material341
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material342
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material343
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material344
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material345
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material346
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material347
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material348
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material349
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material350
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material351
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material352
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material353
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material354
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material355
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material356
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material357
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material358
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material359
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material360
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material361
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material362
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material363
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material364
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material365
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material366
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material367
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material368
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material369
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material370
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material371
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material372
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material373
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material374
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material375
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material376
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material377
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material378
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material379
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material380
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material381
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material382
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material383
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material384
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material385
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material386
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material387
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material388
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material389
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material390
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material391
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material392
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material393
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material394
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material395
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material396
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material397
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material398
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material399
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material400
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material401
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material402
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material403
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material404
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material405
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material406
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material407
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material408
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material409
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material410
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material411
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material412
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material413
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material414
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material415
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material416
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material417
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material418
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material419
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material420
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material421
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material422
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material423
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material424
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material425
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material426
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material427
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material428
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material429
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material430
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material431
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material432
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material433
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material434
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material435
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material436
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material437
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material438
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material439
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material440
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material441
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material442
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material443
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material444
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material445
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material446
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material447
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material448
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material449
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material450
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material451
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material452
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material453
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material454
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material455
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material456
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material457
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material458
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material459
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material460
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material461
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material462
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material463
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material464
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material465
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material466
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material467
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material468
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material469
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material470
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material471
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material472
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material473
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material474
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material475
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material476
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material477
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material478
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material479
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material480
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material481
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material482
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material483
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material484
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material485
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material486
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material487
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material488
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material489
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material490
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material491
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material492
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material493
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material494
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material495
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material496
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material497
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material498
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material499
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material500
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material501
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material502
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material503
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material504
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material505
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material506
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material507
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material508
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material509
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material510
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material511
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material512
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material513
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material514
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material515
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material516
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material517
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material518
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material519
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material520
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material521
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material522
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material523
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material524
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material525
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material526
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material527
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material528
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material529
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material530
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material531
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material532
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material533
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material534
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material535
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material536
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material537
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material538
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material539
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material540
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material541
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material542
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material543
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material544
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material545
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material546
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material547
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material548
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material549
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material550
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material551
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material552
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material553
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material554
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material555
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material556
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material557
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material558
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material559
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material560
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material561
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material562
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material563
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material564
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material565
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material566
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material567
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material568
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material569
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material570
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material571
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material572
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material573
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material574
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material575
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material576
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material577
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material578
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material579
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material580
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material581
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material582
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material583
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material584
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material585
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material586
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material587
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material588
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material589
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material590
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material591
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material592
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material593
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material594
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material595
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material596
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material597
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material598
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material599
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material600
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material601
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material602
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material603
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material604
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material605
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material606
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material607
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material608
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material609
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material610
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material611
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material612
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material613
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material614
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material615
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material616
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material617
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material618
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material619
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material620
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material621
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material622
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material623
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material624
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material625
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material626
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material627
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material628
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material629
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material630
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material631
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material632
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material633
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material634
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material635
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material636
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material637
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material638
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material639
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material640
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material641
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material642
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material643
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material644
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material645
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material646
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material647
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material648
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material649
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material650
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material651
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material652
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material653
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material654
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material655
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material656
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material657
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material658
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material659
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material660
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material661
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material662
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material663
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material664
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material665
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material666
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material667
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material668
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material669
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material670
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material671
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material672
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material673
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material674
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material675
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material676
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material677
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material678
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material679
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material680
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material681
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material682
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material683
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material684
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material685
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material686
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material687
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material688
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material689
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material690
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material691
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material692
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material693
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material694
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material695
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material696
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material697
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material698
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material699
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material700
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material701
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material702
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material703
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material704
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material705
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material706
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material707
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material708
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material709
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material710
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material711
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material712
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material713
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material714
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material715
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material716
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material717
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material718
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material719
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material720
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material721
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material722
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material723
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material724
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material725
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material726
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material727
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material728
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material729
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material730
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material731
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material732
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material733
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material734
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material735
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material736
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material737
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material738
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material739
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material740
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material741
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material742
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material743
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material744
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material745
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material746
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material747
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material748
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material749
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material750
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material751
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material752
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material753
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material754
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material755
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material756
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material757
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material758
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material759
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material760
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material761
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material762
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material763
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material764
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material765
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material766
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material767
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material768
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material769
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material770
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material771
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material772
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material773
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material774
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material775
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material776
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material777
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material778
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material779
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material780
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material781
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material782
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material783
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material784
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material785
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material786
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material787
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material788
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material789
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material790
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material791
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material792
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material793
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material794
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material795
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material796
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material797
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material798
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material799
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material800
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material801
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material802
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material803
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material804
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material805
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material806
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material807
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material808
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material809
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material810
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material811
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material812
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material813
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material814
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material815
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material816
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material817
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material818
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material819
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material820
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material821
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material822
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material823
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material824
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material825
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material826
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material827
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material828
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material829
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material830
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material831
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material832
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material833
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material834
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material835
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material836
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material837
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material838
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material839
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material840
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material841
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material842
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material843
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material844
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material845
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material846
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material847
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material848
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material849
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material850
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material851
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material852
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material853
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material854
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material855
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material856
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material857
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material858
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material859
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material860
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material861
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material862
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material863
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material864
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material865
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material866
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material867
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material868
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material869
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material870
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material871
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material872
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material873
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material874
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material875
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material876
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material877
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material878
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material879
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material880
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material881
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material882
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material883
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material884
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material885
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material886
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material887
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material888
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material889
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material890
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material891
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material892
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material893
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material894
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material895
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material896
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material897
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material898
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material899
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material900
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material901
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material902
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material903
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material904
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material905
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material906
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material907
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material908
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+
+newmtl Material909
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ke 1 1 1
+d 1
+Ns 20
+illum 2
+map_Kd textures/window.9.tif
+
+newmtl Material910
+Ka 0.878431 0.878431 0.878431
+Kd 0.878431 0.878431 0.878431
+Ks 0.878431 0.878431 0.878431
+Ke 0.878431 0.878431 0.878431
+d 1
+Ns 20
+illum 2
+

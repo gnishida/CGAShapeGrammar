@@ -295,27 +295,27 @@
 			<param name="texWidth" type="relative" value="1"/>
 			<param name="texHeight" type="relative" value="1"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/roof.jpg"/>
+		<texture texturePath="textures/roof.jpg"/>
 	</rule>
 	<rule name="RoofSide">
 		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="absolute" value="5"/>
 			<param name="texHeight" type="absolute" value="5"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/roof_paris2.png"/>
+		<texture texturePath="textures/roof_paris2.png"/>
 	</rule>
 	<rule name="RoofLedge">
-		<color s="#f2f2c5"/>
+		<color s="#f0f0f3"/>
 	</rule>
 	<rule name="Wall">
-		<texture texturePath="../assets/textures/wall_paris2.png"/>
+		<texture texturePath="textures/wall_paris3.png"/>
 	</rule>
 	<rule name="WindowGlass">
 		<setupProjection axesSelector="scope.xy">
 			<param name="texWidth" type="relative" value="1"/>
 			<param name="texHeight" type="relative" value="1"/>
 		</setupProjection>
-		<texture texturePath="../assets/textures/window.9.tif"/>
+		<texture texturePath="textures/window.9.tif"/>
 	</rule>
 	<rule name="WindowFrame">
 		<color s="#e0e0e0"/>
@@ -327,6 +327,7 @@
 		<color s="#e0e0e0"/>
 	</rule>
 	<rule name="LedgeFace">
-		<texture texturePath="../assets/textures/wall_paris2.png"/>
+		<color s="#f0f0f3"/>
+		<!--<texture texturePath="textures/wall_paris3.png"/>-->
 	</rule>
 </grammar>
