@@ -47,6 +47,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 MainWindow::~MainWindow() {
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+	glWidget->keyPressEvent(e);
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent* e) {
+	glWidget->keyReleaseEvent(e);
+}
+
 void MainWindow::onOpenCGA() {
 	QString new_filename = QFileDialog::getOpenFileName(this, tr("Open CGA file..."), "", tr("CGA Files (*.xml)"));
 	if (new_filename.isEmpty()) return;

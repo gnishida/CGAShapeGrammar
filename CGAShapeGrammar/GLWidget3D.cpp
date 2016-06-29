@@ -464,20 +464,19 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building
 		camera.pos = glm::vec3(0, 5, 80);
 		camera.updateMVPMatrix();
 
-		float object_width = 15.0f;
-		float object_depth = 10.0f;
+		float object_width = 14;// 15.0f;
+		float object_depth = 20;// 15.0f;
 
-		float offset_x = 0.0f;
-		float offset_y = 0.0f;
+		float offset_x = 8;// 0.0f;
+		float offset_y = 6;// 0.0f;
 		float offset_z = 0.0f;
 		cga::Rectangle* start = new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(offset_x - (float)object_width*0.5f, offset_y - (float)object_depth*0.5f, offset_z)), glm::mat4(), object_width, object_depth, glm::vec3(1, 1, 1));
 
-		//cga::Rectangle* start = new cga::Rectangle("Start", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-object_width*0.5f, -object_height*0.5f, 0)), glm::mat4(), object_width, object_height, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 	}
 #endif
@@ -498,8 +497,8 @@ void GLWidget3D::loadCGA(char* filename) {
 
 #if 0
 	{ // for circular roof
-		float object_width = 6.0f;
-		float object_depth = 6.0f;
+		float object_width = 12.0f;
+		float object_depth = 12.0f;
 
 		float offset_x = 0.0f;
 		float offset_y = 0.0f;
@@ -676,7 +675,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for Dime building/Chrysler house
 		cga::Rectangle* start1 = new cga::Rectangle("Start1", "", glm::translate(glm::rotate(glm::mat4(), -3.141592f * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(-16, -10, 0)), glm::mat4(), 32, 20, glm::vec3(1, 1, 1));
 		system.stack.push_back(boost::shared_ptr<cga::Shape>(start1));
