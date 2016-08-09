@@ -61,7 +61,7 @@ void Cuboid::comp(const std::map<std::string, std::string>& name_map, std::vecto
 			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _grammar_type, _pivot, _modelMat, _scope.x, _scope.y, _color, _texture, _texCoords[0].x, _texCoords[0].y, _texCoords[2].x, _texCoords[2].y)));
 		}
 		else {
-			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _grammar_type, _pivot, _modelMat, _scope.x, _scope.y, _color)));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _grammar_type, _pivot, glm::translate(glm::rotate(_modelMat, M_PI, glm::vec3(1, 0, 0)), glm::vec3(0, -_scope.y, 0)), _scope.x, _scope.y, _color)));
 		}
 	}
 
@@ -248,7 +248,7 @@ void Cuboid::generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& fa
 	// base
 	if (_scope.z >= 0) {
 		std::vector<Vertex> vertices;
-		glm::mat4 mat = _pivot * glm::translate(_modelMat, glm::vec3(_scope.x * 0.5, _scope.y * 0.5, 0));
+		glm::mat4 mat = _pivot * glm::translate(glm::rotate(_modelMat, M_PI, glm::vec3(1, 0, 0)), glm::vec3(_scope.x * 0.5, -_scope.y * 0.5, 0));
 		glutils::drawQuad(_scope.x, _scope.y, glm::vec4(_color, opacity), mat, vertices);
 		faces.push_back(boost::shared_ptr<glutils::Face>(new glutils::Face(_name, _grammar_type, vertices)));
 	}
