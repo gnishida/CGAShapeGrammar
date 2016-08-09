@@ -58,7 +58,7 @@ void Cuboid::comp(const std::map<std::string, std::string>& name_map, std::vecto
 	// bottom face
 	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL" && _scope.z >= 0) {
 		if (_texCoords.size() >= 4) {
-			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _grammar_type, _pivot, _modelMat, _scope.x, _scope.y, _color, _texture, _texCoords[0].x, _texCoords[0].y, _texCoords[2].x, _texCoords[2].y)));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _grammar_type, _pivot, glm::translate(glm::rotate(_modelMat, M_PI, glm::vec3(1, 0, 0)), glm::vec3(0, -_scope.y, 0)), _scope.x, _scope.y, _color, _texture, _texCoords[0].x, _texCoords[0].y, _texCoords[2].x, _texCoords[2].y)));
 		}
 		else {
 			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(name_map.at("bottom"), _grammar_type, _pivot, glm::translate(glm::rotate(_modelMat, M_PI, glm::vec3(1, 0, 0)), glm::vec3(0, -_scope.y, 0)), _scope.x, _scope.y, _color)));
