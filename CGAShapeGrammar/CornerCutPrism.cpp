@@ -56,7 +56,9 @@ void CornerCutPrism::comp(const std::map<std::string, std::string>& name_map, st
 
 	// bottom face
 	if (name_map.find("bottom") != name_map.end() && name_map.at("bottom") != "NIL" && _scope.z >= 0) {
-		shapes.push_back(boost::shared_ptr<Shape>(new CornerCutRectangle(name_map.at("bottom"), _grammar_type, _pivot, _modelMat, _scope.x, _scope.y, _cut_type, _cut_length, _color)));
+		glm::mat4 mat1 = glm::translate(glm::rotate(_modelMat, M_PI, glm::vec3(1, 0, 0)), glm::vec3(0, -_scope.y, 0));
+		glm::mat4 mat2 = glm::translate(glm::rotate(mat1, (float)(M_PI * 0.5), glm::vec3(0, 0, 1)), glm::vec3(0, -_scope.x, 0));
+		shapes.push_back(boost::shared_ptr<Shape>(new CornerCutRectangle(name_map.at("bottom"), _grammar_type, _pivot, mat2, _scope.y, _scope.x, _cut_type, _cut_length, _color)));
 	}
 
 	// front face
