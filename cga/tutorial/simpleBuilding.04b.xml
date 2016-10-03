@@ -32,6 +32,7 @@
 			<param name="front" value="FrontFacade"/>
 			<param name="side" value="SideFacade"/>
 			<param name="top" value="Roof"/>
+			<param name="bottom" value="Base."/>
 		</comp>
 	</rule>
 	<rule name="Building2">

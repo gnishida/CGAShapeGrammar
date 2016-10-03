@@ -175,8 +175,12 @@ void Polygon::setupProjection(int axesSelector, float texWidth, float texHeight)
 	}
 }
 
-void Polygon::size(float xSize, float ySize, float zSize) {
+void Polygon::size(float xSize, float ySize, float zSize, bool centered) {
 	_prev_scope = _scope;
+
+	if (centered) {
+		_modelMat = glm::translate(_modelMat, glm::vec3((_scope.x - xSize) * 0.5, (_scope.y - ySize) * 0.5, (_scope.z - zSize) * 0.5));
+	}
 
 	float scaleX = xSize / _scope.x;
 	float scaleY = ySize / _scope.y;

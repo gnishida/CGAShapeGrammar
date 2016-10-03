@@ -48,11 +48,11 @@ public:
     QAction *actionRotationStart;
     QAction *actionRotationEnd;
     QAction *actionSaveGeometry;
+    QAction *actionViewContourRendering;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuView;
-    QMenu *menuTool;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -111,6 +111,9 @@ public:
         actionRotationEnd->setObjectName(QStringLiteral("actionRotationEnd"));
         actionSaveGeometry = new QAction(MainWindowClass);
         actionSaveGeometry->setObjectName(QStringLiteral("actionSaveGeometry"));
+        actionViewContourRendering = new QAction(MainWindowClass);
+        actionViewContourRendering->setObjectName(QStringLiteral("actionViewContourRendering"));
+        actionViewContourRendering->setCheckable(true);
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -121,8 +124,6 @@ public:
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuView = new QMenu(menuBar);
         menuView->setObjectName(QStringLiteral("menuView"));
-        menuTool = new QMenu(menuBar);
-        menuTool->setObjectName(QStringLiteral("menuTool"));
         MainWindowClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindowClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -133,15 +134,14 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuView->menuAction());
-        menuBar->addAction(menuTool->menuAction());
         menuFile->addAction(actionOpenCGA);
-        menuFile->addAction(actionSaveGeometry);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuView->addAction(actionViewShadow);
         menuView->addSeparator();
         menuView->addAction(actionViewBasicRendering);
         menuView->addAction(actionViewSSAO);
+        menuView->addAction(actionViewContourRendering);
         menuView->addAction(actionViewLineRendering);
         menuView->addAction(actionViewHatching);
         menuView->addAction(actionViewSketchyRendering);
@@ -150,19 +150,6 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionRotationStart);
         menuView->addAction(actionRotationEnd);
-        menuTool->addAction(actionGenerateBuildingImages);
-        menuTool->addAction(actionGenerateBuildingImages2);
-        menuTool->addSeparator();
-        menuTool->addAction(actionGenerateRoofImages);
-        menuTool->addAction(actionGenerateRoofImages2);
-        menuTool->addSeparator();
-        menuTool->addAction(actionGenerateWindowImages);
-        menuTool->addAction(actionGenerateWindowImages2);
-        menuTool->addSeparator();
-        menuTool->addAction(actionGenerateLedgeImages);
-        menuTool->addAction(actionGenerateLedgeImages2);
-        menuTool->addSeparator();
-        menuTool->addAction(actionTest);
 
         retranslateUi(MainWindowClass);
 
@@ -197,9 +184,9 @@ public:
         actionRotationEnd->setText(QApplication::translate("MainWindowClass", "Rotation End", 0));
         actionSaveGeometry->setText(QApplication::translate("MainWindowClass", "Save Geometry", 0));
         actionSaveGeometry->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+S", 0));
+        actionViewContourRendering->setText(QApplication::translate("MainWindowClass", "Contour Rendering", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
-        menuTool->setTitle(QApplication::translate("MainWindowClass", "Tool", 0));
     } // retranslateUi
 
 };

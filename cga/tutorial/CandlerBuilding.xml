@@ -150,7 +150,7 @@
 			<param name="z" type="absolute" value="0"/>
 		</translate>
 		<insert geometryPath="../assets/primitives/cube.obj"/>
-		<texture texturePath="../assets/textures/still.jpg"/>
+		<texture texturePath="../assets/textures/sill.jpg"/>
 	</rule>
 
 	<!-- Wall -->

@@ -23,9 +23,6 @@ float linearizeDepth(float depth, mat4 pMatrix) {
 }
 
 void main(){
-	float normalSensitivity = 1.0;
-	float depthSensitivity = 10.0;
-
 	vec2 coord = outUV.xy;
 	
 	vec3 normal = texture(tex1, coord).rgb;
@@ -55,28 +52,25 @@ void main(){
 
 	// check the normal and depth in the surrounding pixels
 	int range = 1;
-	float normal_diff = 0;
-	float depth_diff = 0;
+	float diff = 0;
 
 	for (int xx = -range; xx <= range; ++xx) {
 		for (int yy = -range; yy <= range; ++yy) {
 			if (xx == 0 && yy == 0) continue;
 
-			vec3 nn = texture(tex1, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).xyz;
+			vec3 nn = normalize(texture(tex1, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).xyz);
 			float dd = texture(depthTex, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).x;
 			dd = linearizeDepth(dd, pMatrix);
 			vec3 pp = texture(tex2, vec2(coord.x + xx * pixelSize.x, coord.y + yy * pixelSize.y)).xyz;
 
-			if (length(pp - vec3(0.95, 0.95, 0.95)) > 0.1 && abs(dot(normalize(pp - originPos), normal)) < 0.4) continue;
+			if (length(pp - vec3(0.95, 0.95, 0.95)) > 0.1 && abs(dot(normalize(pp - originPos), normal)) < 0.1) continue;
 
-			normal_diff = max(normal_diff, length(normal - nn));
-			depth_diff = max(depth_diff, length(orig_depth - dd));
+			diff = max(diff, length(normal - nn));
+			diff = max(diff, length(orig_depth - dd));
 		}
 	}
 
-	float diff = min(1, max(depth_diff * depthSensitivity, normal_diff * normalSensitivity));
-
-	if (diff > 0.3) {
+	if (diff > 0.00001) {
 		outputF = vec4(0, 0, 0, 1);	// line
 	}
 	else {

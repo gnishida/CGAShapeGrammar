@@ -28,7 +28,7 @@ public:
 
 class RenderManager {
 public:
-	static enum { RENDERING_MODE_BASIC = 0, RENDERING_MODE_SSAO, RENDERING_MODE_LINE, RENDERING_MODE_HATCHING, RENDERING_MODE_SKETCHY };
+	static enum { RENDERING_MODE_BASIC = 0, RENDERING_MODE_SSAO, RENDERING_MODE_CONTOUR, RENDERING_MODE_LINE, RENDERING_MODE_HATCHING, RENDERING_MODE_SKETCHY };
 
 public:
 	Shader shader;
@@ -75,7 +75,7 @@ public:
 	void resize(int width,int height);
 	void resizeSsaoKernel();
 
-	void addFaces(const std::vector<boost::shared_ptr<glutils::Face> >& faces);
+	void addFaces(const std::vector<boost::shared_ptr<glutils::Face> >& faces, bool lighting);
 	void addObject(const QString& object_name, const QString& texture_file, const std::vector<Vertex>& vertices, bool lighting);
 	void removeObjects();
 	void removeObject(const QString& object_name);

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	QActionGroup* renderingModeGroup = new QActionGroup(this);
 	renderingModeGroup->addAction(ui.actionViewBasicRendering);
 	renderingModeGroup->addAction(ui.actionViewSSAO);
+	renderingModeGroup->addAction(ui.actionViewContourRendering);
 	renderingModeGroup->addAction(ui.actionViewLineRendering);
 	renderingModeGroup->addAction(ui.actionViewHatching);
 	renderingModeGroup->addAction(ui.actionViewSketchyRendering);
@@ -17,26 +18,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGA, SIGNAL(triggered()), this, SLOT(onOpenCGA()));
-	connect(ui.actionSaveGeometry, SIGNAL(triggered()), this, SLOT(onSaveGeometry()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
 	connect(ui.actionViewBasicRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSSAO, SIGNAL(triggered()), this, SLOT(onViewRendering()));
+	connect(ui.actionViewContourRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewLineRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewHatching, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSketchyRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewRefresh, SIGNAL(triggered()), this, SLOT(onViewRefresh()));
 	connect(ui.actionRotationStart, SIGNAL(triggered()), this, SLOT(onRotationStart()));
 	connect(ui.actionRotationEnd, SIGNAL(triggered()), this, SLOT(onRotationEnd()));
-
-	connect(ui.actionGenerateBuildingImages, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages()));
-	connect(ui.actionGenerateBuildingImages2, SIGNAL(triggered()), this, SLOT(onGenerateBuildingImages2()));
-	connect(ui.actionGenerateRoofImages, SIGNAL(triggered()), this, SLOT(onGenerateRoofImages()));
-	connect(ui.actionGenerateRoofImages2, SIGNAL(triggered()), this, SLOT(onGenerateRoofImages2()));
-	connect(ui.actionGenerateWindowImages, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages()));
-	connect(ui.actionGenerateWindowImages2, SIGNAL(triggered()), this, SLOT(onGenerateWindowImages2()));
-	connect(ui.actionGenerateLedgeImages, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages()));
-	connect(ui.actionGenerateLedgeImages2, SIGNAL(triggered()), this, SLOT(onGenerateLedgeImages2()));
-	connect(ui.actionTest, SIGNAL(triggered()), this, SLOT(onTest()));
 
 	glWidget = new GLWidget3D(this);
 	setCentralWidget(glWidget);
@@ -65,13 +56,6 @@ void MainWindow::onOpenCGA() {
 	this->setWindowTitle("CGA Shape Grammar - " + new_filename);
 }
 
-void MainWindow::onSaveGeometry() {
-	QString filename = QFileDialog::getSaveFileName(this, tr("Save OBJ file..."), "", tr("OBJ Files (*.obj)"));
-	if (filename.isEmpty()) return;
-
-	OBJWriter::write(glWidget->faces, filename.toUtf8().constData());
-}
-
 void MainWindow::onViewShadow() {
 	glWidget->renderManager.useShadow = ui.actionViewShadow->isChecked();
 	glWidget->updateGL();
@@ -83,6 +67,9 @@ void MainWindow::onViewRendering() {
 	}
 	else if (ui.actionViewSSAO->isChecked()) {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_SSAO;
+	}
+	else if (ui.actionViewContourRendering->isChecked()) {
+		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_CONTOUR;
 	}
 	else if (ui.actionViewLineRendering->isChecked()) {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_LINE;
@@ -108,42 +95,6 @@ void MainWindow::onRotationStart() {
 
 void MainWindow::onRotationEnd() {
 	glWidget->rotationEnd();
-}
-
-void MainWindow::onGenerateBuildingImages() {
-	//glWidget->generateBuildingImages(256, 256, false);
-}
-
-void MainWindow::onGenerateBuildingImages2() {
-	//glWidget->generateBuildingImages(128, 128, true);
-}
-
-void MainWindow::onGenerateRoofImages() {
-	//glWidget->generateRoofImages(256, 256, false);
-}
-
-void MainWindow::onGenerateRoofImages2() {
-	//glWidget->generateRoofImages(128, 128, true);
-}
-
-void MainWindow::onGenerateWindowImages() {
-	//glWidget->generateWindowImages(256, 256, false);
-}
-
-void MainWindow::onGenerateWindowImages2() {
-	//glWidget->generateWindowImages(128, 128, true);
-}
-
-void MainWindow::onGenerateLedgeImages() {
-	//glWidget->generateLedgeImages(256, 256, false);
-}
-
-void MainWindow::onGenerateLedgeImages2() {
-	//glWidget->generateLedgeImages(128, 128, true);
-}
-
-void MainWindow::onTest() {
-	glWidget->test();
 }
 
 void MainWindow::camera_update() {

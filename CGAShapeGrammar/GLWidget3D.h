@@ -22,18 +22,10 @@ public:
 
 	void drawScene();
 	void loadCGA(char* filename);
-#if 0
-	void generateBuildingImages(int image_width, int image_height, bool grayscale);
-	void generateRoofImages(int image_width, int image_height, bool grayscale);
-	void generateWindowImages(int image_width, int image_height, bool grayscale);
-	void generateLedgeImages(int image_width, int image_height, bool grayscale);
-#endif
-	void test();
-	void EDLine(const cv::Mat& source, cv::Mat& result, bool grayscale);
 	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
-	bool isImageValid(const cv::Mat& image);
 	void rotationStart();
 	void rotationEnd();
+
 	void keyPressEvent(QKeyEvent* e);
 	void keyReleaseEvent(QKeyEvent* e);
 
@@ -58,13 +50,11 @@ public:
 	glm::vec3 light_dir;
 	glm::mat4 light_mvpMatrix;
 	bool shiftPressed;
+	bool ctrlPressed;
 
 	RenderManager renderManager;
 
-	cga::CGA system;
-	std::vector<std::vector<glm::vec2> > style_polylines;
-	std::vector<boost::shared_ptr<glutils::Face> > faces;
-
+	std::vector<std::vector<glm::vec2>> style_polylines;
 	boost::shared_ptr<QTimer> rotationTimer;
 };
 

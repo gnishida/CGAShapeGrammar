@@ -28,7 +28,6 @@
      <string>File</string>
     </property>
     <addaction name="actionOpenCGA"/>
-    <addaction name="actionSaveGeometry"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -40,6 +39,7 @@
     <addaction name="separator"/>
     <addaction name="actionViewBasicRendering"/>
     <addaction name="actionViewSSAO"/>
+    <addaction name="actionViewContourRendering"/>
     <addaction name="actionViewLineRendering"/>
     <addaction name="actionViewHatching"/>
     <addaction name="actionViewSketchyRendering"/>
@@ -49,27 +49,8 @@
     <addaction name="actionRotationStart"/>
     <addaction name="actionRotationEnd"/>
    </widget>
-   <widget class="QMenu" name="menuTool">
-    <property name="title">
-     <string>Tool</string>
-    </property>
-    <addaction name="actionGenerateBuildingImages"/>
-    <addaction name="actionGenerateBuildingImages2"/>
-    <addaction name="separator"/>
-    <addaction name="actionGenerateRoofImages"/>
-    <addaction name="actionGenerateRoofImages2"/>
-    <addaction name="separator"/>
-    <addaction name="actionGenerateWindowImages"/>
-    <addaction name="actionGenerateWindowImages2"/>
-    <addaction name="separator"/>
-    <addaction name="actionGenerateLedgeImages"/>
-    <addaction name="actionGenerateLedgeImages2"/>
-    <addaction name="separator"/>
-    <addaction name="actionTest"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
-   <addaction name="menuTool"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -215,6 +196,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionViewContourRendering">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Contour Rendering</string>
    </property>
   </action>
  </widget>

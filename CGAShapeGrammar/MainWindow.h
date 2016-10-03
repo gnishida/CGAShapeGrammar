@@ -25,21 +25,11 @@ protected:
 
 public slots:
 	void onOpenCGA();
-	void onSaveGeometry();
 	void onViewShadow();
 	void onViewRendering();
 	void onViewRefresh();
 	void onRotationStart();
 	void onRotationEnd();
-	void onGenerateBuildingImages();
-	void onGenerateBuildingImages2();
-	void onGenerateRoofImages();
-	void onGenerateRoofImages2();
-	void onGenerateWindowImages();
-	void onGenerateWindowImages2();
-	void onGenerateLedgeImages();
-	void onGenerateLedgeImages2();
-	void onTest();
 	void camera_update();
 };
 

@@ -35,8 +35,7 @@ public:
 	static std::vector<std::pair<float, float> > getParamRanges(const Grammar& grammar);
 	static void setParamValues(Grammar& grammar, const std::vector<float>& params);
 	void derive(const Grammar& grammar, bool suppressWarning = false);
-	void derive(const std::map<std::string, Grammar>& grammars, bool suppressWarning = false);
-	void generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces);
+	void generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, bool center);
 };
 
 }

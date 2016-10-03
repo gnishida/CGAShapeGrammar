@@ -6,11 +6,14 @@
 #endif
 
 Camera::Camera() {
-	xrot = 40.0f;
-	yrot = 0.0;
+	center = glm::vec2(0, 0);
+	xrot = 50.0f;
+	yrot = -45.0;
 	zrot = 0.0f;
-	pos = glm::vec3(0, 15, 80);
+	pos = glm::vec3(0, 0, 93.30f);
 	fovy = 45.0f;
+
+	distanceBase = 25.0f;
 }
 
 /**
@@ -23,9 +26,16 @@ void Camera::mousePress(int mouse_x, int mouse_y) {
 /**
  * Call this function whenever the mouse moves while rotating the model.
  */
-void Camera::rotate(int mouse_x, int mouse_y) {
-	xrot += mouse_y - mouse_pos.y;
-	yrot += mouse_x - mouse_pos.x;
+void Camera::rotate(int mouse_x, int mouse_y, float senstivity) {
+	xrot += (mouse_y - mouse_pos.y) * senstivity;
+	yrot += (mouse_x - mouse_pos.x) * senstivity;
+	updateMVPMatrix();
+
+	mouse_pos = glm::vec2(mouse_x, mouse_y);
+}
+
+void Camera::rotateAroundZ(int mouse_x, int mouse_y, float senstivity) {
+	zrot += (mouse_x - mouse_pos.x) * senstivity;
 	updateMVPMatrix();
 
 	mouse_pos = glm::vec2(mouse_x, mouse_y);
@@ -37,6 +47,14 @@ void Camera::rotate(int mouse_x, int mouse_y) {
 void Camera::zoom(float delta) {
 	pos.z -= delta * 0.1f;
 	updateMVPMatrix();
+}
+
+void Camera::changeFov(float delta, float senstivity, int width, int height) {
+	fovy += delta * senstivity;
+	if (fovy < 5) fovy = 5;
+	if (fovy > 160) fovy = 160;
+	pos.z = distanceBase / tanf((float)fovy * 0.5 / 180.0f * M_PI);
+	updatePMatrix(width, height);
 }
 
 /**
@@ -55,8 +73,8 @@ void Camera::move(int mouse_x, int mouse_y) {
  */
 void Camera::updatePMatrix(int width,int height) {
 	float aspect = (float)width / (float)height;
-	float zfar = 3000.0f;
-	float znear = 0.1f;
+	float zfar = 1000.0f;
+	float znear = 1.0f;
 	float f = 1.0f / tan(fovy * M_PI / 360.0f);
 
 	// projection行列
@@ -65,7 +83,7 @@ void Camera::updatePMatrix(int width,int height) {
 	pMatrix = glm::mat4(
 		 f/aspect,	0,								0,									0,
 				0,	f,								0,						 			0,
-			    0,	0,		(zfar+znear)/(znear-zfar),		                           -1,
+				-center.x, -center.y,      (zfar + znear) / (znear - zfar),            -1,
 			    0,	0, (2.0f*zfar*znear)/(znear-zfar),									0);
 
 	updateMVPMatrix();
@@ -84,4 +102,8 @@ void Camera::updateMVPMatrix() {
 
 	// create model view projection matrix
 	mvpMatrix = pMatrix * mvMatrix;
+}
+
+float Camera::f() {
+	return 1.0f / tan(fovy / 180.0f * M_PI * 0.5);
 }

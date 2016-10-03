@@ -101,17 +101,17 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="peristyliumHeight"/>
 		</translate>
-		<offset offsetDistance="-Diameter/2+geisonProjection+architraveD/2" offsetSelector="inside"/>
-		<copy name="Roof"/>
+		<offset offsetDistance="-Diameter/2+geisonProjection+architraveD/2" inside="Roof"/>
 	</rule>
 	<rule name="TempleOuter">
-		<offset offsetDistance="-Diameter/2" offsetSelector="inside"/>
+		<offset offsetDistance="-Diameter/2" inside="TempleOuter2"/>
+	</rule>
+	<rule name="TempleOuter2">
 		<extrude height="peristyliumHeight"/>
 		<copy name="Peristylium"/>
 	</rule>
 	<rule name="TempleInner">
-		<offset offsetDistance="-Cella_Setback" offsetSelector="inside"/>
-		<copy name="Cella"/>
+		<offset offsetDistance="-Cella_Setback" inside="Cella"/>
 	</rule>
 	
 	<!-- PODIUM -->
@@ -121,7 +121,9 @@
 	</rule>
 	<rule name="Steps2">
 		<copy name="Steps1"/>
-		<offset offsetDistance="2*podiumTreadDepth" offsetSelector="inside"/>
+		<offset offsetDistance="2*podiumTreadDepth" inside="Steps2in"/>
+	</rule>
+	<rule name="Steps2in">
 		<extrude height="podiumRiserHeight"/>
 	</rule>
 	<rule name="Steps1">
@@ -131,7 +133,9 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="podiumRiserHeight"/>
 		</translate>
-		<offset offsetDistance="podiumTreadDepth" offsetSelector="inside"/>
+		<offset offsetDistance="podiumTreadDepth" inside="Steps1in"/>
+	</rule>
+	<rule name="Steps1in">
 		<extrude height="podiumRiserHeight"/>
 	</rule>
 	<rule name="Steps0">
@@ -154,7 +158,9 @@
 		</split>
 	</rule>
 	<rule name="InnerPeristylium">
-		<offset offsetDistance="-wallThickness*0.5" offsetSelector="inside"/>
+		<offset offsetDistance="-wallThickness*0.5" inside="InnerPeristylium_in"/>
+	</rule>
+	<rule name="InnerPeristylium_in">
 		<extrude height="peristyliumHeight"/>
 		<split splitAxis="z">
 			<param type="absolute" value="Column_Height" name="InnerPeristyliumSub1"/>
@@ -317,7 +323,7 @@
 			<param name="left" value="Colonnade2"/>
 		</comp>
 	</rule>
-	
+
 	<!-- Peristylium -->
 	<rule name="Peristylium">
 		<comp>
@@ -331,7 +337,7 @@
 			<param type="floating" value="1" name="Entablature"/>
 		</split>
 	</rule>
-	
+
 	<!-- Columns -->
 	<rule name="Colonnade">
 		<split splitAxis="x">
@@ -372,12 +378,11 @@
 		<insert geometryPath="shaftAsset"/>
 	</rule>
 	<rule name="Capital">
-		<size>
+		<size centered="true">
 			<param name="xSize" type="absolute" value="capitalWidth"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="absolute" value="capitalWidth"/>
 		</size>
-		<center axesSelector="xz"/>
 		<split splitAxis="y">
 			<param type="floating" value="echinusPartsHeight" name="Echinus"/>
 			<param type="floating" value="abacusPartsHeight" name="Abacus"/>
@@ -621,7 +626,7 @@
 	<rule name="Roof">
 		<roofGable angle="Angle"/>
 		<comp>
-			<param name="vertical" value="Pediment"/>
+			<param name="side" value="Pediment"/>
 			<param name="top" value="RoofPlane"/>
 		</comp>
 	</rule>
@@ -644,13 +649,14 @@
 			<param name="y" type="absolute" value="0"/>
 			<param name="z" type="absolute" value="-pedimentWidth"/>
 		</translate>
-		<size>
+		<size centered="true">
 			<param name="xSize" type="relative" value="0.995"/>
 			<param name="ySize" type="relative" value="1"/>
 			<param name="zSize" type="relative" value="1"/>
 		</size>
-		<center axesSelector="x"/>
 		<extrude height="pedimentWidth-geisonProjection"/>
 	</rule>
+
+
 </rules>
 

@@ -218,6 +218,7 @@
     <ClCompile Include="UShape.cpp" />
     <ClCompile Include="UShapePrism.cpp" />
     <ClCompile Include="UShapeTaper.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -322,6 +323,7 @@
     <ClInclude Include="UShape.h" />
     <ClInclude Include="UShapePrism.h" />
     <ClInclude Include="UShapeTaper.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>

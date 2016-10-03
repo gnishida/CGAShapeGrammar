@@ -30,7 +30,7 @@ public:
 	boost::shared_ptr<Shape> roofGable(const std::string& name, float angle);
 	boost::shared_ptr<Shape> roofHip(const std::string& name, float angle);
 	void setupProjection(int axesSelector, float texWidth, float texHeight);
-	void size(float xSize, float ySize, float zSize);
+	void size(float xSize, float ySize, float zSize, bool centered);
 	//void split(int direction, const std::vector<float> ratios, const std::vector<std::string> names, std::vector<Object*>& objects);
 	boost::shared_ptr<Shape> taper(const std::string& name, float height, float top_ratio = 0.0f);
 	void generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, float opacity) const;
