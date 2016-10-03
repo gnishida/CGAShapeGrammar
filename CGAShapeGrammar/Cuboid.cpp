@@ -233,6 +233,7 @@ void Cuboid::split(int splitAxis, const std::vector<float>& sizes, const std::ve
 void Cuboid::generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, float opacity) const {
 	if (!_active) return;
 
+	if (_scope.z == 0) return;
 	int num = 0;
 	
 	// top
