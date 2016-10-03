@@ -21,8 +21,9 @@ public:
 	GLWidget3D(MainWindow *parent = 0);
 
 	void drawScene();
+	void render();
 	void loadCGA(char* filename);
-	void draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
+	void draw2DPolyline(QImage& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
 	void rotationStart();
 	void rotationEnd();
 
@@ -35,7 +36,7 @@ public slots:
 protected:
 	void initializeGL();
 	void resizeGL(int width, int height);
-	void paintGL();    
+	void paintEvent(QPaintEvent *event);
 	void mousePressEvent(QMouseEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);

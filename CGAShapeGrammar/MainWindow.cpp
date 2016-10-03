@@ -80,7 +80,7 @@ void MainWindow::onViewRendering() {
 	else {
 		glWidget->renderManager.renderingMode = RenderManager::RENDERING_MODE_SKETCHY;
 	}
-	glWidget->updateGL();
+	glWidget->update();
 }
 
 void MainWindow::onViewRefresh() {
@@ -100,5 +100,5 @@ void MainWindow::onRotationEnd() {
 void MainWindow::camera_update() {
 	glWidget->camera.yrot += 0.02;
 	glWidget->camera.updateMVPMatrix();
-	glWidget->updateGL();
+	glWidget->update();
 }

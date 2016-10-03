@@ -13,13 +13,17 @@
 #include <QDir>
 #include <QTextStream>
 #include <iostream>
-#include "EDLinesLib.h"
+//#include "EDLinesLib.h"
 #include <QProcess>
+#include "Utils.h"
 
 GLWidget3D::GLWidget3D(MainWindow *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	this->mainWin = parent;
 	shiftPressed = false;
 	ctrlPressed = false;
+
+	// This is necessary to prevent the screen overdrawn by OpenGL
+	setAutoFillBackground(false);
 
 	// 光源位置をセット
 	// ShadowMappingは平行光源を使っている。この位置から原点方向を平行光源の方向とする。
@@ -112,101 +116,22 @@ GLWidget3D::GLWidget3D(MainWindow *parent) : QGLWidget(QGLFormat(QGL::SampleBuff
 }
 
 /**
- * This event handler is called when the mouse press events occur.
- */
-void GLWidget3D::mousePressEvent(QMouseEvent *e) {
-	camera.mousePress(e->x(), e->y());
-}
-
-/**
- * This event handler is called when the mouse release events occur.
- */
-void GLWidget3D::mouseReleaseEvent(QMouseEvent *e) {
-}
-
-/**
- * This event handler is called when the mouse move events occur.
- */
-void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
-	if (e->buttons() & Qt::RightButton) { // Rotate
-		if (shiftPressed) { // Move
-			camera.move(e->x(), e->y());
-		}
-		else {
-			camera.rotate(e->x(), e->y(), (ctrlPressed ? 0.1 : 1));
-		}
-	}
-
-	updateGL();
-}
-
-void GLWidget3D::wheelEvent(QWheelEvent* e) {
-	camera.zoom(e->delta() * 0.1);
-	updateGL();
-}
-
-/**
- * This function is called once before the first call to paintGL() or resizeGL().
- */
-void GLWidget3D::initializeGL() {
-	// init glew
-	GLenum err = glewInit();
-	if (err != GLEW_OK) {
-		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
-	}
-
-	if (glewIsSupported("GL_VERSION_4_2"))
-		printf("Ready for OpenGL 4.2\n");
-	else {
-		printf("OpenGL 4.2 not supported\n");
-		exit(1);
-	}
-	const GLubyte* text = glGetString(GL_VERSION);
-	printf("VERSION: %s\n", text);
-
+* Draw the scene.
+*/
+void GLWidget3D::drawScene() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+	glDepthMask(true);
 
-	glEnable(GL_TEXTURE_2D);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-	glTexGenf(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-	glTexGenf(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-	glDisable(GL_TEXTURE_2D);
-
-	glEnable(GL_TEXTURE_3D);
-	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glDisable(GL_TEXTURE_3D);
-
-	glEnable(GL_TEXTURE_2D_ARRAY);
-	glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glDisable(GL_TEXTURE_2D_ARRAY);
-
-	////////////////////////////////
-	renderManager.init("", "", "", true, 8192);
-	renderManager.resize(this->width(), this->height());
-
-	glUniform1i(glGetUniformLocation(renderManager.programs["ssao"], "tex0"), 0);//tex0: 0
+	renderManager.renderAll();
 }
 
-/**
- * This function is called whenever the widget has been resized.
- */
-void GLWidget3D::resizeGL(int width, int height) {
-	height = height ? height : 1;
-	glViewport(0, 0, width, height);
-	camera.updatePMatrix(width, height);
+void GLWidget3D::render() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	renderManager.resize(width, height);
-}
+	glMatrixMode(GL_MODELVIEW);
 
-/**
- * This function is called whenever the widget needs to be painted.
- */
-void GLWidget3D::paintGL() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// PASS 1: Render to texture
 	glUseProgram(renderManager.programs["pass1"]);
@@ -308,7 +233,7 @@ void GLWidget3D::paintGL() {
 		glBindVertexArray(0);
 		glDepthFunc(GL_LEQUAL);
 	}
-	else if (renderManager.renderingMode == RenderManager::RENDERING_MODE_LINE || renderManager.renderingMode == RenderManager::RENDERING_MODE_HATCHING) {
+	else if (renderManager.renderingMode == RenderManager::RENDERING_MODE_LINE || renderManager.renderingMode == RenderManager::RENDERING_MODE_HATCHING || renderManager.renderingMode == RenderManager::RENDERING_MODE_SKETCHY) {
 		glUseProgram(renderManager.programs["line"]);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -320,11 +245,11 @@ void GLWidget3D::paintGL() {
 
 		glUniform2f(glGetUniformLocation(renderManager.programs["line"], "pixelSize"), 1.0f / this->width(), 1.0f / this->height());
 		glUniformMatrix4fv(glGetUniformLocation(renderManager.programs["line"], "pMatrix"), 1, false, &camera.pMatrix[0][0]);
-		if (renderManager.renderingMode == RenderManager::RENDERING_MODE_LINE) {
-			glUniform1i(glGetUniformLocation(renderManager.programs["line"], "useHatching"), 0);
+		if (renderManager.renderingMode == RenderManager::RENDERING_MODE_HATCHING) {
+			glUniform1i(glGetUniformLocation(renderManager.programs["line"], "useHatching"), 1);
 		}
 		else {
-			glUniform1i(glGetUniformLocation(renderManager.programs["line"], "useHatching"), 1);
+			glUniform1i(glGetUniformLocation(renderManager.programs["line"], "useHatching"), 0);
 		}
 
 		glUniform1i(glGetUniformLocation(renderManager.programs["line"], "tex0"), 1);
@@ -448,22 +373,10 @@ void GLWidget3D::paintGL() {
 	glActiveTexture(GL_TEXTURE0);
 }
 
-/**
- * Draw the scene.
- */
-void GLWidget3D::drawScene() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glDepthMask(true);
-
-	renderManager.renderAll();
-}
-
 void GLWidget3D::loadCGA(char* filename) {
 	cga::CGA system;
 
-#if 1
+#if 0
 	{ // for tutorial
 		float object_width = 25;
 		float object_depth = 35;
@@ -490,7 +403,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 0
+#if 1
 	{ // for building
 		float object_width = 14;// 15.0f;
 		float object_depth = 14;// 15.0f;
@@ -769,10 +682,10 @@ void GLWidget3D::loadCGA(char* filename) {
 
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
-	updateGL();
+	update();
 }
 
-void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index) {
+void GLWidget3D::draw2DPolyline(QImage& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index) {
 	float theta = atan2(p1.y - p0.y, p1.x - p0.x);
 	float scale = glm::length(p1 - p0);
 
@@ -785,6 +698,9 @@ void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::ve
 	cv::Mat_<float> A(2, 1);
 	A(0, 0) = p0.x;
 	A(1, 0) = p0.y;
+	
+	QPainter painter(&img);
+	painter.setPen(QPen(QColor(0, 0, 0), 1));
 
 	for (int i = 0; i < style_polylines[polyline_index].size() - 1; ++i) {
 		cv::Mat_<float> X0(2, 1);
@@ -797,8 +713,9 @@ void GLWidget3D::draw2DPolyline(cv::Mat& img, const glm::vec2& p0, const glm::ve
 		X1(1, 0) = style_polylines[polyline_index][i + 1].y;
 		cv::Mat_<float> T1 = R * X1 + A;
 
-		cv::line(img, cv::Point(T0(0, 0), T0(1, 0)), cv::Point(T1(0, 0), T1(1, 0)), cv::Scalar(0), 1, CV_AA);
+		painter.drawLine(T0(0, 0), T0(1, 0), T1(0, 0), T1(1, 0));
 	}
+	painter.end();
 }
 
 void GLWidget3D::rotationStart() {
@@ -806,7 +723,7 @@ void GLWidget3D::rotationStart() {
 	camera.yrot = -90;
 	camera.zrot = 0;
 	camera.pos = glm::vec3(0, 10, 60);
-	updateGL();
+	update();
 
 	rotationTimer = boost::shared_ptr<QTimer>(new QTimer(this));
 	connect(rotationTimer.get(), SIGNAL(timeout()), mainWin, SLOT(camera_update()));
@@ -844,4 +761,145 @@ void GLWidget3D::keyReleaseEvent(QKeyEvent* e) {
 	default:
 		break;
 	}
+}
+
+/**
+* This function is called once before the first call to paintGL() or resizeGL().
+*/
+void GLWidget3D::initializeGL() {
+	// init glew
+	GLenum err = glewInit();
+	if (err != GLEW_OK) {
+		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
+	}
+
+	if (glewIsSupported("GL_VERSION_4_2"))
+		printf("Ready for OpenGL 4.2\n");
+	else {
+		printf("OpenGL 4.2 not supported\n");
+		exit(1);
+	}
+	const GLubyte* text = glGetString(GL_VERSION);
+	printf("VERSION: %s\n", text);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	glEnable(GL_TEXTURE_2D);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	glTexGenf(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	glTexGenf(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	glDisable(GL_TEXTURE_2D);
+
+	glEnable(GL_TEXTURE_3D);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glDisable(GL_TEXTURE_3D);
+
+	glEnable(GL_TEXTURE_2D_ARRAY);
+	glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glDisable(GL_TEXTURE_2D_ARRAY);
+
+	////////////////////////////////
+	renderManager.init("", "", "", true, 8192);
+	renderManager.resize(this->width(), this->height());
+
+	glUniform1i(glGetUniformLocation(renderManager.programs["ssao"], "tex0"), 0);//tex0: 0
+}
+
+/**
+* This function is called whenever the widget has been resized.
+*/
+void GLWidget3D::resizeGL(int width, int height) {
+	height = height ? height : 1;
+	glViewport(0, 0, width, height);
+	camera.updatePMatrix(width, height);
+
+	renderManager.resize(width, height);
+}
+
+/**
+* This function is called whenever the widget needs to be painted.
+*/
+void GLWidget3D::paintEvent(QPaintEvent *event) {
+	// OpenGLで描画
+	makeCurrent();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	render();
+
+	// REMOVE
+	glActiveTexture(GL_TEXTURE0);
+
+	// OpenGLの設定を元に戻す
+	glShadeModel(GL_FLAT);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	QPainter painter(this);
+	painter.setOpacity(1.0f);
+	if (renderManager.renderingMode == RenderManager::RENDERING_MODE_SKETCHY) {
+		QImage img = grabFrameBuffer();
+		cv::Mat mat = cv::Mat(img.height(), img.width(), CV_8UC4, img.bits(), img.bytesPerLine()).clone();
+		cv::cvtColor(mat, mat, cv::COLOR_BGRA2BGR);
+
+		// extract contour vectors
+		std::vector<std::pair<glm::vec2, glm::vec2>> contour;
+		utils::extractEdges(mat, contour);
+
+		QImage result(img.width(), img.height(), QImage::Format_RGB32);
+		result.fill(QColor(255, 255, 255));
+		for (int i = 0; i < contour.size(); ++i) {
+			int r = i * 97 % style_polylines.size();
+			draw2DPolyline(result, contour[i].first, contour[i].second, r);
+		}
+
+		painter.drawImage(0, 0, result);
+	}
+	painter.end();
+
+	glEnable(GL_DEPTH_TEST);
+}
+
+/**
+* This event handler is called when the mouse press events occur.
+*/
+void GLWidget3D::mousePressEvent(QMouseEvent *e) {
+	camera.mousePress(e->x(), e->y());
+}
+
+/**
+* This event handler is called when the mouse move events occur.
+*/
+void GLWidget3D::mouseMoveEvent(QMouseEvent *e) {
+	if (e->buttons() & Qt::RightButton) { // Rotate
+		if (shiftPressed) { // Move
+			camera.move(e->x(), e->y());
+		}
+		else {
+			camera.rotate(e->x(), e->y(), (ctrlPressed ? 0.1 : 1));
+		}
+	}
+
+	update();
+}
+
+/**
+* This event handler is called when the mouse release events occur.
+*/
+void GLWidget3D::mouseReleaseEvent(QMouseEvent *e) {
+}
+
+void GLWidget3D::wheelEvent(QWheelEvent* e) {
+	camera.zoom(e->delta() * 0.1);
+	update();
 }
