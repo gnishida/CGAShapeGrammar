@@ -4,7 +4,7 @@
 
 namespace cga {
 
-	TaperOperator::TaperOperator(const std::string& height, const std::string& slope) {
+TaperOperator::TaperOperator(const std::string& height, const std::string& slope) {
 	this->name = "taper";
 	this->height = height;
 	this->slope = slope;
