@@ -72,9 +72,6 @@ void CGA::derive(const Grammar& grammar, bool suppressWarning) {
 		stack.pop_front();
 
 		if (grammar.contain(shape->_name)) {
-			if (shape->_name == "Capital") {
-				int hoge = 0;
-			}
 			grammar.getRule(shape->_name).apply(shape, grammar, stack, shapes);
 		} else {
 			if (!suppressWarning && shape->_name.back() != '!' && shape->_name.back() != '.') {
