@@ -8,7 +8,6 @@
 #include "Rectangle.h"
 #include "UShapeTaper.h"
 #include "CGA.h"
-#include <iostream>
 
 namespace cga {
 

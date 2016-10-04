@@ -1,4 +1,4 @@
-#include "SplitOperator.h"
+﻿#include "SplitOperator.h"
 #include "CGA.h"
 #include "Shape.h"
 
