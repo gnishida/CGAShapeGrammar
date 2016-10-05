@@ -173,9 +173,6 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShadowMapping.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -239,11 +236,14 @@
     <ClCompile Include="UShapeTaper.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
-    <ClCompile Include="OBJWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJLoader.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJWriter.cpp">
+      <Filter>Source Files\shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,9 +360,6 @@
     <ClInclude Include="NumberEval.h">
       <Filter>Source Files\rule</Filter>
     </ClInclude>
-    <ClInclude Include="OBJLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -444,11 +441,14 @@
     <ClInclude Include="UShapeTaper.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
-    <ClInclude Include="OBJWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJLoader.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJWriter.h">
+      <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
