@@ -13,14 +13,13 @@
 #include <QDir>
 #include <QTextStream>
 #include <iostream>
-//#include "EDLinesLib.h"
 #include <QProcess>
 #include "Utils.h"
 
 GLWidget3D::GLWidget3D(MainWindow *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	this->mainWin = parent;
-	shiftPressed = false;
 	ctrlPressed = false;
+	shiftPressed = false;
 
 	// This is necessary to prevent the screen overdrawn by OpenGL
 	setAutoFillBackground(false);

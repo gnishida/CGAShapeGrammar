@@ -1,5 +1,4 @@
 ﻿#include "GLUtils.h"
-#include <QGLWidget>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
@@ -14,14 +13,6 @@
 #include <boost/geometry/geometries/ring.hpp>
 #include <cassert>
 #include <list>
-
-#ifndef M_PI
-#define M_PI	3.14159265359
-#endif
-
-#ifndef SQR
-#define SQR(x)	((x) * (x))
-#endif
 
 namespace glutils {
 
@@ -250,12 +241,16 @@ float distance(const glm::vec2& a, const glm::vec2& b, const glm::vec2& c, bool 
 	float r = r_numerator / r_denomenator;
 
 	if (segmentOnly && (r < 0 || r > 1)) {
-		float dist1 = SQR(c.x - a.x) + SQR(c.y - a.y);
-		float dist2 = SQR(c.x - b.x) + SQR(c.y - b.y);
+		float dist1 = std::hypot(c.x - a.x, c.y - a.y);
+		//float dist1 = SQR(c.x - a.x) + SQR(c.y - a.y);
+		float dist2 = std::hypot(c.x - b.x, c.y - b.y);
+		//float dist2 = SQR(c.x - b.x) + SQR(c.y - b.y);
 		if (dist1 < dist2) {	
-			return sqrt(dist1);
+			return dist1;
+			//return sqrt(dist1);
 		} else {
-			return sqrt(dist2);
+			return dist2;
+			//return sqrt(dist2);
 		}
 	} else {
 		return abs((a.y-c.y) * (b.x-a.x) - (a.x-c.x) * (b.y-a.y)) / sqrt(r_denomenator);

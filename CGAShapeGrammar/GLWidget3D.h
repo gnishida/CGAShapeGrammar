@@ -18,6 +18,24 @@ class MainWindow;
 
 class GLWidget3D : public QGLWidget {
 public:
+	MainWindow* mainWin;
+
+	// camera
+	Camera camera;
+	glm::vec3 light_dir;
+	glm::mat4 light_mvpMatrix;
+
+	// rendering engine
+	RenderManager renderManager;
+
+	// key status
+	bool shiftPressed;
+	bool ctrlPressed;
+
+	std::vector<std::vector<glm::vec2>> style_polylines;
+	boost::shared_ptr<QTimer> rotationTimer;
+
+public:
 	GLWidget3D(MainWindow *parent = 0);
 
 	void drawScene();
@@ -42,20 +60,5 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *e);
 	void wheelEvent(QWheelEvent* e);
 
-public:
-	static enum { RENDERING_MODE_REGULAR = 0, RENDERING_MODE_LINE };
-
-public:
-	MainWindow* mainWin;
-	Camera camera;
-	glm::vec3 light_dir;
-	glm::mat4 light_mvpMatrix;
-	bool shiftPressed;
-	bool ctrlPressed;
-
-	RenderManager renderManager;
-
-	std::vector<std::vector<glm::vec2>> style_polylines;
-	boost::shared_ptr<QTimer> rotationTimer;
 };
 

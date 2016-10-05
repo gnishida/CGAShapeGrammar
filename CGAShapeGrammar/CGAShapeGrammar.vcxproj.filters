@@ -161,9 +161,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GLWidget3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -236,14 +233,17 @@
     <ClCompile Include="UShapeTaper.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OBJLoader.cpp">
       <Filter>Source Files\shape</Filter>
     </ClCompile>
     <ClCompile Include="OBJWriter.cpp">
       <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="GLUtils.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,9 +369,6 @@
     <ClInclude Include="GLWidget3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GLUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -441,14 +438,17 @@
     <ClInclude Include="UShapeTaper.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OBJLoader.h">
       <Filter>Source Files\shape</Filter>
     </ClInclude>
     <ClInclude Include="OBJWriter.h">
       <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="GLUtils.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
