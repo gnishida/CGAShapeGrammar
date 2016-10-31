@@ -10,13 +10,10 @@
 
 namespace cga {
 
-CGA::CGA() {
-}
-
 /**
  * Randomly select parameter values if the range is specified for the parameter
  */
-std::vector<float> CGA::randomParamValues(Grammar& grammar) {
+std::vector<float> randomParamValues(Grammar& grammar) {
 	std::vector<float> param_values;
 
 	for (auto it = grammar.attrs.begin(); it != grammar.attrs.end(); ++it) {
@@ -32,7 +29,7 @@ std::vector<float> CGA::randomParamValues(Grammar& grammar) {
 	return param_values;
 }
 
-std::vector<std::pair<float, float> > CGA::getParamRanges(const Grammar& grammar) {
+std::vector<std::pair<float, float> > getParamRanges(const Grammar& grammar) {
 	std::vector<std::pair<float, float> > ranges;
 
 	for (auto it = grammar.attrs.begin(); it != grammar.attrs.end(); ++it) {
@@ -50,7 +47,7 @@ std::vector<std::pair<float, float> > CGA::getParamRanges(const Grammar& grammar
 * Each value is normalized to [0, 1], so it has to be populated based on the range.
 * If the parameter value is out of [0, 1], it is forced to be between [0, 1].
 */
-void CGA::setParamValues(Grammar& grammar, const std::vector<float>& params) {
+void setParamValues(Grammar& grammar, const std::vector<float>& params) {
 	int count = 0;
 	for (auto it = grammar.attrs.begin(); it != grammar.attrs.end(); ++it, ++count) {
 		if (it->second.hasRange) {
@@ -59,6 +56,9 @@ void CGA::setParamValues(Grammar& grammar, const std::vector<float>& params) {
 			grammar.attrs[it->first].value = boost::lexical_cast<std::string>((it->second.range_end - it->second.range_start) * param + it->second.range_start);
 		}
 	}
+}
+
+CGA::CGA() {
 }
 
 /**
@@ -74,6 +74,31 @@ void CGA::derive(const Grammar& grammar, bool suppressWarning) {
 		if (grammar.contain(shape->_name)) {
 			grammar.getRule(shape->_name).apply(shape, grammar, stack, shapes);
 		} else {
+			if (!suppressWarning && shape->_name.back() != '!' && shape->_name.back() != '.') {
+				std::cout << "Warning: " << "no rule is found for " << shape->_name << "." << std::endl;
+			}
+			shapes.push_back(shape);
+		}
+	}
+}
+
+void CGA::derive(const std::vector<Grammar>& grammars, bool suppressWarning) {
+	shapes.clear();
+
+	while (!stack.empty()) {
+		boost::shared_ptr<Shape> shape = stack.front();
+		stack.pop_front();
+
+		bool found = false;
+		for (int i = 0; i < grammars.size(); ++i) {
+			if (grammars[i].contain(shape->_name)) {
+				grammars[i].getRule(shape->_name).apply(shape, grammars[i], stack, shapes);
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
 			if (!suppressWarning && shape->_name.back() != '!' && shape->_name.back() != '.') {
 				std::cout << "Warning: " << "no rule is found for " << shape->_name << "." << std::endl;
 			}

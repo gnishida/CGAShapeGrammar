@@ -22,6 +22,10 @@ enum { CORNER_CUT_STRAIGHT = 0, CORNER_CUT_CURVE, CORNER_CUT_NEGATIVE_CURVE };
 const float M_PI = 3.14159265358979f;
 const int CIRCLE_SLICES = 36;
 
+std::vector<float> randomParamValues(Grammar& grammar);
+std::vector<std::pair<float, float> > getParamRanges(const Grammar& grammar);
+void setParamValues(Grammar& grammar, const std::vector<float>& params);
+
 class CGA {
 public:
 	glm::mat4 modelMat;
@@ -31,10 +35,8 @@ public:
 public:
 	CGA();
 
-	static std::vector<float> randomParamValues(Grammar& grammar);
-	static std::vector<std::pair<float, float> > getParamRanges(const Grammar& grammar);
-	static void setParamValues(Grammar& grammar, const std::vector<float>& params);
 	void derive(const Grammar& grammar, bool suppressWarning = false);
+	void derive(const std::vector<Grammar>& grammars, bool suppressWarning = false);
 	void generateGeometry(std::vector<boost::shared_ptr<glutils::Face> >& faces, bool center);
 };
 

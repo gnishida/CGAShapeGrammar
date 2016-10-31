@@ -158,7 +158,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindowClass)
     {
-        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "MainWindow", 0));
+        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "CGA Shape Grammar", 0));
         actionOpenCGA->setText(QApplication::translate("MainWindowClass", "Open CGA", 0));
         actionOpenCGA->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+O", 0));
         actionExit->setText(QApplication::translate("MainWindowClass", "Exit", 0));
