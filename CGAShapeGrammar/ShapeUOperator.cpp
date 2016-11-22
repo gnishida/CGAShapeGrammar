@@ -18,14 +18,14 @@ boost::shared_ptr<Shape> ShapeUOperator::apply(boost::shared_ptr<Shape>& shape, 
 		actual_frontWidth = shape->_scope.x * grammar.evalFloat(frontWidth.value, shape);
 	}
 	else {
-		actual_frontWidth = shape->_scope.x * grammar.evalFloat(frontWidth.value, shape);
+		actual_frontWidth = grammar.evalFloat(frontWidth.value, shape);
 	}
 
 	if (backDepth.type == Value::TYPE_RELATIVE) {
 		actual_backDepth = shape->_scope.y * grammar.evalFloat(backDepth.value, shape);
 	}
 	else {
-		actual_backDepth = shape->_scope.y * grammar.evalFloat(backDepth.value, shape);
+		actual_backDepth = grammar.evalFloat(backDepth.value, shape);
 	}
 
 	return shape->shapeU(shape->_name, actual_frontWidth, actual_backDepth);
