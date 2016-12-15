@@ -656,10 +656,12 @@ void GLWidget3D::loadCGA(char* filename) {
 
 
 	try {
-		cga::Grammar grammar;
+		std::vector<cga::Grammar> grammars;
+		cga::parseGrammar(filename, grammars);
+		system.derive(grammars, true);
+		/*cga::Grammar grammar;
 		cga::parseGrammar(filename, grammar);
-		//system.randomParamValues(grammar);
-		system.derive(grammar, true);
+		system.derive(grammar, true);*/
 
 		std::vector<boost::shared_ptr<glutils::Face> > faces;
 		faces.clear();
