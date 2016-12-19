@@ -402,7 +402,7 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 #endif
 
-#if 1
+#if 0
 	{ // for building
 		float object_width = 14;// 15.0f;
 		float object_depth = 14;// 15.0f;
@@ -652,8 +652,8 @@ void GLWidget3D::loadCGA(char* filename) {
 
 
 
-
-
+	boost::shared_ptr<cga::Shape> start = boost::shared_ptr<cga::Shape>(new cga::Rectangle("Start", "", glm::translate(glm::rotate(glm::mat4(), -(float)CV_PI * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, 0)), glm::mat4(), 0, 0, glm::vec3(1, 1, 1)));
+	system.stack.push_back(boost::shared_ptr<cga::Shape>(start));
 
 	try {
 		std::vector<cga::Grammar> grammars;
@@ -665,7 +665,7 @@ void GLWidget3D::loadCGA(char* filename) {
 
 		std::vector<boost::shared_ptr<glutils::Face> > faces;
 		faces.clear();
-		system.generateGeometry(faces, true);
+		system.generateGeometry(faces, false);
 		renderManager.removeObjects();
 		renderManager.addFaces(faces, true);
 	} catch (const std::string& ex) {
@@ -675,11 +675,9 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 	
 	// add a ground plane
-	/*
 	std::vector<Vertex> vertices;
-	glutils::drawGrid(100, 100, 2.5, glm::vec4(0.521, 0.815, 0.917, 1), glm::vec4(0.898, 0.933, 0.941, 1), system.modelMat, vertices);
+	glutils::drawGrid(100, 100, 2.5, glm::vec4(0.521, 0.815, 0.917, 1), glm::vec4(0.898, 0.933, 0.941, 1), glm::translate(glm::rotate(glm::mat4(), -(float)CV_PI * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, 0.02)), vertices);
 	renderManager.addObject("grid", "", vertices, false);
-	*/
 
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 
