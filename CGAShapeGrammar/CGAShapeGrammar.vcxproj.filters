@@ -245,6 +245,15 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InnerArchOperator.cpp">
+      <Filter>Source Files\rule</Filter>
+    </ClCompile>
+    <ClCompile Include="Arch.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="ArchPrism.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -449,6 +458,15 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InnerArchOperator.h">
+      <Filter>Source Files\rule</Filter>
+    </ClInclude>
+    <ClInclude Include="Arch.h">
+      <Filter>Source Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ArchPrism.h">
+      <Filter>Source Files\shape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
