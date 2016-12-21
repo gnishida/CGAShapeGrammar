@@ -31,6 +31,7 @@ public slots:
 	void onRotationStart();
 	void onRotationEnd();
 	void camera_update();
+	void onCamera();
 };
 
 #endif // MAINWINDOW_H

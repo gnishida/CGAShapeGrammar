@@ -107,10 +107,10 @@ void Arch::offset(const std::string& name, float offsetDistance, const std::stri
 			float v1 = _texCoords[0].y;
 			float u2 = (_scope.x + offsetDistance) / _scope.x * (_texCoords[1].x - _texCoords[0].x) + _texCoords[0].x;
 			float v2 = -offsetDistance / _scope.y * (_texCoords[2].y - _texCoords[0].y) + _texCoords[0].y;
-			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, mat2, new_scope.x, abs(offsetDistance), _color, _texture, u1, v1, u2, v2)));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, mat3, new_scope.x, abs(offsetDistance), _color, _texture, u1, v1, u2, v2)));
 		}
 		else {
-			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, mat2, new_scope.x, abs(offsetDistance), _color)));
+			shapes.push_back(boost::shared_ptr<Shape>(new Rectangle(border, _grammar_type, _pivot, mat3, new_scope.x, abs(offsetDistance), _color)));
 		}
 
 		// arch border

@@ -665,7 +665,7 @@ void GLWidget3D::loadCGA(char* filename) {
 
 		std::vector<boost::shared_ptr<glutils::Face> > faces;
 		faces.clear();
-		system.generateGeometry(faces, false);
+		system.generateGeometry(faces, true);
 		renderManager.removeObjects();
 		renderManager.addFaces(faces, true);
 	} catch (const std::string& ex) {
@@ -675,9 +675,11 @@ void GLWidget3D::loadCGA(char* filename) {
 	}
 	
 	// add a ground plane
+	/*
 	std::vector<Vertex> vertices;
 	glutils::drawGrid(100, 100, 2.5, glm::vec4(0.521, 0.815, 0.917, 1), glm::vec4(0.898, 0.933, 0.941, 1), glm::translate(glm::rotate(glm::mat4(), -(float)CV_PI * 0.5f, glm::vec3(1, 0, 0)), glm::vec3(0, 0, 0.02)), vertices);
 	renderManager.addObject("grid", "", vertices, false);
+	*/
 
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);
 

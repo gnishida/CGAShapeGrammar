@@ -49,10 +49,12 @@ public:
     QAction *actionRotationEnd;
     QAction *actionSaveGeometry;
     QAction *actionViewContourRendering;
+    QAction *actionCamera;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuView;
+    QMenu *menuTools;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -114,6 +116,8 @@ public:
         actionViewContourRendering = new QAction(MainWindowClass);
         actionViewContourRendering->setObjectName(QStringLiteral("actionViewContourRendering"));
         actionViewContourRendering->setCheckable(true);
+        actionCamera = new QAction(MainWindowClass);
+        actionCamera->setObjectName(QStringLiteral("actionCamera"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -124,6 +128,8 @@ public:
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuView = new QMenu(menuBar);
         menuView->setObjectName(QStringLiteral("menuView"));
+        menuTools = new QMenu(menuBar);
+        menuTools->setObjectName(QStringLiteral("menuTools"));
         MainWindowClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindowClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -134,6 +140,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuView->menuAction());
+        menuBar->addAction(menuTools->menuAction());
         menuFile->addAction(actionOpenCGA);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
@@ -150,6 +157,7 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionRotationStart);
         menuView->addAction(actionRotationEnd);
+        menuTools->addAction(actionCamera);
 
         retranslateUi(MainWindowClass);
 
@@ -185,8 +193,10 @@ public:
         actionSaveGeometry->setText(QApplication::translate("MainWindowClass", "Save Geometry", 0));
         actionSaveGeometry->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+S", 0));
         actionViewContourRendering->setText(QApplication::translate("MainWindowClass", "Contour Rendering", 0));
+        actionCamera->setText(QApplication::translate("MainWindowClass", "Camera", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
+        menuTools->setTitle(QApplication::translate("MainWindowClass", "Tools", 0));
     } // retranslateUi
 
 };

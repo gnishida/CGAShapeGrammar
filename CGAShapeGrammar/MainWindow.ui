@@ -49,8 +49,15 @@
     <addaction name="actionRotationStart"/>
     <addaction name="actionRotationEnd"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionCamera"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menuTools"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -204,6 +211,11 @@
    </property>
    <property name="text">
     <string>Contour Rendering</string>
+   </property>
+  </action>
+  <action name="actionCamera">
+   <property name="text">
+    <string>Camera</string>
    </property>
   </action>
  </widget>
