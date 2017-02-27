@@ -32,6 +32,7 @@ public:
 	bool shiftPressed;
 	bool ctrlPressed;
 
+	std::vector<boost::shared_ptr<glutils::Face> > faces;
 	std::vector<std::vector<glm::vec2>> style_polylines;
 	boost::shared_ptr<QTimer> rotationTimer;
 
@@ -44,6 +45,7 @@ public:
 	void draw2DPolyline(QImage& img, const glm::vec2& p0, const glm::vec2& p1, int polyline_index);
 	void rotationStart();
 	void rotationEnd();
+	void saveOBJ(const QString& filename);
 
 	void keyPressEvent(QKeyEvent* e);
 	void keyReleaseEvent(QKeyEvent* e);

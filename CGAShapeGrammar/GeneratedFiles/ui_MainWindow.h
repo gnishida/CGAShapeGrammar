@@ -50,6 +50,8 @@ public:
     QAction *actionSaveGeometry;
     QAction *actionViewContourRendering;
     QAction *actionCamera;
+    QAction *actionSaveImage;
+    QAction *actionSaveOBJ;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -118,6 +120,10 @@ public:
         actionViewContourRendering->setCheckable(true);
         actionCamera = new QAction(MainWindowClass);
         actionCamera->setObjectName(QStringLiteral("actionCamera"));
+        actionSaveImage = new QAction(MainWindowClass);
+        actionSaveImage->setObjectName(QStringLiteral("actionSaveImage"));
+        actionSaveOBJ = new QAction(MainWindowClass);
+        actionSaveOBJ->setObjectName(QStringLiteral("actionSaveOBJ"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindowClass->setCentralWidget(centralWidget);
@@ -142,6 +148,8 @@ public:
         menuBar->addAction(menuView->menuAction());
         menuBar->addAction(menuTools->menuAction());
         menuFile->addAction(actionOpenCGA);
+        menuFile->addAction(actionSaveImage);
+        menuFile->addAction(actionSaveOBJ);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuView->addAction(actionViewShadow);
@@ -194,6 +202,8 @@ public:
         actionSaveGeometry->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+S", 0));
         actionViewContourRendering->setText(QApplication::translate("MainWindowClass", "Contour Rendering", 0));
         actionCamera->setText(QApplication::translate("MainWindowClass", "Camera", 0));
+        actionSaveImage->setText(QApplication::translate("MainWindowClass", "Save Image", 0));
+        actionSaveOBJ->setText(QApplication::translate("MainWindowClass", "Save OBJ", 0));
         menuFile->setTitle(QApplication::translate("MainWindowClass", "File", 0));
         menuView->setTitle(QApplication::translate("MainWindowClass", "View", 0));
         menuTools->setTitle(QApplication::translate("MainWindowClass", "Tools", 0));

@@ -25,6 +25,8 @@ protected:
 
 public slots:
 	void onOpenCGA();
+	void onSaveImage();
+	void onSaveOBJ();
 	void onViewShadow();
 	void onViewRendering();
 	void onViewRefresh();

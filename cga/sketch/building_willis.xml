@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<grammar version="1.0" author="Gen Nishida">
+	<!-- building mass -->
+	<rule name="Start1">
+		<extrude height="50"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.1" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start2">
+		<extrude height="100"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start3">
+		<extrude height="70"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start4">
+		<extrude height="100"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start5">
+		<extrude height="130"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start6">
+		<extrude height="130"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start7">
+		<extrude height="30"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start8">
+		<extrude height="100"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="Start9">
+		<extrude height="50"/>
+		<split splitAxis="z">
+			<param type="floating" value="1" name="BuildingMass"/>
+			<param type="absolute" value="0.05" name="TopLayer"/>
+		</split>
+	</rule>
+	<rule name="TopLayer">
+		<comp>
+			<param name="side" value="RoofWall"/>
+			<param name="top" value="TopFace"/>
+		</comp>
+	</rule>
+	
+	<!-- roof modeling -->
+	<rule name="TopFace">
+		<offset offsetDistance="0.3" inside="TopFaceOffset"/>
+	</rule>
+	<rule name="TopFaceOffset">
+		<extrude height="0.4"/>
+		<comp>
+			<param name="side" value="RoofWall"/>
+			<param name="top" value="TopFaceOffsetTop"/>
+			<param name="bottom" value="RoofWall"/>
+		</comp>
+	</rule>
+	<rule name="TopFaceOffsetTop">
+		<offset offsetDistance="-0.8" inside="TopFaceOffsetTopInside" border="RoofWall"/>
+	</rule>
+	<rule name="TopFaceOffsetTopInside">
+		<extrude height="-0.4"/>
+		<comp>
+			<param name="side" value="RoofWall"/>
+			<param name="top" value="Roof"/>
+		</comp>
+	</rule>
+	
+	<!-- facade modeling -->
+	<rule name="BuildingMass">
+		<split splitAxis="z">
+			<param type="floating" value="2" name="Floor" repeat="true"/>
+			<param type="absolute" value="4" name="TopFloor"/>
+		</split>
+	</rule>
+	<rule name="TopFloor">
+		<comp>
+			<param name="side" value="TopFacade"/>
+		</comp>
+	</rule>
+	<rule name="Floor">
+		<comp>
+			<param name="side" value="Facade"/>
+		</comp>
+	</rule>
+	
+	<!-- floor modeling -->
+	<rule name="TopFacade">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
+		<split splitAxis="x">
+			<param type="absolute" value="0.5" name="Wall"/>
+			<param type="floating" value="2" name="TopTile" repeat="true"/>
+			<param type="absolute" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="Facade">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="absolute" value="5"/>
+			<param name="texHeight" type="absolute" value="5"/>
+		</setupProjection>
+		<split splitAxis="x">
+			<param type="absolute" value="0.5" name="Wall"/>
+			<param type="floating" value="2" name="Tile" repeat="true"/>
+			<param type="absolute" value="0.5" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="TopTile">
+		<split splitAxis="x">
+			<param type="absolute" value="0.2" name="Wall"/>
+			<param type="floating" value="1" name="TopWindowColumn"/>
+			<param type="absolute" value="0.2" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="Tile">
+		<split splitAxis="x">
+			<param type="absolute" value="0.2" name="Wall"/>
+			<param type="floating" value="1" name="WindowColumn"/>
+			<param type="absolute" value="0.2" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="TopWindowColumn">
+		<split splitAxis="y">
+			<param type="absolute" value="0.2" name="Wall"/>
+			<param type="floating" value="1" name="WindowTile"/>
+			<param type="absolute" value="0.2" name="Wall"/>
+		</split>
+	</rule>
+	<rule name="WindowColumn">
+		<split splitAxis="y">
+			<param type="absolute" value="0.2" name="Wall"/>
+			<param type="floating" value="1" name="WindowTile"/>
+			<param type="absolute" value="0.2" name="Wall"/>
+		</split>
+	</rule>
+	
+	<!-- window modeling -->
+	<rule name="WindowTile">
+		<extrude height="-0.1"/>
+		<comp>
+			<param name="side" value="WindowFrame"/>
+			<param name="top" value="WindowGlass"/>
+		</comp>
+	</rule>
+	
+	<!-- material -->
+	<rule name="Roof">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="relative" value="1"/>
+			<param name="texHeight" type="relative" value="1"/>
+		</setupProjection>
+		<texture texturePath="../assets/textures/roof.jpg"/>
+	</rule>
+	<rule name="Wall">
+		<color s="#303030"/>
+	</rule>
+	<rule name="WindowGlass">
+		<setupProjection axesSelector="scope.xy">
+			<param name="texWidth" type="relative" value="1"/>
+			<param name="texHeight" type="relative" value="1"/>
+		</setupProjection>
+		<texture texturePath="../assets/textures/glass.jpg"/>
+	</rule>
+	<rule name="WindowFrame">
+		<color s="#40423f"/>
+	</rule>
+	<rule name="RoofWall">
+		<color s="#40423f"/>
+	</rule>
+</grammar>

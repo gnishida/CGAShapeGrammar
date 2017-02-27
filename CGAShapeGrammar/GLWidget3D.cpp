@@ -15,6 +15,7 @@
 #include <iostream>
 #include <QProcess>
 #include "Utils.h"
+#include "OBJWriter.h"
 
 GLWidget3D::GLWidget3D(MainWindow *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers)) {
 	this->mainWin = parent;
@@ -136,7 +137,8 @@ void GLWidget3D::render() {
 	glUseProgram(renderManager.programs["pass1"]);
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, renderManager.fragDataFB);
-	glClearColor(0.95, 0.95, 0.95, 1);
+	//glClearColor(0.95, 0.95, 0.95, 1);
+	glClearColor(1, 1, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderManager.fragDataTex[0], 0);
@@ -663,7 +665,7 @@ void GLWidget3D::loadCGA(char* filename) {
 		cga::parseGrammar(filename, grammar);
 		system.derive(grammar, true);*/
 
-		std::vector<boost::shared_ptr<glutils::Face> > faces;
+		//std::vector<boost::shared_ptr<glutils::Face> > faces;
 		faces.clear();
 		system.generateGeometry(faces, true);
 		renderManager.removeObjects();
@@ -733,6 +735,10 @@ void GLWidget3D::rotationStart() {
 
 void GLWidget3D::rotationEnd() {
 	rotationTimer->stop();
+}
+
+void GLWidget3D::saveOBJ(const QString& filename) {
+	OBJWriter::write(faces, filename.toUtf8().constData());
 }
 
 void GLWidget3D::keyPressEvent(QKeyEvent *e) {

@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionOpenCGA, SIGNAL(triggered()), this, SLOT(onOpenCGA()));
+	connect(ui.actionSaveImage, SIGNAL(triggered()), this, SLOT(onSaveImage()));
+	connect(ui.actionSaveOBJ, SIGNAL(triggered()), this, SLOT(onSaveOBJ()));
 	connect(ui.actionViewShadow, SIGNAL(triggered()), this, SLOT(onViewShadow()));
 	connect(ui.actionViewBasicRendering, SIGNAL(triggered()), this, SLOT(onViewRendering()));
 	connect(ui.actionViewSSAO, SIGNAL(triggered()), this, SLOT(onViewRendering()));
@@ -60,6 +62,20 @@ void MainWindow::onOpenCGA() {
 	filename = new_filename;
 	glWidget->loadCGA(filename.toUtf8().data());
 	this->setWindowTitle("CGA Shape Grammar - " + new_filename);
+}
+
+void MainWindow::onSaveImage() {
+	QString filename = QFileDialog::getSaveFileName(this, tr("Save Image file..."), "", tr("Image Files (*.png)"));
+	if (filename.isEmpty()) return;
+
+	glWidget->grabFrameBuffer().save(filename);
+}
+
+void MainWindow::onSaveOBJ() {
+	QString filename = QFileDialog::getSaveFileName(this, tr("Save OBJ file..."), "", tr("OJB Files (*.obj)"));
+	if (filename.isEmpty()) return;
+
+	glWidget->saveOBJ(filename);
 }
 
 void MainWindow::onViewShadow() {
