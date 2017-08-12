@@ -743,15 +743,16 @@ void GLWidget3D::saveOBJ(const QString& filename) {
 
 void GLWidget3D::keyPressEvent(QKeyEvent *e) {
 	ctrlPressed = false;
+	shiftPressed = false;
 
-	if (e->modifiers() == Qt::ControlModifier) {
+	if (e->modifiers() & Qt::ControlModifier) {
 		ctrlPressed = true;
+	}
+	if (e->modifiers() & Qt::ShiftModifier) {
+		shiftPressed = true;
 	}
 
 	switch (e->key()) {
-	case Qt::Key_Shift:
-		shiftPressed = true;
-		break;
 	default:
 		break;
 	}
@@ -759,11 +760,11 @@ void GLWidget3D::keyPressEvent(QKeyEvent *e) {
 
 void GLWidget3D::keyReleaseEvent(QKeyEvent* e) {
 	switch (e->key()) {
-	case Qt::Key_Shift:
-		shiftPressed = false;
-		break;
 	case Qt::Key_Control:
 		ctrlPressed = false;
+		break;
+	case Qt::Key_Shift:
+		shiftPressed = false;
 		break;
 	default:
 		break;
