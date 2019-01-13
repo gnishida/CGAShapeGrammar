@@ -291,16 +291,19 @@ void GLWidget3D::render() {
 }
 
 void GLWidget3D::loadOSM(char* filename) {
-	std::vector<std::vector<glm::vec2>> roads;
+	RoadGraph roads;
 	std::vector<BuildingParam> buildingParams;
 	OSMImporter::import(filename, roads, buildingParams);
 
 	renderManager.removeObjects();
 	procedural_generation::Faces faces;
+
+	// generate building geometry
 	for (auto buildingParam : buildingParams) {
 		try {
 			procedural_generation::Polygon2D footprint = buildingParam.footprint;
-			procedural_generation::GeneratePrism(footprint, glm::vec4(1, 1, 1, 1), glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(1, 0, 0)), buildingParam.height, faces);
+			procedural_generation::OrientPolygon(footprint);
+			procedural_generation::GeneratePrism(footprint, glm::vec4(1, 1, 1, 1), glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), buildingParam.height, faces);
 		}
 		catch (const std::string& ex) {
 			std::cout << "ERROR:" << std::endl << ex << std::endl;
@@ -308,7 +311,26 @@ void GLWidget3D::loadOSM(char* filename) {
 		catch (const char* ex) {
 			std::cout << "ERROR:" << std::endl << ex << std::endl;
 		}
-	}	
+	}
+
+	// generate road geometry
+	const float roadWidth = 8.0f;
+	for (int nodeId = 0; nodeId < roads.edges.size(); nodeId++) {
+		for (auto edgepair : roads.edges[nodeId]) {
+			int nodeId2 = edgepair.first;
+			std::vector<glm::vec2>& polyline = edgepair.second->polyline;
+
+			for (int i = 0; i < polyline.size() - 1; i++) {
+				glm::vec2 p1 = polyline[i];
+				glm::vec2 p2 = polyline[i + 1];
+				glm::vec2 dir = glm::normalize(p2 - p1);
+				glm::vec2 perp(dir.y, -dir.x);
+				procedural_generation::Polygon2D polygon = { p1 - perp  * roadWidth * 0.5f, p1 + perp * roadWidth * 0.5f, p2 + perp * roadWidth * 0.5f, p2 - perp * roadWidth * 0.5f };
+				procedural_generation::GeneratePrism(polygon, glm::vec4(0.1, 0.1, 0.1, 1), glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), 0.1f, faces);
+			}
+		}
+	}
+
 	renderManager.addFaces("test", faces, true);
 
 	renderManager.updateShadowMap(this, light_dir, light_mvpMatrix);

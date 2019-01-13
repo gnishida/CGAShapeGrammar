@@ -1,8 +1,9 @@
 ﻿#include "RenderManager.h"
-#include <iostream>
 #include "Shader.h"
+#include "GeometryUtil.h"
 #include <QImage>
 #include <QGLWidget>
+#include <iostream>
 #include <sstream>
 
 GeometryObject::GeometryObject() {
@@ -348,7 +349,7 @@ void RenderManager::resizeSsaoKernel() {
 
 void RenderManager::addFaces(const std::string& name, const procedural_generation::Faces& faces, bool lighting) {
 	for (const auto& face : faces) {
-		// triangulate the face
+		std::vector<procedural_generation::Polygon2D> procedural_generation::Triangulate(const Polygon2D& poly);
 
 		for (int i = 0; i < face.vertices.size() - 2; i++) {
 			std::vector<procedural_generation::Vertex> vertices(3);
@@ -364,7 +365,7 @@ void RenderManager::addObject(const QString& object_name, const QString& texture
 	GLuint texId;
 	
 	if (texture_file.length() > 0) {
-		// テクスチャファイルがまだ読み込まれていない場合は、ロードする
+		// Load texture image
 		if (!textures.contains(texture_file)) {
 			texId = loadTexture(texture_file);
 			textures[texture_file] = texId;

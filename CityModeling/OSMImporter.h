@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RoadGraph.h"
 #include <QString>
 #include <BuildingParam.h>
 
@@ -8,7 +9,7 @@ public:
 	OSMImporter();
 	~OSMImporter();
 
-	static void import(const QString& filename, std::vector<std::vector<glm::vec2>>& roads, std::vector<BuildingParam>& buildingParams);
+	static void import(const QString& filename, RoadGraph& roads, std::vector<BuildingParam>& buildingParams);
 	static glm::vec2 convertLatLonToUTM(double lat, double lon, double center_lat, double center_lon);
 };
 
