@@ -177,7 +177,6 @@
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderManager.cpp" />
-    <ClCompile Include="RoadGraph.cpp" />
     <ClCompile Include="RotateOperator.cpp" />
     <ClCompile Include="SetupProjectionOperator.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -250,7 +249,6 @@
     <ClInclude Include="Prism.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderManager.h" />
-    <ClInclude Include="RoadGraph.h" />
     <ClInclude Include="RotateOperator.h" />
     <ClInclude Include="SetupProjectionOperator.h" />
     <ClInclude Include="Shader.h" />

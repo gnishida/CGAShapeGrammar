@@ -137,9 +137,6 @@
     <ClCompile Include="BuildingParam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RoadGraph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
@@ -241,9 +238,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BuildingParam.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RoadGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

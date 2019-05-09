@@ -791,17 +791,12 @@ namespace procedural_generation {
 
 		glm::vec3 normal(xformMat * glm::vec4(0, 0, 1, 0));
 
-		// triangulate
-		std::vector<procedural_generation::Polygon2D> triangulatedPolygons = procedural_generation::Triangulate(points);
-
-		for (auto triangulatedPolygon : triangulatedPolygons) {
-			Face face;
-			for (const auto& point : triangulatedPolygon) {
-				glm::vec3 v(xformMat * glm::vec4(point, 0, 1));
-				face.vertices.emplace_back(v, normal, color);
-			}
-			faces.push_back(face);
+		Face face;
+		for (const auto& point : points) {
+			glm::vec3 v(xformMat * glm::vec4(point, 0, 1));
+			face.vertices.emplace_back(v, normal, color);
 		}
+		faces.push_back(face);
 	}
 
 	void GeneratePolygon(const std::vector<glm::vec2>& points, const glm::vec4& color, const std::vector<glm::vec2>& texCoords, const std::string& texturePath, const glm::mat4& xformMat, Faces& faces) {
